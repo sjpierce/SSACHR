@@ -1,0 +1,14 @@
+# Automatically added by RStudio (ignores the RStudio project file).
+^.*\.Rproj$
+
+# Used for temporary files.
+^\.Rproj\.user$
+
+# An Rmarkdown file used to generate README.md.
+^README\.Rmd$
+
+# Exclude PDF files created by knitting .Rmd files.
+#^vignettes/*\.pdf$
+
+# Exclude graphics folder to avoid note when checking package.
+^graphics$
