@@ -1,3 +1,7 @@
+# SSACHR 0.1.0, 2020-04-23
+* Added `inst/Step_01_Data_mgt.Rmd` script. It is an early draft and will be 
+  revised further. 
+
 # SSACHR 0.0.0.9001, 2020-04-20
 * Created the GitHub repository to store this package. 
 * Added `.gitignore` file.
