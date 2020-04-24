@@ -1,0 +1,179 @@
+---
+title: \sffamily{\bfseries{\LARGE Criminal History Records Paper Step 1 (Data Management)}}
+geometry: "left=.5in,right=.5in,top=.75in,bottom=.75in"
+author: "Steven J. Pierce"
+output:
+ pdf_document:
+   latex_engine: xelatex
+   number_sections: true
+   toc: yes
+   toc_depth: 3
+   includes:
+     in_header: "../compact-title.tex"
+urlcolor: blue
+header-includes:
+- \usepackage{fancyhdr}
+- \usepackage[yyyymmdd,hhmmss]{datetime}
+- \usepackage{lastpage}
+- \usepackage{fontspec}
+- \defaultfontfeatures{Ligatures=TeX}
+- \usepackage[font={small}, margin=1cm, skip=2pt]{caption}
+- \usepackage{url}
+- \usepackage{floatrow}
+- \floatplacement{figure}{!ht}
+- \floatplacement{table}{!ht}
+- \usepackage{placeins}
+- \usepackage{booktabs}
+- \usepackage{longtable}
+- \usepackage{dcolumn}
+- \usepackage{titling}
+- \usepackage{threeparttable}
+- \usepackage{threeparttablex}
+- \pretitle{\begin{center}\LARGE\bfseries}
+- \posttitle{\end{center}}
+- \pagestyle{fancy}
+- \lhead{SSA CHR Paper Step 1 Data Mgt}
+- \rhead{\today\ \currenttime}
+- \lfoot{\texttt{\small \detokenize{`r sub(".Rmd", ".pdf", knitr:::current_input(dir = FALSE))`}}} 
+- \cfoot{ }
+- \fancyfoot[R]{\thepage\ of \pageref*{LastPage}}
+- \renewcommand{\headrulewidth}{0.4pt}
+- \renewcommand{\footrulewidth}{0.4pt}
+- \fancypagestyle{plain}{\pagestyle{fancy}}
+---
+
+********************************************************************************  
+\FloatBarrier
+
+# Purpose.
+This file imports copies of publicly archived data files (Campbell, 2019) into 
+R, then performs data management to prepare a new data file for a descriptive 
+paper about the criminal histories of suspected serial sexual offenders.  
+
+
+\FloatBarrier
+
+# Setup
+Set global R chunk options (local chunk options will over-ride global options). 
+
+``` {r global_options}
+# Global chunk options (over-ridden by local chunk options)
+knitr::opts_chunk$set(include  = TRUE, echo = TRUE, error = TRUE, 
+                      message = TRUE, warning = TRUE)
+```
+
+If you have not already done so, install the piercer package from 
+[GitHub](https://github.com/sjpierce/piercer) by running the next chunk of R 
+code. The chunk is set to eval = FALSE so that you have to manually run that 
+code, which you should only need to do once (or whenever the piercer package 
+has been updated). 
+
+```{r, eval = FALSE}
+install.packages("devtools")
+library(devtools)
+devtools::install_github("sjpierce/piercer")
+```
+
+Load R packages that we need to get additional functions. 
+
+``` {r load_packages}
+library(here)         # for here()
+library(dplyr)        # for %>%, filter(), group_by(), & summarise()
+library(tidyr)        # for arrange(), filter(), group_by(), mutate(), spread(), 
+                      # summarise(), %>%, etc. 
+library(rmarkdown)    # for render()
+library(knitr)        # for kable()
+options(kableExtra.latex.load_packages = FALSE)
+library(kableExtra)   # for kable_styling(), add_header_above(), column_spec(),
+                      # collapse_rows(), and landscape()
+library(sjlabelled) # For set_label(), get_label()
+library(haven)      # for read_spss()
+library(piercer)    # for DI() and tag_um()
+```
+
+\FloatBarrier
+
+# Import Files
+The SPSS files we will need to import, plus docmentation about their contents
+and relationships between them, are available from an online archive (Campbell,
+2019).
+
+\FloatBarrier
+
+## Core Criminal History Files
+Import the SPSS data files for the five core types of records comprising
+Michigan criminal history records (CHR): offenders (IDN), incidents (INC),
+arrest offenses (ARR), prosecutor charges (CHG), and judicial charges (JUD).
+These are necessary to compute some new variables we plan to use.
+
+``` {r import_chr}
+# Read SPSS data files.
+IDN <- read_sav("data/SSA_IDN_Offenders_2018-09-03.sav", user_na = TRUE)
+INC <- read_sav("data/SSA_INC_Incidents_Imputed_2018-09-03.sav", user_na = TRUE)
+ARR <- read_sav("data/SSA_ARR_Arrests_Imputed_2018-09-03.sav", user_na = TRUE)
+CHG <- read_sav("data/SSA_CHG_PA_Charges_Imputed_2018-09-03.sav", 
+                user_na = TRUE)
+JUD <- read_sav("data/SSA_JUD_Judicial_Charges_Imputed_2018-09-03.sav", 
+                user_na = TRUE) 
+```
+
+
+********************************************************************************
+# Wrap Up
+
+\FloatBarrier
+
+## Project Information
+These materials are scholarly products based on research funded by the following 
+grant. 
+
+Campbell, R., Pierce, S. J., & Sharma, D. (01/01/2015–12/31/2018). Serial sexual
+assaults: A longitudinal examination of offending patterns using DNA evidence.
+[NIJ Award # 2014-NE-BX-0006, Awarded, $699,533]. Sponsor: National Institute of
+Justice. Location: Michigan State University, East Lansing, MI.
+
+\FloatBarrier
+
+## References
+Campbell, R. (2019). *Serial sexual assaults: A longitudinal examination of
+offending patterns using DNA evidence, Detroit, Michigan, 2009* [Data files,
+codebooks, computer programs, and statistical output]. ICPSR37134-v1. Ann Arbor,
+MI: Inter-university Consortium for Political and Social Research [distributor],
+2019-02-28. Retrieved from: https://doi.org/10.3886/ICPSR37134.v1
+
+
+\FloatBarrier
+
+## Document Information
+Folder: *`r getwd()`*
+
+* Script: *`r knitr:::current_input()`*
+* Output: *`r sub(".Rmd", ".pdf", knitr:::current_input())`*
+
+\FloatBarrier
+
+## Software Information
+We use R Markdown to enhance reproducibility. Knitting the R Markdown script
+generates the PDF file containing explanatory text, R code, plus R output 
+(text and graphics) noted in the Document Information section above.
+
+- We use [RStudio (version 1.2.5033 or later)](www.rstudio.org) to work with 
+  R and R markdown files. The software chain looks like this:
+  **Rmd file -> RStudio -> R -> knitr -> pandoc -> MiKTeX -> PDF file**.
+- We recommend using [TinyTeX](https://yihui.org/tinytex/) to compile LaTeX files 
+  into PDF files. However, it should be viable to use 
+  [MiKTeX version 2.9](https://miktex.org) instead. 
+  
+
+``` {r show_citations}
+sessionInfo()
+citation("here")
+citation("dplyr")
+citation("tidyr")
+citation("rmarkdown")
+citation("knitr")
+citation("kableExtra")
+citation("sjlabelled")
+citation("haven")
+citation("piercer")
+```
