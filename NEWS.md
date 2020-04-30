@@ -1,3 +1,9 @@
+# SSACHR 0.2.0, 2020-04-30
+* Added `R/Lattice_Functions.R` with panel.mybox() and panel.mydensity()
+  functions and corresponding help.
+* Added `R/Data_Mgt_Functions.R` with dfsummary() functions and corresponding 
+  help.
+
 # SSACHR 0.1.0, 2020-04-23
 * Added `inst/Step_01_Data_mgt.Rmd` script. It is an early draft and will be 
   revised further. 
