@@ -14,9 +14,11 @@
 #' @seealso \code{\link[lattice]{panel.stripplot}} and
 #'   \code{\link[lattice]{panel.bwplot}}.
 #'
+#' @importFrom lattice panel.stripplot panel.bwplot
+#'
 #' @export
 panel.mybox <- function(...){
-  panel.stripplot(..., col = "grey55", jitter = TRUE)
+  panel.stripplot(..., col = "grey55", jitter.data = TRUE)
   panel.bwplot(..., do.out = FALSE)}
 
 #'=============================================================================
@@ -38,6 +40,9 @@ panel.mybox <- function(...){
 #' @seealso \code{\link[lattice]{densityplot}},
 #'   \code{\link[lattice]{panel.densityplot}}, and
 #'   \code{\link[lattice]{panel.mathdensity}}.
+#'
+#' @importFrom stats dnorm sd
+#' @importFrom lattice panel.densityplot panel.mathdensity
 #'
 #' @export
 # Panel function for densityplot() that adds a normal curve too.
