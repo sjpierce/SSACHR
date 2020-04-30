@@ -2,3 +2,9 @@
 
 export(panel.mybox)
 export(panel.mydensity)
+importFrom(lattice,panel.bwplot)
+importFrom(lattice,panel.densityplot)
+importFrom(lattice,panel.mathdensity)
+importFrom(lattice,panel.stripplot)
+importFrom(stats,dnorm)
+importFrom(stats,sd)
