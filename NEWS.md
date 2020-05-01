@@ -1,3 +1,7 @@
+# SSACHR 0.2.1, 2020-04-30
+* Updated `DESCRIPTION` file by appending "Research Comependium" to package 
+  title. 
+
 # SSACHR 0.2.0, 2020-04-30
 * Added `R/Lattice_Functions.R` with panel.mybox() and panel.mydensity()
   functions and corresponding help.
