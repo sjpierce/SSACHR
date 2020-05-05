@@ -173,3 +173,5 @@ U.S. Department of Justice.
     that occurred before versus after that date. See 2020-04-08 email.
   - Summarize CHRs before vs after perpetrator’s earliest SAK date in
     addition to overall. See 2020-04-08 email.
+  - Update dfsummary() to eliminate warning message when used with a
+    data frame that does not contain an IID variable.
