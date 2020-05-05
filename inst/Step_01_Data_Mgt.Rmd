@@ -240,6 +240,66 @@ bwplot(~ Age, data = IDN, factor = 9, xlim = c(18, 82),
        xlab = "Offender Age (as of 04/15/2016)")
 ```
 
+## CHR Record Counts
+We aggregated data to count how many CHR records of each type are associated 
+with each offender. We summarize the resulting variables (NINC, NARR, NCHG, 
+NJUD, & NCON) below.
+
+```{r}
+## Aggregate by OID into a conviction charge count variable. 
+CON2 <- aggregate(NCON ~ OID, data = CON, FUN=sum)
+
+# Merge NCON conviction charge count variable into IDN.
+IDN <- merge(x = IDN, y = CON2, by = "OID", all.x = TRUE)
+
+# Recode NCON variable to replace NA with 0. 
+IDN$NCON[is.na(IDN$NCON)] <- 0
+  
+# Summarize CHR record counts.
+RC <- describe(IDN[, c("NINC", "NARR", "NCHG", "NJUD", "NCON")],  
+               quant=c(.25, .50, .75))
+row.names(RC) <- c("No. of incidents", 
+                   "No. of arrest offenses", 
+                   "No. of prosecutor charges", 
+                   "No. of adjudicated charges (all)",
+                   "No. of adjudicated charges (convictions)")
+kable(RC[, CNums], digits = 2, col.names = CNames,
+      caption = "Offender-Level Record Counts (All Crime Categories)")
+
+kable(freq(IDN$NINC), digits = 2, 
+      caption = "Number of Incidents (All Crime Categories)")
+
+kable(freq(IDN$NARR), digits = 2,
+      caption = "Number of Arrest Offenses (All Crime Categories)")
+
+kable(freq(IDN$NCHG), digits = 2,
+      caption = "Number of Prosecutor Charges (All Crime Categories)")
+
+kable(freq(IDN$NJUD), digits = 2,
+      caption = "Number of Adjudicated Charges (All Crime Categories, All Dispositions)")
+
+kable(freq(IDN$NCON), digits = 2,
+      caption = "Number of Adjudicated Charges (All Crime Categories, Convictions)")
+```
+
+```{r , fig.height = 3}
+# Rearrange data so we can easily plot multiple variables. 
+IDNW <- gather(data = IDN[, c("OID", "NINC", "NARR", "NCHG", "NJUD")], 
+               key = VName, value = Count, NINC:NJUD)
+IDNW$VName <- ordered(IDNW$VName, levels = c("NINC", "NARR", "NCHG", "NJUD"), 
+                      labels = c("Incidents", "Arrest Offenses", 
+                                 "Prosecutor Charges", "Adjudicated Charges"))
+bwplot(VName ~ Count, data = IDNW, factor = 1, xlim = c(-4, 64),
+       panel = panel.mybox, par.settings = my.boxes,
+       xlab = "Number of Records for Individual Offender")
+densityplot(~ Count | VName, data = IDNW, layout = c(4,1), 
+            panel = panel.mydensity, jitter.amount = 0.005,
+            strip = strip.custom(par.strip.text = list(cex = .7)),
+            xlab = "Number of Records for Individual Offender")
+rm(IDNW)
+```
+
+
 ********************************************************************************
 # Wrap Up
 
