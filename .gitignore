@@ -45,4 +45,4 @@ inst/*.pdf
 
 # Omit SPSS data files that should be downloaded from NACJD archive
 # instead of distributed via GitHub.
-data/*.sav
+inst/extdata/*.sav
