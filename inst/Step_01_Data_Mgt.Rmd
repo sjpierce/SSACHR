@@ -165,7 +165,7 @@ SAK <- read_sav("data/SAKdata_2018-04-03.sav", user_na = TRUE)
 
 \FloatBarrier
 
-# CHR Record Count Overview
+# Criminal History Record (CHR) Count Overview
 Below is a summary of the record counts for different types of CHR records, 
 along with the numbers of unique incidents and unique offenders represented in
 those records. It also shows the range of event dates associated with each 
