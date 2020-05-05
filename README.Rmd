@@ -35,11 +35,12 @@ remain private until we are ready to release the code, which will likely
 coincide with publication of the associated paper. After that, we will make it a
 public repository.
 
-If you use Git (Torvalds et al., 2020) and have a GitHub account, just clone the
-package to your computer using the usual Git commands. Otherwise, manually 
+If you use Git (Torvalds et al., 2020) and have a GitHub account, either clone
+or fork and clone the package to your computer using the usual Git commands
+(Bryan, 2018; Bryan et al., 2019, Chapters 28 and 32). Otherwise, manually
 download a ZIP file and unzip its contents to a folder. Either way, the files
-should end up in a folder called *SSACHR* on your computer. That folder is then
-your local copy of the repository. 
+should end up in a folder called *SSACHR* on your computer. That folder is your
+local copy of the repository.
 
 Note that the package code uses relative rather than absolute folder path and
 file name references. Moving or renaming subfolders and/or files may cause
@@ -94,6 +95,13 @@ Text goes here.
 ```
 
 # References
+Bryan, J. (2018). Excuse me, do you have a moment to talk about version control? 
+*The American Statistician, 72*(1), 20-27. 
+[doi:10.1080/00031305.2017.1399928](https://doi.org/10.1080/00031305.2017.1399928)
+
+Bryan, J., The STAT 545 TAs, & Hester, J. (2019). Happy Git and GitHub for the 
+useR. Retrieved from https://happygitwithr.com
+
 Campbell, R. (2019). *Serial sexual assaults: A longitudinal examination of 
 offending patterns using DNA evidence, Detroit, Michigan, 2009* [Data files, 
 codebooks, computer programs, and statistical output]. ICPSR37134-v1. Ann Arbor,
