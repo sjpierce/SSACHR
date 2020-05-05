@@ -300,6 +300,8 @@ densityplot(~ Count | VName, data = IDNW, layout = c(4,1),
 rm(IDNW)
 ```
 
+\FloatBarrier
+
 ## Recoding Crime Category Variables
 Here we switch over to dummy coding the different crime category variables so 
 can summarize data by category. 
@@ -320,6 +322,8 @@ JUD <- dcode(x = JUD, y = factor(JUD$JCat18, levels = c(1:17, 999)),
              stem = "JCat18")
 JUD <- dcode(x = JUD, y = factor(JUD$JCat12), stem = "JCat12")
 ```
+
+\FloatBarrier
 
 ## Aggregating Crime Category Variables
 Here we aggregate the dummy coded crime category variables data first to the
@@ -397,6 +401,8 @@ IDN$CCat12_Count <- rowSums(IDN[, cvars[1:12]] > 0) # Charge category counts
 IDN$JCat12_Count <- rowSums(IDN[, jvars[1:12]] > 0) # Conviction category counts
 ```
 
+\FloatBarrier
+
 ## Crime Category Count
 Here we are summarizing how many of 12 different categories of crime each 
 offender was *arrested for*, *charged with*, and *convicted of* according to 
@@ -425,6 +431,8 @@ kable(freq(IDN$JCat12_Count), digits = 2,
       caption = "Crime Category Count (With Convictions)")
 ```
 
+\FloatBarrier
+
 ## Incident Counts by Crime Category (12 levels)
 In this section, we analyze variables that contain the number of unique 
 incidents in the offender's criminal history for a given type of crime. We have three separate counts for each category of crime, representing incidents where 
@@ -435,6 +443,8 @@ that fit the relevant category, then aggregated again to get to the offender
 level. It is possible to have multiple arrest offense records, charge records, 
 or adjudication records for convictions on a single incident, but these 
 variables ignore that and only count each incident once. 
+
+\FloatBarrier
 
 ### Arson 
 Here we summarize the counts of unique incidents where the offender was 
@@ -451,6 +461,8 @@ kable(ACat12_1[, CNums], digits = 2, col.names = CNames,
       caption = "Offender-Level Arson Incident Counts")
 ```
 
+\FloatBarrier
+
 ### Assault - DV, Stalking 
 Here we summarize the counts of unique incidents where the offender was 
 *arrested for*, *charged with*, and *convicted of* assaults involving domestic
@@ -463,6 +475,8 @@ row.names(ACat12_2) <- RN.ACC
 kable(ACat12_2[, CNums], digits = 2, col.names = CNames,
       caption = "Offender-Level Assault - DV, Stalking Incident Counts")
 ```
+
+\FloatBarrier
 
 ### Assault - Non-Sexual, Non-DV 
 Here we summarize the counts of unique incidents where the offender was 
@@ -477,6 +491,8 @@ kable(ACat12_3[, CNums], digits = 2, col.names = CNames,
       caption = "Offender-Level Assault - Non-Sexual, Non-DV Incident Counts")
 ```
 
+\FloatBarrier
+
 ### Burglary 
 Here we summarize the counts of unique incidents where the offender was 
 *arrested for*, *charged with*, and *convicted of* burglary.
@@ -488,6 +504,8 @@ row.names(ACat12_4) <- RN.ACC
 kable(ACat12_4[, CNums], digits = 2, col.names = CNames,
       caption = "Offender-Level Burglary Incident Counts")
 ```
+
+\FloatBarrier
 
 ### Criminal Sexual Conduct
 Here we summarize the counts of unique incidents where the offender was 
@@ -532,6 +550,8 @@ densityplot(~ Count | VName, data = IDNW, layout = c(3,1),
 rm(IDNW)
 ```
 
+\FloatBarrier
+
 ### Drug Crime 
 Here we summarize the counts of unique incidents where the offender was 
 *arrested for*, *charged with*, and *convicted of* drug crimes.
@@ -543,6 +563,8 @@ row.names(ACat12_6) <- RN.ACC
 kable(ACat12_6[, CNums], digits = 2, col.names = CNames,
       caption = "Offender-Level Drug Crime Incident Counts")
 ```
+
+\FloatBarrier
 
 ### Homicide 
 Here we summarize the counts of unique incidents where the offender was 
@@ -556,6 +578,8 @@ kable(ACat12_7[, CNums], digits = 2, col.names = CNames,
       caption = "Offender-Level Homicide Incident Counts")
 ```
 
+\FloatBarrier
+
 ### Larceny/Theft/Fraud 
 Here we summarize the counts of unique incidents where the offender was 
 *arrested for*, *charged with*, and *convicted of* larceny, theft, or fraud. 
@@ -568,6 +592,8 @@ kable(ACat12_8[, CNums], digits = 2, col.names = CNames,
       caption = "Offender-Level Larceny, Theft, or Fraud Incident Counts")
 ```
 
+\FloatBarrier
+
 ### Robbery
 Here we summarize the counts of unique incidents where the offender was 
 *arrested for*, *charged with*, and *convicted of* robbery.
@@ -579,6 +605,8 @@ row.names(ACat12_9) <- RN.ACC
 kable(ACat12_9[, CNums], digits = 2, col.names = CNames,
       caption = "Offender-Level Robbery Incident Counts")
 ```
+
+\FloatBarrier
 
 ### Sex Crimes
 Here we summarize the counts of unique incidents where the offender was 
@@ -593,6 +621,8 @@ kable(ACat12_10[, CNums], digits = 2, col.names = CNames,
       caption = "Offender-Level Sex Crime Incident Counts")
 ```
 
+\FloatBarrier
+
 ### Traffic & Ordinances
 Here we summarize the counts of unique incidents where the offender was 
 *arrested for*, *charged with*, and *convicted of* traffic crimes and violations
@@ -606,6 +636,8 @@ kable(ACat12_11[, CNums], digits = 2, col.names = CNames,
       caption = "Offender-Level Traffic & Ordinance Incident Counts")
 ```
 
+\FloatBarrier
+
 ### Weapons
 Here we summarize the counts of unique incidents where the offender was 
 *arrested for*, *charged with*, and *convicted of* weapons crimes.
@@ -617,6 +649,8 @@ row.names(ACat12_12) <- RN.ACC
 kable(ACat12_12[, CNums], digits = 2, col.names = CNames,
       caption = "Offender-Level Weapons Incident Counts")
 ```
+
+\FloatBarrier
 
 ### Other Crimes (Excluded User-Missing)
 Here we summarize the counts of unique incidents where the offender was 
@@ -632,9 +666,13 @@ kable(ACat12_999[, CNums], digits = 2, col.names = CNames,
 ```
 
 ********************************************************************************
+\FloatBarrier
+
 # Arrest Offense Record Summaries
 All summaries in this section directly summarize the ARR data without first 
 aggregating to the incident or offender level. 
+
+\FloatBarrier
 
 ## Crime Category (12 levels)
 ```{r}
@@ -642,6 +680,8 @@ kable(freq(as_factor(ARR$ACat12), user.missing = "Excluded user-missing"),
       digits = 2, format.args = list(big.mark = ','),
       caption = "Number of Arrest Offense Records by Crime Category (12 levels)")
 ```
+
+\FloatBarrier
 
 ## Age at Arrest for Criminal Sexual Conduct
 ```{r}
@@ -651,9 +691,13 @@ kable(OAgeA[, CNums], digits = 2, col.names = CNames,
 ```
 
 ********************************************************************************
+\FloatBarrier
+
 # Prosecutor Charge Record Summaries
 All summaries in this section directly summarize the CHG data without first 
 aggregating to the incident or offender level. 
+
+\FloatBarrier
 
 ## Crime Category (12 levels)
 ```{r, fig.height = 2}
@@ -663,11 +707,15 @@ kable(freq(as_factor(CHG$CCat12), user.missing = "Excluded user-missing"),
 ```
 
 ********************************************************************************
+\FloatBarrier
+
 # Judicial Charge Record Summaries
 All summaries in this section directly summarize the JUD data without first 
 aggregating to the incident or offender level. Note that here we do not
 distinguish between adjudicated charge records based on disposition. While
 some of these records are convictions, others will have other dispositions.
+
+\FloatBarrier
 
 ## Crime Category (12 levels, all dispositions)
 ```{r, fig.height = 2}
@@ -675,6 +723,8 @@ kable(freq(as_factor(JUD$JCat12), user.missing = "Excluded user-missing"),
       digits = 2, format.args = list(big.mark = ','),
       caption = "Number of Adjudicated Charge Records (All Dispositions) by Crime Category (12 levels)")
 ```
+
+\FloatBarrier
 
 ## Crime Category (12 levels, convictions)
 ```{r, fig.height = 2}
