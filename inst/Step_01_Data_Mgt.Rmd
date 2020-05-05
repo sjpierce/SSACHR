@@ -163,6 +163,35 @@ SPD <- read_sav("data/SAK_PERP_2018-04-03.sav", user_na = TRUE)
 SAK <- read_sav("data/SAKdata_2018-04-03.sav", user_na = TRUE) 
 ```
 
+\FloatBarrier
+
+# CHR Record Count Overview
+Below is a summary of the record counts for different types of CHR records, 
+along with the numbers of unique incidents and unique offenders represented in
+those records. It also shows the range of event dates associated with each 
+record type (i.e., birth, incident, arrest, charge, and adjudication dates). 
+
+```{r, warning = FALSE}
+# Create a subset of JUD containing only charges where offender was convicted.
+CON <- JUD[JUD$JDispCat == 1,]
+
+# Summarize record counts.
+CHR.RC <- rbind(dfsummary(IDN, label = "Offenders", dvar = IDN$DOB),
+                dfsummary(INC, label = "Incidents", dvar = INC$IDate), 
+                dfsummary(ARR, label = "Arrest offenses", dvar = ARR$ADate),
+                dfsummary(CHG, label = "Prosecutor charges", dvar = CHG$CDate),
+                dfsummary(JUD, label = "Adjudicated charges (all dispositions)", 
+                          dvar = JUD$JDate),
+                dfsummary(CON, label = "Adjudicated charges (convictions)", 
+                          dvar = CON$JDate))
+kable(CHR.RC, caption = "Criminal History Record Counts and Date Ranges", 
+      format.args = list(big.mark = ','))
+```
+
+Note: Knitting the file will produce a warning message: "Unknown column 'IID'"
+because the IDN data frame does not contain an IID column. The *dfsummary()* 
+function doesn't try to check that before calculating N.Incidents. However, it
+correctly returns N.Incidents = 0 for the IDN data frame. 
 
 ********************************************************************************
 # Wrap Up
