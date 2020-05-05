@@ -57,3 +57,32 @@ dcode <- function(x, y, stem) {
     }
   return(x)
   }
+
+#'=============================================================================
+#' @name rvlabel
+#'
+#' @title Replace a specific value label in an labelled_spss object.
+#'
+#' @description The function replaces a specific value label with a new label.
+#'
+#' @param x A variable with class = labelled_spss.
+#'
+#' @param from A character value for the old label to be replaced.
+#'
+#' @param to A character value for the new label that will replace the old one.
+#'
+#' @details This function is primarily used to get around the fact that
+#'   parentheses in the value labels imported with some SPSS data files cause
+#'   a problem with some of our R code. this allows us to quickly replace those
+#'   value labels.
+#'
+#' @return An updated variable with class = labelled_spss.
+#'
+#' @export
+rvlabel <- function(x, from = "Excluded (user-missing)",
+                    to = "Excluded user-missing") {
+  y <- attr(x, "labels")
+  names(y) <- c(names(y[!names(y) %in% from]), to)
+  attr(x, "labels") <- y
+  return(x)
+  }
