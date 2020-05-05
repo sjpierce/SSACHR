@@ -240,6 +240,8 @@ bwplot(~ Age, data = IDN, factor = 9, xlim = c(18, 82),
        xlab = "Offender Age (as of 04/15/2016)")
 ```
 
+\FloatBarrier
+
 ## CHR Record Counts
 We aggregated data to count how many CHR records of each type are associated 
 with each offender. We summarize the resulting variables (NINC, NARR, NCHG, 
