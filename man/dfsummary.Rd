@@ -7,7 +7,7 @@
 dfsummary(x, label = NULL, dvar)
 }
 \arguments{
-\item{x}{A data frame ata frame containing variables named OID and IID.}
+\item{x}{A data frame containing variables named OID and IID.}
 
 \item{label}{An optional vector of row names for the resulting data frame.}
 
