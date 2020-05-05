@@ -145,6 +145,9 @@ JUD$JCat12 <- rvlabel(JUD$JCat12)
 JUD$JCat10 <- rvlabel(JUD$JCat10)
 JUD$JCat04 <- rvlabel(JUD$JCat04)
 JUD$JCat03 <- rvlabel(JUD$JCat03)
+
+# Create a subset of JUD containing only charges where offender was convicted.
+CON <- JUD[JUD$JDispCat == 1,]
 ```
 
 \FloatBarrier
@@ -172,9 +175,6 @@ those records. It also shows the range of event dates associated with each
 record type (i.e., birth, incident, arrest, charge, and adjudication dates). 
 
 ```{r, warning = FALSE}
-# Create a subset of JUD containing only charges where offender was convicted.
-CON <- JUD[JUD$JDispCat == 1,]
-
 # Summarize record counts.
 CHR.RC <- rbind(dfsummary(IDN, label = "Offenders", dvar = IDN$DOB),
                 dfsummary(INC, label = "Incidents", dvar = INC$IDate), 
