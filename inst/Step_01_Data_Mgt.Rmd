@@ -193,6 +193,50 @@ because the IDN data frame does not contain an IID column. The *dfsummary()*
 function doesn't try to check that before calculating N.Incidents. However, it
 correctly returns N.Incidents = 0 for the IDN data frame. 
 
+\FloatBarrier
+
+# Offender-Level Summaries
+We have few offender-level demographic variables that are worth reporting (we 
+will omit summarizing height, weight, hair color, & eye color). After examining
+sex, race, and age, we switch focus to looking at descriptive data about the 
+criminal history records for arrests, prosecutor charges, and adjudicated 
+charges. 
+
+All the CHR summaries in this section focus on variables that have been 
+aggregated to offender level. That is why the sample size for all of these
+variables is N = 1,143 (the number of offenders for whom Michigan CHR data were
+available). 
+
+\FloatBarrier
+
+## Sex
+```{r}
+kable(freq(as_factor(IDN$Sex)),  digits = 2, caption = "Offender Sex")
+```
+
+\FloatBarrier
+
+## Race
+```{r}
+kable(freq(as_factor(IDN$Race), user.missing = "Unknown"),  digits = 2, 
+      caption = "Offender Race")
+```
+
+\FloatBarrier
+
+## Age (as of 04/15/2016)
+```{r, fig.height = 2}
+CNums  <- c(2:4,8,9,11:12, 14:16)
+CNames <- c("N", "Mean", "SD", "Min", "Max", "Skew", "Kurtosis", "Q25", "Q50", 
+            "Q75")
+Age <- describe(IDN[, "Age"],  quant=c(.25, .50, .75))
+kable(Age[, CNums], digits = 2, col.names = CNames,
+      caption = "Offender Age (as of 04/15/2016)")
+bwplot(~ Age, data = IDN, factor = 9, xlim = c(18, 82),
+       panel = panel.mybox, par.settings = my.boxes,
+       xlab = "Offender Age (as of 04/15/2016)")
+```
+
 ********************************************************************************
 # Wrap Up
 
