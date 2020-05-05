@@ -5,7 +5,7 @@
 #' @description This function summarizes specific properties of data frames
 #'   into a short data frame.
 #'
-#' @param x A data frame ata frame containing variables named OID and IID.
+#' @param x A data frame containing variables named OID and IID.
 #'
 #' @param label An optional vector of row names for the resulting data frame.
 #'
