@@ -98,6 +98,14 @@ library(psych)            # For describe()
 library(car)              # For recode()
 ```
 
+Create objects to hold objects with settings we want to reuse. 
+
+```{r my_settings}
+# Custom settings for use with bwplot().
+my.boxes <- list(box.rectangle = list(col = "black", lwd = 2), 
+                 box.umbrella = list(col = "black", lwd = 2))
+```
+
 \FloatBarrier
 
 # Import Files
@@ -107,11 +115,11 @@ and relationships between them, are available from an online archive (Campbell,
 
 \FloatBarrier
 
-## Core Criminal History Files
+## Core Criminal History Records (CHR) Files
 Import the SPSS data files for the five core types of records comprising
 Michigan criminal history records (CHR): offenders (IDN), incidents (INC),
-arrest offenses (ARR), prosecutor charges (CHG), and judicial charges (JUD).
-These are necessary to compute some new variables we plan to use.
+arrest offenses (ARR), prosecutor charges (CHG), and judicial charges (JUD). 
+See Campbell (2019) for details on these files. 
 
 ``` {r import_chr}
 # Read SPSS data files.
@@ -122,6 +130,21 @@ CHG <- read_sav("data/SSA_CHG_PA_Charges_Imputed_2018-09-03.sav",
                 user_na = TRUE)
 JUD <- read_sav("data/SSA_JUD_Judicial_Charges_Imputed_2018-09-03.sav", 
                 user_na = TRUE) 
+
+# Replace user-missing value labels that have parentheses in them so they will
+# work correctly in freq() as user.missing arguments. 
+ARR$ACat12 <- rvlabel(ARR$ACat12)
+ARR$ACat10 <- rvlabel(ARR$ACat10)
+ARR$ACat04 <- rvlabel(ARR$ACat04)
+ARR$ACat03 <- rvlabel(ARR$ACat03)
+CHG$CCat12 <- rvlabel(CHG$CCat12)
+CHG$CCat10 <- rvlabel(CHG$CCat10)
+CHG$CCat04 <- rvlabel(CHG$CCat04)
+CHG$CCat03 <- rvlabel(CHG$CCat03)
+JUD$JCat12 <- rvlabel(JUD$JCat12)
+JUD$JCat10 <- rvlabel(JUD$JCat10)
+JUD$JCat04 <- rvlabel(JUD$JCat04)
+JUD$JCat03 <- rvlabel(JUD$JCat03)
 ```
 
 
