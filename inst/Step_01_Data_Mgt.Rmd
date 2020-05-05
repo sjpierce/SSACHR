@@ -301,6 +301,389 @@ densityplot(~ Count | VName, data = IDNW, layout = c(4,1),
 rm(IDNW)
 ```
 
+## Recoding Crime Category Variables
+Here we switch over to dummy coding the different crime category variables so 
+can summarize data by category. 
+
+```{r}
+# Dummy code all the crime category variables in ARR
+ARR <- dcode(x = ARR, y = factor(ARR$ACat18, levels = c(1:17, 999)), 
+             stem = "ACat18")
+ARR <- dcode(x = ARR, y = factor(ARR$ACat12), stem = "ACat12")
+
+# Dummy code all the crime category variables in CHG
+CHG <- dcode(x = CHG, y = factor(CHG$CCat18, levels = c(1:17, 999)), 
+             stem = "CCat18")
+CHG <- dcode(x = CHG, y = factor(CHG$CCat12), stem = "CCat12")
+
+# Dummy code all the crime category variables in JUD
+JUD <- dcode(x = JUD, y = factor(JUD$JCat18, levels = c(1:17, 999)), 
+             stem = "JCat18")
+JUD <- dcode(x = JUD, y = factor(JUD$JCat12), stem = "JCat12")
+```
+
+## Aggregating Crime Category Variables
+Here we aggregate the dummy coded crime category variables data first to the
+incident level to flag presence of each crime category on the incident, then 
+to offender level incident counts for each crime category. The incident counts 
+are then merged onto the IDN data frame. 
+
+```{r}
+# Aggregate ACat12 dummy codes by IID
+ARR2 <- aggregate(cbind(ACat12_1,  ACat12_2,  ACat12_3,  ACat12_4,  ACat12_5,
+                        ACat12_6,  ACat12_7,  ACat12_8,  ACat12_9,  ACat12_10,
+                        ACat12_11, ACat12_12, ACat12_999) ~ OID + IID, 
+                  data = ARR, FUN=max)
+
+# Aggregate ACat12 dummy codes by OID into incident count variables
+ARR3 <- aggregate(cbind(ACat12_1,  ACat12_2,  ACat12_3,  ACat12_4,  ACat12_5,
+                        ACat12_6,  ACat12_7,  ACat12_8,  ACat12_9,  ACat12_10,
+                        ACat12_11, ACat12_12, ACat12_999) ~ OID, 
+                  data = ARR2, FUN=sum)
+
+# Merge ACat12 incident count variables into IDN
+IDN <- merge(x = IDN, y = ARR3, by = "OID", all.x = TRUE)
+names(IDN)
+
+# Aggregate CCat12 dummy codes by IID
+CHG2 <- aggregate(cbind(CCat12_1,  CCat12_2,  CCat12_3,  CCat12_4,  CCat12_5,
+                        CCat12_6,  CCat12_7,  CCat12_8,  CCat12_9,  CCat12_10,
+                        CCat12_11, CCat12_12, CCat12_999) ~ OID + IID, 
+                  data = CHG, FUN=max)
+
+# Aggregate CCat12 dummy codes by OID into incident count variables
+CHG3 <- aggregate(cbind(CCat12_1,  CCat12_2,  CCat12_3,  CCat12_4,  CCat12_5,
+                        CCat12_6,  CCat12_7,  CCat12_8,  CCat12_9,  CCat12_10,
+                        CCat12_11, CCat12_12, CCat12_999) ~ OID, 
+                  data = CHG2, FUN=sum)
+
+# Merge CCat12 incident count variables into IDN
+IDN <- merge(x = IDN, y = CHG3, by = "OID", all.x = TRUE)
+names(IDN)
+
+# Aggregate JCat12 dummy codes by IID (subset by JDispCat = 1 returns convictions)
+JUD2 <- aggregate(cbind(JCat12_1,  JCat12_2,  JCat12_3,  JCat12_4,  JCat12_5,
+                        JCat12_6,  JCat12_7,  JCat12_8,  JCat12_9,  JCat12_10,
+                        JCat12_11, JCat12_12, JCat12_999) ~ OID + IID, 
+                  data = JUD[JUD$JDispCat == 1,], FUN=max)
+
+# Aggregate JCat12 dummy codes by OID into incident count variables
+JUD3 <- aggregate(cbind(JCat12_1,  JCat12_2,  JCat12_3,  JCat12_4,  JCat12_5,
+                        JCat12_6,  JCat12_7,  JCat12_8,  JCat12_9,  JCat12_10,
+                        JCat12_11, JCat12_12, JCat12_999) ~ OID, 
+                  data = JUD2, FUN=sum)
+
+# Merge JCat12 incident count variables into IDN
+IDN <- merge(x = IDN, y = JUD3, by = "OID", all.x = TRUE)
+
+# Vector of incident count variables names to be recoded.
+avars <- paste("ACat12", c(1:12, 999), sep = "_")
+cvars <- paste("CCat12", c(1:12, 999), sep = "_")
+jvars <- paste("JCat12", c(1:12, 999), sep = "_") 
+vars <- c(avars, cvars, jvars)
+
+# Recode every variable named in vars to replace NA with 0. 
+IDN[, vars] <- apply(IDN[, vars], 2, function(x) {x <- recode(x, "NA=0"); x})
+
+# Verify that OCSC1 = ACat12_5, OCSC2 = CCat12_5, & OCSC3 = JCat12_5.
+# This compares incident count variables created in SPSS to corresponding 
+# variables created in R above (to prove logic was implemented the same way).
+all(IDN$OCSC1 == IDN$ACat12_5) # Arrest incident counts
+all(IDN$OCSC2 == IDN$CCat12_5) # Charge incident counts
+all(IDN$OCSC3 == IDN$JCat12_5) # Conviction incident counts
+
+# Count the number of crime categories associated w/ each offender.
+IDN$ACat12_Count <- rowSums(IDN[, avars[1:12]] > 0) # Arrest category counts
+IDN$CCat12_Count <- rowSums(IDN[, cvars[1:12]] > 0) # Charge category counts
+IDN$JCat12_Count <- rowSums(IDN[, jvars[1:12]] > 0) # Conviction category counts
+```
+
+## Crime Category Count
+Here we are summarizing how many of 12 different categories of crime each 
+offender was *arrested for*, *charged with*, and *convicted of* according to 
+the CHR data. This sums a set of binary transforms on the incident count 
+variables associated with each crime category in ACat12, CCat12, and JCat12. The
+*Excluded user-missing* value is not counted as a category, so the possible
+range of values for this count is 0-12.
+
+```{r}
+CCC <- describe(IDN[, c("ACat12_Count", "CCat12_Count", "JCat12_Count")],
+                quant=c(.25, .50, .75))
+RN.CCC <- c("Crime category count (arrested)", 
+            "Crime category count (charged)", 
+            "Crime category count (convicted)")
+row.names(CCC) <- RN.CCC
+kable(CCC[, CNums], digits = 2, col.names = CNames,
+      caption = "Offender-Level Crime Category Counts")
+
+kable(freq(IDN$ACat12_Count), digits = 2, 
+      caption = "Crime Category Count (With Arrests)")
+
+kable(freq(IDN$CCat12_Count), digits = 2,
+      caption = "Crime Category Count (With Charges)")
+
+kable(freq(IDN$JCat12_Count), digits = 2,
+      caption = "Crime Category Count (With Convictions)")
+```
+
+## Incident Counts by Crime Category (12 levels)
+In this section, we analyze variables that contain the number of unique 
+incidents in the offender's criminal history for a given type of crime. We have three separate counts for each category of crime, representing incidents where 
+the offender was *arrested for*, *charged with*, or *convicted of* crimes  
+classified into that category. Note that these variables were created by first
+aggregating ARR, CHG, and JUD records to the incident level to flag incidents
+that fit the relevant category, then aggregated again to get to the offender
+level. It is possible to have multiple arrest offense records, charge records, 
+or adjudication records for convictions on a single incident, but these 
+variables ignore that and only count each incident once. 
+
+### Arson 
+Here we summarize the counts of unique incidents where the offender was 
+*arrested for*, *charged with*, and *convicted of* arson.
+
+```{r}
+RN.ACC <- c("Incident count (arrested)", 
+            "Incident count (charged)", 
+            "Incident count (convicted)")
+ACat12_1 <- describe(IDN[, c("ACat12_1", "CCat12_1", "JCat12_1")], 
+                  quant=c(.25, .50, .75))
+row.names(ACat12_1) <- RN.ACC
+kable(ACat12_1[, CNums], digits = 2, col.names = CNames,
+      caption = "Offender-Level Arson Incident Counts")
+```
+
+### Assault - DV, Stalking 
+Here we summarize the counts of unique incidents where the offender was 
+*arrested for*, *charged with*, and *convicted of* assaults involving domestic
+violence and/or stalking.
+
+```{r}
+ACat12_2 <- describe(IDN[, c("ACat12_2", "CCat12_2", "JCat12_2")], 
+                  quant=c(.25, .50, .75))
+row.names(ACat12_2) <- RN.ACC
+kable(ACat12_2[, CNums], digits = 2, col.names = CNames,
+      caption = "Offender-Level Assault - DV, Stalking Incident Counts")
+```
+
+### Assault - Non-Sexual, Non-DV 
+Here we summarize the counts of unique incidents where the offender was 
+*arrested for*, *charged with*, and *convicted of* assaults that were non-sexual
+and did not involve domestic violence. 
+
+```{r}
+ACat12_3 <- describe(IDN[, c("ACat12_3", "CCat12_3", "JCat12_3")], 
+                  quant=c(.25, .50, .75))
+row.names(ACat12_3) <- RN.ACC
+kable(ACat12_3[, CNums], digits = 2, col.names = CNames,
+      caption = "Offender-Level Assault - Non-Sexual, Non-DV Incident Counts")
+```
+
+### Burglary 
+Here we summarize the counts of unique incidents where the offender was 
+*arrested for*, *charged with*, and *convicted of* burglary.
+
+```{r}
+ACat12_4 <- describe(IDN[, c("ACat12_4", "CCat12_4", "JCat12_4")], 
+                  quant=c(.25, .50, .75))
+row.names(ACat12_4) <- RN.ACC
+kable(ACat12_4[, CNums], digits = 2, col.names = CNames,
+      caption = "Offender-Level Burglary Incident Counts")
+```
+
+### Criminal Sexual Conduct
+Here we summarize the counts of unique incidents where the offender was 
+*arrested for*, *charged with*, and *convicted of* criminal sexual conduct.
+
+Note: We actually have redundant sets of variables that contain these particular
+counts. The variables OCSC1-OCSC3 were created and stored in the SPSS file; the
+variables ACat12_5, CCat12_5, and JCat12_5 contain exactly the same data, but 
+were created above in the **Aggregating Crime Category Variables** section. 
+
+```{r}
+CSC <- describe(IDN[, c("OCSC1", "OCSC2", "OCSC3")], quant=c(.25, .50, .75))
+kable(CSC[, CNums], digits = 2, col.names = CNames,
+      caption = "Offender-Level Criminal Sexual Conduct Incident Counts")
+
+kable(freq(IDN$OCSC1), digits = 2, 
+      caption = "Criminal Sexual Conduct Incident Count (With Arrests)")
+
+kable(freq(IDN$OCSC2), digits = 2,
+      caption = "Criminal Sexual Conduct Incident Count (With Charges)")
+
+kable(freq(IDN$OCSC3), digits = 2,
+      caption = "Criminal Sexual Conduct Incident Count (With Convictions)")
+```
+
+```{r}
+# Check how many offenders had > 1 CSC arrest, > 1 CSC charge, and/or > 1 CSC 
+# conviction in their CHR data. 
+nrow(IDN[with(IDN, OCSC1 > 1 | OCSC2 > 1 | OCSC3 > 1),]) 
+```
+
+```{r , fig.height = 3, warning= FALSE}
+# Rearrange data so we can easily plot multiple variables. 
+IDNW <- gather(data = IDN[, c("OID", "OCSC1", "OCSC2", "OCSC3")], 
+               key = VName, value = Count, OCSC1:OCSC3)
+IDNW$VName <- ordered(IDNW$VName, levels = c("OCSC1", "OCSC2", "OCSC3"), 
+                      labels = c("Arrests", "Charges", "Convictions"))
+densityplot(~ Count | VName, data = IDNW, layout = c(3,1), 
+            panel = panel.mydensity, jitter.amount = 0.1,
+            strip = strip.custom(par.strip.text = list(cex = 1)),
+            xlab = "Number of Incidents with Criminal Sexual Conduct")
+rm(IDNW)
+```
+
+### Drug Crime 
+Here we summarize the counts of unique incidents where the offender was 
+*arrested for*, *charged with*, and *convicted of* drug crimes.
+
+```{r}
+ACat12_6 <- describe(IDN[, c("ACat12_6", "CCat12_6", "JCat12_6")], 
+                  quant=c(.25, .50, .75))
+row.names(ACat12_6) <- RN.ACC
+kable(ACat12_6[, CNums], digits = 2, col.names = CNames,
+      caption = "Offender-Level Drug Crime Incident Counts")
+```
+
+### Homicide 
+Here we summarize the counts of unique incidents where the offender was 
+*arrested for*, *charged with*, and *convicted of* homicide.
+
+```{r}
+ACat12_7 <- describe(IDN[, c("ACat12_7", "CCat12_7", "JCat12_7")], 
+                  quant=c(.25, .50, .75))
+row.names(ACat12_7) <- RN.ACC
+kable(ACat12_7[, CNums], digits = 2, col.names = CNames,
+      caption = "Offender-Level Homicide Incident Counts")
+```
+
+### Larceny/Theft/Fraud 
+Here we summarize the counts of unique incidents where the offender was 
+*arrested for*, *charged with*, and *convicted of* larceny, theft, or fraud. 
+
+```{r}
+ACat12_8 <- describe(IDN[, c("ACat12_8", "CCat12_8", "JCat12_8")], 
+                  quant=c(.25, .50, .75))
+row.names(ACat12_8) <- RN.ACC
+kable(ACat12_8[, CNums], digits = 2, col.names = CNames,
+      caption = "Offender-Level Larceny, Theft, or Fraud Incident Counts")
+```
+
+### Robbery
+Here we summarize the counts of unique incidents where the offender was 
+*arrested for*, *charged with*, and *convicted of* robbery.
+
+```{r}
+ACat12_9 <- describe(IDN[, c("ACat12_9", "CCat12_9", "JCat12_9")], 
+                  quant=c(.25, .50, .75))
+row.names(ACat12_9) <- RN.ACC
+kable(ACat12_9[, CNums], digits = 2, col.names = CNames,
+      caption = "Offender-Level Robbery Incident Counts")
+```
+
+### Sex Crimes
+Here we summarize the counts of unique incidents where the offender was 
+*arrested for*, *charged with*, and *convicted of* sex crimes (excluding 
+criminal sexual conduct).
+
+```{r}
+ACat12_10 <- describe(IDN[, c("ACat12_10", "CCat12_10", "JCat12_10")], 
+                  quant=c(.25, .50, .75))
+row.names(ACat12_10) <- RN.ACC
+kable(ACat12_10[, CNums], digits = 2, col.names = CNames,
+      caption = "Offender-Level Sex Crime Incident Counts")
+```
+
+### Traffic & Ordinances
+Here we summarize the counts of unique incidents where the offender was 
+*arrested for*, *charged with*, and *convicted of* traffic crimes and violations
+of ordinances.
+
+```{r}
+ACat12_11 <- describe(IDN[, c("ACat12_11", "CCat12_11", "JCat12_11")], 
+                  quant=c(.25, .50, .75))
+row.names(ACat12_11) <- RN.ACC
+kable(ACat12_11[, CNums], digits = 2, col.names = CNames,
+      caption = "Offender-Level Traffic & Ordinance Incident Counts")
+```
+
+### Weapons
+Here we summarize the counts of unique incidents where the offender was 
+*arrested for*, *charged with*, and *convicted of* weapons crimes.
+
+```{r}
+ACat12_12 <- describe(IDN[, c("ACat12_12", "CCat12_12", "JCat12_12")], 
+                  quant=c(.25, .50, .75))
+row.names(ACat12_12) <- RN.ACC
+kable(ACat12_12[, CNums], digits = 2, col.names = CNames,
+      caption = "Offender-Level Weapons Incident Counts")
+```
+
+### Other Crimes (Excluded User-Missing)
+Here we summarize the counts of unique incidents where the offender was 
+*arrested for*, *charged with*, and *convicted of* any other type of crime not
+included in the other tables above this section.
+
+```{r}
+ACat12_999 <- describe(IDN[, c("ACat12_999", "CCat12_999", "JCat12_999")], 
+                  quant=c(.25, .50, .75))
+row.names(ACat12_999) <- RN.ACC
+kable(ACat12_999[, CNums], digits = 2, col.names = CNames,
+      caption = "Offender-Level Other Crime (Excluded User-Missing) Incident Counts")
+```
+
+********************************************************************************
+# Arrest Offense Record Summaries
+All summaries in this section directly summarize the ARR data without first 
+aggregating to the incident or offender level. 
+
+## Crime Category (12 levels)
+```{r}
+kable(freq(as_factor(ARR$ACat12), user.missing = "Excluded user-missing"), 
+      digits = 2, format.args = list(big.mark = ','),
+      caption = "Number of Arrest Offense Records by Crime Category (12 levels)")
+```
+
+## Age at Arrest for Criminal Sexual Conduct
+```{r}
+OAgeA <- describe(ARR[ARR$ACat12 == 5, "OAgeA"],  quant=c(.25, .50, .75))
+kable(OAgeA[, CNums], digits = 2, col.names = CNames,
+      caption = "Offender Age at Arrest for Criminal Sexual Conduct")
+```
+
+********************************************************************************
+# Prosecutor Charge Record Summaries
+All summaries in this section directly summarize the CHG data without first 
+aggregating to the incident or offender level. 
+
+## Crime Category (12 levels)
+```{r, fig.height = 2}
+kable(freq(as_factor(CHG$CCat12), user.missing = "Excluded user-missing"), 
+      digits = 2, format.args = list(big.mark = ','),
+      caption = "Number of Prosecutor Charge Records by Crime Category (12 levels)")
+```
+
+********************************************************************************
+# Judicial Charge Record Summaries
+All summaries in this section directly summarize the JUD data without first 
+aggregating to the incident or offender level. Note that here we do not
+distinguish between adjudicated charge records based on disposition. While
+some of these records are convictions, others will have other dispositions.
+
+## Crime Category (12 levels, all dispositions)
+```{r, fig.height = 2}
+kable(freq(as_factor(JUD$JCat12), user.missing = "Excluded user-missing"), 
+      digits = 2, format.args = list(big.mark = ','),
+      caption = "Number of Adjudicated Charge Records (All Dispositions) by Crime Category (12 levels)")
+```
+
+## Crime Category (12 levels, convictions)
+```{r, fig.height = 2}
+kable(freq(as_factor(JUD$JCat12[JUD$JDispCat == 1]), 
+           user.missing = "Excluded user-missing"), 
+      digits = 2, format.args = list(big.mark = ','),
+      caption = "Number of Adjudicated Charge Records (Convictions Only) by Crime Category (12 levels)")
+```
 
 ********************************************************************************
 # Wrap Up
