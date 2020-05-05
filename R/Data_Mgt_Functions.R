@@ -30,3 +30,30 @@ dfsummary <- function(x, label = NULL, dvar) {
   }
 
 #'=============================================================================
+#' @name dcode
+#'
+#' @title Convert a factor into a set of dummy codes.
+#'
+#' @description The function converts a factor variable into a set of dummy
+#'   codes then adds them to the data frame on which it operates.
+#'
+#' @param x A data frame containing the factor varable to be dummy coded.
+#'
+#' @param y The factor to be recoded.
+#'
+#' @param stem A character value for the stem of the variable names for the
+#'   resulting dummy codes.
+#'
+#' @details Each level of the factor will be turned into a new binary variable
+#'   in the data frame x with a name of the form stem_level.
+#'
+#' @return An updated data frame containing the new dummy-coded variables.
+#'
+#' @export
+dcode <- function(x, y, stem) {
+  for(level in levels(y)){
+    vname <- paste(stem, level, sep = "_")
+    x[vname] <- as.integer(ifelse(y == level, yes = 1, no = 0))
+    }
+  return(x)
+  }
