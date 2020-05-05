@@ -147,6 +147,22 @@ JUD$JCat04 <- rvlabel(JUD$JCat04)
 JUD$JCat03 <- rvlabel(JUD$JCat03)
 ```
 
+\FloatBarrier
+
+## Additional Data Files
+We may or may not need these additional data files. We will come back and edit 
+this section later to remove anything we don't need. See Campbell (2019) for 
+details on these files. 
+
+``` {r import_other}
+# Read SPSS data files.
+ESC <- read_sav("data/ESCALATIONdata_2018-05-15.sav", user_na = TRUE)
+FOR <- read_sav("data/Forensic_Outcomes_2018-04-03.sav", user_na = TRUE)
+PER <- read_sav("data/PERPdata_2018-04-03.sav", user_na = TRUE)
+SPD <- read_sav("data/SAK_PERP_2018-04-03.sav", user_na = TRUE)
+SAK <- read_sav("data/SAKdata_2018-04-03.sav", user_na = TRUE) 
+```
+
 
 ********************************************************************************
 # Wrap Up
