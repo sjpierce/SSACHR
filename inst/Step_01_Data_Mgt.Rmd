@@ -148,6 +148,9 @@ JUD$JCat03 <- rvlabel(JUD$JCat03)
 
 # Create a subset of JUD containing only charges where offender was convicted.
 CON <- JUD[JUD$JDispCat == 1,]
+
+# Add a variable to CON to simplify aggregation. 
+CON$NCON <- 1
 ```
 
 \FloatBarrier
