@@ -93,6 +93,23 @@ Text goes here.
 # Need to add example code
 ```
 
+# Software Information
+
+We use R Markdown to enhance reproducibility because it provides
+excellent support for generating dynamic reports (Mair, 2016). Knitting
+our R Markdown scripts generates PDF output files containing explanatory
+text, R code, plus R output (both text and graphics).
+
+  - We use [RStudio](www.rstudio.org) to work with R and R Markdown
+    files. The software chain looks like this: **Rmd file -\> RStudio
+    -\> R -\> knitr -\> pandoc -\> TinyTex -\> PDF file**.
+  - A version of [pandoc](https://pandoc.org/) comes bundled with
+    RStudio, but if you want the most recent version, download it from
+    <https://pandoc.org/>.
+  - We recommend using [TinyTeX](https://yihui.org/tinytex/) to compile
+    LaTeX files produced by pandoc into PDF files. However, it may be
+    viable to use [MiKTeX](https://miktex.org) instead.
+
 # References
 
 Bryan, J. (2018). Excuse me, do you have a moment to talk about version
@@ -108,6 +125,10 @@ of offending patterns using DNA evidence, Detroit, Michigan, 2009*
 ICPSR37134-v1. Ann Arbor, MI: Inter-university Consortium for Political
 and Social Research \[distributor\], 2019-02-28. Retrieved from:
 <https://doi.org/10.3886/ICPSR37134.v1>
+
+Mair, P. (2016). Thou shalt be reproducible\! A technology perspective.
+*Frontiers in Psychology, 7*(1079), 1-17.
+[doi:10.3389/fpsyg.2016.01079](http://dx.doi.org/10.3389/fpsyg.2016.01079)
 
 Marwick, B., Boettiger, C., & Mullen, L. (2018). Packaging data
 analytical work reproducibly using R (and friends). *The American
@@ -142,3 +163,13 @@ U.S. Department of Justice.
 
   - Improve this file.
   - Create a script to generate a data flow diagram.
+  - Add citation for the manuscript in preparation to the reference
+    list.
+  - Integrate more code from previous
+    `CHR_Summary_Step01_2017-01.19.Rmd` script.
+  - Add code to identify the date for the earliest SAK associated with
+    each perpetrator and add a binary variable to each INC, ARR, CHG,
+    and JUD record to show whether it was associated with an incident
+    that occurred before versus after that date. See 2020-04-08 email.
+  - Summarize CHRs before vs after perpetrator’s earliest SAK date in
+    addition to overall. See 2020-04-08 email.
