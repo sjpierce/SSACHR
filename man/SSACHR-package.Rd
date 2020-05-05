@@ -8,7 +8,8 @@
   Compendium}
 \description{
 This package and corresponding GitHub repository are intended to
-  enhance the reproducibility of a research paper. The principal investigator 
+  enhance the reproducibility of a research paper by serving as a research
+  compendium (Marwick, Boettiger, & Mullen, 2018). The principal investigator 
   for the study is Dr. Rebecca Campbell (Professor, Department of Psychology, 
   Michigan State University). The paper will present descriptive data about
   the criminal histories of suspected serial sexual offenders using data from
