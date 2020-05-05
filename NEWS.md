@@ -1,3 +1,13 @@
+# SSACHR 0.3.0, 2020-05-05
+* Updated `README.Rmd` and `README.md` extensively.
+* Update `.gitignore` to ignore SPSS data files in `inst/extdata` subfolder. 
+* Added dcode() and rvlabel() to `R/Data_Mgt_Functions.R`.
+* Updated help files for dcode() and rvlabel().
+* Updated `inst/Step_01_Data_mgt.Rmd` by copying in code from previous script 
+  `CHR_Summary_Step01_2017-01.19.Rmd`, which predated the switch to a package 
+  format. Much more work remains to finish that script (and it may get renamed
+  later). 
+
 # SSACHR 0.2.1, 2020-04-30
 * Updated `DESCRIPTION` file by appending "Research Comependium" to package 
   title. 
