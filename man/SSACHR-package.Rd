@@ -4,7 +4,8 @@
 \name{SSACHR-package}
 \alias{SSACHR}
 \alias{SSACHR-package}
-\title{SSACHR: Serial Sexual Assault Study Criminal History Records Paper}
+\title{SSACHR: Serial Sexual Assault Study Criminal History Records Paper Research 
+  Compendium}
 \description{
 This package and corresponding GitHub repository are intended to
   enhance the reproducibility of a research paper. The principal investigator 
