@@ -50,7 +50,6 @@ This file imports copies of publicly archived data files (Campbell, 2019) into
 R, then performs data management to prepare a new data file for a descriptive 
 paper about the criminal histories of suspected serial sexual offenders.  
 
-
 \FloatBarrier
 
 # Setup
@@ -60,18 +59,6 @@ Set global R chunk options (local chunk options will over-ride global options).
 # Global chunk options (over-ridden by local chunk options)
 knitr::opts_chunk$set(include  = TRUE, echo = TRUE, error = TRUE, 
                       message = TRUE, warning = TRUE)
-```
-
-If you have not already done so, install the piercer package from 
-[GitHub](https://github.com/sjpierce/piercer) by running the next chunk of R 
-code. The chunk is set to eval = FALSE so that you have to manually run that 
-code, which you should only need to do once (or whenever the piercer package 
-has been updated). 
-
-```{r, eval = FALSE}
-install.packages("devtools")
-library(devtools)
-devtools::install_github("sjpierce/piercer")
 ```
 
 Load R packages that we need to get additional functions. 
