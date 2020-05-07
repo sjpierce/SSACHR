@@ -84,7 +84,7 @@ library(psych)            # For describe()
 library(car)              # For recode()
 ```
 
-Create objects to hold objects with settings we want to reuse. 
+Create objects to hold settings we plan to reuse often. 
 
 ```{r my_settings}
 # Custom settings for use with bwplot().
@@ -107,36 +107,52 @@ Michigan criminal history records (CHR): offenders (IDN), incidents (INC),
 arrest offenses (ARR), prosecutor charges (CHG), and judicial charges (JUD). 
 See Campbell (2019) for details on these files. 
 
-``` {r import_chr}
-# Read SPSS data files.
-IDN <- read_sav("data/SSA_IDN_Offenders_2018-09-03.sav", user_na = TRUE)
-INC <- read_sav("data/SSA_INC_Incidents_Imputed_2018-09-03.sav", user_na = TRUE)
-ARR <- read_sav("data/SSA_ARR_Arrests_Imputed_2018-09-03.sav", user_na = TRUE)
-CHG <- read_sav("data/SSA_CHG_PA_Charges_Imputed_2018-09-03.sav", 
-                user_na = TRUE)
-JUD <- read_sav("data/SSA_JUD_Judicial_Charges_Imputed_2018-09-03.sav", 
-                user_na = TRUE) 
+The variables we are updating with *rvlabel()* all have user-missing values with
+labels that contain parentheses that are problematic when supplied to the 
+*user.missing* argument in *freq()*, so we just remove the parentheses from the 
+labels at import.
 
-# Replace user-missing value labels that have parentheses in them so they will
-# work correctly in freq() as user.missing arguments. 
-ARR$ACat12 <- rvlabel(ARR$ACat12)
-ARR$ACat10 <- rvlabel(ARR$ACat10)
-ARR$ACat04 <- rvlabel(ARR$ACat04)
-ARR$ACat03 <- rvlabel(ARR$ACat03)
-CHG$CCat12 <- rvlabel(CHG$CCat12)
-CHG$CCat10 <- rvlabel(CHG$CCat10)
-CHG$CCat04 <- rvlabel(CHG$CCat04)
-CHG$CCat03 <- rvlabel(CHG$CCat03)
-JUD$JCat12 <- rvlabel(JUD$JCat12)
-JUD$JCat10 <- rvlabel(JUD$JCat10)
-JUD$JCat04 <- rvlabel(JUD$JCat04)
-JUD$JCat03 <- rvlabel(JUD$JCat03)
+``` {r import_chr}
+read_sav(here::here("./inst/extdata/SSA_IDN_Offenders_2018-09-03.sav"), 
+         user_na = TRUE) -> 
+  IDN
+
+read_sav(here::here("./inst/extdata/SSA_INC_Incidents_Imputed_2018-09-03.sav"), 
+         user_na = TRUE) ->
+  INC
+
+read_sav(here::here("./inst/extdata/SSA_ARR_Arrests_Imputed_2018-09-03.sav"), 
+         user_na = TRUE) %>% 
+  # Replace user-missing value labels.
+  mutate(ACat12 = rvlabel(ACat12),
+         ACat10 = rvlabel(ACat10),
+         ACat04 = rvlabel(ACat04)) ->
+  ARR
+
+read_sav(here::here("./inst/extdata/SSA_CHG_PA_Charges_Imputed_2018-09-03.sav"), 
+         user_na = TRUE) %>% 
+  # Replace user-missing value labels.
+  mutate(CCat12 = rvlabel(CCat12),
+         CCat10 = rvlabel(CCat10),
+         CCat04 = rvlabel(CCat04))->
+  CHG
+
+read_sav(here::here("./inst/extdata/SSA_JUD_Judicial_Charges_Imputed_2018-09-03.sav"), 
+         user_na = TRUE) %>% 
+  %>% 
+  # Replace user-missing value labels.
+  mutate(JCat12 = rvlabel(JCat12),
+         JCat10 = rvlabel(JCat10),
+         JCat04 = rvlabel(JCat04))->
+  JUD
 
 # Create a subset of JUD containing only charges where offender was convicted.
-CON <- JUD[JUD$JDispCat == 1,]
-
-# Add a variable to CON to simplify aggregation. 
-CON$NCON <- 1
+JUD %>% 
+  # Retain a subset of JUD records based on disposition.
+  filter(JDispCat == 1) %>% 
+  # Add a variable to CON to simplify aggregation later. 
+  mutate(NCON = 1) ->
+  CON
 ```
 
 \FloatBarrier
@@ -148,11 +164,16 @@ details on these files.
 
 ``` {r import_other}
 # Read SPSS data files.
-ESC <- read_sav("data/ESCALATIONdata_2018-05-15.sav", user_na = TRUE)
-FOR <- read_sav("data/Forensic_Outcomes_2018-04-03.sav", user_na = TRUE)
-PER <- read_sav("data/PERPdata_2018-04-03.sav", user_na = TRUE)
-SPD <- read_sav("data/SAK_PERP_2018-04-03.sav", user_na = TRUE)
-SAK <- read_sav("data/SAKdata_2018-04-03.sav", user_na = TRUE) 
+ESC <- read_sav(here::here("./inst/extdata/ESCALATIONdata_2018-05-15.sav", 
+                user_na = TRUE)
+FOR <- read_sav(here::here("./inst/extdata/Forensic_Outcomes_2018-04-03.sav", 
+                user_na = TRUE)
+PER <- read_sav(here::here("./inst/extdata/PERPdata_2018-04-03.sav", 
+                user_na = TRUE)
+SPD <- read_sav(here::here("./inst/extdata/SAK_PERP_2018-04-03.sav", 
+                user_na = TRUE)
+SAK <- read_sav(here::here("./inst/extdata/SAKdata_2018-04-03.sav", 
+                user_na = TRUE) 
 ```
 
 \FloatBarrier
