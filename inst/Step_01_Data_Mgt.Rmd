@@ -64,20 +64,20 @@ knitr::opts_chunk$set(include  = TRUE, echo = TRUE, error = TRUE,
 Load R packages that we need to get additional functions. 
 
 ``` {r load_packages}
-library(here)         # for here()
-library(dplyr)        # for %>%, filter(), group_by(), & summarise()
-library(tidyr)        # for arrange(), filter(), group_by(), mutate(), spread(), 
-                      # summarise(), %>%, etc. 
-library(rmarkdown)    # for render()
-library(knitr)        # for kable()
+library(here)             # for here()
+library(dplyr)            # for %>%, filter(), group_by(), & summarise()
+library(tidyr)            # for arrange(), filter(), group_by(), mutate(),  
+                          # spread(), summarise(), %>%, etc. 
+library(rmarkdown)        # for render()
+library(knitr)            # for kable()
 options(kableExtra.latex.load_packages = FALSE)
-library(kableExtra)   # for kable_styling(), add_header_above(), column_spec(),
-                      # collapse_rows(), and landscape()
+library(kableExtra)       # for kable_styling(), add_header_above(), column_spec(),
+                          # collapse_rows(), and landscape()
 library(descr)            # For freq().
 options(descr.plot=FALSE) # Make freq() & crosstab() skip plots by default.
 library(lubridate)        # For date conversion, eg. ymd(), time_length().
-library(sjlabelled) # For set_label(), get_label()
-library(haven)      # for read_spss()
+library(sjlabelled)       # For set_label(), get_label()
+library(haven)            # for read_spss()
 library(lattice)          # For xyplot(), bwplot(), etc. 
 library(plyr)             # For mapvalues()
 library(psych)            # For describe()
