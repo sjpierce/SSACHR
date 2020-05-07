@@ -1,3 +1,10 @@
+# SSACHR 0.3.1, 2020-05-07
+* Updated `inst/Step_01_Data_mgt.Rmd` as follows.
+    * Remove chunk for installing `piercer` package and associated text. 
+    * Use here:here() to access files. 
+    * Switch to use tidyverse style for data import code. 
+    * Make code more readable. 
+
 # SSACHR 0.3.0, 2020-05-05
 * Updated `README.Rmd` and `README.md` extensively.
 * Update `.gitignore` to ignore SPSS data files in `inst/extdata` subfolder. 
