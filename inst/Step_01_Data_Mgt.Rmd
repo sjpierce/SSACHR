@@ -335,6 +335,7 @@ are then merged onto the IDN data frame.
 avars <- paste("ACat12", c(1:12, 999), sep = "_")
 cvars <- paste("CCat12", c(1:12, 999), sep = "_")
 jvars <- paste("JCat12", c(1:12, 999), sep = "_") 
+acjvars <- c(avars, cvars, jvars)
 
 # Aggregate ACat12 dummy codes to offender level incident counts.
 ARR %>% 
@@ -374,26 +375,8 @@ names(IDN)
 IDN <- merge(x = IDN, y = CHG3, by = "OID", all.x = TRUE)
 names(IDN)
 
-# Aggregate JCat12 dummy codes by IID (subset by JDispCat = 1 returns convictions)
-JUD2 <- aggregate(cbind(JCat12_1,  JCat12_2,  JCat12_3,  JCat12_4,  JCat12_5,
-                        JCat12_6,  JCat12_7,  JCat12_8,  JCat12_9,  JCat12_10,
-                        JCat12_11, JCat12_12, JCat12_999) ~ OID + IID, 
-                  data = JUD[JUD$JDispCat == 1,], FUN=max)
-
-# Aggregate JCat12 dummy codes by OID into incident count variables
-JUD3 <- aggregate(cbind(JCat12_1,  JCat12_2,  JCat12_3,  JCat12_4,  JCat12_5,
-                        JCat12_6,  JCat12_7,  JCat12_8,  JCat12_9,  JCat12_10,
-                        JCat12_11, JCat12_12, JCat12_999) ~ OID, 
-                  data = JUD2, FUN=sum)
-
 # Merge JCat12 incident count variables into IDN
 IDN <- merge(x = IDN, y = JUD3, by = "OID", all.x = TRUE)
-
-# Vector of incident count variables names to be recoded.
-avars <- paste("ACat12", c(1:12, 999), sep = "_")
-cvars <- paste("CCat12", c(1:12, 999), sep = "_")
-jvars <- paste("JCat12", c(1:12, 999), sep = "_") 
-vars <- c(avars, cvars, jvars)
 
 # Recode every variable named in vars to replace NA with 0. 
 IDN[, vars] <- apply(IDN[, vars], 2, function(x) {x <- recode(x, "NA=0"); x})
