@@ -184,7 +184,7 @@ along with the numbers of unique incidents and unique offenders represented in
 those records. It also shows the range of event dates associated with each 
 record type (i.e., birth, incident, arrest, charge, and adjudication dates). 
 
-```{r, warning = FALSE}
+```{r chr_overview, warning = FALSE}
 # Summarize record counts.
 CHR.RC <- rbind(dfsummary(IDN, label = "Offenders", dvar = IDN$DOB),
                 dfsummary(INC, label = "Incidents", dvar = INC$IDate), 
