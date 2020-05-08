@@ -113,15 +113,19 @@ labels that contain parentheses that are problematic when supplied to the
 *user.missing* argument in *freq()*, so we just remove the parentheses from the 
 labels at import.
 
-``` {r import_chr}
+```{r import_IDN}
 read_sav(here::here("./inst/extdata/SSA_IDN_Offenders_2018-09-03.sav"), 
          user_na = TRUE) -> 
   IDN
+```
 
+```{r import_INC}
 read_sav(here::here("./inst/extdata/SSA_INC_Incidents_Imputed_2018-09-03.sav"), 
          user_na = TRUE) ->
   INC
+```
 
+```{r import_ARR}
 read_sav(here::here("./inst/extdata/SSA_ARR_Arrests_Imputed_2018-09-03.sav"), 
          user_na = TRUE) %>% 
   # Replace user-missing value labels.
@@ -129,7 +133,9 @@ read_sav(here::here("./inst/extdata/SSA_ARR_Arrests_Imputed_2018-09-03.sav"),
          ACat10 = rvlabel(ACat10),
          ACat04 = rvlabel(ACat04)) ->
   ARR
+```
 
+```{r import_CHG}
 read_sav(here::here("./inst/extdata/SSA_CHG_PA_Charges_Imputed_2018-09-03.sav"), 
          user_na = TRUE) %>% 
   # Replace user-missing value labels.
@@ -137,7 +143,9 @@ read_sav(here::here("./inst/extdata/SSA_CHG_PA_Charges_Imputed_2018-09-03.sav"),
          CCat10 = rvlabel(CCat10),
          CCat04 = rvlabel(CCat04)) ->
   CHG
+```
 
+```{r import_JUD}
 read_sav(here::here("./inst/extdata/SSA_JUD_Judicial_Charges_Imputed_2018-09-03.sav"), 
          user_na = TRUE) %>% 
   # Replace user-missing value labels.
@@ -145,7 +153,9 @@ read_sav(here::here("./inst/extdata/SSA_JUD_Judicial_Charges_Imputed_2018-09-03.
          JCat10 = rvlabel(JCat10),
          JCat04 = rvlabel(JCat04)) ->
   JUD
+```
 
+```{r create_CON}
 # Create a subset of JUD containing only charges where offender was convicted.
 JUD %>% 
   # Retain a subset of JUD records based on disposition.
