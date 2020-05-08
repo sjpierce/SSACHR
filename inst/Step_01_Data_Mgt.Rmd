@@ -198,11 +198,6 @@ kable(CHR.RC, caption = "Criminal History Record Counts and Date Ranges",
       format.args = list(big.mark = ','))
 ```
 
-Note: Knitting the file will produce a warning message: "Unknown column 'IID'"
-because the IDN data frame does not contain an IID column. The *dfsummary()* 
-function doesn't try to check that before calculating N.Incidents. However, it
-correctly returns N.Incidents = 0 for the IDN data frame. 
-
 \FloatBarrier
 
 # Offender-Level Summaries
