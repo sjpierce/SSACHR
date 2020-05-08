@@ -21,7 +21,9 @@
 #' @export
 dfsummary <- function(x, label = NULL, dvar) {
   res <- data.frame(N.Records = nrow(x),
-                    N.Incidents = length(unique(x$IID)),
+                    N.Incidents = ifelse(test = "IID" %in% names(x),
+                                         yes = length(unique(x$IID)),
+                                         no = 0),
                     N.Offenders = length(unique(x$OID)),
                     Earliest = min(dvar),
                     Latest = max(dvar),
