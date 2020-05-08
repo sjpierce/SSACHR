@@ -331,41 +331,36 @@ to offender level incident counts for each crime category. The incident counts
 are then merged onto the IDN data frame. 
 
 ```{r}
+# Create objects wth vectors of variable names
+avars <- paste("ACat12", c(1:12, 999), sep = "_")
+cvars <- paste("CCat12", c(1:12, 999), sep = "_")
+jvars <- paste("JCat12", c(1:12, 999), sep = "_") 
+
+# Aggregate ACat12 dummy codes to offender level incident counts.
 ARR %>% 
   group_by(OID, IID) %>% 
-  # Aggregate ACat12 dummy codes by IID 
-  summarize_at(.vars = vars(ACat12_1, ACat12_2, ACat12_3, ACat12_4, ACat12_5, 
-                            ACat12_6, ACat12_7, ACat12_8, ACat12_9, ACat12_10, 
-                            ACat12_11, ACat12_12, ACat12_999),
-               .funs = c("max")) %>% 
+  # Aggregate ACat12 dummy codes by OID + IID into binary variables
+  summarize_at(.vars = avars, .funs = c("max")) %>% 
   group_by(OID) %>% 
   # Aggregate ACat12 dummy codes by OID into incident count variables
-  summarize_at(.vars = vars(ACat12_1, ACat12_2, ACat12_3, ACat12_4, ACat12_5, 
-                            ACat12_6, ACat12_7, ACat12_8, ACat12_9, ACat12_10, 
-                            ACat12_11, ACat12_12, ACat12_999),
-               .funs = c("sum")) ->
+  summarize_at(.vars = avars, .funs = c("sum")) ->
   ARR3
          
-            
-  
+# Aggregate ACat12 dummy codes to offender level incident counts.
+CHG %>% 
+  group_by(OID, IID) %>% 
+  # Aggregate ACat12 dummy codes by OID + IID  into binary variables
+  summarize_at(.vars = cvars, .funs = c("max")) %>% 
+  group_by(OID) %>% 
+  # Aggregate ACat12 dummy codes by OID into incident count variables
+  summarize_at(.vars = cvars, .funs = c("sum")) ->
+  CHG3
 
 
 
 # Merge ACat12 incident count variables into IDN
 IDN <- merge(x = IDN, y = ARR3, by = "OID", all.x = TRUE)
 names(IDN)
-
-# Aggregate CCat12 dummy codes by IID
-CHG2 <- aggregate(cbind(CCat12_1,  CCat12_2,  CCat12_3,  CCat12_4,  CCat12_5,
-                        CCat12_6,  CCat12_7,  CCat12_8,  CCat12_9,  CCat12_10,
-                        CCat12_11, CCat12_12, CCat12_999) ~ OID + IID, 
-                  data = CHG, FUN=max)
-
-# Aggregate CCat12 dummy codes by OID into incident count variables
-CHG3 <- aggregate(cbind(CCat12_1,  CCat12_2,  CCat12_3,  CCat12_4,  CCat12_5,
-                        CCat12_6,  CCat12_7,  CCat12_8,  CCat12_9,  CCat12_10,
-                        CCat12_11, CCat12_12, CCat12_999) ~ OID, 
-                  data = CHG2, FUN=sum)
 
 # Merge CCat12 incident count variables into IDN
 IDN <- merge(x = IDN, y = CHG3, by = "OID", all.x = TRUE)
