@@ -157,7 +157,10 @@ read_sav(here::here("./inst/extdata/SSA_JUD_Judicial_Charges_Imputed_2018-09-03.
   # Replace user-missing value labels.
   mutate(JCat12 = rvlabel(JCat12),
          JCat10 = rvlabel(JCat10),
-         JCat04 = rvlabel(JCat04)) ->
+         JCat04 = rvlabel(JCat04)) %>% 
+  # Dummy code crime category variables. 
+  dcode(x = ., y = factor(.$JCat18, levels = c(1:17, 999)), stem = "JCat18") %>% 
+  dcode(x = ., y = factor(.$JCat12), stem = "JCat12") ->
   JUD
 ```
 
@@ -317,19 +320,6 @@ densityplot(~ Count | VName, data = IDNW, layout = c(4,1),
             strip = strip.custom(par.strip.text = list(cex = .7)),
             xlab = "Number of Records for Individual Offender")
 rm(IDNW)
-```
-
-\FloatBarrier
-
-## Recoding Crime Category Variables
-Here we switch over to dummy coding the different crime category variables so 
-can summarize data by category. 
-
-```{r}
-# Dummy code all the crime category variables in JUD
-JUD <- dcode(x = JUD, y = factor(JUD$JCat18, levels = c(1:17, 999)), 
-             stem = "JCat18")
-JUD <- dcode(x = JUD, y = factor(JUD$JCat12), stem = "JCat12")
 ```
 
 \FloatBarrier
