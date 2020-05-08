@@ -164,15 +164,15 @@ details on these files.
 
 ``` {r import_other}
 # Read SPSS data files.
-ESC <- read_sav(here::here("./inst/extdata/ESCALATIONdata_2018-05-15.sav", 
+ESC <- read_sav(here::here("./inst/extdata/ESCALATIONdata_2018-05-15.sav"), 
                 user_na = TRUE)
-FOR <- read_sav(here::here("./inst/extdata/Forensic_Outcomes_2018-04-03.sav", 
+FOR <- read_sav(here::here("./inst/extdata/Forensic_Outcomes_2018-04-03.sav"), 
                 user_na = TRUE)
-PER <- read_sav(here::here("./inst/extdata/PERPdata_2018-04-03.sav", 
+PER <- read_sav(here::here("./inst/extdata/PERPdata_2018-04-03.sav"), 
                 user_na = TRUE)
-SPD <- read_sav(here::here("./inst/extdata/SAK_PERP_2018-04-03.sav", 
+SPD <- read_sav(here::here("./inst/extdata/SAK_PERP_2018-04-03.sav"), 
                 user_na = TRUE)
-SAK <- read_sav(here::here("./inst/extdata/SAKdata_2018-04-03.sav", 
+SAK <- read_sav(here::here("./inst/extdata/SAKdata_2018-04-03.sav"), 
                 user_na = TRUE) 
 ```
 
