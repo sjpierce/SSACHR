@@ -133,6 +133,11 @@ read_sav(here::here("./inst/extdata/SSA_ARR_Arrests_Imputed_2018-09-03.sav"),
          ACat10 = rvlabel(ACat10),
          ACat04 = rvlabel(ACat04)) ->
   ARR
+
+# Dummy code crime category variables. 
+ARR <- dcode(x = ARR, y = factor(ARR$ACat18, levels = c(1:17, 999)), 
+             stem = "ACat18")
+ARR <- dcode(x = ARR, y = factor(ARR$ACat12), stem = "ACat12")
 ```
 
 ```{r import_CHG}
@@ -320,10 +325,7 @@ Here we switch over to dummy coding the different crime category variables so
 can summarize data by category. 
 
 ```{r}
-# Dummy code all the crime category variables in ARR
-ARR <- dcode(x = ARR, y = factor(ARR$ACat18, levels = c(1:17, 999)), 
-             stem = "ACat18")
-ARR <- dcode(x = ARR, y = factor(ARR$ACat12), stem = "ACat12")
+
 
 # Dummy code all the crime category variables in CHG
 CHG <- dcode(x = CHG, y = factor(CHG$CCat18, levels = c(1:17, 999)), 
