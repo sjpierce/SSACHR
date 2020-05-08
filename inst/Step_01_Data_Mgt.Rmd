@@ -339,24 +339,32 @@ jvars <- paste("JCat12", c(1:12, 999), sep = "_")
 # Aggregate ACat12 dummy codes to offender level incident counts.
 ARR %>% 
   group_by(OID, IID) %>% 
-  # Aggregate ACat12 dummy codes by OID + IID into binary variables
+  # Aggregate dummy codes by OID + IID into binary variables
   summarize_at(.vars = avars, .funs = c("max")) %>% 
   group_by(OID) %>% 
-  # Aggregate ACat12 dummy codes by OID into incident count variables
+  # Aggregate dummy codes by OID into incident count variables
   summarize_at(.vars = avars, .funs = c("sum")) ->
   ARR3
          
 # Aggregate CCat12 dummy codes to offender level incident counts.
 CHG %>% 
   group_by(OID, IID) %>% 
-  # Aggregate ACat12 dummy codes by OID + IID  into binary variables
+  # Aggregate dummy codes by OID + IID into binary variables
   summarize_at(.vars = cvars, .funs = c("max")) %>% 
   group_by(OID) %>% 
-  # Aggregate ACat12 dummy codes by OID into incident count variables
+  # Aggregate dummy codes by OID into incident count variables
   summarize_at(.vars = cvars, .funs = c("sum")) ->
   CHG3
 
-
+# Aggregate JCat12 dummy codes to offender level incident counts.
+JUD %>% 
+  group_by(OID, IID) %>% 
+  # Aggregate dummy codes by OID + IID into binary variables
+  summarize_at(.vars = jvars, .funs = c("max")) %>% 
+  group_by(OID) %>% 
+  # Aggregate dummy codes by OID into incident count variables
+  summarize_at(.vars = jvars, .funs = c("sum")) ->
+  JUD3
 
 # Merge ACat12 incident count variables into IDN
 IDN <- merge(x = IDN, y = ARR3, by = "OID", all.x = TRUE)
