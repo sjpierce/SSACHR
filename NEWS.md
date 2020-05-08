@@ -1,3 +1,13 @@
+# SSACHR 0.3.2, 2020-05-08
+* Updated task list in `README.Rmd` and `README.md`.
+* Updated dfsummary() function in `R/Data_Mgt_Functions.R` to eliminate warning 
+  message when used with a data frame that does not contain an IID variable.
+* Updated `inst/Step_01_Data_mgt.Rmd` as follows.
+    * Added a chunk label. 
+    * Fixed some data import code. 
+    * Updated some code to use tidyverse style piped operations (still have more 
+      to do).
+
 # SSACHR 0.3.1, 2020-05-07
 * Updated `inst/Step_01_Data_mgt.Rmd` as follows.
     * Remove chunk for installing `piercer` package and associated text. 
