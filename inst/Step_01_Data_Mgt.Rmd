@@ -379,7 +379,7 @@ names(IDN)
 IDN <- merge(x = IDN, y = JUD3, by = "OID", all.x = TRUE)
 
 # Recode every variable named in vars to replace NA with 0. 
-IDN[, vars] <- apply(IDN[, vars], 2, function(x) {x <- recode(x, "NA=0"); x})
+IDN[, acjvars] <- apply(IDN[, acjvars], 2, function(x) {x <- recode(x, "NA=0"); x})
 
 # Verify that OCSC1 = ACat12_5, OCSC2 = CCat12_5, & OCSC3 = JCat12_5.
 # This compares incident count variables created in SPSS to corresponding 
