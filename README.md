@@ -165,13 +165,12 @@ U.S. Department of Justice.
   - Create a script to generate a data flow diagram.
   - Add citation for the manuscript in preparation to the reference
     list.
-  - Integrate more code from previous
-    `CHR_Summary_Step01_2017-01.19.Rmd` script.
+  - Edit code pasted into `inst/Step_01_Data_mgt.Rmd` from previous
+    `CHR_Summary_Step01_2017-01.19.Rmd` script to use tidyverse style
+    where feasible.
   - Add code to identify the date for the earliest SAK associated with
     each perpetrator and add a binary variable to each INC, ARR, CHG,
     and JUD record to show whether it was associated with an incident
     that occurred before versus after that date. See 2020-04-08 email.
   - Summarize CHRs before vs after perpetrator’s earliest SAK date in
     addition to overall. See 2020-04-08 email.
-  - Update dfsummary() to eliminate warning message when used with a
-    data frame that does not contain an IID variable.
