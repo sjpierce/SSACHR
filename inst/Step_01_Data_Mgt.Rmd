@@ -135,7 +135,7 @@ read_sav(here::here("./inst/extdata/SSA_ARR_Arrests_Imputed_2018-09-03.sav"),
   # Dummy code crime category variables. 
   dcode(x = ., y = factor(.$ACat18, levels = c(1:17, 999)), stem = "ACat18") %>% 
   dcode(x = ., y = factor(.$ACat12), stem = "ACat12") ->
-  ARR2
+  ARR
 ```
 
 ```{r import_CHG}
