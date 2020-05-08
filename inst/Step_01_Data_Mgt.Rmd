@@ -367,7 +367,7 @@ JUD %>%
   summarize_at(.vars = jvars, .funs = c("sum")) ->
   JUD3
 
-# Merge ACat12 incident count variables into IDN
+# Merge ACat12 incident count variables into IDN -- CONTINUE HERE
 IDN <- merge(x = IDN, y = ARR3, by = "OID", all.x = TRUE)
 names(IDN)
 
