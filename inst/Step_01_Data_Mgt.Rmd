@@ -346,7 +346,7 @@ ARR %>%
   summarize_at(.vars = avars, .funs = c("sum")) ->
   ARR3
          
-# Aggregate ACat12 dummy codes to offender level incident counts.
+# Aggregate CCat12 dummy codes to offender level incident counts.
 CHG %>% 
   group_by(OID, IID) %>% 
   # Aggregate ACat12 dummy codes by OID + IID  into binary variables
