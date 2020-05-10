@@ -1,3 +1,9 @@
+# SSACHR 0.3.3, 2020-05-10
+* Updated `inst/Step_01_Data_mgt.Rmd` as follows.
+    * Updated more code to use tidyverse-style piped operations (still have more 
+      to do).  
+
+
 # SSACHR 0.3.2, 2020-05-08
 * Updated task list in `README.Rmd` and `README.md`.
 * Updated dfsummary() function in `R/Data_Mgt_Functions.R` to eliminate warning 
@@ -5,7 +11,7 @@
 * Updated `inst/Step_01_Data_mgt.Rmd` as follows.
     * Added a chunk label. 
     * Fixed some data import code. 
-    * Updated some code to use tidyverse style piped operations (still have more 
+    * Updated some code to use tidyverse-style piped operations (still have more 
       to do).
 
 # SSACHR 0.3.1, 2020-05-07
