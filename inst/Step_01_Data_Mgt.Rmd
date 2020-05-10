@@ -115,12 +115,13 @@ labels at import.
 
 ```{r import_IDN}
 read_sav(here::here("./inst/extdata/SSA_IDN_Offenders_2018-09-03.sav"), 
-         user_na = TRUE) -> 
+         user_na = TRUE) %>% 
+  # Set variable label to match other core CHR files.
+  var_labels(OID = "Offender ID (de-identified)") -> 
   IDN
 
-# Make attributes for OID match those in other core CHR files
+# Make attributes for OID match those in other core CHR files.
 attr(IDN$OID, "format.spss") <- "A4"
-attr(IDN$OID, "label")       <- "Offender ID (de-identified)"
 ```
 
 ```{r import_INC}
@@ -174,8 +175,32 @@ JUD %>%
   # Retain a subset of JUD records based on disposition.
   filter(JDispCat == 1) %>% 
   # Add a variable to CON to simplify aggregation later. 
-  mutate(NCON = 1) ->
+  mutate(NCON = 1) %>% 
+  # Add variable label. 
+  var_labels(NCON = "No. of adjudicated charge records w/ convictions") ->
   CON
+
+
+# CONTINUE HERE 
+
+# FIX THIS SECTION
+# Merge NCON conviction charge count variable into IDN.
+CON %>% 
+  group_by(OID) %>% 
+  summarize_at(.vars = "NCON", .funs = c("sum")) %>% 
+  left_join(x = IDN, y = ., by = "OID") -> 
+  IDN2
+
+
+# TO REPLACE THIS SECTION
+## Aggregate by OID into a conviction charge count variable. 
+CON2 <- aggregate(NCON ~ OID, data = CON, FUN=sum)
+
+# Merge NCON conviction charge count variable into IDN.
+IDN <- merge(x = IDN, y = CON2, by = "OID", all.x = TRUE)
+
+# Recode NCON variable to replace NA with 0. 
+IDN$NCON[is.na(IDN$NCON)] <- 0
 ```
 
 \FloatBarrier
@@ -375,8 +400,7 @@ JUD %>%
 IDN2 <- merge(x = IDN, y = ARR2, by = "OID", all.x = TRUE)
 names(IDN2)
 
-IDN %>% 
-  left_join(x = ., y = ARR2, by = "OID") %>% 
+left_join(x = IDN, y = ARR2, by = "OID") %>% 
   IDN3
 
 
