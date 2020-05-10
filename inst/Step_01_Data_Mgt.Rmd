@@ -253,7 +253,7 @@ kable(freq(as_factor(IDN$Race), user.missing = "Unknown"),  digits = 2,
 CNums  <- c(2:4,8,9,11:12, 14:16)
 CNames <- c("N", "Mean", "SD", "Min", "Max", "Skew", "Kurtosis", "Q25", "Q50", 
             "Q75")
-Age <- describe(IDN[, "Age"],  quant=c(.25, .50, .75))
+Age <- describe(IDN$Age,  quant=c(.25, .50, .75))
 kable(Age[, CNums], digits = 2, col.names = CNames,
       caption = "Offender Age (as of 04/15/2016)")
 bwplot(~ Age, data = IDN, factor = 9, xlim = c(18, 82),
@@ -345,7 +345,7 @@ ARR %>%
   group_by(OID) %>% 
   # Aggregate dummy codes by OID into incident count variables
   summarize_at(.vars = avars, .funs = c("sum")) ->
-  ARR3
+  ARR2
          
 # Aggregate CCat12 dummy codes to offender level incident counts.
 CHG %>% 
@@ -368,8 +368,14 @@ JUD %>%
   JUD3
 
 # Merge ACat12 incident count variables into IDN -- CONTINUE HERE
-IDN <- merge(x = IDN, y = ARR3, by = "OID", all.x = TRUE)
-names(IDN)
+IDN2 <- merge(x = IDN, y = ARR2, by = "OID", all.x = TRUE)
+names(IDN2)
+
+IDN %>% 
+  left_join(x = ., y = ARR2, by = "OID") %>% 
+  IDN3
+
+
 
 # Merge CCat12 incident count variables into IDN
 IDN <- merge(x = IDN, y = CHG3, by = "OID", all.x = TRUE)
