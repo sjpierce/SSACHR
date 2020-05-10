@@ -117,6 +117,10 @@ labels at import.
 read_sav(here::here("./inst/extdata/SSA_IDN_Offenders_2018-09-03.sav"), 
          user_na = TRUE) -> 
   IDN
+
+# Make attributes for OID match those in other core CHR files
+attr(IDN$OID, "format.spss") <- "A4"
+attr(IDN$OID, "label")       <- "Offender ID (de-identified)"
 ```
 
 ```{r import_INC}
