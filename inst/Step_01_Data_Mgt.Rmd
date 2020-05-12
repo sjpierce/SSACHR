@@ -183,6 +183,8 @@ read_sav(here::here("./inst/extdata/SAK_PERP_2018-04-03.sav"),
 
 # Data Management
 
+\FloatBarrier
+
 ## Create Conviction Dataset
  
 ```{r create_CON}
@@ -202,7 +204,7 @@ For the paper, we need to identify the data of the earliest SAK associated with
 each offender, store that as a variable in the IDN dataset, then merge it onto 
 other datasets for use in further computations. 
 
-
+\FloatBarrier
 
 ## Aggregate and Merge Datasets
 
@@ -219,6 +221,8 @@ CON %>%
   mutate(NCON = if_else(is.na(NCON), true = 0, false = NCON)) -> 
   IDN2
 ```
+
+\FloatBarrier
 
 ### Aggregating Crime Category Variables
 Here we aggregate the dummy coded crime category variables data first to the
