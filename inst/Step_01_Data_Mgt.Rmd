@@ -169,18 +169,6 @@ read_sav(here::here("./inst/extdata/SSA_JUD_Judicial_Charges_Imputed_2018-09-03.
   JUD
 ```
 
-```{r create_CON}
-# Create a subset of JUD containing only charges where offender was convicted.
-JUD %>% 
-  # Retain a subset of JUD records based on disposition.
-  filter(JDispCat == 1) %>% 
-  # Add a variable to CON to simplify aggregation later. 
-  mutate(NCON = 1) %>% 
-  # Add variable label. 
-  var_labels(NCON = "No. of adjudicated charge records w/ convictions") ->
-  CON
-```
-
 \FloatBarrier
 
 ## Additional Data Files
@@ -203,6 +191,20 @@ SAK <- read_sav(here::here("./inst/extdata/SAKdata_2018-04-03.sav"),
 ```
 
 \FloatBarrier
+
+# Create Subset Data
+ 
+```{r create_CON}
+# Create a subset of JUD containing only charges where offender was convicted.
+JUD %>% 
+  # Retain a subset of JUD records based on disposition.
+  filter(JDispCat == 1) %>% 
+  # Add a variable to CON to simplify aggregation later. 
+  mutate(NCON = 1) %>% 
+  # Add variable label. 
+  var_labels(NCON = "No. of adjudicated charge records w/ convictions") ->
+  CON
+```
 
 # Merge Data
 
