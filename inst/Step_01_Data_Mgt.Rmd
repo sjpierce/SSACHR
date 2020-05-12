@@ -138,7 +138,6 @@ read_sav(here::here("./inst/extdata/SSA_ARR_Arrests_Imputed_2018-09-03.sav"),
          ACat10 = rvlabel(ACat10),
          ACat04 = rvlabel(ACat04)) %>% 
   # Dummy code crime category variables. 
-  dcode(x = ., y = factor(.$ACat18, levels = c(1:17, 999)), stem = "ACat18") %>% 
   dcode(x = ., y = factor(.$ACat12), stem = "ACat12") ->
   ARR
 ```
@@ -151,7 +150,6 @@ read_sav(here::here("./inst/extdata/SSA_CHG_PA_Charges_Imputed_2018-09-03.sav"),
          CCat10 = rvlabel(CCat10),
          CCat04 = rvlabel(CCat04)) %>% 
   # Dummy code crime category variables. 
-  dcode(x = ., y = factor(.$CCat18, levels = c(1:17, 999)), stem = "CCat18") %>% 
   dcode(x = ., y = factor(.$CCat12), stem = "CCat12") ->
   CHG
 ```
@@ -164,7 +162,6 @@ read_sav(here::here("./inst/extdata/SSA_JUD_Judicial_Charges_Imputed_2018-09-03.
          JCat10 = rvlabel(JCat10),
          JCat04 = rvlabel(JCat04)) %>% 
   # Dummy code crime category variables. 
-  dcode(x = ., y = factor(.$JCat18, levels = c(1:17, 999)), stem = "JCat18") %>% 
   dcode(x = ., y = factor(.$JCat12), stem = "JCat12") ->
   JUD
 ```
