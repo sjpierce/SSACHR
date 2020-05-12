@@ -189,7 +189,9 @@ SAK <- read_sav(here::here("./inst/extdata/SAKdata_2018-04-03.sav"),
 
 \FloatBarrier
 
-# Create Conviction Dataset
+# Data Management
+
+## Create Conviction Dataset
  
 ```{r create_CON}
 # Create a subset of JUD containing only charges where offender was convicted.
@@ -203,7 +205,7 @@ JUD %>%
   CON
 ```
 
-# Aggregate and Merge Datasets
+## Aggregate and Merge Datasets
 
 ```{r merge_IDN_CON}
 # Merge NCON conviction charge count variable into IDN.
@@ -219,7 +221,7 @@ CON %>%
   IDN2
 ```
 
-## Aggregating Crime Category Variables
+### Aggregating Crime Category Variables
 Here we aggregate the dummy coded crime category variables data first to the
 incident level to flag presence of each crime category on the incident, then 
 to offender level incident counts for each crime category. The incident counts 
