@@ -375,15 +375,6 @@ with each offender. We summarize the resulting variables (NINC, NARR, NCHG,
 NJUD, & NCON) below.
 
 ```{r}
-## Aggregate by OID into a conviction charge count variable. 
-CON2 <- aggregate(NCON ~ OID, data = CON, FUN=sum)
-
-# Merge NCON conviction charge count variable into IDN.
-IDN <- merge(x = IDN, y = CON2, by = "OID", all.x = TRUE)
-
-# Recode NCON variable to replace NA with 0. 
-IDN$NCON[is.na(IDN$NCON)] <- 0
-  
 # Summarize CHR record counts.
 RC <- describe(IDN[, c("NINC", "NARR", "NCHG", "NJUD", "NCON")],  
                quant=c(.25, .50, .75))
