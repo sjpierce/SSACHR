@@ -168,23 +168,15 @@ read_sav(here::here("./inst/extdata/SSA_JUD_Judicial_Charges_Imputed_2018-09-03.
 
 \FloatBarrier
 
-## Additional Data Files
-We may or may not need these additional data files. We will come back and edit 
-this section later to remove anything we don't need. See Campbell (2019) for 
-details on these files. 
+## SAK-Perpetrator Data Files
+We need this additional data file to identify the earliest SAK associated with
+each offender. See Campbell (2019) for details on this file.  
 
-``` {r import_other}
-# Read SPSS data files.
-ESC <- read_sav(here::here("./inst/extdata/ESCALATIONdata_2018-05-15.sav"), 
-                user_na = TRUE)
-FOR <- read_sav(here::here("./inst/extdata/Forensic_Outcomes_2018-04-03.sav"), 
-                user_na = TRUE)
-PER <- read_sav(here::here("./inst/extdata/PERPdata_2018-04-03.sav"), 
-                user_na = TRUE)
-SPD <- read_sav(here::here("./inst/extdata/SAK_PERP_2018-04-03.sav"), 
-                user_na = TRUE)
-SAK <- read_sav(here::here("./inst/extdata/SAKdata_2018-04-03.sav"), 
-                user_na = TRUE) 
+``` {r import_SPD}
+# Read SPSS data file.
+read_sav(here::here("./inst/extdata/SAK_PERP_2018-04-03.sav"), 
+         user_na = TRUE) ->
+  SPD
 ```
 
 \FloatBarrier
@@ -204,6 +196,13 @@ JUD %>%
   var_labels(NCON = "No. of adjudicated charge records w/ convictions") ->
   CON
 ```
+
+## Identify Earliest SAK for Each Offender
+For the paper, we need to identify the data of the earliest SAK associated with 
+each offender, store that as a variable in the IDN dataset, then merge it onto 
+other datasets for use in further computations. 
+
+
 
 ## Aggregate and Merge Datasets
 
