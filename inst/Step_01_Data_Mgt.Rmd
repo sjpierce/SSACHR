@@ -168,7 +168,7 @@ read_sav(here::here("./inst/extdata/SSA_JUD_Judicial_Charges_Imputed_2018-09-03.
 
 \FloatBarrier
 
-## SAK-Perpetrator Data Files
+## SAK-Perpetrator Data File
 We need this additional data file to identify the earliest SAK associated with
 each offender. See Campbell (2019) for details on this file.  
 
