@@ -203,7 +203,7 @@ JUD %>%
   CON
 ```
 
-# Merge Data
+# Merge Datasets
 
 ```{r merge_IDN_CON}
 # Merge NCON conviction charge count variable into IDN.
