@@ -227,9 +227,9 @@ are then merged onto the IDN data frame.
 
 ```{r}
 # Create objects wth vectors of variable names
-avars <- paste("ACat12", c(1:12, 999), sep = "_")
-cvars <- paste("CCat12", c(1:12, 999), sep = "_")
-jvars <- paste("JCat12", c(1:12, 999), sep = "_") 
+avars   <- paste("ACat12", c(1:12, 999), sep = "_")
+cvars   <- paste("CCat12", c(1:12, 999), sep = "_")
+jvars   <- paste("JCat12", c(1:12, 999), sep = "_") 
 acjvars <- c(avars, cvars, jvars)
 ```
 
