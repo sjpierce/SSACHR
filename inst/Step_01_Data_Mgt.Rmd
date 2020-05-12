@@ -189,7 +189,7 @@ SAK <- read_sav(here::here("./inst/extdata/SAKdata_2018-04-03.sav"),
 
 \FloatBarrier
 
-# Create Subset Data
+# Create Conviction Dataset
  
 ```{r create_CON}
 # Create a subset of JUD containing only charges where offender was convicted.
