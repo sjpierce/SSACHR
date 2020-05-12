@@ -181,20 +181,6 @@ JUD %>%
   CON
 ```
 
-```{r merge_IDN_CON}
-# Merge NCON conviction charge count variable into IDN.
-CON %>% 
-  group_by(OID) %>% 
-  summarize_at(.vars = "NCON", .funs = c("sum")) %>% 
-  ungroup() %>% 
-  left_join(x = IDN, y = ., by = "OID") %>% 
-  # Add variable label. 
-  var_labels(NCON = "No. of adjudicated charge records w/ convictions") %>% 
-  # Recode NCON variable to replace NA with 0. 
-  mutate(NCON = if_else(is.na(NCON), true = 0, false = NCON)) -> 
-  IDN2
-```
-
 \FloatBarrier
 
 ## Additional Data Files
@@ -220,7 +206,19 @@ SAK <- read_sav(here::here("./inst/extdata/SAKdata_2018-04-03.sav"),
 
 # Merge Data
 
-
+```{r merge_IDN_CON}
+# Merge NCON conviction charge count variable into IDN.
+CON %>% 
+  group_by(OID) %>% 
+  summarize_at(.vars = "NCON", .funs = c("sum")) %>% 
+  ungroup() %>% 
+  left_join(x = IDN, y = ., by = "OID") %>% 
+  # Add variable label. 
+  var_labels(NCON = "No. of adjudicated charge records w/ convictions") %>% 
+  # Recode NCON variable to replace NA with 0. 
+  mutate(NCON = if_else(is.na(NCON), true = 0, false = NCON)) -> 
+  IDN2
+```
 
 
 # Criminal History Record (CHR) Count Overview
