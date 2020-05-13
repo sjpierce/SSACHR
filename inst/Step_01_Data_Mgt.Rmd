@@ -175,7 +175,9 @@ each offender. See Campbell (2019) for details on this file.
 ``` {r import_SPD}
 # Read SPSS data file.
 read_sav(here::here("./inst/extdata/SAK_PERP_2018-04-03.sav"), 
-         user_na = TRUE) ->
+         user_na = TRUE) %>% 
+  # Sort by OID and SAK collection date. 
+  arrange(OID, SDate) ->
   SPD
 ```
 
@@ -201,8 +203,17 @@ JUD %>%
 
 ## Identify Earliest SAK for Each Offender
 For the paper, we need to identify the data of the earliest SAK associated with 
-each offender, store that as a variable in the IDN dataset, then merge it onto 
-other datasets for use in further computations. 
+each offender and store that as a new dataset. We'll need to tack on the  
+
+```{r}
+SPD %>% 
+  group_by(OID) -> 
+  # Retain only the earliest SAK 9first record after the sort above) for each offender.
+  #filter(row_number() == 1) ->
+  SPDE
+  
+
+```
 
 \FloatBarrier
 
