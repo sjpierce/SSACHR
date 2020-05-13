@@ -1,9 +1,14 @@
+# SSACHR 0.3.5, 2020-05-12
+* Updated `inst/Step_01_Data_mgt.Rmd` to improve SPD import and create SPDE 
+  dataset.
+
 # SSACHR 0.3.4, 2020-05-12
 * Updated `inst/Step_01_Data_mgt.Rmd` as follows.
     * Fixed computation of NCON variable.
     * Updated heading structure and moved some code to different sections.
     * Removed import code for data files we will not need.
     * Deleted code for creating variables we will not be using. 
+    * Added code 
 
 # SSACHR 0.3.3, 2020-05-10
 * Updated `inst/Step_01_Data_mgt.Rmd` as follows.
