@@ -1,8 +1,14 @@
+# SSACHR 0.3.4, 2020-05-12
+* Updated `inst/Step_01_Data_mgt.Rmd` as follows.
+    * Fixed computation of NCON variable.
+    * Updated heading structure and moved some code to different sections.
+    * Removed import code for data files we will not need.
+    * Deleted code for creating variables we will not be using. 
+
 # SSACHR 0.3.3, 2020-05-10
 * Updated `inst/Step_01_Data_mgt.Rmd` as follows.
     * Updated more code to use tidyverse-style piped operations (still have more 
       to do).  
-
 
 # SSACHR 0.3.2, 2020-05-08
 * Updated task list in `README.Rmd` and `README.md`.
