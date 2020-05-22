@@ -176,8 +176,8 @@ each offender. See Campbell (2019) for details on this file.
 # Read SPSS data file.
 read_sav(here::here("./inst/extdata/SAK_PERP_2018-04-03.sav"), 
          user_na = TRUE) %>% 
-  # Sort by OID and SAK collection date. 
-  arrange(OID, SDate) ->
+  # Sort by OID and SAK collection date (but NAs are last in sort order).
+  arrange(OID, SDate.Yr, SDate.Mt, SDate) ->
   SPD
 ```
 
@@ -203,8 +203,8 @@ JUD %>%
 
 ## Identify Earliest SAK for Each Offender
 For the paper, we need to identify the data of the earliest SAK associated with 
-each offender and store that as a new dataset. Along the way, we need to do 
-several intermediate tasks. 
+each offender who has criminal history data and store that as a new dataset. 
+Along the way, we need to do several intermediate tasks. 
 
 According to the help files, *dplyr::arrange* always puts NA values last in 
 the sort order. That may affect whether we use that function or another one 
@@ -216,9 +216,8 @@ perpetrators for whom we have criminal history data.
 ```{r}
 SPD %>% 
   # Retain only only offenders with CHR data. 
-  filter(OID %in% IDN$OID) %>% 
+  filter(OIDinCHR == "Yes") %>% 
   # 
-  arrange(OID, SDate.Yr, SDate.Mt, SDate) %>% 
   group_by(OID) ->   
   # Retain only the earliest SAK (first record after the sort above) for each offender.
   #filter(row_number() == 1) ->
