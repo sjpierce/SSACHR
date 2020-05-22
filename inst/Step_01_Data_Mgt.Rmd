@@ -203,12 +203,24 @@ JUD %>%
 
 ## Identify Earliest SAK for Each Offender
 For the paper, we need to identify the data of the earliest SAK associated with 
-each offender and store that as a new dataset. We'll need to tack on the  
+each offender and store that as a new dataset. Along the way, we need to do 
+several intermediate tasks. 
+
+According to the help files, *dplyr::arrange* always puts NA values last in 
+the sort order. That may affect whether we use that function or another one 
+for sorting the data. 
+
+First, we have to trim the SPD data down to just the SAKs associated with 
+perpetrators for whom we have criminal history data. 
 
 ```{r}
 SPD %>% 
-  group_by(OID) -> 
-  # Retain only the earliest SAK 9first record after the sort above) for each offender.
+  # Retain only only offenders with CHR data. 
+  filter(OID %in% IDN$OID) %>% 
+  # 
+  arrange(OID, SDate.Yr, SDate.Mt, SDate) %>% 
+  group_by(OID) ->   
+  # Retain only the earliest SAK (first record after the sort above) for each offender.
   #filter(row_number() == 1) ->
   SPDE
   
