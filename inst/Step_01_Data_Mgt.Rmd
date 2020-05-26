@@ -190,6 +190,8 @@ read_sav(here::here("./inst/extdata/SAK_PERP_2018-04-03.sav"),
 \FloatBarrier
 
 ## Create Conviction Dataset
+Convictions are the subset of adjudicated charges that have a specific 
+disposition code. For simplicity, we extract them to a new tibble. 
  
 ```{r create_CON}
 # Create a subset of JUD containing only charges where offender was convicted.
