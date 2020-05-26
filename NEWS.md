@@ -1,3 +1,7 @@
+# SSACHR 0.3.6, 2020-05-22
+* Updated `inst/Step_01_Data_mgt.Rmd` to improve SPD import and work on 
+  identifying earliest SAK for each offender.
+  
 # SSACHR 0.3.5, 2020-05-12
 * Updated `inst/Step_01_Data_mgt.Rmd` to improve SPD import and create SPDE 
   dataset.
