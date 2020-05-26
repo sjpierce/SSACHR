@@ -177,7 +177,9 @@ each offender. See Campbell (2019) for details on this file.
 read_sav(here::here("./inst/extdata/SAK_PERP_2018-04-03.sav"), 
          user_na = TRUE) %>% 
   # Sort by OID and SAK collection date (but NAs are last in sort order).
-  arrange(OID, SDate.Yr, SDate.Mt, SDate) ->
+  arrange(OID, SDate.Yr, SDate.Mt, SDate) %>% 
+  # Add a variable showing how many unique SAKs the offender has.
+  add_count(OID, name = "OID_NSAK") ->
   SPD
 ```
 
@@ -211,14 +213,47 @@ the sort order. That may affect whether we use that function or another one
 for sorting the data. 
 
 First, we have to trim the SPD data down to just the SAKs associated with 
-perpetrators for whom we have criminal history data. 
+offenders for whom we have criminal history data. 
 
-```{r}
+```{r create_SPDCHR}
 SPD %>% 
   # Retain only only offenders with CHR data. 
-  filter(OIDinCHR == "Yes") %>% 
-  # 
-  group_by(OID) ->   
+  filter(OIDinCHR == "Yes") -> 
+  SPDCHR 
+```
+
+Now we capture a vector of OIDs for offenders who have multiple SAKs at least
+one of which has a completely missing SDate or a partial SDate. 
+
+```{r}
+SPDCHR %>% 
+  filter(OID_NSAK > 1 & SDate.Miss != "C") %>% 
+  pull(OID) %>% 
+  unique() -> 
+  OID_MSAKs_SDateMissing
+```
+
+Inspect the SAKs and associated SDate values for that subset of offenders. 
+
+```{r inspect_missing_SDate}
+SPDCHR %>% 
+  filter(OID %in% OID_MSAKs_SDateMissing) %>% 
+  select(OID, SAKID, OID_NSAK, SDate.Miss, SDate.Yr, SDate.Mt) %>% 
+  kable()
+```
+
+
+
+
+Next, we need to figure out how many SAKs are associated with each offender and 
+merge that information back into SPDCHR as a new variable. 
+
+```{r} 
+SPDCHR %>% 
+  # Add a variable showing how many unique SAKs the offender has.
+  add_count(OID, name = "OID_NSAK") ->
+  tmp # %>% 
+  head(tmp)    
   # Retain only the earliest SAK (first record after the sort above) for each offender.
   #filter(row_number() == 1) ->
   SPDE
