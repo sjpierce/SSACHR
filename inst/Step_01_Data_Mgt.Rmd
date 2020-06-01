@@ -48,7 +48,53 @@ header-includes:
 # Purpose.
 This file imports copies of publicly archived data files (Campbell, 2019) into 
 R, then performs data management to prepare a new data file for a descriptive 
-paper about the criminal histories of suspected serial sexual offenders.  
+paper about the criminal histories of suspected serial sexual offenders. The 
+data come from Detroit, MI. 
+
+Part of the analysis will require splitting each offender's criminal history 
+into three periods: 
+* Before the offender's earliest known sexual assault kit (SAK). 
+* During a *testing window* that represents a working definition for what 
+  constitutes timely forensic testing.
+* After the end of the testing window. 
+
+# Defining Timely Testing
+One purpose of forensic testing for SAKs is to prevent future crimes by 
+facilitating identification and arrest of suspected offenders. However, forensic
+testing takes time to yield results. There are several steps that occur between 
+SAK collection and law enforcement personnel being able to act on test results. 
+
+There are examples of testing taking as little as a week for cases deemed to be
+emergencies, but for non-emergency cases the testing time in Detroit had 
+historically been much longer (typically 6-9 months, but 12-24 months was not 
+uncommon) according to local stakeholders. 
+
+Michigan's [2014 Sexual Assault Kit Evidence Submission Act (PA227)](http://www.legislature.mi.gov/(S(hsasgpdffxp4tsy3f3hpbxeo))/documents/mcl/pdf/mcl-Act-227-of-2014.pdf)
+provides a working definition of timely testing by stipulating the following
+requirements.
+
+* Law enforcement agencies must take possession of an SAK within 14 days of 
+  receiving notice from a health care facility that it has been collected. 
+* Law enforcement agencies must submit the SAK to a lab for testing within 14 
+  days of taking possession of it. 
+* Laboratories must complete testing within 90 days after receiving an SAK. 
+
+Adhering to those requirements would mean that law enforcement agencies should
+be able to start acting on forensic results no later than 118 days after SAK
+collection. Although some practitioners have reservations about the feasibility
+of meeting the timing requirements in this law, it is nevertheless the best
+working definition of timely testing available because it represents the outcome
+of a public policy process in which multiple stakeholders had a voice.
+
+In this study, we adopted an operational definition for the testing window based
+on PA227's timing requirements. We defined the testing window as the first 118
+days following the earliest SAK date associated with a suspected offender. It is
+unrealistic to expect that crimes committed during this period could be
+prevented by timely SAK testing because law enforcement personnel cannot act on
+information they don’t have yet. Adopting a testing window definition based on 
+the maximum duration consistent with the notion of timely testing is useful for
+initial descriptive analyses that aim to characterize what crimes might have 
+been prevented if timely testing had been done on the SAKs in this sample. 
 
 \FloatBarrier
 
@@ -244,15 +290,14 @@ SPDCHR %>%
   kable()
 ```
 
-Next, we need to figure out how many SAKs are associated with each offender and 
-merge that information back into SPDCHR as a new variable. 
+Next, we need to implement some decision rules about reconciling discrepancies 
+between SAK collection date (SDate) and the CHR incident date (IDate) for SAKs
+that were previously matched to CHR incident records. This is necessary so that
+we can create a new variable called WDate to store the start date for the SAK 
+testing window discussed above. 
 
 ```{r} 
 SPDCHR %>% 
-  # Add a variable showing how many unique SAKs the offender has.
-  add_count(OID, name = "OID_NSAK") ->
-  tmp # %>% 
-  head(tmp)    
   # Retain only the earliest SAK (first record after the sort above) for each offender.
   #filter(row_number() == 1) ->
   SPDE
