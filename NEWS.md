@@ -1,3 +1,6 @@
+# SSACHR 0.3.8, 2020-05-31
+* Updated `inst/Step_01_Data_mgt.Rmd` to improve some explanatory text.
+
 # SSACHR 0.3.7, 2020-05-26
 * Committed some changes actually made on 2020-05-22. 
 * Updated `inst/Step_01_Data_mgt.Rmd` to improve some explanatory text.
