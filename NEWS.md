@@ -1,3 +1,7 @@
+# SSACHR 0.3.9, 2020-06-02
+* Updated `inst/Step_01_Data_mgt.Rmd` to improve some explanatory text,
+  create and examine WDate variable.
+
 # SSACHR 0.3.8, 2020-05-31
 * Updated `inst/Step_01_Data_mgt.Rmd` to improve some explanatory text.
 
