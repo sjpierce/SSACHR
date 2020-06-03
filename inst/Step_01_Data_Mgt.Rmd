@@ -253,7 +253,7 @@ JUD %>%
 
 ## Identify Earliest SAK for Each Offender
 For the paper, we need to identify the earliest SAK associated with each 
-offender who has criminal history data and store that as a new dataset. Along 
+offender who has criminal history data and store those in a new dataset. Along 
 the way, we need to do several intermediate tasks. 
 
 According to the help files, *dplyr::arrange* always puts NA values last in 
@@ -270,6 +270,83 @@ SPD %>%
   SPDCHR 
 ```
 
+With the resulting SPDCHR data, we need to identify the start of the testing 
+window for each SAK and store it in a new variable called WDate, then aggregate 
+across SAKs associated with each offender to identify the earliest WDate value. 
+
+### Identify Start of Testing Window for each SAK
+Creating the new WDate variable for recording when the testing window for each
+SAK started is complicated by the fact that some SAKs have only partial date 
+information, leaving SDate with NA values. 
+
+We also need to account for the fact that in our prior work we linked some SAKs
+to existing CHR incident records that involved criminal sexual conduct (as
+evidenced by an associated arrest offense record, prosecutor charge record, or
+judicial charge record for a sexual assault). Those links were created recognize 
+possible overlap between sexual assaults represented in the CODIS hits (CHITS)
+data from the SAK testing and the CHR data files. However, we did not require 
+exact date matches in the previous work because we were dealing wth data that 
+originated from different organizations. SAK collection dates (SDate) were 
+recorded by hospitals (or other healthcare providers) who actually collected the 
+SAKs. These dates are more likely to be accurate than the incident dates on 
+because healthcare providers have a very strong financial incentive to get dates 
+of service correct for billing purposes. 
+
+For SAKs that are not linked to an incident record, OID_IID = "" (an empty 
+string) and OID_IDate = NA. Therefore, the only date information available is 
+the SAK collection date (SDate) and WDate can be set equal to SDate if SDate is 
+non-missing. 
+
+```{r}
+SPDCHR %>% 
+  mutate(WDate = case_when(
+           # Default to using SDate if it is not missing. 
+           is.na(SDate) == FALSE ~ SDate,
+           # If SDate is incomplete or missing, use a valid OID_IDate instead. 
+           is.na(SDate) == TRUE & is.na(OID_IDate) == FALSE ~ OID_IDate),
+         WDate.Yr = case_when(
+           # Default to year of WDate if it is not missing
+           is.na(WDate) == FALSE ~ year(WDate),
+           # Otherwise use SDate.Yr
+           is.na(WDate) == TRUE ~ SDate.Yr),
+         WDate.Mt = case_when(
+           is.na(WDate) == FALSE ~ month(WDate),
+           is.na(WDate) == TRUE ~ SDate.Mt)) %>% 
+  # Sort records by year, month, and date but ensure that within each layer 
+  # records with missing data come first. 
+  arrange(OID, -is.na(WDate.Yr), WDate.Yr, -is.na(WDate.Mt), WDate.Mt, WDate) %>% 
+  # Group by OID, then select first record for each offender and save a tibble. 
+  group_by(OID) %>% 
+  filter(row_number() == 1) %>% 
+  ungroup() %>% 
+  # Add another variable. 
+  mutate(WDate.Miss = case_when(
+           is.na(WDate) == TRUE & is.na(WDate.Yr) == TRUE ~ "M",
+           is.na(WDate) == TRUE & is.na(WDate.Mt) == TRUE ~ "PDY",
+           is.na(WDate) == TRUE & is.na(WDate.Mt) == FALSE ~ "PDYM",
+           is.na(WDate) == FALSE ~ "C")) ->
+  SPDCHRE
+```
+
+```{r examine_WDate_missingness}
+addmargins(xtabs(~OID_NSAK + WDate.Miss , addNA = TRUE, data = SPDCHRE))
+```
+
+CONTINUE HERE
+
+```{r}
+SPDCHRE %>% 
+  #filter(is.na(WDate)) %>% 
+  select(SAKID, OID, OID_NSAK, SDate, SDate.Miss, SDate.Mt, OID_IDate, WDate, 
+         WDate.Yr, WDate.Mt, WDate.Miss) ->
+  SPDCHRE2
+  
+as.data.frame(SPDCHRE2)
+
+
+  
+```
+
 Now we capture a vector of OIDs for offenders who have multiple SAKs at least
 one of which has a completely missing SDate or a partial SDate. 
 
@@ -284,10 +361,14 @@ SPDCHR %>%
 Inspect the SAKs and associated SDate values for that subset of offenders. 
 
 ```{r inspect_missing_SDate}
-SPDCHR %>% 
+SPDCHRE %>% 
   filter(OID %in% OID_MSAKs_SDateMissing) %>% 
-  select(OID, SAKID, OID_NSAK, SDate.Miss, SDate.Yr, SDate.Mt) %>% 
-  kable()
+  select(OID, SAKID, SDate, SDate.Yr, SDate.Mt, OID_IDate, WDate, WDate.Yr, WDate.Mt) -> 
+  SPDCHRE2
+
+# Examine SAKs for offenders w/ multiple SAKs at least one of which has missing SDate. 
+as.data.frame(SPDCHRE2)
+
 ```
 
 Next, we need to implement some decision rules about reconciling discrepancies 
