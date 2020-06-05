@@ -421,7 +421,29 @@ with partial *WDate* information. We have not identified a reasonable and
 defensible method for imputing precise *WDate* values for these offenders.
 Therefore, we have excluded them from the sample analyzed for this paper by
 trimming the *SPDCHRE* dataset down to just those offenders who have a known
-*WDate* and saving the results as the *SPDCHREW* dataset.
+*WDate* and saving the results as the *SPDCHREW* dataset. This is an 
+offender-level dataset. 
+
+\FloatBarrier
+
+### Merge Testing Window Start Date Onto Incident Data
+The next step is to merge variables from *SPDCHREW* onto the incident data in 
+*INC* so that we can classify each incident according to whether it occurred 
+before, during, or after the earliest testing window for the offender. Along the
+way we subset the 
+
+```{r merge_WDate}
+SPDCHREW %>% 
+  # Retain only variables we need to merge into INC.
+  select(SAKID, OID, OID_IID, WDate) %>% 
+  # Merge SPDCHREW variables onto INC rows. 
+  right_join(x = ., y = INC, by = "OID") %>% 
+  # Retain only INC records for offenders with non-missing WDate values. 
+  filter(is.na(Wdate) == FALSE) %>% 
+  
+  
+```
+
 
 \FloatBarrier
 
