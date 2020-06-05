@@ -56,6 +56,7 @@ brevity]. The data come from Detroit, MI.
 
 Part of the analysis will require splitting each offender's criminal history 
 into three periods: 
+
 * Before the offender's earliest known sexual assault kit (SAK). 
 * During a *testing window* that represents a working definition for what 
   constitutes timely forensic testing.
