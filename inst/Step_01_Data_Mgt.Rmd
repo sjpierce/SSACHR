@@ -255,6 +255,8 @@ JUD %>%
   CON
 ```
 
+\FloatBarrier
+
 ## Identify Earliest SAK for Each Offender
 For the paper, we need to identify the earliest SAK associated with each 
 offender who has criminal history data and store those in a new dataset. Along 
@@ -278,6 +280,8 @@ With the resulting *SPDCHR* data, we need to identify the start of the testing
 window for each SAK and store it in a new variable called *WDate*, then
 aggregate across SAKs associated with each offender to identify the earliest
 *WDate* value. 
+
+\FloatBarrier
 
 ### Identify Start of Testing Window for each SAK
 The testing window for a SAK should start on the date it was collected. We
@@ -358,7 +362,9 @@ the start of the testing window, sorts the data into chronological order, then
 drops everything but the earliest SAK for each perpetrator. The result is saved
 to the *SPDCHRE* dataset
 
-### Missingness Status for Earliest SAK Start of Testing Window 
+\FloatBarrier
+
+### Missingness Status for Earliest SAK Testing Window Start Date
 Here we pause to assess how many of the offenders with CHR data have missing 
 *WDate* values for their earliest SAK. Table \ref{tab:examine_WDate} shows 
 a cross-tabulation of the number of SAKs associated with a perpetrator 
