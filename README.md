@@ -168,9 +168,9 @@ U.S. Department of Justice.
   - Edit code pasted into `inst/Step_01_Data_mgt.Rmd` from previous
     `CHR_Summary_Step01_2017-01.19.Rmd` script to use tidyverse style
     where feasible.
-  - Add code to identify the date for the earliest SAK associated with
-    each perpetrator and add a binary variable to each INC, ARR, CHG,
-    and JUD record to show whether it was associated with an incident
-    that occurred before versus after that date. See 2020-04-08 email.
+  - Merge earliest SAK testing window date (WDate) onto each INC record,
+    then classify each ARR\< CHG\< JUD, and CON record as before,
+    during, or after the the testing window. See 2020-04-08 email and
+    subsequent emails.
   - Summarize CHRs before vs after perpetrator’s earliest SAK date in
     addition to overall. See 2020-04-08 email.
