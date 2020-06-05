@@ -385,7 +385,18 @@ addmargins(xtabs(~OID_NSAK + WDate.Status, addNA = TRUE, data = SPDCHRE)) %>%
          threeparttable = TRUE)
 ```
 
-CONTINUE HERE
+```{r create_SPDCHREW}
+SPDCHRE %>% 
+  # Retain only the earliest SAKs with known WDate values. 
+  filter(WDate.Status == "Known") ->
+  SPDCHREW
+```
+
+We have complete, known WDate values for `r nrow(SPDCHREW)` 
+(`r round(100*nrow(SPDCHREW)/nrow(SPDCHRE))`%) of the `r nrow(SPDCHRE)`
+perpetrators with CHR data. Rather than try to impute WDate for the remaining 
+`r nrow(SPDCHRE) - nrow(SPDCHREW)` perpetrators, we will exclude them from the 
+sample analyzed for this paper. 
 
 ```{r}
 SPDCHRE %>% 
