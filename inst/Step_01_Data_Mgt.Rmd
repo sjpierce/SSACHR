@@ -351,7 +351,9 @@ SPDCHR %>%
 ```
 
 Here we pause to assess how many of the offenders with CHR data have complete 
-*WDate* values for their earliest SAK. 
+*WDate* values for their earliest SAK. Table \ref{tab:examine_WDate} shows 
+a cross-tabulation of the number of SAKs associated with a perpetrator 
+(*OID_NSAK*) against the status of the *WDate* variable. 
 
 ```{r examine_WDate}
 # Table caption.
