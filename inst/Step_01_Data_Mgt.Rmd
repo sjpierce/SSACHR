@@ -48,8 +48,11 @@ header-includes:
 # Purpose.
 This file imports copies of publicly archived data files (Campbell, 2019) into 
 R, then performs data management to prepare a new data file for a descriptive 
-paper about the criminal histories of suspected serial sexual offenders. The 
-data come from Detroit, MI. 
+paper about the criminal histories of suspected serial sexual perpetrators 
+^[In this document, we use the terms perpetrator and offender interchangeably. 
+Both terms should be interpreted as referring to individuals suspected of 
+committing a crime but we occasionally omit that qualifier for the sake of 
+brevity]. The data come from Detroit, MI. 
 
 Part of the analysis will require splitting each offender's criminal history 
 into three periods: 
