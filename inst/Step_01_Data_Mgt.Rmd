@@ -270,32 +270,50 @@ SPD %>%
   SPDCHR 
 ```
 
-With the resulting SPDCHR data, we need to identify the start of the testing 
-window for each SAK and store it in a new variable called WDate, then aggregate 
-across SAKs associated with each offender to identify the earliest WDate value. 
+With the resulting *SPDCHR* data, we need to identify the start of the testing
+window for each SAK and store it in a new variable called *WDate*, then
+aggregate across SAKs associated with each offender to identify the earliest
+*WDate* value. 
 
 ### Identify Start of Testing Window for each SAK
-Creating the new WDate variable for recording when the testing window for each
-SAK started is complicated by the fact that some SAKs have only partial date 
-information, leaving SDate with NA values. 
+The testing window for a SAK should start on the date it was collected. We
+already have a variable called *SDate* that records this information. However, 
+some SAKs have only partial date information, leaving *SDate* with NA values. A
+very small number of SAKs have completely missing data on *SDate* such that not
+even the year of collection is known, but most that of the cases with missing 
+SDate values have the year of collection recorded in *SDate.Yr* and some also
+have the month recorded in *SDate.Mt*.
 
-We also need to account for the fact that in our prior work we linked some SAKs
-to existing CHR incident records that involved criminal sexual conduct (as
+SAK collection dates (*SDate*) were recorded by hospitals (or other healthcare
+providers) who actually collected the SAKs. These dates are very likely to be
+accurate because healthcare providers have a strong financial incentive to get
+dates of service correct for billing purposes. 
+
+However, when we have missing or partial *SDate* data, we have an additional
+source of data that might provide an exact date for the start of the testing
+window (*WDate*). In our prior work with these data, we linked some SAKs to
+existing CHR incident records that involved criminal sexual conduct (as
 evidenced by an associated arrest offense record, prosecutor charge record, or
-judicial charge record for a sexual assault). Those links were created recognize 
-possible overlap between sexual assaults represented in the CODIS hits (CHITS)
-data from the SAK testing and the CHR data files. However, we did not require 
-exact date matches in the previous work because we were dealing wth data that 
-originated from different organizations. SAK collection dates (SDate) were 
-recorded by hospitals (or other healthcare providers) who actually collected the 
-SAKs. These dates are more likely to be accurate than the incident dates on 
-because healthcare providers have a very strong financial incentive to get dates 
-of service correct for billing purposes. 
+judicial charge record for a sexual assault). Those links were created to
+recognize possible overlap between sexual assaults represented in the CODIS hits
+(CHITS) data from the SAK testing and the CHR data files. We did not require
+exact date matches in the previous work because we were dealing with data that
+originated from different organizations. We allowed up to a 45 day discrepancy
+in the dates when making matches.
 
-For SAKs that are not linked to an incident record, OID_IID = "" (an empty 
-string) and OID_IDate = NA. Therefore, the only date information available is 
-the SAK collection date (SDate) and WDate can be set equal to SDate if SDate is 
-non-missing. 
+For SAKs that are not linked to an incident record, *OID_IID* = "" (an empty 
+string) and *OID_IDate* = NA. Therefore, the only date information available is
+in the SAK collection date variables (*SDate*, *SDate.Yr*, and *SDate.Mt*). If
+we have a valid value in *SDate*, then *WDate* = *SDate*. When we only have
+partial date information, then SDate is missing but SDate.Yr and possibly also
+SDate.Mt have valid values, but we cannot assign a precise date to the SAK
+collection and *WDate* ends up with a missing value.
+
+For SAKs that were linked to an incident record, *OID_IID* stores the incident
+ID value that links to the CHR incident record in the *INC* data and *OID_IDate*
+stores the corresponding incident date. Thus, if *SDate* is missing, we set
+*WDate* = *OID_IDate* instead, thereby using *OID_IDate* as supplementary 
+information to reduce missing data in *WDate*. 
 
 ```{r}
 SPDCHR %>% 
@@ -327,6 +345,9 @@ SPDCHR %>%
            is.na(WDate) == FALSE ~ "C")) ->
   SPDCHRE
 ```
+
+Here we pause to assess how many of the offenders with CHR data have complete 
+*WDate* values for their earliest SAK. 
 
 ```{r examine_WDate_missingness}
 addmargins(xtabs(~OID_NSAK + WDate.Miss , addNA = TRUE, data = SPDCHRE))
