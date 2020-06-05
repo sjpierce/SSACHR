@@ -1,3 +1,13 @@
+# SSACHR 0.3.10, 2020-06-05
+* Updated `inst/Step_01_Data_mgt.Rmd` to:
+    * Improve code for computing WDate and related variables. 
+    * Document case selection criteria for offenders with known WDate.
+    * Add a clean, formatted table. 
+    * Start the section for merging WDate onto INC data. 
+    * Add and improve explanatory text. 
+* `inst/Step_01_Data_mgt.Rmd` is still in draft status, with much left to do.
+* Updated task list in `README.Rmd`. 
+    
 # SSACHR 0.3.9, 2020-06-02
 * Updated `inst/Step_01_Data_mgt.Rmd` to improve some explanatory text,
   create and examine WDate variable.
