@@ -338,19 +338,30 @@ SPDCHR %>%
   filter(row_number() == 1) %>% 
   ungroup() %>% 
   # Add another variable. 
-  mutate(WDate.Miss = case_when(
-           is.na(WDate) == TRUE & is.na(WDate.Yr) == TRUE ~ "M",
-           is.na(WDate) == TRUE & is.na(WDate.Mt) == TRUE ~ "PDY",
-           is.na(WDate) == TRUE & is.na(WDate.Mt) == FALSE ~ "PDYM",
-           is.na(WDate) == FALSE ~ "C")) ->
+  mutate(WDate.Status = case_when(
+           is.na(WDate) == TRUE & is.na(WDate.Yr) == TRUE ~ "Missing",
+           is.na(WDate) == TRUE & is.na(WDate.Mt) == TRUE ~ "Partial.Y",
+           is.na(WDate) == TRUE & is.na(WDate.Mt) == FALSE ~ "Partial.YM",
+           is.na(WDate) == FALSE ~ "Known")) ->
   SPDCHRE
 ```
 
 Here we pause to assess how many of the offenders with CHR data have complete 
 *WDate* values for their earliest SAK. 
 
-```{r examine_WDate_missingness}
-addmargins(xtabs(~OID_NSAK + WDate.Miss , addNA = TRUE, data = SPDCHRE))
+```{r examine_WDate}
+# Vector of text values for column labels to be used in .
+clabels <- c("No. SAKs", "YMD", "YM?", "Y??", "???", "Sum")
+
+addmargins(xtabs(~OID_NSAK + WDate.Status, addNA = TRUE, data = SPDCHRE)) %>% 
+  as.data.frame() %>% 
+  pivot_wider(names_from = WDate.Status, values_from = Freq) %>% 
+  select(OID_NSAK, Known, Partial.YM, Partial.Y, Missing, Sum) %>% 
+  kable(., col.names = clabels) %>% 
+  add_header_above(c("", "Known", "Partial" = 2, "Missing", "")) %>% 
+  add_header_above(c("", "WDate Status" = 4, "")) %>% 
+  column_spec(1, width = "1.8cm") %>% 
+  column_spec(2:6, width = "1.2cm")
 ```
 
 CONTINUE HERE
