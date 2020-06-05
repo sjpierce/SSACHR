@@ -401,7 +401,7 @@ SPDCHRE %>%
   SPDCHREW
 ```
 
-We have complete, known WDate values for `r nrow(SPDCHREW)` 
+We have complete, known *WDate* values for `r nrow(SPDCHREW)` 
 (`r round(100*nrow(SPDCHREW)/nrow(SPDCHRE))`%) of the `r nrow(SPDCHRE)`
 perpetrators with CHR data. That leaves `r nrow(SPDCHRE) - nrow(SPDCHREW)`
 perpetrators with missing or partial information for *WDate*. For perpetrators 
