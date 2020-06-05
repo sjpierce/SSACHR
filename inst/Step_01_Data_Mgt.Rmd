@@ -411,9 +411,9 @@ histories into the three periods for before, during, and after the testing
 window. 
 
 We know only the year of earliest SAK collection for most of the perpetrators
-with partial *WDate* information. We are not not identified any reasonable and
+with partial *WDate* information. We have not identified a reasonable and
 defensible method for imputing precise *WDate* values for these offenders.
-Therefore, we have excluded them from the sample analyzed for this paper
+Therefore, we have excluded them from the sample analyzed for this paper by
 trimming the *SPDCHRE* dataset down to just those offenders who have a known
 *WDate* and save the results as the *SPDCHREW* dataset.
 
