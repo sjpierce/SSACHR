@@ -439,6 +439,10 @@ way we subset down to the records that have non-missing WDate values and save to
 a new tibble called *INCEW*. 
 
 ```{r merge_WDate}
+# Object to hold names of IWhen levels.
+IWhenLevels <- c("Before TW", "During TW", "After TW")
+
+# Data management for the merge. 
 SPDCHREW %>% 
   # Retain only variables we need to merge into INC.
   select(SAKID, OID, OID_IID, WDate) %>% 
