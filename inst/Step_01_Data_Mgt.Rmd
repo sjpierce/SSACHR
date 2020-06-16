@@ -325,6 +325,9 @@ stores the corresponding incident date. Thus, if *SDate* is missing, we set
 *WDate* = *OID_IDate* instead, thereby using *OID_IDate* as supplementary 
 information to reduce missing data in *WDate*. 
 
+We also create a *TWindow* date interval variable to record the start and end 
+dates for the 118-day testing window for each of these SAKs. 
+
 ```{r create_SPDCHRE}
 SPDCHR %>% 
   mutate(WDate = case_when(
