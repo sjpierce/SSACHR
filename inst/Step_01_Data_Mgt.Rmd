@@ -330,28 +330,35 @@ dates for the 118-day testing window for each of these SAKs.
 
 ```{r create_SPDCHRE}
 SPDCHR %>% 
-  mutate(WDate = case_when(
+  mutate(# Testing Window Start Date.
+         WDate = case_when(
            # Default to using SDate if it is not missing. 
            is.na(SDate) == FALSE ~ SDate,
            # If SDate is incomplete or missing, use a valid OID_IDate instead. 
            is.na(SDate) == TRUE & is.na(OID_IDate) == FALSE ~ OID_IDate),
+         # Testing Window Start Year.
          WDate.Yr = case_when(
-           # Default to year of WDate if it is not missing
+           # Default to year of WDate if it is not missing.
            is.na(WDate) == FALSE ~ year(WDate),
            # Otherwise use SDate.Yr
            is.na(WDate) == TRUE ~ SDate.Yr),
+         # Testing Window Start Month.
          WDate.Mt = case_when(
            is.na(WDate) == FALSE ~ month(WDate),
            is.na(WDate) == TRUE ~ SDate.Mt),
+         # Testing Window Start Date Status.
          WDate.Status = case_when(
            is.na(WDate) == TRUE & is.na(WDate.Yr) == TRUE ~ "Missing",
            is.na(WDate) == TRUE & is.na(WDate.Mt) == TRUE ~ "Partial.Y",
            is.na(WDate) == TRUE & is.na(WDate.Mt) == FALSE ~ "Partial.YM",
-           is.na(WDate) == FALSE ~ "Known")) %>% 
+           is.na(WDate) == FALSE ~ "Known"),
+         # Testing Window Date Interval.
+         TWindow = interval(WDate, WDate + 118)) %>% 
   var_labels(WDate = "Testing Window Start Date",
              WDate.Yr = "Testing Window Start Year",
              WDate.Mt = "Testing Window Start Month",
-             WDate.Status = "Testing Window Start Date Status") %>% 
+             WDate.Status = "Testing Window Start Date Status",
+             TWindow = "Testing Window Date Interval") %>% 
   # Sort records by year, month, and date but ensure that within each layer 
   # records with missing data come first. 
   arrange(OID, -is.na(WDate.Yr), WDate.Yr, -is.na(WDate.Mt), WDate.Mt, WDate) %>% 
