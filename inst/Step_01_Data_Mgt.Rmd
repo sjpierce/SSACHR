@@ -452,7 +452,7 @@ IWhenLevels <- c("Before TW", "During TW", "After TW")
 # Data management for the merge. 
 SPDCHREW %>% 
   # Retain only variables we need to merge into INC.
-  select(SAKID, OID, OID_IID, WDate) %>% 
+  select(SAKID, OID, OID_IID, WDate, TWindow) %>% 
   # Merge SPDCHREW variables onto INC rows. 
   right_join(x = ., y = INC, by = "OID") %>% 
   # Retain only INC records for offenders with non-missing WDate values. 
