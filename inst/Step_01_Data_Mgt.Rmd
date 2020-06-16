@@ -229,7 +229,9 @@ read_sav(here::here("./inst/extdata/SAK_PERP_2018-04-03.sav"),
   # Sort by OID and SAK collection date (but NAs are last in sort order).
   arrange(OID, SDate.Yr, SDate.Mt, SDate) %>% 
   # Add a variable showing how many unique SAKs the offender has.
-  add_count(OID, name = "OID_NSAK") ->
+  add_count(OID, name = "OID_NSAK") %>% 
+  # Make a OID variable label match the lbel used in CHR data sets. 
+  var_labels(OID = "Offender ID (de-identified)") ->
   SPD
 ```
 
