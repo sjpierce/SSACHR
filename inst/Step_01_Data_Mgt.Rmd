@@ -447,7 +447,7 @@ a new tibble called *INCEW*.
 
 ```{r merge_WDate}
 # Object to hold names of IWhen levels.
-IWhenLevels <- c("Before TW", "During TW", "After TW")
+IWhenLevels <- c("Before", "During", "After")
 
 # Data management for the merge. 
 SPDCHREW %>% 
@@ -461,17 +461,55 @@ SPDCHREW %>%
   mutate(# Classify incidents as before, during, or after the testing window. 
          IWhen = case_when(
            # If incident matched to earliest SAK, incident was in the window.
-           OID_IID == IID ~ "During TW",
+           OID_IID == IID ~ "During",
            # Otherwise, compare IDate to TWindow to determine if incident was in
            # the window. 
-           IDate < int_start(TWindow) ~ "Before TW",
-           IDate %within% TWindow ~ "During TW",
-           IDate > int_end(TWindow) ~ "After TW"),
+           IDate < int_start(TWindow) ~ "Before",
+           IDate %within% TWindow ~ "During",
+           IDate > int_end(TWindow) ~ "After"),
          # Convert to a factor with levels in sensible order for display.
-         IWhen = factor(IWhen, levels = IWhenLevels)) ->
+         IWhen = factor(IWhen, levels = IWhenLevels)) %>% 
+  var_labels(IWhen = "When was incident relative to testing window?") ->
   INCEW
 ```
 
+We used one special case decision rule when classifying incidents. If an 
+incident record had been previously linked to the perpetrator's earliest SAK in
+the SPD tibble, then the *IID* variable in the INC record will have a value 
+matching the *OID_IID* variable merged in from the SPDCHREW tibble. Such
+incidents must by definition be treated as occurring during the testing window
+even if the *IDate* lies outside the window. This reflects the notion that we 
+are trusting the *SDate* values more than *IDate* values when constructing
+*WDate* ad *TWindow*. Table \ref{tab:examine_IDate} shows that there are only a
+few incidents matched to the perpetrator's earliest SAK where this decision rule
+classifies an incident as occurring during the testing window even though
+*IDate* actually falls outside that date interval. 
+
+```{r examine_IDate}
+# Table caption.
+T2cap <- paste("Crosstabulation of Whether Incident Date Was Within Testing",
+               "Window and Whether Incident Matched to Perpetrator's Earliest",
+               "SAK")
+# Footnote text.
+FN2 <- paste("Cells contain counts of incidents. Only incidents with valid",
+             "testing window start dates were included. ESAK, earliest sexual",
+             "assaut kit; IDate, incident date; TWindow, testing window.")
+
+# Vector of text values for column labels to be used in the table.
+clabels <- c("IDate in TWindow", "FALSE", "TRUE", "Sum")
+
+xtabs(~IDate %within% TWindow + (OID_IID == IID), addNA = TRUE, data = INCEW) %>% 
+  addmargins() %>% 
+  as.data.frame() %>% 
+  pivot_wider(names_from = OID_IID....IID, values_from = Freq) %>% 
+  kable(., format = "latex", booktabs = TRUE, caption = T2cap, 
+        col.names = clabels, format.args = list(big.mark = ",")) %>% 
+  add_header_above(c("", "Matched to ESAK" = 2, "")) %>% 
+  column_spec(1, width = "3cm") %>% 
+  column_spec(2:4, width = "1.5cm") %>% 
+  footnote(general = FN2, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
+```
 
 \FloatBarrier
 
