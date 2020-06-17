@@ -384,8 +384,7 @@ a cross-tabulation of the number of SAKs associated with a perpetrator
 
 ```{r examine_WDate}
 # Table caption.
-T1cap <- paste("Number of SAKs by WDate Status for Earliest SAK Associated",
-               "with Perpetrator")
+TCap <- paste("Number of SAKs by WDate Status for Perpetrator's Earliest SAK")
 # Footnote text.
 FN1 <- paste("Cells contain counts of perpetrators. Only perpetrators for whom",
              "criminal history records are available were included.",
