@@ -401,13 +401,13 @@ addmargins(xtabs(~OID_NSAK + WDate.Status, addNA = TRUE, data = SPDCHRE)) %>%
   as.data.frame() %>% 
   pivot_wider(names_from = WDate.Status, values_from = Freq) %>% 
   select(OID_NSAK, Known, Partial.YM, Partial.Y, Missing, Sum) %>% 
-  kable(., format = "latex", booktabs = TRUE, caption = T1cap, 
+  kable(., format = "latex", booktabs = TRUE, caption = TCap, 
         col.names = clabels, format.args = list(big.mark = ",")) %>% 
   add_header_above(c("", "Known", "Partial" = 2, "Missing", "")) %>% 
   add_header_above(c("", "WDate Status" = 4, "")) %>% 
   column_spec(1, width = "1.8cm") %>% 
   column_spec(2:6, width = "1.2cm") %>% 
-  footnote(general = FN1, general_title = "Note: ", footnote_as_chunk = TRUE,
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
 
