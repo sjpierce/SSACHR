@@ -386,13 +386,13 @@ a cross-tabulation of the number of SAKs associated with a perpetrator
 # Table caption.
 TCap <- paste("Number of SAKs by WDate Status for Perpetrator's Earliest SAK")
 # Footnote text.
-FN1 <- paste("Cells contain counts of perpetrators. Only perpetrators for whom",
-             "criminal history records are available were included.",
-             "No. SAKs, total number of SAKs associated with perpetrator;",
-             "WDate, start date for testing window;",
-             "Y, M, and D, respectively refer to the year, month, and day", 
-             " components of WDate. Letters replaced by question marks (?)",
-             "show which components are unknown.")
+FN <- paste("Cells contain counts of perpetrators. Only perpetrators for whom",
+            "criminal history records are available were included.",
+            "No. SAKs, total number of SAKs associated with perpetrator;",
+            "WDate, start date for testing window;",
+            "Y, M, and D, respectively refer to the year, month, and day", 
+            "components of WDate. Letters replaced by question marks (?)",
+            "show which components are unknown.")
 
 # Vector of text values for column labels to be used in the table.
 clabels <- c("No. SAKs", "YMD", "YM?", "Y??", "???", "Sum")
