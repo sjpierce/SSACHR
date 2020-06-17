@@ -465,9 +465,10 @@ SPDCHREW %>%
            # the window. 
            IDate < int_start(TWindow) ~ "Before",
            IDate %within% TWindow ~ "During",
-           IDate > int_end(TWindow) ~ "After"),
-         # Convert to a factor with levels in sensible order for display.
-         IWhen = factor(IWhen, levels = IWhenLevels)) %>% 
+           IDate > int_end(TWindow) ~ "After")) %>% 
+  # Convert IWhen to a factor with levels in sensible order for display.
+  mutate(IWhen = factor(IWhen, levels = IWhenLevels, ordered = TRUE)) %>% 
+  # Add variable label.
   var_labels(IWhen = "When was incident relative to testing window?") ->
   INCEW
 ```
