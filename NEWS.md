@@ -1,3 +1,10 @@
+# SSACHR 0.3.11, 2020-06-16
+* Updated `inst/Step_01_Data_mgt.Rmd` to:
+    * Improve explantory text and comments in code chunks. 
+    * Add new tables.
+    * Add new IWhen variable. 
+    * Improve and rename objects for table captions and footnotes. 
+
 # SSACHR 0.3.10, 2020-06-05
 * Updated `inst/Step_01_Data_mgt.Rmd` to:
     * Improve code for computing WDate and related variables. 
