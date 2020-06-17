@@ -473,6 +473,31 @@ SPDCHREW %>%
   INCEW
 ```
 
+Table \ref{tab:examine_IWhen} shows the frequency distribution for when the 
+incidents occurred relative to the testing window. 
+
+```{r examine_IWhen}
+# Table caption.
+TCap <- paste("Frequency Distribution of When Incident Occurred Relative to",
+              "Testing Window")
+# Footnote text.
+FN <- paste("Only incidents with valid testing window start dates were",
+            "included. IWhen, when was incident relative to testing window?")
+
+# Vector of text values for column labels to be used in the table.
+clabels <- c("IWhen", "Frequency", "Percent")
+
+xtabs(~IWhen, data = INCEW) %>% 
+  addmargins() %>% 
+  as.data.frame() %>% 
+  mutate(Percent = 100*Freq/nrow(INCEW)) %>% 
+  kable(., format = "latex", booktabs = TRUE, caption = TCap, digits = 2,
+        col.names = clabels, format.args = list(big.mark = ",")) %>% 
+  column_spec(1:3, width = "1.5cm") %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
+```
+
 We used one special case decision rule when classifying incidents. If an 
 incident record had been previously linked to the perpetrator's earliest SAK in
 the SPD tibble, then the *IID* variable in the INC record will have a value 
