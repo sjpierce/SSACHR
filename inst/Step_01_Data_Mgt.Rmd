@@ -512,13 +512,13 @@ classifies an incident as occurring during the testing window even though
 
 ```{r examine_IDate}
 # Table caption.
-T2cap <- paste("Crosstabulation of Whether Incident Date Was Within Testing",
-               "Window and Whether Incident Matched to Perpetrator's Earliest",
-               "SAK")
+TCap <- paste("Crosstabulation of Whether Incident Date Was Within Testing",
+              "Window and Whether Incident Matched to Perpetrator's Earliest",
+              "SAK")
 # Footnote text.
-FN2 <- paste("Cells contain counts of incidents. Only incidents with valid",
-             "testing window start dates were included. ESAK, earliest sexual",
-             "assaut kit; IDate, incident date; TWindow, testing window.")
+FN <- paste("Cells contain counts of incidents. Only incidents with valid",
+            "testing window start dates were included. ESAK, earliest sexual",
+            "assault kit; IDate, incident date; TWindow, testing window.")
 
 # Vector of text values for column labels to be used in the table.
 clabels <- c("IDate in TWindow", "FALSE", "TRUE", "Sum")
@@ -527,12 +527,12 @@ xtabs(~IDate %within% TWindow + (OID_IID == IID), addNA = TRUE, data = INCEW) %>
   addmargins() %>% 
   as.data.frame() %>% 
   pivot_wider(names_from = OID_IID....IID, values_from = Freq) %>% 
-  kable(., format = "latex", booktabs = TRUE, caption = T2cap, 
+  kable(., format = "latex", booktabs = TRUE, caption = TCap, 
         col.names = clabels, format.args = list(big.mark = ",")) %>% 
   add_header_above(c("", "Matched to ESAK" = 2, "")) %>% 
   column_spec(1, width = "3cm") %>% 
   column_spec(2:4, width = "1.5cm") %>% 
-  footnote(general = FN2, general_title = "Note: ", footnote_as_chunk = TRUE,
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
 
