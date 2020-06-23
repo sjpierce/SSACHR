@@ -437,7 +437,7 @@ offender-level dataset.
 
 \FloatBarrier
 
-## Merge Testing Window Start Date Onto Incident Data
+## Merge Testing Window Variables Onto Incident Data
 The next step is to merge variables from *SPDCHREW* onto the incident data in 
 *INC* so that we can classify each incident according to whether it occurred 
 before, during, or after the earliest testing window for the offender. Along the
