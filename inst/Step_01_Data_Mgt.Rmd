@@ -441,8 +441,10 @@ offender-level dataset.
 The next step is to merge variables from *SPDCHREW* onto the incident data in 
 *INC* so that we can classify each incident according to whether it occurred 
 before, during, or after the earliest testing window for the offender in the new
-*IWhen* variable. Along the way we subset down to the records that have
-non-missing WDate values and save to a new tibble called *INCEW*.
+*IWhen* variable. Along the way we rename some variables and update variable 
+labels for clarity. Then we select only the variables we need to keep and subset
+down to the records that have non-missing WDate values and save to a new 
+tibble called *INCEW*.
 
 ```{r merge_SPDCHREW_INC}
 # Object to hold names of IWhen levels.
