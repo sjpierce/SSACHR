@@ -505,7 +505,7 @@ matching the *OID_IID* variable merged in from the SPDCHREW tibble. Such
 incidents must by definition be treated as occurring during the testing window
 even if the *IDate* lies outside the window. This reflects the notion that we 
 are trusting the *SDate* values more than *IDate* values when constructing
-*WDate* ad *TWindow*. Table \ref{tab:examine_IDate} shows that there are only a
+*WDate* and *TWindow*. Table \ref{tab:examine_IDate} shows that there are only a
 few incidents matched to the perpetrator's earliest SAK where this decision rule
 classifies an incident as occurring during the testing window even though
 *IDate* actually falls outside that date interval. 
