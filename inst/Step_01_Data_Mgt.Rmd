@@ -481,8 +481,14 @@ SPDCHREW %>%
            IDate > int_end(TWindow) ~ "After")) %>% 
   # Convert IWhen to a factor with levels in sensible order for display.
   mutate(IWhen = factor(IWhen, levels = IWhenLevels, ordered = TRUE)) %>% 
-  # Add variable label.
-  var_labels(IWhen = "When was incident relative to testing window?") ->
+  # Add variable labels.
+  var_labels(IWhen = "When was incident relative to testing window?") %>% 
+  # Retain only variables we need, in sensible order. 
+  select(RType, OID, IID, IDate, OAgeI, INARR, INCHG, INJUD, IAMiss, ICMiss,
+         IDateImp, CSC_ARR, CSC_CHG, CSC_JUD, CSC_CON, CSC_ANY, ESAKID, 
+         ESAK_IID, WDate, TWindow, IWhen) %>% 
+  # Add another variable label that was otherwise being dropped. 
+  var_labels(TWindow = "Testing Window Date Interval") ->
   INCEW
 ```
 
