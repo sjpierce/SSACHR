@@ -560,6 +560,19 @@ xtabs(~IDate %within% TWindow + (ESAK_IID == IID), addNA = TRUE, data = INCEW) %
 
 ## Merge Testing Window Variables Onto Arrest Records
 
+```{r create_ARREW}
+INCEW %>% 
+  # Retain only variables we need to merge into ARR.
+  select(IID, ESAKID, ESAK_IID, WDate, TWindow, IWhen) %>% 
+  # Merge INCEW variables onto ARR rows. 
+  right_join(x = ., y = ARR, by = "IID") %>% 
+  # Retain only INC records for offenders with non-missing WDate values. 
+  filter(is.na(WDate) == FALSE) %>% 
+  # Retain only variables we need, in sensible order. 
+  select(all_of(c(names(ARR), twvars))) ->
+  ARREW 
+```
+
 \FloatBarrier
 
 ## Aggregate and Merge Datasets
