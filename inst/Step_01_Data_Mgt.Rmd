@@ -418,7 +418,14 @@ addmargins(xtabs(~OID_NSAK + WDate.Status, addNA = TRUE, data = SPDCHRE)) %>%
 ```{r create_SPDCHREW}
 SPDCHRE %>% 
   # Retain only the earliest SAKs with known WDate values. 
-  filter(WDate.Status == "Known") ->
+  filter(WDate.Status == "Known") %>% 
+  # Rename variables for clarity. 
+  dplyr::rename(ESAKID = SAKID, 
+                ESAK_IID = OID_IID) %>% 
+  # Add variable labels.
+  var_labels(ESAKID = "SAK ID for Offender's Earliest SAK",
+             ESAK_IID = "Incident ID for Offender's Earliest SAK",
+             TWindow = "Testing Window Date Interval") ->
   SPDCHREW
 ```
 
