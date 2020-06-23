@@ -450,7 +450,7 @@ labels for clarity. Then we select only the variables we need to keep and subset
 down to the records that have non-missing WDate values and save to a new 
 tibble called *INCEW*.
 
-```{r merge_SPDCHREW_INC}
+```{r create_INCEW}
 # Object to hold names of IWhen levels.
 IWhenLevels <- c("Before", "During", "After")
 
