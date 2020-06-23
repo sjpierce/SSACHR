@@ -538,6 +538,10 @@ xtabs(~IDate %within% TWindow + (OID_IID == IID), addNA = TRUE, data = INCEW) %>
 
 \FloatBarrier
 
+## Merge Testing Window Variables Onto Arrest Records
+
+\FloatBarrier
+
 ## Aggregate and Merge Datasets
 
 ```{r merge_IDN_CON}
