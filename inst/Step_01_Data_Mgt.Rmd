@@ -569,7 +569,9 @@ INCEW %>%
   # Retain only INC records for offenders with non-missing WDate values. 
   filter(is.na(WDate) == FALSE) %>% 
   # Retain only variables we need, in sensible order. 
-  select(all_of(c(names(ARR), twvars))) ->
+  select(all_of(c(names(ARR), twvars))) %>% 
+  # Add another variable label that was otherwise being dropped. 
+  var_labels(TWindow = "Testing Window Date Interval") ->
   ARREW 
 ```
 
