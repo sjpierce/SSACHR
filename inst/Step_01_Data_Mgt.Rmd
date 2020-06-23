@@ -677,14 +677,14 @@ available).
 \FloatBarrier
 
 ## Sex
-```{r}
+```{r examine_Sex}
 kable(freq(as_factor(IDN$Sex)),  digits = 2, caption = "Offender Sex")
 ```
 
 \FloatBarrier
 
 ## Race
-```{r}
+```{r examine_Race}
 kable(freq(as_factor(IDN$Race), user.missing = "Unknown"),  digits = 2, 
       caption = "Offender Race")
 ```
