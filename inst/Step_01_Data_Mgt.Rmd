@@ -444,7 +444,7 @@ before, during, or after the earliest testing window for the offender in the new
 *IWhen* variable. Along the way we subset down to the records that have
 non-missing WDate values and save to a new tibble called *INCEW*.
 
-```{r merge_WDate}
+```{r merge_WDate_INC}
 # Object to hold names of IWhen levels.
 IWhenLevels <- c("Before", "During", "After")
 
