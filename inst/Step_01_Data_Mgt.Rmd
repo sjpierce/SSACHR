@@ -231,7 +231,8 @@ read_sav(here::here("./inst/extdata/SAK_PERP_2018-04-03.sav"),
   # Add a variable showing how many unique SAKs the offender has.
   add_count(OID, name = "OID_NSAK") %>% 
   # Make a OID variable label match the lbel used in CHR data sets. 
-  var_labels(OID = "Offender ID (de-identified)") ->
+  var_labels(OID = "Offender ID (de-identified)",
+             OID_NSAK = "No. of unique SAKs associated with this offender") ->
   SPD
 ```
 
