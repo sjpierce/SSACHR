@@ -542,10 +542,10 @@ FN <- paste("Cells contain counts of incidents. Only incidents with valid",
 # Vector of text values for column labels to be used in the table.
 clabels <- c("IDate in TWindow", "FALSE", "TRUE", "Sum")
 
-xtabs(~IDate %within% TWindow + (OID_IID == IID), addNA = TRUE, data = INCEW) %>% 
+xtabs(~IDate %within% TWindow + (ESAK_IID == IID), addNA = TRUE, data = INCEW) %>% 
   addmargins() %>% 
   as.data.frame() %>% 
-  pivot_wider(names_from = OID_IID....IID, values_from = Freq) %>% 
+  pivot_wider(names_from = ESAK_IID....IID, values_from = Freq) %>% 
   kable(., format = "latex", booktabs = TRUE, caption = TCap, 
         col.names = clabels, format.args = list(big.mark = ",")) %>% 
   add_header_above(c("", "Matched to ESAK" = 2, "")) %>% 
