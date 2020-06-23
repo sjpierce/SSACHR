@@ -464,7 +464,7 @@ IWhenLevels <- c("Before", "During", "After")
 # Data management for the merge. 
 SPDCHREW %>% 
   # Retain only variables we need to merge into INC.
-  select(SAKID, OID, OID_IID, WDate, TWindow) %>% 
+  select(ESAKID, OID, ESAK_IID, WDate, TWindow) %>% 
   # Merge SPDCHREW variables onto INC rows. 
   right_join(x = ., y = INC, by = "OID") %>% 
   # Retain only INC records for offenders with non-missing WDate values. 
@@ -473,7 +473,7 @@ SPDCHREW %>%
   mutate(# Classify incidents as before, during, or after the testing window. 
          IWhen = case_when(
            # If incident matched to earliest SAK, incident was in the window.
-           OID_IID == IID ~ "During",
+           ESAK_IID == IID ~ "During",
            # Otherwise, compare IDate to TWindow to determine if incident was in
            # the window. 
            IDate < int_start(TWindow) ~ "Before",
