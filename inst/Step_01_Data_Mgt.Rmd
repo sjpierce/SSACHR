@@ -355,6 +355,7 @@ SPDCHR %>%
            is.na(WDate) == FALSE ~ "Known"),
          # Testing Window Date Interval.
          TWindow = interval(WDate, WDate + 118)) %>% 
+  # Add variable labels.
   var_labels(WDate = "Testing Window Start Date",
              WDate.Yr = "Testing Window Start Year",
              WDate.Mt = "Testing Window Start Month",
@@ -366,6 +367,8 @@ SPDCHR %>%
   group_by(OID) %>% 
   filter(row_number() == 1) %>% 
   ungroup() %>% 
+  # Add another variable label that was otherwise being dropped when it was 
+  # assigned in the prior var_labels() call. 
   var_labels(TWindow = "Testing Window Date Interval") ->
   SPDCHRE
 ```
