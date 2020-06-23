@@ -355,21 +355,20 @@ SPDCHR %>%
            is.na(WDate) == FALSE ~ "Known"),
          # Testing Window Date Interval.
          TWindow = interval(WDate, WDate + 118)) %>% 
-  # Add variable labels.
-  var_labels(WDate = "Testing Window Start Date",
-             WDate.Yr = "Testing Window Start Year",
-             WDate.Mt = "Testing Window Start Month",
-             WDate.Status = "Testing Window Start Date Status") %>% 
   # Sort records by year, month, and date but ensure that within each layer 
   # records with missing data come first. 
   arrange(OID, -is.na(WDate.Yr), WDate.Yr, -is.na(WDate.Mt), WDate.Mt, WDate) %>% 
-  # Group by OID, then select first record for each offender and save a tibble. 
+  # Group by OID, then select first record for each offender. 
   group_by(OID) %>% 
   filter(row_number() == 1) %>% 
+  # Ungroup to ensure simpler, more predictable tibble behavior later. 
   ungroup() %>% 
-  # Add another variable label that was otherwise being dropped when it was 
-  # assigned in the prior var_labels() call. 
-  var_labels(TWindow = "Testing Window Date Interval") ->
+  # Add variable labels. 
+  var_labels(WDate = "Testing Window Start Date",
+             WDate.Yr = "Testing Window Start Year",
+             WDate.Mt = "Testing Window Start Month",
+             WDate.Status = "Testing Window Start Date Status",
+             TWindow = "Testing Window Date Interval") ->
   SPDCHRE
 ```
 
@@ -447,6 +446,12 @@ trimming the *SPDCHRE* dataset down to just those offenders who have a known
 offender-level dataset. 
 
 \FloatBarrier
+
+## Merge Testing Window Variables Onto IDN Data
+
+CONTINUE HERE
+May need to replace SPDCHREW with IDNEW instead
+
 
 ## Merge Testing Window Variables Onto Incident Data
 The next step is to merge variables from *SPDCHREW* onto the incident data in 
