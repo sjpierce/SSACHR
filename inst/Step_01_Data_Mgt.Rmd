@@ -461,6 +461,9 @@ tibble called *INCEW*.
 # Object to hold names of IWhen levels.
 IWhenLevels <- c("Before", "During", "After")
 
+# Object to hold names of crucial testing window variables
+twvars <- c("IID", "ESAKID", "ESAK_IID", "WDate", "TWindow", "IWhen")
+
 # Data management for the merge. 
 SPDCHREW %>% 
   # Retain only variables we need to merge into INC.
@@ -484,9 +487,7 @@ SPDCHREW %>%
   # Add variable labels.
   var_labels(IWhen = "When was incident relative to testing window?") %>% 
   # Retain only variables we need, in sensible order. 
-  select(RType, OID, IID, IDate, OAgeI, INARR, INCHG, INJUD, IAMiss, ICMiss,
-         IDateImp, CSC_ARR, CSC_CHG, CSC_JUD, CSC_CON, CSC_ANY, ESAKID, 
-         ESAK_IID, WDate, TWindow, IWhen) %>% 
+  select(all_of(c(names(INC), twvars))) %>% 
   # Add another variable label that was otherwise being dropped. 
   var_labels(TWindow = "Testing Window Date Interval") ->
   INCEW
