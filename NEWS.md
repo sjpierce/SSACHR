@@ -1,3 +1,11 @@
+# SSACHR 0.3.12, 2020-06-23
+* Updated `inst/Step_01_Data_mgt.Rmd` to:
+    * Change headings to improve organization and clarity.
+    * Rename chunks and selected variables.
+    * Simplify code and improve comments. 
+    * Merge testing window variables onto INC and ARR data.
+
+
 # SSACHR 0.3.11, 2020-06-16
 * Updated `inst/Step_01_Data_mgt.Rmd` to:
     * Improve explantory text and comments in code chunks. 
