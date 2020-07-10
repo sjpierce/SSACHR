@@ -115,6 +115,7 @@ Load R packages that we need to get additional functions.
 
 ``` {r load_packages}
 library(here)             # for here()
+library(plyr)             # For mapvalues()
 library(dplyr)            # for %>%, filter(), group_by(), & summarise()
 library(tidyr)            # for arrange(), filter(), group_by(), mutate(),  
                           # spread(), summarise(), %>%, etc. 
@@ -129,7 +130,6 @@ library(lubridate)        # For date conversion, eg. ymd(), time_length().
 library(sjlabelled)       # For set_label(), get_label()
 library(haven)            # for read_spss()
 library(lattice)          # For xyplot(), bwplot(), etc. 
-library(plyr)             # For mapvalues()
 library(psych)            # For describe()
 library(car)              # For recode()
 library(SSACHR)           # for rvlabel()
@@ -1187,6 +1187,7 @@ generates the PDF file containing explanatory text, R code, plus R output
 ``` {r show_citations}
 sessionInfo()
 citation("here")
+citation("plyr")
 citation("dplyr")
 citation("tidyr")
 citation("rmarkdown")
@@ -1197,7 +1198,6 @@ citation("lubridate")
 citation("sjlabelled")
 citation("haven")
 citation("lattice")
-citation("plyr")
 citation("psych")
 citation("car")
 ```
