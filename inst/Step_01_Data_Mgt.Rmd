@@ -274,7 +274,7 @@ offenders for whom we have criminal history data (SPDCHR).
 
 ```{r create_SPDCHR}
 SPD %>% 
-  # Retain only only offenders with CHR data. 
+  # Retain only offenders with CHR data. 
   filter(OIDinCHR == "Yes") -> 
   SPDCHR 
 ```
