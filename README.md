@@ -93,7 +93,7 @@ Text goes here.
 # Need to add example code
 ```
 
-# Software Information
+## Software Information
 
 We use R Markdown to enhance reproducibility because it provides
 excellent support for generating dynamic reports (Mair, 2016). Knitting
@@ -110,7 +110,7 @@ text, R code, plus R output (both text and graphics).
     LaTeX files produced by pandoc into PDF files. However, it may be
     viable to use [MiKTeX](https://miktex.org) instead.
 
-# References
+## References
 
 Bryan, J. (2018). Excuse me, do you have a moment to talk about version
 control? *The American Statistician, 72*(1), 20-27.
@@ -139,7 +139,7 @@ Torvalds, L., Hamano, J. C., & other contributors to the Git Project.
 (2020). Git for Windows (Version 2.26.2) \[Computer program\]. Brooklyn,
 NY: Software Freedom Conservancy. Retrieved from <https://git-scm.com>
 
-# Funding Support
+## Funding Support
 
 This R package and repository are based on research supported by the
 following grant.
@@ -150,7 +150,7 @@ using DNA evidence. \[NIJ Award \# 2014-NE-BX-0006, Awarded, $699,533\].
 Sponsor: National Institute of Justice. Location: Michigan State
 University, East Lansing, MI.
 
-# Disclaimer
+## Disclaimer
 
 This research was supported by a grant from the National Institute of
 Justice, United States (2014-NE-BX-0006). The opinions or points of view
@@ -159,7 +159,7 @@ package and repository) are solely those of the authors and do not
 reflect the official positions of any participating organization or the
 U.S. Department of Justice.
 
-# Task List
+## Task List
 
   - Improve this file.
   - Create a script to generate a data flow diagram.
