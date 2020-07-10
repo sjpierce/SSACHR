@@ -104,8 +104,19 @@ been prevented if timely testing had been done on the SAKs in this sample.
 
 # Setup
 Set global R chunk options (local chunk options will over-ride global options). 
+The method for creating a size option that controls font size in code chunks and
+their text output is based on an answer to a question posted on   
+[stackoverflow.com](https://stackoverflow.com/questions/25646333/code-chunk-font-size-in-rmarkdown-with-knitr-and-latex/46526740#46526740). 
 
-``` {r global_options}
+``` {r global_options, cfsize = "footnotesize"}
+# Create a custom chunk hook/option for controlling font size in chunk & output.
+def.chunk.hook  <- knitr::knit_hooks$get("chunk")
+knitr::knit_hooks$set(chunk = function(x, options) {
+  x <- def.chunk.hook(x, options)
+  ifelse(options$cfsize != "normalsize", paste0("\n \\", options$cfsize,"\n\n", 
+                                              x, "\n\n \\normalsize"), x)
+  })
+
 # Global chunk options (over-ridden by local chunk options)
 knitr::opts_chunk$set(include  = TRUE, echo = TRUE, error = TRUE, 
                       message = TRUE, warning = TRUE)
