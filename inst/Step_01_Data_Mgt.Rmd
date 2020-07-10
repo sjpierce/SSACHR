@@ -291,9 +291,9 @@ The testing window for a SAK should start on the date it was collected. We
 already have a variable called *SDate* that records this information. However, 
 some SAKs have only partial date information, leaving *SDate* with NA values. A
 very small number of SAKs have completely missing data on *SDate* such that not
-even the year of collection is known, but most that of the cases with missing 
-SDate values have the year of collection recorded in *SDate.Yr* and some also
-have the month recorded in *SDate.Mt*.
+even the year of collection is known, but most of the cases with missing *SDate*
+values have the year of collection recorded in *SDate.Yr* and some also have the
+month recorded in *SDate.Mt*.
 
 SAK collection dates (*SDate*) were recorded by hospitals (or other healthcare
 providers) who actually collected the SAKs. These dates are very likely to be
@@ -316,9 +316,9 @@ For SAKs that are not linked to an incident record, *OID_IID* = "" (an empty
 string) and *OID_IDate* = NA. Therefore, the only date information available is
 in the SAK collection date variables (*SDate*, *SDate.Yr*, and *SDate.Mt*). If
 we have a valid value in *SDate*, then *WDate* = *SDate*. When we only have
-partial date information, then SDate is missing but SDate.Yr and possibly also
-SDate.Mt have valid values, but we cannot assign a precise date to the SAK
-collection and *WDate* ends up with a missing value.
+partial date information, then *SDate* is missing but *SDate.Yr* and possibly
+also *SDate.Mt* have valid values, but we cannot assign a precise date to the
+SAK collection and *WDate* ends up with a missing value.
 
 For SAKs that were linked to an incident record, *OID_IID* stores the incident
 ID value that links to the CHR incident record in the *INC* data and *OID_IDate*
