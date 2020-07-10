@@ -58,8 +58,8 @@ Part of the analysis will require splitting each offender's criminal history
 into three periods: 
 
 * Before the offender's earliest known sexual assault kit (SAK). 
-* During a *testing window* that represents a working definition for what 
-  constitutes timely forensic testing.
+* During a *testing window* that starts on the date of the offender's earliest 
+  known SAK. This window operationalizes the concept of timely forensic testing. 
 * After the end of the testing window. 
 
 # Defining Timely Testing
