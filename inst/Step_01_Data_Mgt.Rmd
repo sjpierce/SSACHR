@@ -496,7 +496,7 @@ tibble called *INCEW*.
 IWhenLevels <- c("Before", "During", "After")
 
 # Object to hold names of crucial testing window variables
-twvars <- c("IID", "ESAKID", "ESAK_IID", "WDate", "TWindow", "IWhen")
+twvars <- c("ESAKID", "ESAK_IID", "WDate", "TWindow", "IWhen")
 
 # Data management for the merge. 
 SPDCHREW %>% 
