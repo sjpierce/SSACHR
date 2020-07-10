@@ -488,7 +488,7 @@ The next step is to merge variables from *SPDCHREW* onto the incident data in
 before, during, or after the earliest testing window for the offender in the new
 *IWhen* variable. Along the way we rename some variables and update variable 
 labels for clarity. Then we select only the variables we need to keep and subset
-down to the records that have non-missing WDate values and save to a new 
+down to the records that have non-missing *WDate* values and save to a new 
 tibble called *INCEW*.
 
 ```{r create_INCEW}
