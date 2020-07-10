@@ -593,6 +593,12 @@ xtabs(~IDate %within% TWindow + (ESAK_IID == IID), addNA = TRUE, data = INCEW) %
 \FloatBarrier
 
 ## Merge Testing Window Variables Onto Arrest Records
+The next step is to merge variables from *INCEW* onto the arrest data in *ARR*
+so that we can classify each arrest offense record according to whether the
+incident associated with it occurred before, during, or after the earliest
+testing window for the offender by using *IWhen*. Then we subset down to the
+*ARR* records that have non-missing *WDate* values and select only the variables
+we need to keep before saving a new tibble called *ARREW*.
 
 ```{r create_ARREW}
 INCEW %>% 
@@ -608,6 +614,10 @@ INCEW %>%
   var_labels(TWindow = "Testing Window Date Interval") ->
   ARREW 
 ```
+
+The original *ARR* tibble had `r nrow(ARR)` arrest offense records. Dropping the
+records associated with offenders whose earliest testing window could not be
+identified leaves `r nrow(ARREW`) arrest offense records in *ARREW*.
 
 \FloatBarrier
 
