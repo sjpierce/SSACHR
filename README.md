@@ -174,3 +174,8 @@ U.S. Department of Justice.
     subsequent emails.
   - Summarize CHRs before vs after perpetrator’s earliest SAK date in
     addition to overall. See 2020-04-08 email.
+  - Create a folder structure diagram in `README.Rmd` and `README.md`.
+    Check the following web links for ideas how to do it.
+      - <https://tex.stackexchange.com/questions/5073/making-a-simple-directory-tree>
+      - <https://tex.stackexchange.com/questions/328886/making-a-directory-tree-of-folders-and-files>
+      - <https://tex.stackexchange.com/questions/361257/make-directory-tree-with-folders-and-files-along-with-comments-in-tikz>
