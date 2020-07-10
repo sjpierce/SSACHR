@@ -119,7 +119,7 @@ knitr::knit_hooks$set(chunk = function(x, options) {
 
 # Global chunk options (over-ridden by local chunk options)
 knitr::opts_chunk$set(include  = TRUE, echo = TRUE, error = TRUE, 
-                      message = TRUE, warning = TRUE)
+                      message = TRUE, warning = TRUE, cfsize = "footnotesize")
 ```
 
 Load R packages that we need to get additional functions. 
