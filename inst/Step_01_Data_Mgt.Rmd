@@ -604,7 +604,7 @@ INCEW %>%
   filter(is.na(WDate) == FALSE) %>% 
   # Retain only variables we need, in sensible order. 
   select(all_of(c(names(ARR), twvars))) %>% 
-  # Add another variable label that was otherwise being dropped. 
+  # Add a variable label that was otherwise being dropped. 
   var_labels(TWindow = "Testing Window Date Interval") ->
   ARREW 
 ```
