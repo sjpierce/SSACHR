@@ -600,7 +600,7 @@ INCEW %>%
   select(IID, ESAKID, ESAK_IID, WDate, TWindow, IWhen) %>% 
   # Merge INCEW variables onto ARR rows. 
   right_join(x = ., y = ARR, by = "IID") %>% 
-  # Retain only INC records for offenders with non-missing WDate values. 
+  # Retain only ARR records for offenders with non-missing WDate values. 
   filter(is.na(WDate) == FALSE) %>% 
   # Retain only variables we need, in sensible order. 
   select(all_of(c(names(ARR), twvars))) %>% 
