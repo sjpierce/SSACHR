@@ -1,10 +1,22 @@
+# SSACHR 0.3.13, 2020-07-10
+* Updated `README.Rmd` and `README.md` heading structure and task list. 
+* Updated `inst/Step_01_Data_mgt.Rmd` to:
+    * Update heading structure. 
+    * Change order of loading and citing R packages. 
+    * Make code chunks & R text output use smaller font size by adding a custom 
+      chunk hook/option called cfsize.
+    * Improve formatting consistency for variable and tibble names in 
+      explanatory text.
+    * Add and improve explanatory text. 
+    * Merge testing window variables onto ARR data. 
+    * Improve comments in some code chunks. 
+
 # SSACHR 0.3.12, 2020-06-23
 * Updated `inst/Step_01_Data_mgt.Rmd` to:
     * Change headings to improve organization and clarity.
     * Rename chunks and selected variables.
     * Simplify code and improve comments. 
     * Merge testing window variables onto INC and ARR data.
-
 
 # SSACHR 0.3.11, 2020-06-16
 * Updated `inst/Step_01_Data_mgt.Rmd` to:
