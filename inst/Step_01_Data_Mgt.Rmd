@@ -617,8 +617,33 @@ INCEW %>%
 
 The original *ARR* tibble had `r nrow(ARR)` arrest offense records. Dropping the
 records associated with offenders whose earliest testing window could not be
-identified leaves `r nrow(ARREW`) arrest offense records in *ARREW*.
+identified leaves `r nrow(ARREW)` arrest offense records in *ARREW*. Table 
+\ref{tab:examine_ARREW_IWhen} shows how many arrest offense records were 
+associated with incidents that occurred before, during, and after the testing 
+window. 
 
+```{r examine_ARREW_IWhen}
+# Table caption.
+TCap <- paste("Frequency Distribution of When the Associated Incident Occurred",
+              "Relative to Testing Window for Arrest Offense Records")
+# Footnote text.
+FN <- paste("Only arrest offense records for incidents with valid testing",
+            "window start dates were included. IWhen, when was incident", 
+            "relative to testing window?")
+
+# Vector of text values for column labels to be used in the table.
+clabels <- c("IWhen", "Frequency", "Percent")
+
+xtabs(~IWhen, data = ARREW) %>% 
+  addmargins() %>% 
+  as.data.frame() %>% 
+  mutate(Percent = 100*Freq/nrow(ARREW)) %>% 
+  kable(., format = "latex", booktabs = TRUE, caption = TCap, digits = 2,
+        col.names = clabels, format.args = list(big.mark = ",")) %>% 
+  column_spec(1:3, width = "1.5cm") %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
+```
 \FloatBarrier
 
 ## Aggregate and Merge Datasets
