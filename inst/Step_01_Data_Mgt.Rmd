@@ -647,6 +647,61 @@ xtabs(~IWhen, data = ARREW) %>%
 
 \FloatBarrier
 
+## Merge Testing Window Variables Onto Prosecutor Charge Records
+The next step is to merge variables from *INCEW* onto the arrest data in *CHG*
+so that we can classify each prosecutor charge record according to whether the
+incident associated with it occurred before, during, or after the earliest
+testing window for the offender by using *IWhen*. Then we subset down to the
+*CHG* records that have non-missing *WDate* values and select only the variables
+we need to keep before saving a new tibble called *CHGEW*.
+
+```{r create_CHGEW}
+INCEW %>% 
+  # Retain only variables we need to merge into ARR.
+  select(IID, ESAKID, ESAK_IID, WDate, TWindow, IWhen) %>% 
+  # Merge INCEW variables onto ARR rows. 
+  right_join(x = ., y = CHG, by = "IID") %>% 
+  # Retain only CHG records for offenders with non-missing WDate values. 
+  filter(is.na(WDate) == FALSE) %>% 
+  # Retain only variables we need, in sensible order. 
+  select(all_of(c(names(CHG), twvars))) %>% 
+  # Add a variable label that was otherwise being dropped. 
+  var_labels(TWindow = "Testing Window Date Interval") ->
+  CHGEW 
+```
+
+The original *CHG* tibble had `r nrow(CHG)` prosecutor charge records. Dropping the
+records associated with offenders whose earliest testing window could not be
+identified leaves `r nrow(CHGEW)` prosecutor charge  records in *CHGEW*. Table 
+\ref{tab:examine_CHGEW_IWhen} shows how many prosecutor charge records were 
+associated with incidents that occurred before, during, and after the testing 
+window. 
+
+```{r examine_CHGEW_IWhen}
+# Table caption.
+TCap <- paste("Frequency Distribution of When the Associated Incident Occurred",
+              "Relative to Testing Window for Prosecutor Charge Records")
+# Footnote text.
+FN <- paste("Only prosecutor charge records for incidents with valid testing",
+            "window start dates were included. IWhen, when was incident", 
+            "relative to testing window?")
+
+# Vector of text values for column labels to be used in the table.
+clabels <- c("IWhen", "Frequency", "Percent")
+
+xtabs(~IWhen, data = ARREW) %>% 
+  addmargins() %>% 
+  as.data.frame() %>% 
+  mutate(Percent = 100*Freq/nrow(CHGEW)) %>% 
+  kable(., format = "latex", booktabs = TRUE, caption = TCap, digits = 2,
+        col.names = clabels, format.args = list(big.mark = ",")) %>% 
+  column_spec(1:3, width = "1.5cm") %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
+```
+
+\FloatBarrier
+
 ## Aggregate and Merge Datasets
 
 ```{r merge_IDN_CON}
