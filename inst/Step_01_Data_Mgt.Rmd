@@ -689,7 +689,7 @@ FN <- paste("Only prosecutor charge records for incidents with valid testing",
 # Vector of text values for column labels to be used in the table.
 clabels <- c("IWhen", "Frequency", "Percent")
 
-xtabs(~IWhen, data = ARREW) %>% 
+xtabs(~IWhen, data = CHGEW) %>% 
   addmargins() %>% 
   as.data.frame() %>% 
   mutate(Percent = 100*Freq/nrow(CHGEW)) %>% 
