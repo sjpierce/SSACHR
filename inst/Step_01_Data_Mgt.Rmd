@@ -459,7 +459,7 @@ offender-level dataset.
 \FloatBarrier
 
 ## Merge Testing Window Variables Onto IDN Data
-Merging the testing window variables onto the *IDN* data in an obvious next
+Merging the testing window variables onto the *IDN* data is an obvious next
 step. Then we subset down to the records that have non-missing *WDate* values
 and select only the variables we need to keep before setting a variable label
 and saving to a new tibble called *IDNEW*.
