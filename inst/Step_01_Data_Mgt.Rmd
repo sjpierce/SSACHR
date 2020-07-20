@@ -702,6 +702,61 @@ xtabs(~IWhen, data = CHGEW) %>%
 
 \FloatBarrier
 
+## Merge Testing Window Variables Onto Judicial Charge Records
+The next step is to merge variables from *INCEW* onto the charge data in *JUD*
+so that we can classify each judicial charge record according to whether the
+incident associated with it occurred before, during, or after the earliest
+testing window for the offender by using *IWhen*. Then we subset down to the
+*JUD* records that have non-missing *WDate* values and select only the variables
+we need to keep before saving a new tibble called *JUDEW*.
+
+```{r create_JUDEW}
+INCEW %>% 
+  # Retain only variables we need to merge into ARR.
+  select(IID, ESAKID, ESAK_IID, WDate, TWindow, IWhen) %>% 
+  # Merge INCEW variables onto JUD rows. 
+  right_join(x = ., y = JUD, by = "IID") %>% 
+  # Retain only CHG records for offenders with non-missing WDate values. 
+  filter(is.na(WDate) == FALSE) %>% 
+  # Retain only variables we need, in sensible order. 
+  select(all_of(c(names(JUD), twvars))) %>% 
+  # Add a variable label that was otherwise being dropped. 
+  var_labels(TWindow = "Testing Window Date Interval") ->
+  JUDEW 
+```
+
+The original *JUD* tibble had `r nrow(JUD)` judicial charge records. Dropping
+the records associated with offenders whose earliest testing window could not be
+identified leaves `r nrow(JUDEW)` judicial charge records in *JUDEW*. Table
+\ref{tab:examine_JUDEW_IWhen} shows how many judicial charge records were
+associated with incidents that occurred before, during, and after the testing
+window.
+
+```{r examine_JUDEW_IWhen}
+# Table caption.
+TCap <- paste("Frequency Distribution of When the Associated Incident Occurred",
+              "Relative to Testing Window for Judicial Charge Records")
+# Footnote text.
+FN <- paste("Only judicial charge records for incidents with valid testing",
+            "window start dates were included. IWhen, when was incident", 
+            "relative to testing window?")
+
+# Vector of text values for column labels to be used in the table.
+clabels <- c("IWhen", "Frequency", "Percent")
+
+xtabs(~IWhen, data = JUDEW) %>% 
+  addmargins() %>% 
+  as.data.frame() %>% 
+  mutate(Percent = 100*Freq/nrow(JUDEW)) %>% 
+  kable(., format = "latex", booktabs = TRUE, caption = TCap, digits = 2,
+        col.names = clabels, format.args = list(big.mark = ",")) %>% 
+  column_spec(1:3, width = "1.5cm") %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
+```
+
+\FloatBarrier
+
 ## Aggregate and Merge Datasets
 
 ```{r merge_IDN_CON}
