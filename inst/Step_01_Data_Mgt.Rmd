@@ -624,8 +624,8 @@ window.
 
 ```{r examine_ARREW_IWhen}
 # Table caption.
-TCap <- paste("Frequency Distribution of When the Associated Incident Occurred",
-              "Relative to Testing Window for Arrest Offense Records")
+TCap <- paste("Frequency Distribution of When the Incident Associated With An",
+              "Arrest Offense Record Occurred Relative to Testing Window")
 # Footnote text.
 FN <- paste("Only arrest offense records for incidents with valid testing",
             "window start dates were included. IWhen, when was incident", 
@@ -734,8 +734,8 @@ window.
 
 ```{r examine_JUDEW_IWhen}
 # Table caption.
-TCap <- paste("Frequency Distribution of When the Associated Incident Occurred",
-              "Relative to Testing Window for Judicial Charge Records")
+TCap <- paste("Frequency Distribution of When the Incident Associated With A",
+              "Judicial Charge Record Occurred Relative to Testing Window")
 # Footnote text.
 FN <- paste("Only judicial charge records for incidents with valid testing",
             "window start dates were included. IWhen, when was incident", 
