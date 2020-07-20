@@ -644,6 +644,7 @@ xtabs(~IWhen, data = ARREW) %>%
   footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
+
 \FloatBarrier
 
 ## Aggregate and Merge Datasets
