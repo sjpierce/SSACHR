@@ -648,7 +648,7 @@ xtabs(~IWhen, data = ARREW) %>%
 \FloatBarrier
 
 ## Merge Testing Window Variables Onto Prosecutor Charge Records
-The next step is to merge variables from *INCEW* onto the arrest data in *CHG*
+The next step is to merge variables from *INCEW* onto the charge data in *CHG*
 so that we can classify each prosecutor charge record according to whether the
 incident associated with it occurred before, during, or after the earliest
 testing window for the offender by using *IWhen*. Then we subset down to the
@@ -659,7 +659,7 @@ we need to keep before saving a new tibble called *CHGEW*.
 INCEW %>% 
   # Retain only variables we need to merge into ARR.
   select(IID, ESAKID, ESAK_IID, WDate, TWindow, IWhen) %>% 
-  # Merge INCEW variables onto ARR rows. 
+  # Merge INCEW variables onto CHG rows. 
   right_join(x = ., y = CHG, by = "IID") %>% 
   # Retain only CHG records for offenders with non-missing WDate values. 
   filter(is.na(WDate) == FALSE) %>% 
@@ -670,17 +670,17 @@ INCEW %>%
   CHGEW 
 ```
 
-The original *CHG* tibble had `r nrow(CHG)` prosecutor charge records. Dropping the
-records associated with offenders whose earliest testing window could not be
-identified leaves `r nrow(CHGEW)` prosecutor charge  records in *CHGEW*. Table 
-\ref{tab:examine_CHGEW_IWhen} shows how many prosecutor charge records were 
-associated with incidents that occurred before, during, and after the testing 
-window. 
+The original *CHG* tibble had `r nrow(CHG)` prosecutor charge records. Dropping
+the records associated with offenders whose earliest testing window could not be
+identified leaves `r nrow(CHGEW)` prosecutor charge  records in *CHGEW*. Table
+\ref{tab:examine_CHGEW_IWhen} shows how many prosecutor charge records were
+associated with incidents that occurred before, during, and after the testing
+window.
 
 ```{r examine_CHGEW_IWhen}
 # Table caption.
-TCap <- paste("Frequency Distribution of When the Associated Incident Occurred",
-              "Relative to Testing Window for Prosecutor Charge Records")
+TCap <- paste("Frequency Distribution of When the Incident Associated With A",
+              "Prosecutor Charge Record Occurred Relative to Testing Window")
 # Footnote text.
 FN <- paste("Only prosecutor charge records for incidents with valid testing",
             "window start dates were included. IWhen, when was incident", 
