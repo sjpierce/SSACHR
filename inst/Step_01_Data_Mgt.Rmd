@@ -527,8 +527,8 @@ IDNEW %>%
   INCEW
 ```
 
-Table \ref{tab:examine_IWhen} shows the frequency distribution for when the 
-incidents occurred relative to the testing window. 
+Table \ref{tab:examine_INCEW_IWhen} shows the frequency distribution for when 
+the incidents occurred relative to the testing window. 
 
 ```{r examine_INCEW_IWhen}
 # Table caption.
