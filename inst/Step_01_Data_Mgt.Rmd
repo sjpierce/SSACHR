@@ -473,7 +473,7 @@ SPDCHREW %>%
   # Retain only IDN records for offenders with non-missing WDate values. 
   filter(is.na(WDate) == FALSE) %>%
   # Retain only variables we need, in sensible order. 
-  select(all_of(c(names(IDN), "ESAKID", "WDate", "TWindow"))) %>% 
+  select(all_of(c(names(IDN), "ESAKID", "ESAK_IID", "WDate", "TWindow"))) %>% 
   # Add a variable label that was otherwise being dropped. 
   var_labels(TWindow = "Testing Window Date Interval") ->
   IDNEW
