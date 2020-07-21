@@ -1,3 +1,12 @@
+# SSACHR 0.3.14, 2020-07-20
+* Updated `inst/Step_01_Data_mgt.Rmd` to:
+    * Switched source used to merge testing window variables onto INC data. 
+    * Add an extra variable to IDNEW. 
+    * Added more output tables and improved table captions. 
+    * Fix typos in explanatory text. 
+    * Add sections for merging testing window variables onto CHG and JUD data. 
+    * Move and improve code for merging NCON variable onto IDN data. 
+
 # SSACHR 0.3.13, 2020-07-10
 * Updated `README.Rmd` and `README.md` heading structure and task list. 
 * Updated `inst/Step_01_Data_mgt.Rmd` to:
