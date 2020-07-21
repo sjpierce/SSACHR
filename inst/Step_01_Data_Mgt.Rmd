@@ -271,6 +271,24 @@ JUD %>%
 
 \FloatBarrier
 
+## Merge Number of Convictions onto IDN Dataset
+
+```{r merge_CON_IDN}
+# Merge NCON conviction charge count variable into IDN.
+CON %>% 
+  group_by(OID) %>% 
+  summarize_at(.vars = "NCON", .funs = c("sum")) %>% 
+  ungroup() %>% 
+  left_join(x = IDN, y = ., by = "OID") %>% 
+  # Recode NCON variable to replace NA with 0. 
+  replace_na(data = ., replace = list(NCON = 0)) %>%  
+  # Retain only variables we need, in sensible order. 
+  select(all_of(c(names(IDN), "NCON"))) %>% 
+  # Add variable label. 
+  var_labels(NCON = "No. of adjudicated charge records w/ convictions") -> 
+  IDN
+```
+
 ## Identify Earliest SAK for Each Offender
 For the paper, we need to identify the earliest SAK associated with each 
 offender who has criminal history data and store those in a new dataset. Along 
@@ -753,24 +771,6 @@ xtabs(~IWhen, data = JUDEW) %>%
   column_spec(1:3, width = "1.5cm") %>% 
   footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
-```
-
-\FloatBarrier
-
-## Aggregate and Merge Datasets
-
-```{r merge_IDN_CON}
-# Merge NCON conviction charge count variable into IDN.
-CON %>% 
-  group_by(OID) %>% 
-  summarize_at(.vars = "NCON", .funs = c("sum")) %>% 
-  ungroup() %>% 
-  left_join(x = IDN, y = ., by = "OID") %>% 
-  # Add variable label. 
-  var_labels(NCON = "No. of adjudicated charge records w/ convictions") %>% 
-  # Recode NCON variable to replace NA with 0. 
-  mutate(NCON = if_else(is.na(NCON), true = 0, false = NCON)) -> 
-  IDN2
 ```
 
 \FloatBarrier
