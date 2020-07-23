@@ -1,3 +1,7 @@
+# SSACHR 0.4.0, 2020-07-23
+* Renamed default Git branch from master to main using instructions at 
+  https://stevenmortimer.com/5-steps-to-change-github-default-branch-from-master-to-main/
+
 # SSACHR 0.3.14, 2020-07-20
 * Updated `inst/Step_01_Data_mgt.Rmd` to:
     * Switched source used to merge testing window variables onto INC data. 
