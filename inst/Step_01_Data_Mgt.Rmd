@@ -852,9 +852,9 @@ IDNEW %>%
 # Verify that OCSC1 = ACat12_5, OCSC2 = CCat12_5, & OCSC3 = JCat12_5.
 # This compares incident count variables created in SPSS to corresponding 
 # variables created in R above (to prove logic was implemented the same way).
-all(IDN$OCSC1 == IDN$ACat12_5) # Arrest incident counts
-all(IDN$OCSC2 == IDN$CCat12_5) # Charge incident counts
-all(IDN$OCSC3 == IDN$JCat12_5) # Conviction incident counts
+all(IDNEW2$OCSC1 == IDNEW2$ACat12_5) # Arrest incident counts
+all(IDNEW2$OCSC2 == IDNEW2$CCat12_5) # Charge incident counts
+all(IDNEW2$OCSC3 == IDNEW2$JCat12_5) # Conviction incident counts
 ```
 
 
