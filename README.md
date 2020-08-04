@@ -175,8 +175,8 @@ U.S. Department of Justice.
     then classify each ARR\< CHG\< JUD, and CON record as before,
     during, or after the the testing window. See 2020-04-08 email and
     subsequent emails.
-  - Summarize CHRs before vs after perpetrator’s earliest SAK date in
-    addition to overall. See 2020-04-08 email.
+  - Summarize CHRs before, during, and after the testing window, per
+    2020-04-08 email thread.
   - Create a folder structure diagram in `README.Rmd` and `README.md`.
     Check the following web links for ideas how to do it.
       - <https://tex.stackexchange.com/questions/5073/making-a-simple-directory-tree>
