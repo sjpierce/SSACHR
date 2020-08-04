@@ -834,12 +834,12 @@ IDNEW %>%
   left_join(x = ., y = CHG2, by = "OID") %>% 
   # Merge in JCat12 incident count variables
   left_join(x = ., y = JUD2, by = "OID") %>% 
+  # Replace all NA values in the new variables with 0. 
+  mutate(across(.cols = all_of(acjvars), .fns = replace_na, replace = 0)) -> 
+  IDNEW2
 ```
 
 ```{r}
-# Recode every variable named in vars to replace NA with 0. 
-IDN[, acjvars] <- apply(IDN[, acjvars], 2, function(x) {x <- recode(x, "NA=0"); x})
-
 # Verify that OCSC1 = ACat12_5, OCSC2 = CCat12_5, & OCSC3 = JCat12_5.
 # This compares incident count variables created in SPSS to corresponding 
 # variables created in R above (to prove logic was implemented the same way).
