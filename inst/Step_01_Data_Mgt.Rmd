@@ -780,15 +780,15 @@ Here we aggregate the dummy coded crime category variables data first to the
 incident level to flag presence of each crime category on the incident, then 
 to offender level incident counts for each crime category. 
 
-```{r}
-# Create objects wth vectors of variable names
+```{r create_acjvars}
+# Create objects with vectors of variable names
 avars   <- paste("ACat12", c(1:12, 999), sep = "_")
 cvars   <- paste("CCat12", c(1:12, 999), sep = "_")
 jvars   <- paste("JCat12", c(1:12, 999), sep = "_") 
 acjvars <- c(avars, cvars, jvars)
 ```
 
-```{r}
+```{r create_ARR2}
 # Aggregate ACat12 dummy codes to offender level incident counts.
 ARR %>% 
   group_by(OID, IID) %>% 
@@ -800,7 +800,7 @@ ARR %>%
   ARR2
 ```
 
-```{r}         
+```{r create_CHG2}         
 # Aggregate CCat12 dummy codes to offender level incident counts.
 CHG %>% 
   group_by(OID, IID) %>% 
@@ -812,7 +812,7 @@ CHG %>%
   CHG2
 ```
 
-```{r}
+```{r create_JUD2}
 # Aggregate JCat12 dummy codes to offender level incident counts.
 JUD %>% 
   group_by(OID, IID) %>% 
