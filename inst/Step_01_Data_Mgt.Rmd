@@ -825,20 +825,15 @@ JUD %>%
   JUD2
 ```
 
+
 ```{r}
-# Merge ACat12 incident count variables into IDN -- CONTINUE HERE
-IDN2 <- merge(x = IDN, y = ARR2, by = "OID", all.x = TRUE)
-names(IDN2)
-
-left_join(x = IDN, y = ARR2, by = "OID") %>% 
-  IDN3
-
-# Merge CCat12 incident count variables into IDN
-IDN <- merge(x = IDN, y = CHG3, by = "OID", all.x = TRUE)
-names(IDN)
-
-# Merge JCat12 incident count variables into IDN
-IDN <- merge(x = IDN, y = JUD3, by = "OID", all.x = TRUE)
+IDNEW %>% 
+  # Merge in ACat12 incident count variables 
+  left_join(x = ., y = ARR2, by = "OID") %>% 
+  # Merge in CCat12 incident count variables 
+  left_join(x = ., y = CHG2, by = "OID") %>% 
+  # Merge in JCat12 incident count variables
+  left_join(x = ., y = JUD2, by = "OID") %>% 
 ```
 
 ```{r}
