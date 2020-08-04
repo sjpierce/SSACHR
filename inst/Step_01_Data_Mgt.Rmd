@@ -778,8 +778,7 @@ xtabs(~IWhen, data = JUDEW) %>%
 ### Aggregating Crime Category Variables
 Here we aggregate the dummy coded crime category variables data first to the
 incident level to flag presence of each crime category on the incident, then 
-to offender level incident counts for each crime category. The incident counts 
-are then merged onto the IDN data frame. 
+to offender level incident counts for each crime category. 
 
 ```{r}
 # Create objects wth vectors of variable names
@@ -825,6 +824,9 @@ JUD %>%
   JUD2
 ```
 
+The incident counts are then merged onto the *IDNEW* data frame via left_join()
+because it preserves variable attributes better than merge() and is more
+compatible with the tidyverse style and piped operator %>%.
 
 ```{r}
 IDNEW %>% 
