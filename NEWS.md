@@ -1,3 +1,13 @@
+# SSACHR 0.4.1, 2020-08-04
+* Updated `inst/Step_01_Data_mgt.Rmd` to:
+    * Switch more code to tidyverse style.
+    * Replace scoped verbs like summarize_at() with newer approach based on 
+      across(), such as summarize(across()). 
+    * Simplify method for merging extrta variables onto IDNEW.
+    * Fix a data selection problem that led to failing a cross-check on incident
+      count variables. 
+    * Rename some code chunks. 
+
 # SSACHR 0.4.0, 2020-07-23
 * Renamed default Git branch from master to main using instructions at 
   https://stevenmortimer.com/5-steps-to-change-github-default-branch-from-master-to-main/
