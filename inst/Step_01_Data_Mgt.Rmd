@@ -826,7 +826,9 @@ JUD %>%
 
 The incident counts are then merged onto the *IDNEW* data frame via left_join()
 because it preserves variable attributes better than merge() and is more
-compatible with the tidyverse style and piped operator %>%.
+compatible with the tidyverse style and piped operator %>%. After merging, we 
+replace the missing values in the new variables with zeroes, then compute some
+additional variables as well. 
 
 ```{r}
 IDNEW %>% 
@@ -837,7 +839,12 @@ IDNEW %>%
   # Merge in JCat12 incident count variables
   left_join(x = ., y = JUD2, by = "OID") %>% 
   # Replace all NA values in the new variables with 0. 
-  mutate(across(.cols = all_of(acjvars), .fns = replace_na, replace = 0)) -> 
+  mutate(across(.cols = all_of(acjvars), .fns = replace_na, replace = 0)) %>% 
+  # Count the number of crime categories associated w/ each offender.
+  rowwise() %>% 
+  mutate(ACat12_Count = sum(c_across(all_of(avars[1:12])) > 0),
+         CCat12_Count = sum(c_across(all_of(cvars[1:12])) > 0),
+         JCat12_Count = sum(c_across(all_of(jvars[1:12])) > 0)) -> 
   IDNEW2
 ```
 
@@ -848,11 +855,6 @@ IDNEW %>%
 all(IDN$OCSC1 == IDN$ACat12_5) # Arrest incident counts
 all(IDN$OCSC2 == IDN$CCat12_5) # Charge incident counts
 all(IDN$OCSC3 == IDN$JCat12_5) # Conviction incident counts
-
-# Count the number of crime categories associated w/ each offender.
-IDN$ACat12_Count <- rowSums(IDN[, avars[1:12]] > 0) # Arrest category counts
-IDN$CCat12_Count <- rowSums(IDN[, cvars[1:12]] > 0) # Charge category counts
-IDN$JCat12_Count <- rowSums(IDN[, jvars[1:12]] > 0) # Conviction category counts
 ```
 
 
