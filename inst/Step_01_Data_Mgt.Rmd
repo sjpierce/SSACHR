@@ -812,16 +812,16 @@ CHG %>%
   CHG2
 ```
 
-```{r create_JUD2}
+```{r create_CON2}
 # Aggregate JCat12 dummy codes to offender level incident counts.
-JUD %>% 
+CON %>% 
   group_by(OID, IID) %>% 
   # Aggregate dummy codes by OID + IID into binary variables
   summarize(across(.cols = all_of(jvars), .fns = max)) %>% 
   group_by(OID) %>% 
   # Aggregate dummy codes by OID into incident count variables
   summarize(across(.cols = all_of(jvars), .fns = sum)) ->
-  JUD2
+  CON2
 ```
 
 The incident counts are then merged onto the *IDNEW* data frame via left_join()
@@ -830,14 +830,14 @@ compatible with the tidyverse style and piped operator %>%. After merging, we
 replace the missing values in the new variables with zeroes, then compute some
 additional variables as well. 
 
-```{r}
+```{r create_IDNEW2}
 IDNEW %>% 
   # Merge in ACat12 incident count variables 
   left_join(x = ., y = ARR2, by = "OID") %>% 
   # Merge in CCat12 incident count variables 
   left_join(x = ., y = CHG2, by = "OID") %>% 
   # Merge in JCat12 incident count variables
-  left_join(x = ., y = JUD2, by = "OID") %>% 
+  left_join(x = ., y = CON2, by = "OID") %>% 
   # Replace all NA values in the new variables with 0. 
   mutate(across(.cols = all_of(acjvars), .fns = replace_na, replace = 0)) %>% 
   # Count the number of crime categories associated w/ each offender.
