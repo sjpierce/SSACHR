@@ -794,10 +794,10 @@ acjvars <- c(avars, cvars, jvars)
 ARR %>% 
   group_by(OID, IID) %>% 
   # Aggregate dummy codes by OID + IID into binary variables
-  summarize_at(.vars = avars, .funs = c("max")) %>% 
+  summarize(across(.cols = all_of(avars), .fns = max)) %>% 
   group_by(OID) %>% 
   # Aggregate dummy codes by OID into incident count variables
-  summarize_at(.vars = avars, .funs = c("sum")) ->
+  summarize(across(.cols = all_of(avars), .fns = sum)) ->
   ARR2
 ```
 
@@ -806,11 +806,11 @@ ARR %>%
 CHG %>% 
   group_by(OID, IID) %>% 
   # Aggregate dummy codes by OID + IID into binary variables
-  summarize_at(.vars = cvars, .funs = c("max")) %>% 
+  summarize(across(.cols = all_of(cvars), .fns = max)) %>% 
   group_by(OID) %>% 
   # Aggregate dummy codes by OID into incident count variables
-  summarize_at(.vars = cvars, .funs = c("sum")) ->
-  CHG3
+  summarize(across(.cols = all_of(cvars), .fns = sum)) ->
+  CHG2
 ```
 
 ```{r}
@@ -818,11 +818,11 @@ CHG %>%
 JUD %>% 
   group_by(OID, IID) %>% 
   # Aggregate dummy codes by OID + IID into binary variables
-  summarize_at(.vars = jvars, .funs = c("max")) %>% 
+  summarize(across(.cols = all_of(jvars), .fns = max)) %>% 
   group_by(OID) %>% 
   # Aggregate dummy codes by OID into incident count variables
-  summarize_at(.vars = jvars, .funs = c("sum")) ->
-  JUD3
+  summarize(across(.cols = all_of(jvars), .fns = sum)) ->
+  JUD2
 ```
 
 ```{r}
