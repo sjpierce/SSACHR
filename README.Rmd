@@ -207,15 +207,15 @@ participating organization or the U.S. Department of Justice.
 ## Task List
 * Improve this file. 
 * Create a script to generate a data flow diagram. 
+* Pull analysis code out of `inst/Step_01_Data_mgt.Rmd` into a separate .Rmd 
+  file. 
+* Create a make-file script once we have multiple .Rmd files.
 * Add citation for the manuscript in preparation to the reference list.
 * Edit code pasted into `inst/Step_01_Data_mgt.Rmd` from previous 
   `CHR_Summary_Step01_2017-01.19.Rmd` script to:
     * Use tidyverse style where feasible. 
     * Eliminate LaTeX Warning s such as "Label `tab:unnamed-chunk-8' multiply defined."
       that are caused by haivng multiple calls to kabl() in same code chunk. 
-* Merge earliest SAK testing window date (WDate) onto each INC record, then 
-  classify each ARR< CHG< JUD, and CON record as before, during, or after the
-  the testing window. See 2020-04-08 email and subsequent emails.
 * Summarize CHRs before, during, and after the testing window, per 2020-04-08 
   email thread.
 * Create a folder structure diagram in `README.Rmd` and `README.md`. Check the 
