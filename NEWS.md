@@ -9,7 +9,6 @@
   `inst/extdata` subfolder will exist in any repospitory ZIP files downloaded 
   from GitHub. 
 
-
 # SSACHR 0.4.1, 2020-08-04
 * Updated `inst/Step_01_Data_mgt.Rmd` to:
     * Switch more code to tidyverse style.
