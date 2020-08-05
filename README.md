@@ -132,7 +132,7 @@ the Github repositories.
 ``` r
 install.packages("devtools")
 devtools::install_github("sjpierce/piercer")
-devtools::install_github("sjpierce/SSACHR")
+devtools::install_github("sjpierce/SSACHR", ref = "main")
 ```
 
 ## Obtaining Data Files
