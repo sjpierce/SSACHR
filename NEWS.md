@@ -1,3 +1,15 @@
+# SSACHR 0.4.2, 2020-08-04
+* Updated `README.Rmd` and `README.md`:
+    * Updated installation code to pull from the GitHub main branch (because 
+      install_github() defaults to looking for branch called master, but we 
+      renamed it to main). 
+    * Added information about folder structure.
+    * Updated the task list. 
+* Added the file `inst/extdata/Read_This_Note.txt` to ensure that the 
+  `inst/extdata` subfolder will exist in any repospitory ZIP files downloaded 
+  from GitHub. 
+
+
 # SSACHR 0.4.1, 2020-08-04
 * Updated `inst/Step_01_Data_mgt.Rmd` to:
     * Switch more code to tidyverse style.
@@ -7,6 +19,7 @@
     * Fix a data selection problem that led to failing a cross-check on incident
       count variables. 
     * Rename some code chunks. 
+* Updated `README.Rmd` and `README.md` task list. 
 
 # SSACHR 0.4.0, 2020-07-23
 * Renamed default Git branch from master to main using instructions at 
