@@ -2,8 +2,8 @@ Package: SSACHR
 Type: Package
 Title: Serial Sexual Assault Study Criminal History Records Paper Research 
   Compendium
-Version: 0.4.1
-Date: 2020-08-04
+Version: 0.4.2
+Date: 2020-08-05
 Authors@R: 
     person(given = c("Steven", "J."),
            family = "Pierce",
@@ -24,7 +24,7 @@ URL: https://github.com/sjpierce/SSACHR
 BugReport: https://github.com/sjpierce/SSACHR/issues
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Suggests: 
     knitr,
     rmarkdown
