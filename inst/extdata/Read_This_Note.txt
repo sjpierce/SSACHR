@@ -1,0 +1,3 @@
+This "SSACHR/inst/extdata" folder is where you should put the SPSS data files,
+which can only be downloaded from the National Archive of Criminal Justice Data
+as discussed in the README.Rmd and README.md files.
