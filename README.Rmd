@@ -121,13 +121,13 @@ to install the other two packages directly from the Github repositories.
 ```r
 install.packages("devtools")
 devtools::install_github("sjpierce/piercer")
-devtools::install_github("sjpierce/SSACHR")
+devtools::install_github("sjpierce/SSACHR", ref = "main")
 ```
 
-```{r, echo = FALSE, eval = FALSE}
+```{r installation_code, echo = FALSE, eval = FALSE}
 install.packages("devtools")
 devtools::install_github("sjpierce/piercer")
-devtools::install_github("sjpierce/SSACHR")
+devtools::install_github("sjpierce/SSACHR", ref = "main")
 ```
 
 ## Obtaining Data Files
