@@ -1356,10 +1356,12 @@ generates the PDF file containing explanatory text, R code, plus R output
 - We recommend using [TinyTeX](https://yihui.org/tinytex/) to compile LaTeX files 
   into PDF files. However, it should be viable to use 
   [MiKTeX version 2.9](https://miktex.org) instead. 
-  
+
+This document was generated using the following computational environment and 
+dependencies: 
 
 ``` {r show_citations}
-sessionInfo()
+devtools::session_info()
 citation("here")
 citation("plyr")
 citation("dplyr")
