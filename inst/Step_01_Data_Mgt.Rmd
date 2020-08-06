@@ -1376,4 +1376,5 @@ citation("haven")
 citation("lattice")
 citation("psych")
 citation("car")
+citation("SSACHR")
 ```
