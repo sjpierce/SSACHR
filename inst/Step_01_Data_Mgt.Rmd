@@ -775,6 +775,61 @@ xtabs(~IWhen, data = JUDEW) %>%
 
 \FloatBarrier
 
+## Merge Testing Window Variables Onto Conviction Records
+The next step is to merge variables from *INCEW* onto the charge data in *CON*
+so that we can classify each conviction record according to whether the
+incident associated with it occurred before, during, or after the earliest
+testing window for the offender by using *IWhen*. Then we subset down to the
+*CON* records that have non-missing *WDate* values and select only the variables
+we need to keep before saving a new tibble called *CONEW*.
+
+```{r create_CONEW}
+INCEW %>% 
+  # Retain only variables we need to merge into ARR.
+  select(IID, ESAKID, ESAK_IID, WDate, TWindow, IWhen) %>% 
+  # Merge INCEW variables onto JUD rows. 
+  right_join(x = ., y = CON, by = "IID") %>% 
+  # Retain only CHG records for offenders with non-missing WDate values. 
+  filter(is.na(WDate) == FALSE) %>% 
+  # Retain only variables we need, in sensible order. 
+  select(all_of(c(names(JUD), twvars))) %>% 
+  # Add a variable label that was otherwise being dropped. 
+  var_labels(TWindow = "Testing Window Date Interval") ->
+  JUDEW 
+```
+
+The original *CON* tibble had `r nrow(CON)` conviction records. Dropping
+the records associated with offenders whose earliest testing window could not be
+identified leaves `r nrow(CONEW)` judicial charge records in *CONEW*. Table
+\ref{tab:examine_CONEW_IWhen} shows how many conviction records were
+associated with incidents that occurred before, during, and after the testing
+window.
+
+```{r examine_CONEW_IWhen}
+# Table caption.
+TCap <- paste("Frequency Distribution of When the Incident Associated With A",
+              "Conviction Record Occurred Relative to Testing Window")
+# Footnote text.
+FN <- paste("Only conviction records for incidents with valid testing",
+            "window start dates were included. IWhen, when was incident", 
+            "relative to testing window?")
+
+# Vector of text values for column labels to be used in the table.
+clabels <- c("IWhen", "Frequency", "Percent")
+
+xtabs(~IWhen, data = CONEW) %>% 
+  addmargins() %>% 
+  as.data.frame() %>% 
+  mutate(Percent = 100*Freq/nrow(CONEW)) %>% 
+  kable(., format = "latex", booktabs = TRUE, caption = TCap, digits = 2,
+        col.names = clabels, format.args = list(big.mark = ",")) %>% 
+  column_spec(1:3, width = "1.5cm") %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
+```
+
+\FloatBarrier
+
 ## Aggregating Crime Category Variables
 Here we aggregate the dummy coded crime category variables data first to the
 incident level to flag presence of each crime category on the incident, then 
