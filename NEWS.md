@@ -1,3 +1,8 @@
+# SSACHR 0.4.3, 2020-08-06
+* Updated `inst/Step_01_Data_mgt.Rmd` to:
+    * Improve Software Information section, including how we get package version 
+      output and add Git commit and status information. 
+
 # SSACHR 0.4.2, 2020-08-05
 * Updated `README.Rmd` and `README.md`:
     * Updated installation code to pull from the GitHub main branch (because 
