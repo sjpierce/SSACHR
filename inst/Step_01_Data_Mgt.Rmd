@@ -775,7 +775,7 @@ xtabs(~IWhen, data = JUDEW) %>%
 
 \FloatBarrier
 
-### Aggregating Crime Category Variables
+## Aggregating Crime Category Variables
 Here we aggregate the dummy coded crime category variables data first to the
 incident level to flag presence of each crime category on the incident, then 
 to offender level incident counts for each crime category. 
