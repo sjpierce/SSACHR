@@ -920,28 +920,32 @@ those records. It also shows the range of event dates associated with each
 record type (i.e., birth, incident, arrest, charge, and adjudication dates). 
 
 ```{r chr_overview, warning = FALSE}
-# Summarize record counts before case selection for this study.
-bind_rows(# Before case selection
-          dfsummary(IDN, label = "Offenders", dvar = IDN$DOB),
-          dfsummary(INC, label = "Incidents", dvar = INC$IDate), 
-          dfsummary(ARR, label = "Arrest offenses", dvar = ARR$ADate),
-          dfsummary(CHG, label = "Prosecutor charges", dvar = CHG$CDate),
-          dfsummary(JUD, label = "Adjudicated charges (all dispositions)", 
+# Table caption.
+TCap <- paste("Criminal History Record Counts and Date Ranges Before Versus",
+              "After Case Selection Based on Testing Window Data")
+
+# Summarize record counts before & after case selection for this study.
+bind_rows(dfsummary(IDN, label = "Offenders...Before", dvar = IDN$DOB),
+          dfsummary(IDNEW2, label = "Offenders...After", dvar = IDNEW2$DOB),
+          dfsummary(INC, label = "Incidents...Before", dvar = INC$IDate), 
+          dfsummary(INCEW, label = "Incidents...After", dvar = INCEW$IDate), 
+          dfsummary(ARR, label = "Arrest offenses...Before", dvar = ARR$ADate),
+          dfsummary(ARREW, label = "Arrest offenses...After", 
+                    dvar = ARREW$ADate),
+          dfsummary(CHG, label = "Prosecutor charges...Before", 
+                    dvar = CHG$CDate),
+          dfsummary(CHGEW, label = "Prosecutor charges...After", 
+                    dvar = CHGEW$CDate),
+          dfsummary(JUD, label = "Adjudicated charges (all dispositions)...Before", 
                     dvar = JUD$JDate),
-          dfsummary(CON, label = "Adjudicated charges (convictions)", 
+          dfsummary(JUDEW, label = "Adjudicated charges (all dispositions)...After", 
+                    dvar = JUDEW$JDate),
+          dfsummary(CON, label = "Adjudicated charges (convictions)...Before", 
                     dvar = CON$JDate),
-          # After case selection 
-          dfsummary(IDNEW2, label = "Offenders", dvar = IDN$DOB),
-          dfsummary(INCEW, label = "Incidents", dvar = INC$IDate), 
-          dfsummary(ARREW, label = "Arrest offenses", dvar = ARR$ADate),
-          dfsummary(CHGEW, label = "Prosecutor charges", dvar = CHG$CDate),
-          dfsummary(JUDEW, label = "Adjudicated charges (all dispositions)", 
-                    dvar = JUD$JDate),
-          dfsummary(CONEW, label = "Adjudicated charges (convictions)", 
-                    dvar = CON$JDate)) ->
+          dfsummary(CONEW, label = "Adjudicated charges (convictions)...After", 
+                    dvar = CONEW$JDate)) ->
   CHR.RC
-kable(CHR.RC, caption = "Criminal History Record Counts and Date Ranges", 
-      format.args = list(big.mark = ','))
+kable(CHR.RC, caption = TCap, format.args = list(big.mark = ','))
 ```
 
 \FloatBarrier
