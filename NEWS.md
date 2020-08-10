@@ -1,3 +1,15 @@
+# SSACHR 0.4.4, 2020-08-10
+* Committed changes to `DESCRIPTION` and `NEWS.md` that were made on 2020-08-06
+  as par of version 0.4.3. 
+* Updated `inst/Step_01_Data_mgt.Rmd` to:
+    * Fix a heading's level.
+    * Add a new section: Merging Testing Window Variables Onto Conviction 
+      Records. 
+    * Update the CHR Count Overview section to show record counts before vs. 
+      after case selection based on testing window data. 
+    * Fix errors in Crime Category Count section caused by referring to original 
+      tibbles instead of the new ones that have extra variables. 
+    
 # SSACHR 0.4.3, 2020-08-06
 * Updated `inst/Step_01_Data_mgt.Rmd` to:
     * Improve Software Information section, including how we get package version 
