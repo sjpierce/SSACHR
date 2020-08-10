@@ -795,7 +795,7 @@ INCEW %>%
   select(all_of(c(names(JUD), twvars))) %>% 
   # Add a variable label that was otherwise being dropped. 
   var_labels(TWindow = "Testing Window Date Interval") ->
-  JUDEW 
+  CONEW 
 ```
 
 The original *CON* tibble had `r nrow(CON)` conviction records. Dropping
