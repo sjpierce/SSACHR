@@ -1055,7 +1055,7 @@ variables associated with each crime category in ACat12, CCat12, and JCat12. The
 range of values for this count is 0-12.
 
 ```{r}
-CCC <- describe(IDN[, c("ACat12_Count", "CCat12_Count", "JCat12_Count")],
+CCC <- describe(IDNEW2[, c("ACat12_Count", "CCat12_Count", "JCat12_Count")],
                 quant=c(.25, .50, .75))
 RN.CCC <- c("Crime category count (arrested)", 
             "Crime category count (charged)", 
@@ -1064,13 +1064,13 @@ row.names(CCC) <- RN.CCC
 kable(CCC[, CNums], digits = 2, col.names = CNames,
       caption = "Offender-Level Crime Category Counts")
 
-kable(freq(IDN$ACat12_Count), digits = 2, 
+kable(freq(IDNEW2$ACat12_Count), digits = 2, 
       caption = "Crime Category Count (With Arrests)")
 
-kable(freq(IDN$CCat12_Count), digits = 2,
+kable(freq(IDNEW2$CCat12_Count), digits = 2,
       caption = "Crime Category Count (With Charges)")
 
-kable(freq(IDN$JCat12_Count), digits = 2,
+kable(freq(IDNEW2$JCat12_Count), digits = 2,
       caption = "Crime Category Count (With Convictions)")
 ```
 
