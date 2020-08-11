@@ -1,3 +1,16 @@
+# SSACHR 0.5.0, 2020-08-11
+* Added `inst/Step_02_Analysis.Rmd` by copying `inst/Step_01_Data_mgt.Rmd` then
+  removing the data management code at the start. 
+* Updated `inst/Step_01_Data_mgt.Rmd` to:
+    * Remove analysis code that got moved to `inst/Step_02_Analysis.Rmd`.
+    * Add code to save out data at end of script. 
+    * Fix spelling errors. 
+    * Rmeove the Document Information section. 
+    * Update the Software Information section. 
+    * Remove chunks no longer required and rename other chunks. 
+    * Improve some table formatting. 
+    * Create additional aggregated variables and merge them onto IDNEW. 
+
 # SSACHR 0.4.4, 2020-08-10
 * Committed changes to `DESCRIPTION` and `NEWS.md` that were made on 2020-08-06
   as par of version 0.4.3. 
