@@ -1,0 +1,618 @@
+---
+title: \sffamily{\bfseries{\LARGE Criminal History Records Paper Step 2 (Analysis)}}
+geometry: "left=.5in,right=.5in,top=.75in,bottom=.75in"
+author: "Steven J. Pierce"
+output:
+ pdf_document:
+   latex_engine: xelatex
+   number_sections: true
+   toc: yes
+   toc_depth: 3
+   includes:
+     in_header: "compact-title.tex"
+urlcolor: blue
+header-includes:
+- \usepackage{fancyhdr}
+- \usepackage[yyyymmdd,hhmmss]{datetime}
+- \usepackage{lastpage}
+- \usepackage{fontspec}
+- \defaultfontfeatures{Ligatures=TeX}
+- \usepackage[font={small}, margin=1cm, skip=2pt]{caption}
+- \usepackage{url}
+- \usepackage{floatrow}
+- \floatplacement{figure}{!ht}
+- \floatplacement{table}{!ht}
+- \usepackage{placeins}
+- \usepackage{booktabs}
+- \usepackage{longtable}
+- \usepackage{dcolumn}
+- \usepackage{titling}
+- \usepackage{threeparttable}
+- \usepackage{threeparttablex}
+- \pretitle{\begin{center}\LARGE\bfseries}
+- \posttitle{\end{center}}
+- \pagestyle{fancy}
+- \lhead{SSA CHR Paper Step 2 Analysis}
+- \rhead{\today\ \currenttime}
+- \lfoot{\texttt{\small \detokenize{`r sub(".Rmd", ".pdf", knitr:::current_input(dir = FALSE))`}}} 
+- \cfoot{ }
+- \fancyfoot[R]{\thepage\ of \pageref*{LastPage}}
+- \renewcommand{\headrulewidth}{0.4pt}
+- \renewcommand{\footrulewidth}{0.4pt}
+- \fancypagestyle{plain}{\pagestyle{fancy}}
+---
+
+********************************************************************************  
+\FloatBarrier
+
+# Purpose.
+This file produces the analysis output required for the paper. 
+
+\FloatBarrier
+
+# Setup
+Set global R chunk options (local chunk options will over-ride global options). 
+The method for creating a size option that controls font size in code chunks and
+their text output is based on an answer to a question posted on   
+[stackoverflow.com](https://stackoverflow.com/questions/25646333/code-chunk-font-size-in-rmarkdown-with-knitr-and-latex/46526740#46526740). 
+
+``` {r global_options, cfsize = "footnotesize"}
+# Create a custom chunk hook/option for controlling font size in chunk & output.
+def.chunk.hook  <- knitr::knit_hooks$get("chunk")
+knitr::knit_hooks$set(chunk = function(x, options) {
+  x <- def.chunk.hook(x, options)
+  ifelse(options$cfsize != "normalsize", paste0("\n \\", options$cfsize,"\n\n", 
+                                              x, "\n\n \\normalsize"), x)
+  })
+
+# Global chunk options (over-ridden by local chunk options)
+knitr::opts_chunk$set(include  = TRUE, echo = TRUE, error = TRUE, 
+                      message = TRUE, warning = TRUE, cfsize = "footnotesize")
+```
+
+Load R packages that we need to get additional functions. 
+
+``` {r load_packages}
+library(here)             # for here()
+library(plyr)             # For mapvalues()
+library(dplyr)            # for %>%, filter(), group_by(), & summarise()
+library(tidyr)            # for arrange(), filter(), group_by(), mutate(),  
+                          # spread(), summarise(), %>%, etc. 
+library(rmarkdown)        # for render()
+library(knitr)            # for kable()
+options(kableExtra.latex.load_packages = FALSE)
+library(kableExtra)       # for kable_styling(), add_header_above(), column_spec(),
+                          # collapse_rows(), and landscape()
+library(descr)            # For freq().
+options(descr.plot=FALSE) # Make freq() & crosstab() skip plots by default.
+library(lubridate)        # For date conversion, eg. ymd(), time_length().
+library(sjlabelled)       # For set_label(), get_label()
+library(haven)            # for read_spss()
+library(lattice)          # For xyplot(), bwplot(), etc. 
+library(psych)            # For describe()
+library(car)              # For recode()
+library(SSACHR)           # for rvlabel()
+```
+
+Create objects to hold settings we plan to reuse often. 
+
+```{r my_settings}
+# Custom settings for use with bwplot().
+my.boxes <- list(box.rectangle = list(col = "black", lwd = 2), 
+                 box.umbrella = list(col = "black", lwd = 2))
+```
+
+\FloatBarrier
+
+# Load Data 
+The chunk below loads the data saved by the prior script *Step_01_Data_Mgt.Rmd*.
+
+```{r load_data}
+load(file = here::here("./data/CHR_Data.RData"))
+```
+
+\FloatBarrier
+
+# Offender-Level Summaries
+We have few offender-level demographic variables that are worth reporting (we 
+will omit summarizing height, weight, hair color, & eye color). After examining
+sex, race, and age, we switch focus to looking at descriptive data about the 
+criminal history records for arrests, prosecutor charges, and adjudicated 
+charges. 
+
+All the CHR summaries in this section focus on variables that have been 
+aggregated to offender level. That is why the sample size for all of these
+variables is N = 1,143 (the number of offenders for whom Michigan CHR data were
+available). 
+
+\FloatBarrier
+
+## Sex
+```{r examine_Sex}
+kable(freq(as_factor(IDNEW$Sex)),  digits = 2, caption = "Offender Sex")
+```
+
+\FloatBarrier
+
+## Race
+```{r examine_Race}
+kable(freq(as_factor(IDN$Race), user.missing = "Unknown"),  digits = 2, 
+      caption = "Offender Race")
+```
+
+\FloatBarrier
+
+## Age (as of 04/15/2016)
+```{r, fig.height = 2}
+CNums  <- c(2:4,8,9,11:12, 14:16)
+CNames <- c("N", "Mean", "SD", "Min", "Max", "Skew", "Kurtosis", "Q25", "Q50", 
+            "Q75")
+Age <- describe(IDN$Age,  quant=c(.25, .50, .75))
+kable(Age[, CNums], digits = 2, col.names = CNames,
+      caption = "Offender Age (as of 04/15/2016)")
+bwplot(~ Age, data = IDN, factor = 9, xlim = c(18, 82),
+       panel = panel.mybox, par.settings = my.boxes,
+       xlab = "Offender Age (as of 04/15/2016)")
+```
+
+\FloatBarrier
+
+## CHR Record Counts
+We aggregated data to count how many CHR records of each type are associated 
+with each offender. We summarize the resulting variables (NINC, NARR, NCHG, 
+NJUD, & NCON) below.
+
+```{r}
+# Summarize CHR record counts.
+RC <- describe(IDN[, c("NINC", "NARR", "NCHG", "NJUD", "NCON")],  
+               quant=c(.25, .50, .75))
+row.names(RC) <- c("No. of incidents", 
+                   "No. of arrest offenses", 
+                   "No. of prosecutor charges", 
+                   "No. of adjudicated charges (all)",
+                   "No. of adjudicated charges (convictions)")
+kable(RC[, CNums], digits = 2, col.names = CNames,
+      caption = "Offender-Level Record Counts (All Crime Categories)")
+
+kable(freq(IDN$NINC), digits = 2, 
+      caption = "Number of Incidents (All Crime Categories)")
+
+kable(freq(IDN$NARR), digits = 2,
+      caption = "Number of Arrest Offenses (All Crime Categories)")
+
+kable(freq(IDN$NCHG), digits = 2,
+      caption = "Number of Prosecutor Charges (All Crime Categories)")
+
+kable(freq(IDN$NJUD), digits = 2,
+      caption = "Number of Adjudicated Charges (All Crime Categories, All Dispositions)")
+
+kable(freq(IDN$NCON), digits = 2,
+      caption = "Number of Adjudicated Charges (All Crime Categories, Convictions)")
+```
+
+```{r , fig.height = 3}
+# Rearrange data so we can easily plot multiple variables. 
+IDNW <- gather(data = IDN[, c("OID", "NINC", "NARR", "NCHG", "NJUD")], 
+               key = VName, value = Count, NINC:NJUD)
+IDNW$VName <- ordered(IDNW$VName, levels = c("NINC", "NARR", "NCHG", "NJUD"), 
+                      labels = c("Incidents", "Arrest Offenses", 
+                                 "Prosecutor Charges", "Adjudicated Charges"))
+bwplot(VName ~ Count, data = IDNW, factor = 1, xlim = c(-4, 64),
+       panel = panel.mybox, par.settings = my.boxes,
+       xlab = "Number of Records for Individual Offender")
+densityplot(~ Count | VName, data = IDNW, layout = c(4,1), 
+            panel = panel.mydensity, jitter.amount = 0.005,
+            strip = strip.custom(par.strip.text = list(cex = .7)),
+            xlab = "Number of Records for Individual Offender")
+rm(IDNW)
+```
+
+\FloatBarrier
+
+## Crime Category Count
+Here we are summarizing how many of 12 different categories of crime each 
+offender was *arrested for*, *charged with*, and *convicted of* according to 
+the CHR data. This sums a set of binary transforms on the incident count 
+variables associated with each crime category in ACat12, CCat12, and JCat12. The
+*Excluded user-missing* value is not counted as a category, so the possible
+range of values for this count is 0-12.
+
+```{r}
+CCC <- describe(IDNEW2[, c("ACat12_Count", "CCat12_Count", "JCat12_Count")],
+                quant=c(.25, .50, .75))
+RN.CCC <- c("Crime category count (arrested)", 
+            "Crime category count (charged)", 
+            "Crime category count (convicted)")
+row.names(CCC) <- RN.CCC
+kable(CCC[, CNums], digits = 2, col.names = CNames,
+      caption = "Offender-Level Crime Category Counts")
+
+kable(freq(IDNEW2$ACat12_Count), digits = 2, 
+      caption = "Crime Category Count (With Arrests)")
+
+kable(freq(IDNEW2$CCat12_Count), digits = 2,
+      caption = "Crime Category Count (With Charges)")
+
+kable(freq(IDNEW2$JCat12_Count), digits = 2,
+      caption = "Crime Category Count (With Convictions)")
+```
+
+\FloatBarrier
+
+## Incident Counts by Crime Category (12 levels)
+In this section, we analyze variables that contain the number of unique 
+incidents in the offender's criminal history for a given type of crime. We have three separate counts for each category of crime, representing incidents where 
+the offender was *arrested for*, *charged with*, or *convicted of* crimes  
+classified into that category. Note that these variables were created by first
+aggregating ARR, CHG, and JUD records to the incident level to flag incidents
+that fit the relevant category, then aggregated again to get to the offender
+level. It is possible to have multiple arrest offense records, charge records, 
+or adjudication records for convictions on a single incident, but these 
+variables ignore that and only count each incident once. 
+
+\FloatBarrier
+
+### Arson 
+Here we summarize the counts of unique incidents where the offender was 
+*arrested for*, *charged with*, and *convicted of* arson.
+
+```{r}
+RN.ACC <- c("Incident count (arrested)", 
+            "Incident count (charged)", 
+            "Incident count (convicted)")
+ACat12_1 <- describe(IDN[, c("ACat12_1", "CCat12_1", "JCat12_1")], 
+                  quant=c(.25, .50, .75))
+row.names(ACat12_1) <- RN.ACC
+kable(ACat12_1[, CNums], digits = 2, col.names = CNames,
+      caption = "Offender-Level Arson Incident Counts")
+```
+
+\FloatBarrier
+
+### Assault - DV, Stalking 
+Here we summarize the counts of unique incidents where the offender was 
+*arrested for*, *charged with*, and *convicted of* assaults involving domestic
+violence and/or stalking.
+
+```{r}
+ACat12_2 <- describe(IDN[, c("ACat12_2", "CCat12_2", "JCat12_2")], 
+                  quant=c(.25, .50, .75))
+row.names(ACat12_2) <- RN.ACC
+kable(ACat12_2[, CNums], digits = 2, col.names = CNames,
+      caption = "Offender-Level Assault - DV, Stalking Incident Counts")
+```
+
+\FloatBarrier
+
+### Assault - Non-Sexual, Non-DV 
+Here we summarize the counts of unique incidents where the offender was 
+*arrested for*, *charged with*, and *convicted of* assaults that were non-sexual
+and did not involve domestic violence. 
+
+```{r}
+ACat12_3 <- describe(IDN[, c("ACat12_3", "CCat12_3", "JCat12_3")], 
+                  quant=c(.25, .50, .75))
+row.names(ACat12_3) <- RN.ACC
+kable(ACat12_3[, CNums], digits = 2, col.names = CNames,
+      caption = "Offender-Level Assault - Non-Sexual, Non-DV Incident Counts")
+```
+
+\FloatBarrier
+
+### Burglary 
+Here we summarize the counts of unique incidents where the offender was 
+*arrested for*, *charged with*, and *convicted of* burglary.
+
+```{r}
+ACat12_4 <- describe(IDN[, c("ACat12_4", "CCat12_4", "JCat12_4")], 
+                  quant=c(.25, .50, .75))
+row.names(ACat12_4) <- RN.ACC
+kable(ACat12_4[, CNums], digits = 2, col.names = CNames,
+      caption = "Offender-Level Burglary Incident Counts")
+```
+
+\FloatBarrier
+
+### Criminal Sexual Conduct
+Here we summarize the counts of unique incidents where the offender was 
+*arrested for*, *charged with*, and *convicted of* criminal sexual conduct.
+
+Note: We actually have redundant sets of variables that contain these particular
+counts. The variables OCSC1-OCSC3 were created and stored in the SPSS file; the
+variables ACat12_5, CCat12_5, and JCat12_5 contain exactly the same data, but 
+were created above in the **Aggregating Crime Category Variables** section. 
+
+```{r}
+CSC <- describe(IDN[, c("OCSC1", "OCSC2", "OCSC3")], quant=c(.25, .50, .75))
+kable(CSC[, CNums], digits = 2, col.names = CNames,
+      caption = "Offender-Level Criminal Sexual Conduct Incident Counts")
+
+kable(freq(IDN$OCSC1), digits = 2, 
+      caption = "Criminal Sexual Conduct Incident Count (With Arrests)")
+
+kable(freq(IDN$OCSC2), digits = 2,
+      caption = "Criminal Sexual Conduct Incident Count (With Charges)")
+
+kable(freq(IDN$OCSC3), digits = 2,
+      caption = "Criminal Sexual Conduct Incident Count (With Convictions)")
+```
+
+```{r}
+# Check how many offenders had > 1 CSC arrest, > 1 CSC charge, and/or > 1 CSC 
+# conviction in their CHR data. 
+nrow(IDN[with(IDN, OCSC1 > 1 | OCSC2 > 1 | OCSC3 > 1),]) 
+```
+
+```{r , fig.height = 3, warning= FALSE}
+# Rearrange data so we can easily plot multiple variables. 
+IDNW <- gather(data = IDN[, c("OID", "OCSC1", "OCSC2", "OCSC3")], 
+               key = VName, value = Count, OCSC1:OCSC3)
+IDNW$VName <- ordered(IDNW$VName, levels = c("OCSC1", "OCSC2", "OCSC3"), 
+                      labels = c("Arrests", "Charges", "Convictions"))
+densityplot(~ Count | VName, data = IDNW, layout = c(3,1), 
+            panel = panel.mydensity, jitter.amount = 0.1,
+            strip = strip.custom(par.strip.text = list(cex = 1)),
+            xlab = "Number of Incidents with Criminal Sexual Conduct")
+rm(IDNW)
+```
+
+\FloatBarrier
+
+### Drug Crime 
+Here we summarize the counts of unique incidents where the offender was 
+*arrested for*, *charged with*, and *convicted of* drug crimes.
+
+```{r}
+ACat12_6 <- describe(IDN[, c("ACat12_6", "CCat12_6", "JCat12_6")], 
+                  quant=c(.25, .50, .75))
+row.names(ACat12_6) <- RN.ACC
+kable(ACat12_6[, CNums], digits = 2, col.names = CNames,
+      caption = "Offender-Level Drug Crime Incident Counts")
+```
+
+\FloatBarrier
+
+### Homicide 
+Here we summarize the counts of unique incidents where the offender was 
+*arrested for*, *charged with*, and *convicted of* homicide.
+
+```{r}
+ACat12_7 <- describe(IDN[, c("ACat12_7", "CCat12_7", "JCat12_7")], 
+                  quant=c(.25, .50, .75))
+row.names(ACat12_7) <- RN.ACC
+kable(ACat12_7[, CNums], digits = 2, col.names = CNames,
+      caption = "Offender-Level Homicide Incident Counts")
+```
+
+\FloatBarrier
+
+### Larceny/Theft/Fraud 
+Here we summarize the counts of unique incidents where the offender was 
+*arrested for*, *charged with*, and *convicted of* larceny, theft, or fraud. 
+
+```{r}
+ACat12_8 <- describe(IDN[, c("ACat12_8", "CCat12_8", "JCat12_8")], 
+                  quant=c(.25, .50, .75))
+row.names(ACat12_8) <- RN.ACC
+kable(ACat12_8[, CNums], digits = 2, col.names = CNames,
+      caption = "Offender-Level Larceny, Theft, or Fraud Incident Counts")
+```
+
+\FloatBarrier
+
+### Robbery
+Here we summarize the counts of unique incidents where the offender was 
+*arrested for*, *charged with*, and *convicted of* robbery.
+
+```{r}
+ACat12_9 <- describe(IDN[, c("ACat12_9", "CCat12_9", "JCat12_9")], 
+                  quant=c(.25, .50, .75))
+row.names(ACat12_9) <- RN.ACC
+kable(ACat12_9[, CNums], digits = 2, col.names = CNames,
+      caption = "Offender-Level Robbery Incident Counts")
+```
+
+\FloatBarrier
+
+### Sex Crimes
+Here we summarize the counts of unique incidents where the offender was 
+*arrested for*, *charged with*, and *convicted of* sex crimes (excluding 
+criminal sexual conduct).
+
+```{r}
+ACat12_10 <- describe(IDN[, c("ACat12_10", "CCat12_10", "JCat12_10")], 
+                  quant=c(.25, .50, .75))
+row.names(ACat12_10) <- RN.ACC
+kable(ACat12_10[, CNums], digits = 2, col.names = CNames,
+      caption = "Offender-Level Sex Crime Incident Counts")
+```
+
+\FloatBarrier
+
+### Traffic & Ordinances
+Here we summarize the counts of unique incidents where the offender was 
+*arrested for*, *charged with*, and *convicted of* traffic crimes and violations
+of ordinances.
+
+```{r}
+ACat12_11 <- describe(IDN[, c("ACat12_11", "CCat12_11", "JCat12_11")], 
+                  quant=c(.25, .50, .75))
+row.names(ACat12_11) <- RN.ACC
+kable(ACat12_11[, CNums], digits = 2, col.names = CNames,
+      caption = "Offender-Level Traffic & Ordinance Incident Counts")
+```
+
+\FloatBarrier
+
+### Weapons
+Here we summarize the counts of unique incidents where the offender was 
+*arrested for*, *charged with*, and *convicted of* weapons crimes.
+
+```{r}
+ACat12_12 <- describe(IDN[, c("ACat12_12", "CCat12_12", "JCat12_12")], 
+                  quant=c(.25, .50, .75))
+row.names(ACat12_12) <- RN.ACC
+kable(ACat12_12[, CNums], digits = 2, col.names = CNames,
+      caption = "Offender-Level Weapons Incident Counts")
+```
+
+\FloatBarrier
+
+### Other Crimes (Excluded User-Missing)
+Here we summarize the counts of unique incidents where the offender was 
+*arrested for*, *charged with*, and *convicted of* any other type of crime not
+included in the other tables above this section.
+
+```{r}
+ACat12_999 <- describe(IDN[, c("ACat12_999", "CCat12_999", "JCat12_999")], 
+                  quant=c(.25, .50, .75))
+row.names(ACat12_999) <- RN.ACC
+kable(ACat12_999[, CNums], digits = 2, col.names = CNames,
+      caption = "Offender-Level Other Crime (Excluded User-Missing) Incident Counts")
+```
+
+********************************************************************************
+\FloatBarrier
+
+# Arrest Offense Record Summaries
+All summaries in this section directly summarize the ARR data without first 
+aggregating to the incident or offender level. 
+
+\FloatBarrier
+
+## Crime Category (12 levels)
+```{r}
+kable(freq(as_factor(ARR$ACat12), user.missing = "Excluded user-missing"), 
+      digits = 2, format.args = list(big.mark = ','),
+      caption = "Number of Arrest Offense Records by Crime Category (12 levels)")
+```
+
+\FloatBarrier
+
+## Age at Arrest for Criminal Sexual Conduct
+```{r}
+OAgeA <- describe(ARR[ARR$ACat12 == 5, "OAgeA"],  quant=c(.25, .50, .75))
+kable(OAgeA[, CNums], digits = 2, col.names = CNames,
+      caption = "Offender Age at Arrest for Criminal Sexual Conduct")
+```
+
+********************************************************************************
+\FloatBarrier
+
+# Prosecutor Charge Record Summaries
+All summaries in this section directly summarize the CHG data without first 
+aggregating to the incident or offender level. 
+
+\FloatBarrier
+
+## Crime Category (12 levels)
+```{r, fig.height = 2}
+kable(freq(as_factor(CHG$CCat12), user.missing = "Excluded user-missing"), 
+      digits = 2, format.args = list(big.mark = ','),
+      caption = "Number of Prosecutor Charge Records by Crime Category (12 levels)")
+```
+
+********************************************************************************
+\FloatBarrier
+
+# Judicial Charge Record Summaries
+All summaries in this section directly summarize the JUD data without first 
+aggregating to the incident or offender level. Note that here we do not
+distinguish between adjudicated charge records based on disposition. While
+some of these records are convictions, others will have other dispositions.
+
+\FloatBarrier
+
+## Crime Category (12 levels, all dispositions)
+```{r, fig.height = 2}
+kable(freq(as_factor(JUD$JCat12), user.missing = "Excluded user-missing"), 
+      digits = 2, format.args = list(big.mark = ','),
+      caption = "Number of Adjudicated Charge Records (All Dispositions) by Crime Category (12 levels)")
+```
+
+\FloatBarrier
+
+## Crime Category (12 levels, convictions)
+```{r, fig.height = 2}
+kable(freq(as_factor(JUD$JCat12[JUD$JDispCat == 1]), 
+           user.missing = "Excluded user-missing"), 
+      digits = 2, format.args = list(big.mark = ','),
+      caption = "Number of Adjudicated Charge Records (Convictions Only) by Crime Category (12 levels)")
+```
+
+********************************************************************************
+# Wrap Up
+
+\FloatBarrier
+
+## Project Information
+These materials are scholarly products based on research funded by the following 
+grant. 
+
+Campbell, R., Pierce, S. J., & Sharma, D. (01/01/2015–12/31/2018). Serial sexual
+assaults: A longitudinal examination of offending patterns using DNA evidence.
+[NIJ Award # 2014-NE-BX-0006, Awarded, $699,533]. Sponsor: National Institute of
+Justice. Location: Michigan State University, East Lansing, MI.
+
+\FloatBarrier
+
+## References
+Campbell, R. (2019). *Serial sexual assaults: A longitudinal examination of
+offending patterns using DNA evidence, Detroit, Michigan, 2009* [Data files,
+codebooks, computer programs, and statistical output]. ICPSR37134-v1. Ann Arbor,
+MI: Inter-university Consortium for Political and Social Research [distributor],
+2019-02-28. Retrieved from: https://doi.org/10.3886/ICPSR37134.v1
+
+\FloatBarrier
+
+## Software Information
+We use R Markdown to enhance reproducibility. Knitting the source R Markdown 
+script *`r knitr:::current_input()`* generates this PDF file containing 
+explanatory text, R code, plus R output (text and graphics).
+
+- We use [RStudio (version 1.3.1056 or later)](www.rstudio.org) to work with 
+  R and R markdown files. The software chain looks like this:
+  **Rmd file -> RStudio -> R -> knitr -> pandoc -> MiKTeX -> PDF file**.
+- We recommend using [TinyTeX](https://yihui.org/tinytex/) to compile LaTeX files 
+  into PDF files. However, it should be viable to use 
+  [MiKTeX version 2.9](https://miktex.org) instead. 
+- We used [pandoc](https://pandoc.org) version `r pandoc_version()` for this 
+  document. 
+
+This document was generated using the following computational environment and 
+dependencies: 
+
+``` {r show_citations}
+devtools::session_info()
+# If is_tineytex = TRUE, then we used TinyTex, otherwise we used MikTeX. 
+tinytex:::is_tinytex()
+citation("here")
+citation("plyr")
+citation("dplyr")
+citation("tidyr")
+citation("rmarkdown")
+citation("knitr")
+citation("kableExtra")
+citation("descr")
+citation("lubridate")
+citation("sjlabelled")
+citation("haven")
+citation("lattice")
+citation("psych")
+citation("car")
+citation("SSACHR")
+```
+
+The current Git commit details and status are:
+
+```{r git_details, eval=TRUE}
+# Store whether git2r is installed and we are in a git repository.
+GitCheck <- "git2r" %in% installed.packages() & git2r::in_repository(path = ".")
+cat(paste("GitCheck =", GitCheck, "\n"))
+
+# What commit is this file at? 
+if (GitCheck) git2r::repository(here::here())
+
+# What is the repository status? 
+if (GitCheck) git2r::status()
+```
