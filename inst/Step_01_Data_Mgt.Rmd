@@ -1404,7 +1404,6 @@ codebooks, computer programs, and statistical output]. ICPSR37134-v1. Ann Arbor,
 MI: Inter-university Consortium for Political and Social Research [distributor],
 2019-02-28. Retrieved from: https://doi.org/10.3886/ICPSR37134.v1
 
-
 \FloatBarrier
 
 ## Software Information
