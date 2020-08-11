@@ -600,6 +600,21 @@ xtabs(~IDate %within% TWindow + (ESAK_IID == IID), addNA = TRUE, data = INCEW) %
          threeparttable = TRUE)
 ```
 
+Now, we need to get offender-level counts of incidents that occurred before, 
+during, and after the testing window respectively called *NINC_Before*, 
+*NINC_During*, and *NINC_After*. We can aggregate as follows to get them. We 
+will merge these variables into *IDNEW* later. 
+
+```{r create_INCEWAgg}
+INCEW %>% 
+  mutate(NINC = 1) %>% 
+  group_by(OID, IWhen, .drop = FALSE) %>% 
+  # Aggregate by OID and IWhen to get count variables
+  summarize(NINC = sum(NINC)) %>% 
+  pivot_wider(names_from = IWhen, values_from = NINC, 
+              names_glue = "NINC_{IWhen}") ->
+  INCEWAgg
+```
 \FloatBarrier
 
 ## Merge Testing Window Variables Onto Arrest Records
@@ -653,6 +668,23 @@ xtabs(~IWhen, data = ARREW) %>%
   column_spec(1:3, width = "1.5cm") %>% 
   footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
+```
+
+Now, we need to get offender-level counts of arrest offense records associated 
+with incidents that occurred before, during, and after the testing window 
+respectively called *NARR_Before*, *NARR_During*, and *NARR_After*. We can 
+aggregate as follows to get them. We will merge these variables into *IDNEW* 
+later. 
+
+```{r create_ARREWAgg}
+ARREW %>% 
+  mutate(NARR = 1) %>% 
+  group_by(OID, IWhen, .drop = FALSE) %>% 
+  # Aggregate by OID and IWhen to get count variables
+  summarize(NARR = sum(NARR)) %>% 
+  pivot_wider(names_from = IWhen, values_from = NARR, 
+              names_glue = "NARR_{IWhen}") ->
+  ARREWAgg
 ```
 
 \FloatBarrier
@@ -710,6 +742,23 @@ xtabs(~IWhen, data = CHGEW) %>%
          threeparttable = TRUE)
 ```
 
+Now, we need to get offender-level counts of prosecutor charge records
+associated with incidents that occurred before, during, and after the testing
+window  respectively called *NCHG_Before*, *NCHG_During*, and *NCHG_After*. We
+can aggregate as follows to get them. We will merge these variables into *IDNEW*
+later.
+
+```{r create_CHGEWAgg}
+CHGEW %>% 
+  mutate(NCHG = 1) %>% 
+  group_by(OID, IWhen, .drop = FALSE) %>% 
+  # Aggregate by OID and IWhen to get count variables
+  summarize(NCHG = sum(NCHG)) %>% 
+  pivot_wider(names_from = IWhen, values_from = NCHG, 
+              names_glue = "NCHG_{IWhen}") ->
+  CHGEWAgg
+```
+
 \FloatBarrier
 
 ## Merge Testing Window Variables Onto Judicial Charge Records
@@ -763,6 +812,23 @@ xtabs(~IWhen, data = JUDEW) %>%
   column_spec(1:3, width = "1.5cm") %>% 
   footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
+```
+
+Now, we need to get offender-level counts of judicial charge records associated
+with incidents that occurred before, during, and after the testing window
+respectively called *NJUD_Before*, *NJUD_During*, and *NJUD_After*. We can
+aggregate as follows to get them. We will merge these variables into *IDNEW*
+later.
+
+```{r create_JUDEWAgg}
+JUDEW %>% 
+  mutate(NJUD = 1) %>% 
+  group_by(OID, IWhen, .drop = FALSE) %>% 
+  # Aggregate by OID and IWhen to get count variables
+  summarize(NJUD = sum(NJUD)) %>% 
+  pivot_wider(names_from = IWhen, values_from = NJUD, 
+              names_glue = "NJUD_{IWhen}") ->
+  JUDEWAgg
 ```
 
 \FloatBarrier
@@ -820,6 +886,22 @@ xtabs(~IWhen, data = CONEW) %>%
          threeparttable = TRUE)
 ```
 
+Now, we need to get offender-level counts of conviction records associated
+with incidents that occurred before, during, and after the testing window
+respectively called *NCON_Before*, *NCON_During*, and *NCON_After*. We can
+aggregate as follows to get them. We will merge these variables into *IDNEW*
+later.
+
+```{r create_CONEWAgg}
+CONEW %>% 
+  mutate(NCON = 1) %>% 
+  group_by(OID, IWhen, .drop = FALSE) %>% 
+  # Aggregate by OID and IWhen to get count variables
+  summarize(NCON = sum(NCON)) %>% 
+  pivot_wider(names_from = IWhen, values_from = NCON, 
+              names_glue = "NCON_{IWhen}") ->
+  CONEWAgg
+```
 \FloatBarrier
 
 ## Aggregating Crime Category Variables
@@ -870,6 +952,7 @@ CON %>%
   summarize(across(.cols = all_of(jvars), .fns = sum)) ->
   CON2
 ```
+# Merge Aggregated Variables onto IDNEW. 
 
 The incident counts are then merged onto the *IDNEW* data frame via left_join()
 because it preserves variable attributes better than merge() and is more
