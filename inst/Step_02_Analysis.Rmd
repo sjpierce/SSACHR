@@ -167,7 +167,7 @@ with each offender. We summarize the resulting variables (NINC, NARR, NCHG,
 NJUD, & NCON) below.
 
 ```{r}
-# Summarize CHR record counts.
+# Summarize CHR record counts (both overall and broken down by IWhen).
 RC <- describe(IDNEW[, c("NINC", "NARR", "NCHG", "NJUD", "NCON")],  
                quant=c(.25, .50, .75))
 row.names(RC) <- c("No. of incidents", 
