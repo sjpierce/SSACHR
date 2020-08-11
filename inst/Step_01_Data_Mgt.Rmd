@@ -942,6 +942,13 @@ kable(CHR.RC, format = "latex", booktabs = TRUE, caption = TCap,
 
 \FloatBarrier
 
+# Save Data to a File
+
+```{r save_data}
+save(IDN, IDNEW2, INC, INCEW, ARR, ARREW, CHG, CHGEW, JUD, JUDEW, CON, CONEW, 
+     file = here::here("./data/CHR_Data.RData"))
+```
+
 # Wrap Up
 
 \FloatBarrier
