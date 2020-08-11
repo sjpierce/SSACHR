@@ -1407,14 +1407,6 @@ MI: Inter-university Consortium for Political and Social Research [distributor],
 
 \FloatBarrier
 
-## Document Information
-Folder: *`r getwd()`*
-
-* Script: *`r knitr:::current_input()`*
-* Output: *
-
-\FloatBarrier
-
 ## Software Information
 We use R Markdown to enhance reproducibility. Knitting the source R Markdown 
 script *`r knitr:::current_input()`* generates this PDF file containing 
