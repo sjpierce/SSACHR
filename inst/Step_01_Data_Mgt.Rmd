@@ -903,7 +903,7 @@ IDNEW %>%
   IDNEW2
 ```
 
-```{r}
+```{r check_assumptions}
 # Verify that OCSC1 = ACat12_5, OCSC2 = CCat12_5, & OCSC3 = JCat12_5.
 # This compares incident count variables created in SPSS to corresponding 
 # variables created in R above (to prove logic was implemented the same way).
@@ -944,7 +944,8 @@ bind_rows(dfsummary(IDN, label = "Offenders...Before", dvar = IDN$DOB),
           dfsummary(CONEW, label = "Adjudicated charges (convictions)...After", 
                     dvar = CONEW$JDate)) ->
   CHR.RC
-kable(CHR.RC, caption = TCap, format.args = list(big.mark = ','))
+kable(CHR.RC, format = "latex", booktabs = TRUE, caption = TCap, 
+      format.args = list(big.mark = ','))
 ```
 
 \FloatBarrier
