@@ -447,7 +447,7 @@ kable(ACat12_10[, CNums], digits = 2, col.names = CNames,
 
 \FloatBarrier
 
-### Traffic & Ordinances
+### Traffic and Ordinances
 Here we summarize the counts of unique incidents where the offender was 
 *arrested for*, *charged with*, and *convicted of* traffic crimes and violations
 of ordinances.
@@ -457,7 +457,7 @@ ACat12_11 <- describe(IDNEW[, c("ACat12_11", "CCat12_11", "JCat12_11")],
                   quant=c(.25, .50, .75))
 row.names(ACat12_11) <- RN.ACC
 kable(ACat12_11[, CNums], digits = 2, col.names = CNames,
-      caption = "Offender-Level Traffic & Ordinance Incident Counts")
+      caption = "Offender-Level Traffic and Ordinance Incident Counts")
 ```
 
 \FloatBarrier
