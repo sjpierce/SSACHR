@@ -131,15 +131,16 @@ available).
 
 ## Sex
 ```{r examine_Sex}
-kable(freq(as_factor(IDNEW$Sex)),  digits = 2, caption = "Offender Sex")
+kable(freq(as_factor(IDNEW$Sex)), format = "latex", booktabs = TRUE, digits = 2,
+      caption = "Offender Sex")
 ```
 
 \FloatBarrier
 
 ## Race
 ```{r examine_Race}
-kable(freq(as_factor(IDNEW$Race), user.missing = "Unknown"),  digits = 2, 
-      caption = "Offender Race")
+kable(freq(as_factor(IDNEW$Race), user.missing = "Unknown"), format = "latex", 
+      booktabs = TRUE,  digits = 2, caption = "Offender Race")
 ```
 
 \FloatBarrier
@@ -150,7 +151,8 @@ CNums  <- c(2:4,8,9,11:12, 14:16)
 CNames <- c("N", "Mean", "SD", "Min", "Max", "Skew", "Kurtosis", "Q25", "Q50", 
             "Q75")
 Age <- describe(IDNEW$Age,  quant=c(.25, .50, .75))
-kable(Age[, CNums], digits = 2, col.names = CNames,
+kable(Age[, CNums], format = "latex", booktabs = TRUE, digits = 2, 
+      col.names = CNames,
       caption = "Offender Age (as of 04/15/2016)")
 bwplot(~ Age, data = IDNEW, factor = 9, xlim = c(18, 82),
        panel = panel.mybox, par.settings = my.boxes,
@@ -173,32 +175,33 @@ row.names(RC) <- c("No. of incidents",
                    "No. of prosecutor charges", 
                    "No. of adjudicated charges (all)",
                    "No. of adjudicated charges (convictions)")
-kable(RC[, CNums], digits = 2, col.names = CNames,
+kable(RC[, CNums], format = "latex", booktabs = TRUE, digits = 2, 
+      col.names = CNames,
       caption = "Offender-Level Record Counts (All Crime Categories)")
 ```
 
 ```{r}
-kable(freq(IDNEW$NINC), digits = 2, 
+kable(freq(IDNEW$NINC), format = "latex", booktabs = TRUE, digits = 2, 
       caption = "Number of Incidents (All Crime Categories)")
 ```
 
 ```{r}
-kable(freq(IDNEW$NARR), digits = 2,
+kable(freq(IDNEW$NARR), format = "latex", booktabs = TRUE, digits = 2,
       caption = "Number of Arrest Offenses (All Crime Categories)")
 ```
 
 ```{r}
-kable(freq(IDNEW$NCHG), digits = 2,
+kable(freq(IDNEW$NCHG), format = "latex", booktabs = TRUE, digits = 2,
       caption = "Number of Prosecutor Charges (All Crime Categories)")
 ```
 
 ```{r}
-kable(freq(IDNEW$NJUD), digits = 2,
+kable(freq(IDNEW$NJUD), format = "latex", booktabs = TRUE, digits = 2,
       caption = "Number of Adjudicated Charges (All Crime Categories, All Dispositions)")
 ```
 
 ```{r}
-kable(freq(IDNEW$NCON), digits = 2,
+kable(freq(IDNEW$NCON), format = "latex", booktabs = TRUE, digits = 2,
       caption = "Number of Adjudicated Charges (All Crime Categories, Convictions)")
 ```
 
@@ -236,22 +239,23 @@ RN.CCC <- c("Crime category count (arrested)",
             "Crime category count (charged)", 
             "Crime category count (convicted)")
 row.names(CCC) <- RN.CCC
-kable(CCC[, CNums], digits = 2, col.names = CNames,
+kable(CCC[, CNums], format = "latex", booktabs = TRUE, digits = 2, 
+      col.names = CNames,
       caption = "Offender-Level Crime Category Counts")
 ```
 
 ```{r}
-kable(freq(IDNEW$ACat12_Count), digits = 2, 
+kable(freq(IDNEW$ACat12_Count), format = "latex", booktabs = TRUE, digits = 2, 
       caption = "Crime Category Count (With Arrests)")
 ```
 
 ```{r}
-kable(freq(IDNEW$CCat12_Count), digits = 2,
+kable(freq(IDNEW$CCat12_Count), format = "latex", booktabs = TRUE, digits = 2,
       caption = "Crime Category Count (With Charges)")
 ```
 
 ```{r}
-kable(freq(IDNEW$JCat12_Count), digits = 2,
+kable(freq(IDNEW$JCat12_Count), format = "latex", booktabs = TRUE, digits = 2,
       caption = "Crime Category Count (With Convictions)")
 ```
 
@@ -281,7 +285,8 @@ RN.ACC <- c("Incident count (arrested)",
 ACat12_1 <- describe(IDNEW[, c("ACat12_1", "CCat12_1", "JCat12_1")], 
                   quant=c(.25, .50, .75))
 row.names(ACat12_1) <- RN.ACC
-kable(ACat12_1[, CNums], digits = 2, col.names = CNames,
+kable(ACat12_1[, CNums], format = "latex", booktabs = TRUE, digits = 2, 
+      col.names = CNames,
       caption = "Offender-Level Arson Incident Counts")
 ```
 
@@ -296,7 +301,8 @@ violence and/or stalking.
 ACat12_2 <- describe(IDNEW[, c("ACat12_2", "CCat12_2", "JCat12_2")], 
                   quant=c(.25, .50, .75))
 row.names(ACat12_2) <- RN.ACC
-kable(ACat12_2[, CNums], digits = 2, col.names = CNames,
+kable(ACat12_2[, CNums], format = "latex", booktabs = TRUE, digits = 2, 
+      col.names = CNames,
       caption = "Offender-Level Assault - DV, Stalking Incident Counts")
 ```
 
@@ -311,7 +317,8 @@ and did not involve domestic violence.
 ACat12_3 <- describe(IDNEW[, c("ACat12_3", "CCat12_3", "JCat12_3")], 
                   quant=c(.25, .50, .75))
 row.names(ACat12_3) <- RN.ACC
-kable(ACat12_3[, CNums], digits = 2, col.names = CNames,
+kable(ACat12_3[, CNums], format = "latex", booktabs = TRUE, digits = 2, 
+      col.names = CNames,
       caption = "Offender-Level Assault - Non-Sexual, Non-DV Incident Counts")
 ```
 
@@ -325,7 +332,8 @@ Here we summarize the counts of unique incidents where the offender was
 ACat12_4 <- describe(IDNEW[, c("ACat12_4", "CCat12_4", "JCat12_4")], 
                   quant=c(.25, .50, .75))
 row.names(ACat12_4) <- RN.ACC
-kable(ACat12_4[, CNums], digits = 2, col.names = CNames,
+kable(ACat12_4[, CNums], format = "latex", booktabs = TRUE, digits = 2, 
+      col.names = CNames,
       caption = "Offender-Level Burglary Incident Counts")
 ```
 
@@ -342,16 +350,23 @@ were created above in the **Aggregating Crime Category Variables** section.
 
 ```{r}
 CSC <- describe(IDNEW[, c("OCSC1", "OCSC2", "OCSC3")], quant=c(.25, .50, .75))
-kable(CSC[, CNums], digits = 2, col.names = CNames,
+kable(CSC[, CNums], digits = 2, format = "latex", booktabs = TRUE, 
+      col.names = CNames,
       caption = "Offender-Level Criminal Sexual Conduct Incident Counts")
+```
 
-kable(freq(IDNEW$OCSC1), digits = 2, 
+```{r}
+kable(freq(IDNEW$OCSC1), digits = 2, format = "latex", booktabs = TRUE, 
       caption = "Criminal Sexual Conduct Incident Count (With Arrests)")
+```
 
-kable(freq(IDNEW$OCSC2), digits = 2,
+```{r}
+kable(freq(IDNEW$OCSC2), digits = 2, format = "latex", booktabs = TRUE, 
       caption = "Criminal Sexual Conduct Incident Count (With Charges)")
+```
 
-kable(freq(IDNEW$OCSC3), digits = 2,
+```{r}
+kable(freq(IDNEW$OCSC3), digits = 2, format = "latex", booktabs = TRUE, 
       caption = "Criminal Sexual Conduct Incident Count (With Convictions)")
 ```
 
@@ -384,7 +399,8 @@ Here we summarize the counts of unique incidents where the offender was
 ACat12_6 <- describe(IDNEW[, c("ACat12_6", "CCat12_6", "JCat12_6")], 
                   quant=c(.25, .50, .75))
 row.names(ACat12_6) <- RN.ACC
-kable(ACat12_6[, CNums], digits = 2, col.names = CNames,
+kable(ACat12_6[, CNums], format = "latex", booktabs = TRUE, digits = 2, 
+      col.names = CNames,
       caption = "Offender-Level Drug Crime Incident Counts")
 ```
 
@@ -398,7 +414,8 @@ Here we summarize the counts of unique incidents where the offender was
 ACat12_7 <- describe(IDNEW[, c("ACat12_7", "CCat12_7", "JCat12_7")], 
                   quant=c(.25, .50, .75))
 row.names(ACat12_7) <- RN.ACC
-kable(ACat12_7[, CNums], digits = 2, col.names = CNames,
+kable(ACat12_7[, CNums], format = "latex", booktabs = TRUE, digits = 2, 
+      col.names = CNames,
       caption = "Offender-Level Homicide Incident Counts")
 ```
 
@@ -412,7 +429,8 @@ Here we summarize the counts of unique incidents where the offender was
 ACat12_8 <- describe(IDNEW[, c("ACat12_8", "CCat12_8", "JCat12_8")], 
                   quant=c(.25, .50, .75))
 row.names(ACat12_8) <- RN.ACC
-kable(ACat12_8[, CNums], digits = 2, col.names = CNames,
+kable(ACat12_8[, CNums], format = "latex", booktabs = TRUE, digits = 2, 
+      col.names = CNames,
       caption = "Offender-Level Larceny, Theft, or Fraud Incident Counts")
 ```
 
@@ -426,7 +444,8 @@ Here we summarize the counts of unique incidents where the offender was
 ACat12_9 <- describe(IDNEW[, c("ACat12_9", "CCat12_9", "JCat12_9")], 
                   quant=c(.25, .50, .75))
 row.names(ACat12_9) <- RN.ACC
-kable(ACat12_9[, CNums], digits = 2, col.names = CNames,
+kable(ACat12_9[, CNums], format = "latex", booktabs = TRUE, digits = 2, 
+      col.names = CNames,
       caption = "Offender-Level Robbery Incident Counts")
 ```
 
@@ -441,7 +460,8 @@ criminal sexual conduct).
 ACat12_10 <- describe(IDNEW[, c("ACat12_10", "CCat12_10", "JCat12_10")], 
                   quant=c(.25, .50, .75))
 row.names(ACat12_10) <- RN.ACC
-kable(ACat12_10[, CNums], digits = 2, col.names = CNames,
+kable(ACat12_10[, CNums], format = "latex", booktabs = TRUE, digits = 2, 
+      col.names = CNames,
       caption = "Offender-Level Sex Crime Incident Counts")
 ```
 
@@ -456,7 +476,8 @@ of ordinances.
 ACat12_11 <- describe(IDNEW[, c("ACat12_11", "CCat12_11", "JCat12_11")], 
                   quant=c(.25, .50, .75))
 row.names(ACat12_11) <- RN.ACC
-kable(ACat12_11[, CNums], digits = 2, col.names = CNames,
+kable(ACat12_11[, CNums], format = "latex", booktabs = TRUE, digits = 2, 
+      col.names = CNames,
       caption = "Offender-Level Traffic and Ordinance Incident Counts")
 ```
 
@@ -470,7 +491,8 @@ Here we summarize the counts of unique incidents where the offender was
 ACat12_12 <- describe(IDNEW[, c("ACat12_12", "CCat12_12", "JCat12_12")], 
                   quant=c(.25, .50, .75))
 row.names(ACat12_12) <- RN.ACC
-kable(ACat12_12[, CNums], digits = 2, col.names = CNames,
+kable(ACat12_12[, CNums], format = "latex", booktabs = TRUE, digits = 2, 
+      col.names = CNames,
       caption = "Offender-Level Weapons Incident Counts")
 ```
 
@@ -485,7 +507,8 @@ included in the other tables above this section.
 ACat12_999 <- describe(IDNEW[, c("ACat12_999", "CCat12_999", "JCat12_999")], 
                   quant=c(.25, .50, .75))
 row.names(ACat12_999) <- RN.ACC
-kable(ACat12_999[, CNums], digits = 2, col.names = CNames,
+kable(ACat12_999[, CNums], format = "latex", booktabs = TRUE, digits = 2, 
+      col.names = CNames,
       caption = "Offender-Level Other Crime (Excluded User-Missing) Incident Counts")
 ```
 
@@ -501,7 +524,8 @@ aggregating to the incident or offender level.
 ## Crime Category (12 levels)
 ```{r}
 kable(freq(as_factor(ARREW$ACat12), user.missing = "Excluded user-missing"), 
-      digits = 2, format.args = list(big.mark = ','),
+      format = "latex", booktabs = TRUE, digits = 2, 
+      format.args = list(big.mark = ','),
       caption = "Number of Arrest Offense Records by Crime Category (12 levels)")
 ```
 
@@ -510,7 +534,8 @@ kable(freq(as_factor(ARREW$ACat12), user.missing = "Excluded user-missing"),
 ## Age at Arrest for Criminal Sexual Conduct
 ```{r}
 OAgeA <- describe(ARREW[ARREW$ACat12 == 5, "OAgeA"],  quant=c(.25, .50, .75))
-kable(OAgeA[, CNums], digits = 2, col.names = CNames,
+kable(OAgeA[, CNums], format = "latex", booktabs = TRUE, digits = 2, 
+      col.names = CNames,
       caption = "Offender Age at Arrest for Criminal Sexual Conduct")
 ```
 
@@ -526,7 +551,8 @@ aggregating to the incident or offender level.
 ## Crime Category (12 levels)
 ```{r, fig.height = 2}
 kable(freq(as_factor(CHGEW$CCat12), user.missing = "Excluded user-missing"), 
-      digits = 2, format.args = list(big.mark = ','),
+      format = "latex", booktabs = TRUE, digits = 2, 
+      format.args = list(big.mark = ','),
       caption = "Number of Prosecutor Charge Records by Crime Category (12 levels)")
 ```
 
@@ -544,7 +570,8 @@ some of these records are convictions, others will have other dispositions.
 ## Crime Category (12 levels, all dispositions)
 ```{r, fig.height = 2}
 kable(freq(as_factor(JUDEW$JCat12), user.missing = "Excluded user-missing"), 
-      digits = 2, format.args = list(big.mark = ','),
+      format = "latex", booktabs = TRUE, digits = 2, 
+      format.args = list(big.mark = ','),
       caption = "Number of Adjudicated Charge Records (All Dispositions) by Crime Category (12 levels)")
 ```
 
@@ -554,7 +581,8 @@ kable(freq(as_factor(JUDEW$JCat12), user.missing = "Excluded user-missing"),
 ```{r, fig.height = 2}
 kable(freq(as_factor(JUDEW$JCat12[JUDEW$JDispCat == 1]), 
            user.missing = "Excluded user-missing"), 
-      digits = 2, format.args = list(big.mark = ','),
+      format = "latex", booktabs = TRUE, digits = 2, 
+      format.args = list(big.mark = ','),
       caption = "Number of Adjudicated Charge Records (Convictions Only) by Crime Category (12 levels)")
 ```
 
