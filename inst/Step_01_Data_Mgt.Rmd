@@ -146,14 +146,6 @@ library(car)              # For recode()
 library(SSACHR)           # for rvlabel()
 ```
 
-Create objects to hold settings we plan to reuse often. 
-
-```{r my_settings}
-# Custom settings for use with bwplot().
-my.boxes <- list(box.rectangle = list(col = "black", lwd = 2), 
-                 box.umbrella = list(col = "black", lwd = 2))
-```
-
 \FloatBarrier
 
 # Import Files
