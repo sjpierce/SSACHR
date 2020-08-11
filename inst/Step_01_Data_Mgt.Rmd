@@ -157,7 +157,7 @@ my.boxes <- list(box.rectangle = list(col = "black", lwd = 2),
 \FloatBarrier
 
 # Import Files
-The SPSS files we will need to import, plus docmentation about their contents
+The SPSS files we will need to import, plus documentation about their contents
 and relationships between them, are available from an online archive (Campbell,
 2019).
 
