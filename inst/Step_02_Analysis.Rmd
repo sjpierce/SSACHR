@@ -124,8 +124,9 @@ charges.
 
 All the CHR summaries in this section focus on variables that have been 
 aggregated to offender level. That is why the sample size for all of these
-variables is N = 1,143 (the number of offenders for whom Michigan CHR data were
-available). 
+variables is N = `r nrow(IDNEW)` (the number of offenders for whom Michigan CHR 
+data were available and the start date for the earliest SAK testing window could
+be established). 
 
 \FloatBarrier
 
