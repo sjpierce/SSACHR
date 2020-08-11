@@ -877,7 +877,7 @@ compatible with the tidyverse style and piped operator %>%. After merging, we
 replace the missing values in the new variables with zeroes, then compute some
 additional variables as well. 
 
-```{r create_IDNEW2}
+```{r update_IDNEW}
 IDNEW %>% 
   # Merge in ACat12 incident count variables 
   left_join(x = ., y = ARR2, by = "OID") %>% 
@@ -892,16 +892,16 @@ IDNEW %>%
   mutate(ACat12_Count = sum(c_across(all_of(avars[1:12])) > 0),
          CCat12_Count = sum(c_across(all_of(cvars[1:12])) > 0),
          JCat12_Count = sum(c_across(all_of(jvars[1:12])) > 0)) -> 
-  IDNEW2
+  IDNEW
 ```
 
 ```{r check_assumptions}
 # Verify that OCSC1 = ACat12_5, OCSC2 = CCat12_5, & OCSC3 = JCat12_5.
 # This compares incident count variables created in SPSS to corresponding 
 # variables created in R above (to prove logic was implemented the same way).
-all(IDNEW2$OCSC1 == IDNEW2$ACat12_5) # Arrest incident counts
-all(IDNEW2$OCSC2 == IDNEW2$CCat12_5) # Charge incident counts
-all(IDNEW2$OCSC3 == IDNEW2$JCat12_5) # Conviction incident counts
+all(IDNEW$OCSC1 == IDNEW$ACat12_5) # Arrest incident counts
+all(IDNEW$OCSC2 == IDNEW$CCat12_5) # Charge incident counts
+all(IDNEW$OCSC3 == IDNEW$JCat12_5) # Conviction incident counts
 ```
 
 # Criminal History Record (CHR) Count Overview
@@ -917,7 +917,7 @@ TCap <- paste("Criminal History Record Counts and Date Ranges Before Versus",
 
 # Summarize record counts before & after case selection for this study.
 bind_rows(dfsummary(IDN, label = "Offenders...Before", dvar = IDN$DOB),
-          dfsummary(IDNEW2, label = "Offenders...After", dvar = IDNEW2$DOB),
+          dfsummary(IDNEW, label = "Offenders...After", dvar = IDNEW2$DOB),
           dfsummary(INC, label = "Incidents...Before", dvar = INC$IDate), 
           dfsummary(INCEW, label = "Incidents...After", dvar = INCEW$IDate), 
           dfsummary(ARR, label = "Arrest offenses...Before", dvar = ARR$ADate),
@@ -945,7 +945,7 @@ kable(CHR.RC, format = "latex", booktabs = TRUE, caption = TCap,
 # Save Data to a File
 
 ```{r save_data}
-save(IDN, IDNEW2, INC, INCEW, ARR, ARREW, CHG, CHGEW, JUD, JUDEW, CON, CONEW, 
+save(IDNEW, INCEW, ARREW, CHGEW, JUDEW, CONEW, 
      file = here::here("./data/CHR_Data.RData"))
 ```
 
