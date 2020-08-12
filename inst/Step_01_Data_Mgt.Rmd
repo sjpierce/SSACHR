@@ -986,9 +986,10 @@ CON %>%
 
 The incident counts are then merged onto the *IDNEW* data frame via left_join()
 because it preserves variable attributes better than merge() and is more
-compatible with the tidyverse style and piped operator %>%. After merging, we 
-replace the missing values in the new variables with zeroes, then compute some
-additional variables as well. 
+compatible with the tidyverse style and the pipe operator %>%. Then, we merge in 
+crime category incident counts variables as well. After merging, we replace the
+missing values in the new variables with zeroes, then compute some additional
+variables as well.
 
 ```{r update_IDNEW}
 rcvars <- paste(rep(c("NINC", "NARR", "NCHG", "NJUD", "NCON"), each = 3), 
