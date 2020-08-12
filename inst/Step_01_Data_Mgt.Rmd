@@ -992,6 +992,16 @@ additional variables as well.
 
 ```{r update_IDNEW}
 IDNEW %>% 
+  # Merge in incident record count variables
+  left_join(x = ., y = INCEWAgg, by = "OID") %>% 
+  # Merge in arrest record count variables
+  left_join(x = ., y = ARREWAgg, by = "OID") %>% 
+  # Merge in charge record count variables
+  left_join(x = ., y = CHGEWAgg, by = "OID") %>% 
+  # Merge in judicial charge record count variables
+  left_join(x = ., y = JUDEWAgg, by = "OID") %>% 
+  # Merge in conviction record count variables
+  left_join(x = ., y = CONEWAgg, by = "OID") %>% 
   # Merge in ACat12 incident count variables 
   left_join(x = ., y = ARR2, by = "OID") %>% 
   # Merge in CCat12 incident count variables 
