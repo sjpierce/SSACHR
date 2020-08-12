@@ -613,13 +613,10 @@ INCEW %>%
   summarize(NINC = sum(NINC)) %>% 
   pivot_wider(names_from = IWhen, values_from = NINC, 
               names_glue = "NINC_{IWhen}") %>% 
-  var_labels(NINC_Before = paste(get_label(IDNEW$NINC), 
-                                 "before earliest testing window"),
-             NINC_During = paste(get_label(IDNEW$NINC), 
-                                 "during earliest testing window"),
-             NINC_After  = paste(get_label(IDNEW$NINC), 
-                                 "after earliest testing window")) ->
-  INCEWAgg
+  var_labels(NINC_Before = "No. of incident records before testing window",
+             NINC_During = "No. of incident records during testing window",
+             NINC_After  = "No. of incident records after testing window") ->
+   INCEWAgg
 ```
 \FloatBarrier
 
@@ -690,12 +687,9 @@ ARREW %>%
   summarize(NARR = sum(NARR)) %>% 
   pivot_wider(names_from = IWhen, values_from = NARR, 
               names_glue = "NARR_{IWhen}") %>% 
-  var_labels(NARR_Before = paste(get_label(IDNEW$NARR), 
-                                 "before earliest testing window"),
-             NARR_During = paste(get_label(IDNEW$NARR), 
-                                 "during earliest testing window"),
-             NARR_After  = paste(get_label(IDNEW$NARR), 
-                                 "after earliest testing window")) ->
+  var_labels(NARR_Before = "No. of arrest offense records before testing window",
+             NARR_During = "No. of arrest offense records during testing window",
+             NARR_After  = "No. of arrest offense records after testing window") ->
   ARREWAgg
 ```
 
@@ -768,12 +762,9 @@ CHGEW %>%
   summarize(NCHG = sum(NCHG)) %>% 
   pivot_wider(names_from = IWhen, values_from = NCHG, 
               names_glue = "NCHG_{IWhen}") %>% 
-  var_labels(NCHG_Before = paste(get_label(IDNEW$NCHG), 
-                                 "before earliest testing window"),
-             NCHG_During = paste(get_label(IDNEW$NCHG), 
-                                 "during earliest testing window"),
-             NCHG_After  = paste(get_label(IDNEW$NCHG), 
-                                 "after earliest testing window")) ->
+  var_labels(NCHG_Before = "No. of prosecutor charge records before testing window",
+             NCHG_During = "No. of prosecutor charge records during testing window",
+             NCHG_After  = "No. of prosecutor charge records after testing window") ->
   CHGEWAgg
 ```
 
@@ -846,12 +837,9 @@ JUDEW %>%
   summarize(NJUD = sum(NJUD)) %>% 
   pivot_wider(names_from = IWhen, values_from = NJUD, 
               names_glue = "NJUD_{IWhen}") %>% 
-  var_labels(NJUD_Before = paste(get_label(IDNEW$NJUD), 
-                                 "before earliest testing window"),
-             NJUD_During = paste(get_label(IDNEW$NJUD), 
-                                 "during earliest testing window"),
-             NJUD_After = paste(get_label(IDNEW$NJUD), 
-                                 "after earliest testing window")) ->
+  var_labels(NJUD_Before = "No. of adjudicated charge records before testing window",
+             NJUD_During = "No. of adjudicated charge records during testing window",
+             NJUD_After  = "No. of adjudicated charge records after testing window") ->
   JUDEWAgg
 ```
 
@@ -924,12 +912,9 @@ CONEW %>%
   summarize(NCON = sum(NCON)) %>% 
   pivot_wider(names_from = IWhen, values_from = NCON, 
               names_glue = "NCON_{IWhen}") %>% 
-  var_labels(NCON_Before = paste(get_label(IDNEW$NCON), 
-                                 "before earliest testing window"),
-             NCON_During = paste(get_label(IDNEW$NCON), 
-                                 "during earliest testing window"),
-             NCON_After = paste(get_label(IDNEW$NCON), 
-                                "after earliest testing window")) ->
+  var_labels(NCON_Before = "No. of conviction records before testing window",
+             NCON_During = "No. of conviction records during testing window",
+             NCON_After  = "No. of conviction records after testing window") ->
   CONEWAgg
 ```
 \FloatBarrier
