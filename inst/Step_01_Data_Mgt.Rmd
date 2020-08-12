@@ -983,8 +983,7 @@ CON %>%
   CON2
 ```
 # Merge Aggregated Variables onto IDNEW. 
-
-The incident counts are then merged onto the *IDNEW* data frame via left_join()
+First, we merge additional record count variables into *IDNEW* via *left_join()*
 because it preserves variable attributes better than merge() and is more
 compatible with the tidyverse style and the pipe operator %>%. Then, we merge in 
 crime category incident counts variables as well. After merging, we replace the
