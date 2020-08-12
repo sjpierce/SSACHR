@@ -49,4 +49,4 @@ inst/extdata/*.sav
 
 # Omit RData files that should not be uploaded to GitHub. User can run
 # script to create the data file locally.
-data/*.RData
+inst/data/*.RData
