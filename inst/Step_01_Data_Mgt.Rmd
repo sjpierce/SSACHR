@@ -991,6 +991,9 @@ replace the missing values in the new variables with zeroes, then compute some
 additional variables as well. 
 
 ```{r update_IDNEW}
+rcvars <- paste(rep(c("NINC", "NARR", "NCHG", "NJUD", "NCON"), each = 3), 
+                rep(IWhenLevels, times = 5), sep = "_")
+
 IDNEW %>% 
   # Merge in incident record count variables
   left_join(x = ., y = INCEWAgg, by = "OID") %>% 
@@ -1009,7 +1012,8 @@ IDNEW %>%
   # Merge in JCat12 incident count variables (for convictions only)
   left_join(x = ., y = CON2, by = "OID") %>% 
   # Replace all NA values in the new variables with 0. 
-  mutate(across(.cols = all_of(acjvars), .fns = replace_na, replace = 0)) %>% 
+  mutate(across(.cols = all_of(c(acjvars, rcvars)), .fns = replace_na, 
+                               replace = 0)) %>% 
   # Count the number of crime categories associated w/ each offender.
   rowwise() %>% 
   mutate(ACat12_Count = sum(c_across(all_of(avars[1:12])) > 0),
