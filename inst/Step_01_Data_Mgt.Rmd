@@ -1045,7 +1045,7 @@ TCap <- paste("Criminal History Record Counts and Date Ranges Before Versus",
 
 # Summarize record counts before & after case selection for this study.
 bind_rows(dfsummary(IDN, label = "Offenders...Before", dvar = IDN$DOB),
-          dfsummary(IDNEW, label = "Offenders...After", dvar = IDNEW2$DOB),
+          dfsummary(IDNEW, label = "Offenders...After", dvar = IDNEW$DOB),
           dfsummary(INC, label = "Incidents...Before", dvar = INC$IDate), 
           dfsummary(INCEW, label = "Incidents...After", dvar = INCEW$IDate), 
           dfsummary(ARR, label = "Arrest offenses...Before", dvar = ARR$ADate),
