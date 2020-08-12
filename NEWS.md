@@ -1,3 +1,12 @@
+# SSACHR 0.5.1, 2020-08-11
+* Updated `.Rbuildignore` to fix errors and warnings from check() and 
+  install_github(). 
+* Updated `inst/Step_01_Data_mgt.Rmd` to:
+    * Merge additional aggregated variables onto IDNEW, replace NA values with 
+      zeroes, and add variable labels.
+    * Improve explanatory text. 
+    * Fix sme object references to tibbles.
+
 # SSACHR 0.5.0, 2020-08-11
 * Added `inst/Step_02_Analysis.Rmd` by copying `inst/Step_01_Data_mgt.Rmd` then
   removing the data management code at the start. 
@@ -9,7 +18,7 @@
     * Update the Software Information section. 
     * Remove chunks no longer required and rename other chunks. 
     * Improve some table formatting. 
-    * Create additional aggregated variables and merge them onto IDNEW. 
+    * Create additional aggregated variables.
 
 # SSACHR 0.4.4, 2020-08-10
 * Committed changes to `DESCRIPTION` and `NEWS.md` that were made on 2020-08-06
