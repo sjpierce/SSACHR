@@ -15,4 +15,7 @@
 
 # Omit RData files that should not be uploaded to GitHub. User can run
 # script to create the data file locally.
-^data/*\.RData
+^data/CHR_Data.RData$
+
+# Omit text file that should not be treated as actual data.
+^data/Read_This_Note\.txt$
