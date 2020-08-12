@@ -988,6 +988,7 @@ CON %>%
   summarize(across(.cols = all_of(jvars), .fns = sum)) ->
   CON2
 ```
+
 # Merge Aggregated Variables onto IDNEW. 
 First, we merge additional record count variables into *IDNEW* via *left_join()*
 because it preserves variable attributes better than merge() and is more
