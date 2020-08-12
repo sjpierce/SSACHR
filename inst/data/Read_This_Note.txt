@@ -1,4 +1,0 @@
-This "SSACHR/data" folder is where the Step_01_Data_Mgt.Rmd script will write an 
-.RData file when you run it. The resulting file is not tracked by Git because 
-we don't want it on GitHub. Users are supposed to generate it locally with the 
-script. 
