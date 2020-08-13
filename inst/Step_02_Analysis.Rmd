@@ -201,6 +201,41 @@ kable(freq(IDNEW$NINC), format = "latex", booktabs = TRUE, digits = 2,
 ```
 
 ```{r}
+# Get side-by side frequency tables.
+
+IDNEW %>% 
+  group_by(NINC) %>% 
+  count() %>% 
+  rename(Value = NINC, n_all = n) -> 
+  tmp1
+IDNEW %>% 
+  group_by(NINC_Before) %>% 
+  count() %>% 
+  rename(Value = NINC_Before, n_before = n) -> 
+  tmp2
+IDNEW %>% 
+  group_by(NINC_During) %>% 
+  count() %>% 
+  rename(Value = NINC_During, n_during = n) -> 
+  tmp3
+IDNEW %>% 
+  group_by(NINC_After) %>% 
+  count() %>% 
+  rename(Value = NINC_After, n_after = n) -> 
+  tmp4
+
+tmp1 %>% 
+  full_join(tmp2, by = "Value") %>% 
+  full_join(tmp3, by = "Value") %>%
+  full_join(tmp4, by = "Value") %>% 
+  arrange(Value) %>% 
+  replace_na(replace = list(n_all = 0, n_before = 0, n_during = 0, n_after = 0))
+```
+
+
+
+
+```{r}
 kable(freq(IDNEW$NARR), format = "latex", booktabs = TRUE, digits = 2,
       caption = "Number of Arrest Offenses (All Crime Categories)")
 ```
