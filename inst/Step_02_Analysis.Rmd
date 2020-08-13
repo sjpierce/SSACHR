@@ -168,17 +168,31 @@ with each offender. We summarize the resulting variables (NINC, NARR, NCHG,
 NJUD, & NCON) below.
 
 ```{r}
+TCap <- paste("Offender-Level Record Counts (All Crime Categories, Overall and",
+              "By When Incident Occured Relative to Testing Window)")
+rcvars <- c("NINC", "NINC_Before", "NINC_During", "NINC_After", 
+            "NARR", "NARR_Before", "NARR_During", "NARR_After",
+            "NCHG", "NCHG_Before", "NCHG_During", "NCHG_After",
+            "NJUD", "NJUD_Before", "NJUD_During", "NJUD_After",
+            "NCON", "NCON_Before", "NCON_During", "NCON_After")
+BDA <- c("...Before", "...During", "...After")
+rclabs <- c("No. of incidents", BDA, 
+            "No. of arrest offenses", BDA,
+            "No. of prosecutor charges", BDA,
+            "No. of adjudicated charges (all)", BDA,
+            "No. of adjudicated charges (convictions)", BDA)
+
 # Summarize CHR record counts (both overall and broken down by IWhen).
-RC <- describe(IDNEW[, c("NINC", "NARR", "NCHG", "NJUD", "NCON")],  
-               quant=c(.25, .50, .75))
-row.names(RC) <- c("No. of incidents", 
-                   "No. of arrest offenses", 
-                   "No. of prosecutor charges", 
-                   "No. of adjudicated charges (all)",
-                   "No. of adjudicated charges (convictions)")
-kable(RC[, CNums], format = "latex", booktabs = TRUE, digits = 2, 
-      col.names = CNames,
-      caption = "Offender-Level Record Counts (All Crime Categories)")
+describe(IDNEW[, rcvars], quant=c(.25, .50, .75)) %>% 
+  bind_cols(data.frame(Variable = rclabs), .) %>% 
+  select(Variable, n, mean, sd, min, max, skew, kurtosis, Q0.25, Q0.5, Q0.75) %>% 
+  kable(., format = "latex", booktabs = TRUE, digits = 2, row.names = FALSE, 
+        col.names = c("Variable", CNames), caption = TCap) %>% 
+  group_rows(" ", 1, 4) %>% 
+  group_rows(" ", 5, 8) %>% 
+  group_rows(" ", 9, 12) %>% 
+  group_rows(" ", 13, 16) %>% 
+  group_rows(" ", 17, 20)
 ```
 
 ```{r}
