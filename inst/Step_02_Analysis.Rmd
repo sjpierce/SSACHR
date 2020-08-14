@@ -45,7 +45,7 @@ header-includes:
 ********************************************************************************  
 \FloatBarrier
 
-# Purpose.
+# Purpose
 This file analyzes data derived from publicly archived data files (Campbell,
 2019) to produce outputs for a descriptive paper about the criminal histories of
 suspected serial sexual perpetrators.^[In this document, we use the terms
