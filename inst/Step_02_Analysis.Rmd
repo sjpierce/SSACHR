@@ -196,64 +196,164 @@ IDNEW %>%
   group_rows(" ", 17, 20)
 ```
 
-kable(freq(IDNEW$NINC), format = "latex", booktabs = TRUE, digits = 2, 
-      caption = "Number of Incidents (All Crime Categories)")
-```
-
-```{r}
-# Get side-by side frequency tables.
 ```{r freq_NINC}
+# Table caption.
+TCap <- paste("Frequency Distributions for Number of Incidents (All Crime",
+              "Categories) Overall and By When Incident Occurred")
+# Footnote text.
+FN <- paste0("N = ", format(nrow(IDNEW), big.mark = ","), ". TW, earliest ",
+            "testing window.")
 
+# Get frequency distributions. 
 IDNEW %>% 
-  group_by(NINC) %>% 
+  select(OID, NINC, NINC_Before, NINC_During, NINC_After) %>% 
+  rename(All = NINC, Before = NINC_Before, During = NINC_During, 
+         After = NINC_After) %>% 
+  pivot_longer(cols = -OID, names_to = "When", values_to = "Value") %>% 
+  group_by(When, Value) %>% 
   count() %>% 
-  rename(Value = NINC, n_all = n) -> 
-  tmp1
-IDNEW %>% 
-  group_by(NINC_Before) %>% 
-  count() %>% 
-  rename(Value = NINC_Before, n_before = n) -> 
-  tmp2
-IDNEW %>% 
-  group_by(NINC_During) %>% 
-  count() %>% 
-  rename(Value = NINC_During, n_during = n) -> 
-  tmp3
-IDNEW %>% 
-  group_by(NINC_After) %>% 
-  count() %>% 
-  rename(Value = NINC_After, n_after = n) -> 
-  tmp4
-
-tmp1 %>% 
-  full_join(tmp2, by = "Value") %>% 
-  full_join(tmp3, by = "Value") %>%
-  full_join(tmp4, by = "Value") %>% 
   arrange(Value) %>% 
-  replace_na(replace = list(n_all = 0, n_before = 0, n_during = 0, n_after = 0))
+  pivot_wider(names_from = When, values_from = n, values_fill = 0) %>% 
+  mutate(All_p = 100*All/nrow(IDNEW),
+         Before_p = 100*Before/nrow(IDNEW),
+         During_p = 100*During/nrow(IDNEW),
+         After_p = 100*After/nrow(IDNEW)) %>% 
+  select(Value, All, All_p, Before, Before_p, During, During_p, After, 
+         After_p) %>% 
+  kable(format = "latex", booktabs = TRUE, digits = 2, 
+        col.names = c("Value", rep(c("Frequency", "Percent"), 4)),
+        caption = TCap) %>% 
+  kable_styling() %>% 
+  add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
+                   "After TW" = 2)) %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
 ```
 
 
+```{r freq_NARR}
+# Table caption.
+TCap <- paste("Frequency Distributions for Number of Arrest Offenses (All",
+              "Crime Categories) Overall and By When Incident Occurred")
 
-
-```{r}
-kable(freq(IDNEW$NARR), format = "latex", booktabs = TRUE, digits = 2,
-      caption = "Number of Arrest Offenses (All Crime Categories)")
+# Get frequency distributions. 
+IDNEW %>% 
+  select(OID, NARR, NARR_Before, NARR_During, NARR_After) %>% 
+  rename(All = NARR, Before = NARR_Before, During = NARR_During, 
+         After = NARR_After) %>% 
+  pivot_longer(cols = -OID, names_to = "When", values_to = "Value") %>% 
+  group_by(When, Value) %>% 
+  count() %>% 
+  arrange(Value) %>% 
+  pivot_wider(names_from = When, values_from = n, values_fill = 0) %>% 
+  mutate(All_p = 100*All/nrow(IDNEW),
+         Before_p = 100*Before/nrow(IDNEW),
+         During_p = 100*During/nrow(IDNEW),
+         After_p = 100*After/nrow(IDNEW)) %>% 
+  select(Value, All, All_p, Before, Before_p, During, During_p, After, 
+         After_p) %>% 
+  kable(format = "latex", booktabs = TRUE, digits = 2, 
+        col.names = c("Value", rep(c("Frequency", "Percent"), 4)),
+        caption = TCap) %>% 
+  kable_styling() %>% 
+  add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
+                   "After TW" = 2)) %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
 ```
 
-```{r}
-kable(freq(IDNEW$NCHG), format = "latex", booktabs = TRUE, digits = 2,
-      caption = "Number of Prosecutor Charges (All Crime Categories)")
+```{r freq_NCHG}
+# Table caption.
+TCap <- paste("Frequency Distributions for Number of Prosecutor Charges (All",
+              "Crime Categories) Overall and By When Incident Occurred")
+
+# Get frequency distributions. 
+IDNEW %>% 
+  select(OID, NCHG, NCHG_Before, NCHG_During, NCHG_After) %>% 
+  rename(All = NCHG, Before = NCHG_Before, During = NCHG_During, 
+         After = NCHG_After) %>% 
+  pivot_longer(cols = -OID, names_to = "When", values_to = "Value") %>% 
+  group_by(When, Value) %>% 
+  count() %>% 
+  arrange(Value) %>% 
+  pivot_wider(names_from = When, values_from = n, values_fill = 0) %>% 
+  mutate(All_p = 100*All/nrow(IDNEW),
+         Before_p = 100*Before/nrow(IDNEW),
+         During_p = 100*During/nrow(IDNEW),
+         After_p = 100*After/nrow(IDNEW)) %>% 
+  select(Value, All, All_p, Before, Before_p, During, During_p, After, 
+         After_p) %>% 
+  kable(format = "latex", booktabs = TRUE, digits = 2, 
+        col.names = c("Value", rep(c("Frequency", "Percent"), 4)),
+        caption = TCap) %>% 
+  kable_styling() %>% 
+  add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
+                   "After TW" = 2)) %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
 ```
 
-```{r}
-kable(freq(IDNEW$NJUD), format = "latex", booktabs = TRUE, digits = 2,
-      caption = "Number of Adjudicated Charges (All Crime Categories, All Dispositions)")
+```{r freq_NJUD}
+# Table caption.
+TCap <- paste("Frequency Distributions for Number of Adjudicated Charges (All",
+              "Crime Categories) Overall and By When Incident Occurred")
+
+# Get frequency distributions. 
+IDNEW %>% 
+  select(OID, NJUD, NJUD_Before, NJUD_During, NJUD_After) %>% 
+  rename(All = NJUD, Before = NJUD_Before, During = NJUD_During, 
+         After = NJUD_After) %>% 
+  pivot_longer(cols = -OID, names_to = "When", values_to = "Value") %>% 
+  group_by(When, Value) %>% 
+  count() %>% 
+  arrange(Value) %>% 
+  pivot_wider(names_from = When, values_from = n, values_fill = 0) %>% 
+  mutate(All_p = 100*All/nrow(IDNEW),
+         Before_p = 100*Before/nrow(IDNEW),
+         During_p = 100*During/nrow(IDNEW),
+         After_p = 100*After/nrow(IDNEW)) %>% 
+  select(Value, All, All_p, Before, Before_p, During, During_p, After, 
+         After_p) %>% 
+  kable(format = "latex", booktabs = TRUE, digits = 2, 
+        col.names = c("Value", rep(c("Frequency", "Percent"), 4)),
+        caption = TCap) %>% 
+  kable_styling() %>% 
+  add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
+                   "After TW" = 2)) %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
 ```
 
-```{r}
-kable(freq(IDNEW$NCON), format = "latex", booktabs = TRUE, digits = 2,
-      caption = "Number of Adjudicated Charges (All Crime Categories, Convictions)")
+```{r freq_NCON}
+# Table caption.
+TCap <- paste("Frequency Distributions for Number of Adjudicated Charges (All",
+              "Crime Categories, Convictions) Overall and By When Incident",
+              "Occurred")
+
+# Get frequency distributions. 
+IDNEW %>% 
+  select(OID, NCON, NCON_Before, NCON_During, NCON_After) %>% 
+  rename(All = NCON, Before = NCON_Before, During = NCON_During, 
+         After = NCON_After) %>% 
+  pivot_longer(cols = -OID, names_to = "When", values_to = "Value") %>% 
+  group_by(When, Value) %>% 
+  count() %>% 
+  arrange(Value) %>% 
+  pivot_wider(names_from = When, values_from = n, values_fill = 0) %>% 
+  mutate(All_p = 100*All/nrow(IDNEW),
+         Before_p = 100*Before/nrow(IDNEW),
+         During_p = 100*During/nrow(IDNEW),
+         After_p = 100*After/nrow(IDNEW)) %>% 
+  select(Value, All, All_p, Before, Before_p, During, During_p, After, 
+         After_p) %>% 
+  kable(format = "latex", booktabs = TRUE, digits = 2, 
+        col.names = c("Value", rep(c("Frequency", "Percent"), 4)),
+        caption = TCap) %>% 
+  kable_styling() %>% 
+  add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
+                   "After TW" = 2)) %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
 ```
 
 ```{r , fig.height = 3}
