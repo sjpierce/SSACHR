@@ -77,6 +77,14 @@ knitr::opts_chunk$set(include  = TRUE, echo = TRUE, error = TRUE,
                       message = TRUE, warning = TRUE, cfsize = "footnotesize")
 ```
 
+Load R packages that we need to get additional functions. 
+
+``` {r load_packages}
+library(here)             # for here()
+library(rmarkdown)        # for render()
+#library(knitr)            # for kable()
+```
+
 \FloatBarrier
 
 ## Project Information
