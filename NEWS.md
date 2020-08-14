@@ -1,3 +1,11 @@
+# SSACHR 0.5.3, 2020-08-13
+* Updated `inst/Step_02_Analysis.Rmd` to: 
+    * Create incident count variables for specific crime categories that are 
+      broken down by when incident occurred relative to testing window and merge
+      them into IDNEW. 
+    * Change some tibble names and code chunk labels. 
+* Updated `README.Rmd` and `README.md` task list.
+
 # SSACHR 0.5.2, 2020-08-12
 * Updated `inst/Step_01_Data_Mgt.Rmd` to:
     * Fix variable labels assigned to aggregated variables. 
