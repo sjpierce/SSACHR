@@ -87,7 +87,7 @@ library(rmarkdown)        # for render()
 
 \FloatBarrier
 
-## Project Information
+# Project Information
 These materials are scholarly products based on research funded by the following 
 grant. 
 
@@ -98,7 +98,7 @@ Justice. Location: Michigan State University, East Lansing, MI.
 
 \FloatBarrier
 
-## Software Information
+# Software Information
 We use R Markdown to enhance reproducibility. Knitting the source R Markdown 
 script *`r knitr:::current_input()`* generates this PDF file.
 
