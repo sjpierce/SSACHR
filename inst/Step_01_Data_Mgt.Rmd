@@ -961,11 +961,26 @@ ARREW %>%
   ARREWAgg2
 ```
 
+```{r create_ARREWAgg3}
 # This solves warnings issued by max() when it is used on an empty vector. 
 # max(numeric(0)) yields warning "no non-missing arguments to min; returning -Inf"
 # So we replace the max() function with one that just returns NA when the vector
 # is empty. This speeds up execution dramatically
 RobustMax <- function(x) {if (length(x)>0) max(x) else NA}
+
+# Aggregate ACat12 dummy codes to offender level incident counts.
+ARREW %>% 
+  group_by(OID, IID, IWhen, .drop = FALSE) %>% 
+  # Aggregate dummy codes by OID + IID into binary variables
+  summarize(across(.cols = all_of(avars), .fns = RobustMax)) %>% 
+  pivot_wider(names_from = IWhen, values_from = all_of(avars), 
+              values_fill = 0) %>%
+  group_by(OID) %>% 
+  # Aggregate dummy codes by OID into incident count variables
+  summarize(across(.cols = all_of(avarsbda), .fns = sum, na.rm = TRUE)) ->
+  ARREWAgg3
+```
+
 ### Incidents With Charges
 
 ```{r create_CHGEWAgg2}         
@@ -980,6 +995,21 @@ CHGEW %>%
   CHGEWAgg2
 ```
 
+```{r create_CHGEWAgg3}
+# Aggregate CCat12 dummy codes to offender level incident counts.
+CHGEW %>% 
+  group_by(OID, IID, IWhen, .drop = FALSE) %>% 
+  # Aggregate dummy codes by OID + IID into binary variables
+  summarize(across(.cols = all_of(cvars), .fns = RobustMax)) %>% 
+  pivot_wider(names_from = IWhen, values_from = all_of(cvars), 
+              values_fill = 0) %>%
+  group_by(OID) %>% 
+  # Aggregate dummy codes by OID into incident count variables
+  summarize(across(.cols = all_of(cvarsbda), .fns = sum, na.rm = TRUE)) ->
+  CHGEWAgg3
+```
+
+
 ### Incidents With Convictions
 
 ```{r create_CONEWAgg2}
@@ -992,6 +1022,20 @@ CONEW %>%
   # Aggregate dummy codes by OID into incident count variables
   summarize(across(.cols = all_of(jvars), .fns = sum)) ->
   CONEWAgg2
+```
+
+```{r create_CONEWAgg3}
+# Aggregate JCat12 dummy codes to offender level incident counts.
+CONEW %>% 
+  group_by(OID, IID, IWhen, .drop = FALSE) %>% 
+  # Aggregate dummy codes by OID + IID into binary variables
+  summarize(across(.cols = all_of(jvars), .fns = RobustMax)) %>% 
+  pivot_wider(names_from = IWhen, values_from = all_of(jvars), 
+              values_fill = 0) %>%
+  group_by(OID) %>% 
+  # Aggregate dummy codes by OID into incident count variables
+  summarize(across(.cols = all_of(jvarsbda), .fns = sum, na.rm = TRUE)) ->
+  CONEWAgg3
 ```
 
 # Merge Aggregated Variables onto IDNEW. 
