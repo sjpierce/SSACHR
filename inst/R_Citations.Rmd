@@ -102,13 +102,13 @@ Justice. Location: Michigan State University, East Lansing, MI.
 We use R Markdown to enhance reproducibility. Knitting the source R Markdown 
 script *`r knitr:::current_input()`* generates this PDF file.
 
-- We use [RStudio (version 1.3.1056 or later)](www.rstudio.org) to work with 
-  R and R markdown files. The software chain looks like this:
+- We used [RStudio](www.rstudio.org) `r rstudioapi::versionInfo()$version` to 
+  work with R and R markdown files. The software chain looks like this:
   **Rmd file > RStudio > R > rmarkdown > knitr > pandoc > TinyTeX or MiKTeX > PDF file**.
 - We recommend using [TinyTeX](https://yihui.org/tinytex/) to compile LaTeX files 
   into PDF files. However, it should be viable to use 
   [MiKTeX version 2.9](https://miktex.org) instead. 
-- We used [pandoc](https://pandoc.org) version `r pandoc_version()` for this 
+- We used [pandoc](https://pandoc.org) `r pandoc_version()` for this 
   document. 
 
 This document was generated using the following computational environment and 
