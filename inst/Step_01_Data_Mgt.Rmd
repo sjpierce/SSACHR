@@ -934,44 +934,44 @@ acjvars <- c(avars, cvars, jvars)
 
 ### Incidents With Arrests
 
-```{r create_ARR2}
+```{r create_ARREWAgg2}
 # Aggregate ACat12 dummy codes to offender level incident counts.
-ARR %>% 
+ARREW %>% 
   group_by(OID, IID) %>% 
   # Aggregate dummy codes by OID + IID into binary variables
   summarize(across(.cols = all_of(avars), .fns = max)) %>% 
   group_by(OID) %>% 
   # Aggregate dummy codes by OID into incident count variables
   summarize(across(.cols = all_of(avars), .fns = sum)) ->
-  ARR2
+  ARREWAgg2
 ```
 
 ### Incidents With Charges
 
-```{r create_CHG2}         
+```{r create_CHGEWAgg2}         
 # Aggregate CCat12 dummy codes to offender level incident counts.
-CHG %>% 
+CHGEW %>% 
   group_by(OID, IID) %>% 
   # Aggregate dummy codes by OID + IID into binary variables
   summarize(across(.cols = all_of(cvars), .fns = max)) %>% 
   group_by(OID) %>% 
   # Aggregate dummy codes by OID into incident count variables
   summarize(across(.cols = all_of(cvars), .fns = sum)) ->
-  CHG2
+  CHGEWAgg2
 ```
 
 ### Incidents With Convictions
 
-```{r create_CON2}
+```{r create_CONEWAgg2}
 # Aggregate JCat12 dummy codes to offender level incident counts.
-CON %>% 
+CONEW %>% 
   group_by(OID, IID) %>% 
   # Aggregate dummy codes by OID + IID into binary variables
   summarize(across(.cols = all_of(jvars), .fns = max)) %>% 
   group_by(OID) %>% 
   # Aggregate dummy codes by OID into incident count variables
   summarize(across(.cols = all_of(jvars), .fns = sum)) ->
-  CON2
+  CONEWAgg2
 ```
 
 # Merge Aggregated Variables onto IDNEW. 
