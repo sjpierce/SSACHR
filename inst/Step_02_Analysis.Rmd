@@ -463,19 +463,127 @@ IDNEW %>%
          threeparttable = TRUE)
 ```
 
-```{r}
-kable(freq(IDNEW$ACat12_Count), format = "latex", booktabs = TRUE, digits = 2, 
-      caption = "Crime Category Count (With Arrests)")
+```{r freq_ACat12_Count}
+# Table caption.
+TCap <- paste("Frequency Distributions for Number of Crime Categories for",
+              "Which Offender Was Arrested (Overall and By When Incident",
+              "Occurred)")
+# Footnote text.
+FN <- paste0("N = ", format(nrow(IDNEW), big.mark = ","), ". TW, earliest ",
+            "testing window. ",
+            "Before, during, and after refer to when the incident associated ",
+            "with the record occurred, not when the arrest date occurred ",
+            "relative to the testing window. For example, an offender could be ",
+            "arrested during the testing window for an incident that occurred ",
+            "before it began. That would show up here in the before column.")
+
+# Get frequency distributions. 
+IDNEW %>% 
+  select(OID, ACat12_Count, ACat12_Count_Before, ACat12_Count_During, 
+         ACat12_Count_After) %>% 
+  rename(All = ACat12_Count, Before = ACat12_Count_Before, 
+         During = ACat12_Count_During, After = ACat12_Count_After) %>% 
+  pivot_longer(cols = -OID, names_to = "When", values_to = "Value") %>% 
+  group_by(When, Value) %>% 
+  count() %>% 
+  arrange(Value) %>% 
+  pivot_wider(names_from = When, values_from = n, values_fill = 0) %>% 
+  mutate(All_p = 100*All/nrow(IDNEW),
+         Before_p = 100*Before/nrow(IDNEW),
+         During_p = 100*During/nrow(IDNEW),
+         After_p = 100*After/nrow(IDNEW)) %>% 
+  select(Value, All, All_p, Before, Before_p, During, During_p, After, 
+         After_p) %>% 
+  kable(format = "latex", booktabs = TRUE, digits = 2, 
+        col.names = c("Value", rep(c("Frequency", "Percent"), 4)),
+        caption = TCap) %>% 
+  kable_styling() %>% 
+  add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
+                   "After TW" = 2)) %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
 ```
 
-```{r}
-kable(freq(IDNEW$CCat12_Count), format = "latex", booktabs = TRUE, digits = 2,
-      caption = "Crime Category Count (With Charges)")
+```{r freq_CCat12_Count}
+# Table caption.
+TCap <- paste("Frequency Distributions for Number of Crime Categories for",
+              "Which Offender Was Charged (Overall and By When Incident",
+              "Occurred)")
+# Footnote text.
+FN <- paste0("N = ", format(nrow(IDNEW), big.mark = ","), ". TW, earliest ",
+            "testing window. ",
+            "Before, during, and after refer to when the incident associated ",
+            "with the record occurred, not when the charge date occurred ",
+            "relative to the testing window. For example, an offender could be ",
+            "charged during the testing window for an incident that occurred ",
+            "before it began. That would show up here in the before column.")
+
+# Get frequency distributions. 
+IDNEW %>% 
+  select(OID, CCat12_Count, CCat12_Count_Before, CCat12_Count_During, 
+         CCat12_Count_After) %>% 
+  rename(All = CCat12_Count, Before = CCat12_Count_Before, 
+         During = CCat12_Count_During, After = CCat12_Count_After) %>% 
+  pivot_longer(cols = -OID, names_to = "When", values_to = "Value") %>% 
+  group_by(When, Value) %>% 
+  count() %>% 
+  arrange(Value) %>% 
+  pivot_wider(names_from = When, values_from = n, values_fill = 0) %>% 
+  mutate(All_p = 100*All/nrow(IDNEW),
+         Before_p = 100*Before/nrow(IDNEW),
+         During_p = 100*During/nrow(IDNEW),
+         After_p = 100*After/nrow(IDNEW)) %>% 
+  select(Value, All, All_p, Before, Before_p, During, During_p, After, 
+         After_p) %>% 
+  kable(format = "latex", booktabs = TRUE, digits = 2, 
+        col.names = c("Value", rep(c("Frequency", "Percent"), 4)),
+        caption = TCap) %>% 
+  kable_styling() %>% 
+  add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
+                   "After TW" = 2)) %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
 ```
 
-```{r}
-kable(freq(IDNEW$JCat12_Count), format = "latex", booktabs = TRUE, digits = 2,
-      caption = "Crime Category Count (With Convictions)")
+```{r freq_JCat12_Count}
+# Table caption.
+TCap <- paste("Frequency Distributions for Number of Crime Categories for",
+              "Which Offender Was Convicted (Overall and By When Incident",
+              "Occurred)")
+# Footnote text.
+FN <- paste0("N = ", format(nrow(IDNEW), big.mark = ","), ". TW, earliest ",
+            "testing window. ",
+            "Before, during, and after refer to when the incident associated ",
+            "with the record occurred, not when the charge date occurred ",
+            "relative to the testing window. For example, an offender could be ",
+            "convicted during the testing window for an incident that occurred ",
+            "before it began. That would show up here in the before column.")
+
+# Get frequency distributions. 
+IDNEW %>% 
+  select(OID, JCat12_Count, JCat12_Count_Before, JCat12_Count_During, 
+         JCat12_Count_After) %>% 
+  rename(All = JCat12_Count, Before = JCat12_Count_Before, 
+         During = JCat12_Count_During, After = JCat12_Count_After) %>% 
+  pivot_longer(cols = -OID, names_to = "When", values_to = "Value") %>% 
+  group_by(When, Value) %>% 
+  count() %>% 
+  arrange(Value) %>% 
+  pivot_wider(names_from = When, values_from = n, values_fill = 0) %>% 
+  mutate(All_p = 100*All/nrow(IDNEW),
+         Before_p = 100*Before/nrow(IDNEW),
+         During_p = 100*During/nrow(IDNEW),
+         After_p = 100*After/nrow(IDNEW)) %>% 
+  select(Value, All, All_p, Before, Before_p, During, During_p, After, 
+         After_p) %>% 
+  kable(format = "latex", booktabs = TRUE, digits = 2, 
+        col.names = c("Value", rep(c("Frequency", "Percent"), 4)),
+        caption = TCap) %>% 
+  kable_styling() %>% 
+  add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
+                   "After TW" = 2)) %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
 ```
 
 \FloatBarrier
