@@ -675,26 +675,156 @@ counts. The variables OCSC1-OCSC3 were created and stored in the SPSS file; the
 variables ACat12_5, CCat12_5, and JCat12_5 contain exactly the same data, but 
 were created above in the **Aggregating Crime Category Variables** section. 
 
-```{r}
-CSC <- describe(IDNEW[, c("OCSC1", "OCSC2", "OCSC3")], quant=c(.25, .50, .75))
-kable(CSC[, CNums], digits = 2, format = "latex", booktabs = TRUE, 
-      col.names = CNames,
-      caption = "Offender-Level Criminal Sexual Conduct Incident Counts")
+```{r describe_cscvars}
+# Table caption. 
+TCap <- paste("Offender-Level Criminal Sexual Conduct Incidents (Overall and",
+              "By When Incident Occurred)")
+# Footnote text. 
+FN <- paste("Only offenders with valid testing window start dates are included.",
+            "Before, during, and after refer to when the incident associated",
+            "with the record occurred, not when the arrest date, charge date,",
+            "or conviction date occurred relative to the testing window.")
+
+csclabs <- c("No. of CSC incidents (arrested)", BDA, 
+            "No. of CSC incidents (charged)", BDA,
+            "No. of CSC incidents (convicted)", BDA)
+
+# Summarize crime category counts (both overall and broken down by IWhen).
+IDNEW %>% 
+  select(ACat12_5, ACat12_5_Before, ACat12_5_During, ACat12_5_After, 
+         CCat12_5, CCat12_5_Before, CCat12_5_During, CCat12_5_After, 
+         JCat12_5, JCat12_5_Before, JCat12_5_During, JCat12_5_After) %>% 
+  describe(., quant=c(.25, .50, .75)) %>% 
+  bind_cols(data.frame(Variable = csclabs), .) %>% 
+  select(Variable, n, mean, sd, min, max, skew, kurtosis, Q0.25, Q0.5, Q0.75) %>% 
+  kable(., format = "latex", booktabs = TRUE, digits = 2, row.names = FALSE, 
+        col.names = c("Variable", CNames), caption = TCap) %>% 
+  group_rows(" ", 1, 4) %>% 
+  group_rows(" ", 5, 8) %>% 
+  group_rows(" ", 9, 12) %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
 ```
 
-```{r}
-kable(freq(IDNEW$OCSC1), digits = 2, format = "latex", booktabs = TRUE, 
-      caption = "Criminal Sexual Conduct Incident Count (With Arrests)")
+```{r freq_ACat12_5}
+# Table caption.
+TCap <- paste("Frequency Distributions for Number of Criminal Sexual Conduct",
+              "Incidents for Which Offender Was Arrested (Overall and By When",
+              "Incident Occurred)")
+# Footnote text.
+FN <- paste0("N = ", format(nrow(IDNEW), big.mark = ","), ". TW, earliest ",
+            "testing window. ",
+            "Before, during, and after refer to when the incident associated ",
+            "with the record occurred, not when the arrest date occurred ",
+            "relative to the testing window. For example, an offender could be ",
+            "arrested during the testing window for an incident that occurred ",
+            "before it began. That would show up here in the before column.")
+
+# Get frequency distributions. 
+IDNEW %>% 
+  select(OID, ACat12_5, ACat12_5_Before, ACat12_5_During, ACat12_5_After) %>% 
+  rename(All = ACat12_5, Before = ACat12_5_Before, During = ACat12_5_During, 
+         After = ACat12_5_After) %>% 
+  pivot_longer(cols = -OID, names_to = "When", values_to = "Value") %>% 
+  group_by(When, Value) %>% 
+  count() %>% 
+  arrange(Value) %>% 
+  pivot_wider(names_from = When, values_from = n, values_fill = 0) %>% 
+  mutate(All_p = 100*All/nrow(IDNEW),
+         Before_p = 100*Before/nrow(IDNEW),
+         During_p = 100*During/nrow(IDNEW),
+         After_p = 100*After/nrow(IDNEW)) %>% 
+  select(Value, All, All_p, Before, Before_p, During, During_p, After, 
+         After_p) %>% 
+  kable(format = "latex", booktabs = TRUE, digits = 2, 
+        col.names = c("Value", rep(c("Frequency", "Percent"), 4)),
+        caption = TCap) %>% 
+  kable_styling() %>% 
+  add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
+                   "After TW" = 2)) %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
 ```
 
-```{r}
-kable(freq(IDNEW$OCSC2), digits = 2, format = "latex", booktabs = TRUE, 
-      caption = "Criminal Sexual Conduct Incident Count (With Charges)")
+
+```{r freq_CCat12_5}
+# Table caption.
+TCap <- paste("Frequency Distributions for Number of Criminal Sexual Conduct",
+              "Incidents for Which Offender Was Charged (Overall and By When",
+              "Incident Occurred)")
+# Footnote text.
+FN <- paste0("N = ", format(nrow(IDNEW), big.mark = ","), ". TW, earliest ",
+            "testing window. ",
+            "Before, during, and after refer to when the incident associated ",
+            "with the record occurred, not when the charge date occurred ",
+            "relative to the testing window. For example, an offender could be ",
+            "charged during the testing window for an incident that occurred ",
+            "before it began. That would show up here in the before column.")
+
+# Get frequency distributions. 
+IDNEW %>% 
+  select(OID, CCat12_5, CCat12_5_Before, CCat12_5_During, CCat12_5_After) %>% 
+  rename(All = CCat12_5, Before = CCat12_5_Before, During = CCat12_5_During, 
+         After = CCat12_5_After) %>% 
+  pivot_longer(cols = -OID, names_to = "When", values_to = "Value") %>% 
+  group_by(When, Value) %>% 
+  count() %>% 
+  arrange(Value) %>% 
+  pivot_wider(names_from = When, values_from = n, values_fill = 0) %>% 
+  mutate(All_p = 100*All/nrow(IDNEW),
+         Before_p = 100*Before/nrow(IDNEW),
+         During_p = 100*During/nrow(IDNEW),
+         After_p = 100*After/nrow(IDNEW)) %>% 
+  select(Value, All, All_p, Before, Before_p, During, During_p, After, 
+         After_p) %>% 
+  kable(format = "latex", booktabs = TRUE, digits = 2, 
+        col.names = c("Value", rep(c("Frequency", "Percent"), 4)),
+        caption = TCap) %>% 
+  kable_styling() %>% 
+  add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
+                   "After TW" = 2)) %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
 ```
 
-```{r}
-kable(freq(IDNEW$OCSC3), digits = 2, format = "latex", booktabs = TRUE, 
-      caption = "Criminal Sexual Conduct Incident Count (With Convictions)")
+```{r freq_JCat12_5}
+# Table caption.
+TCap <- paste("Frequency Distributions for Number of Criminal Sexual Conduct",
+              "Incidents for Which Offender Was Convicted (Overall and By When",
+              "Incident Occurred)")
+# Footnote text.
+FN <- paste0("N = ", format(nrow(IDNEW), big.mark = ","), ". TW, earliest ",
+            "testing window. ",
+            "Before, during, and after refer to when the incident associated ",
+            "with the record occurred, not when the charge date occurred ",
+            "relative to the testing window. For example, an offender could be ",
+            "convicted during the testing window for an incident that occurred ",
+            "before it began. That would show up here in the before column.")
+
+# Get frequency distributions. 
+IDNEW %>% 
+  select(OID, JCat12_5, JCat12_5_Before, JCat12_5_During, JCat12_5_After) %>% 
+  rename(All = JCat12_5, Before = JCat12_5_Before, During = JCat12_5_During, 
+         After = JCat12_5_After) %>% 
+  pivot_longer(cols = -OID, names_to = "When", values_to = "Value") %>% 
+  group_by(When, Value) %>% 
+  count() %>% 
+  arrange(Value) %>% 
+  pivot_wider(names_from = When, values_from = n, values_fill = 0) %>% 
+  mutate(All_p = 100*All/nrow(IDNEW),
+         Before_p = 100*Before/nrow(IDNEW),
+         During_p = 100*During/nrow(IDNEW),
+         After_p = 100*After/nrow(IDNEW)) %>% 
+  select(Value, All, All_p, Before, Before_p, During, During_p, After, 
+         After_p) %>% 
+  kable(format = "latex", booktabs = TRUE, digits = 2, 
+        col.names = c("Value", rep(c("Frequency", "Percent"), 4)),
+        caption = TCap) %>% 
+  kable_styling() %>% 
+  add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
+                   "After TW" = 2)) %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
 ```
 
 ```{r}
