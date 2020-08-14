@@ -1079,8 +1079,29 @@ IDNEW %>%
   # Count the number of crime categories associated w/ each offender.
   rowwise() %>% 
   mutate(ACat12_Count = sum(c_across(all_of(avars[1:12])) > 0),
+         ACat12_Count_Before = sum(c_across(all_of(avarsb[1:12])) > 0),
+         ACat12_Count_During = sum(c_across(all_of(avarsd[1:12])) > 0),
+         ACat12_Count_After = sum(c_across(all_of(avarsa[1:12])) > 0),
          CCat12_Count = sum(c_across(all_of(cvars[1:12])) > 0),
-         JCat12_Count = sum(c_across(all_of(jvars[1:12])) > 0)) -> 
+         CCat12_Count_Before = sum(c_across(all_of(cvarsb[1:12])) > 0),
+         CCat12_Count_During = sum(c_across(all_of(cvarsd[1:12])) > 0),
+         CCat12_Count_After = sum(c_across(all_of(cvarsa[1:12])) > 0),
+         JCat12_Count = sum(c_across(all_of(jvars[1:12])) > 0),
+         JCat12_Count_Before = sum(c_across(all_of(jvarsb[1:12])) > 0),
+         JCat12_Count_During = sum(c_across(all_of(jvarsd[1:12])) > 0),
+         JCat12_Count_After = sum(c_across(all_of(jvarsa[1:12])) > 0)) %>% 
+  var_labels(ACat12_Count = "Arrested crime category count (overall)",
+             ACat12_Count_Before = "Arrested crime category count (incidents before testing window)",
+             ACat12_Count_During = "Arrested crime category count (incidents during testing window)",
+             ACat12_Count_After = "Arrested crime category count (incidents after testing window)",
+             CCat12_Count = "Charged crime category count (overall)",
+             CCat12_Count_Before = "Charged crime category count (incidents before testing window)",
+             CCat12_Count_During = "Charged crime category count (incidents during testing window)",
+             CCat12_Count_After = "Charged crime category count (incidents after testing window)",
+             JCat12_Count = "Convicted crime category count (overall)",
+             JCat12_Count_Before = "Convicted crime category count (incidents before testing window)",
+             JCat12_Count_During = "Convicted crime category count (incidents during testing window)",
+             JCat12_Count_After = "Convicted crime category count (incidents after testing window)")-> 
   IDNEW
 ```
 
