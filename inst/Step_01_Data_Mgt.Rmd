@@ -616,7 +616,7 @@ INCEW %>%
   var_labels(NINC_Before = "No. of incident records before testing window",
              NINC_During = "No. of incident records during testing window",
              NINC_After  = "No. of incident records after testing window") ->
-   INCEWAgg
+  INCEWAgg
 ```
 \FloatBarrier
 
