@@ -171,9 +171,19 @@ with each offender. We summarize the resulting variables (NINC, NARR, NCHG,
 NJUD, & NCON) below.
 
 ```{r describe_rcvars}
+# Table caption. 
 TCap <- paste("Offender-Level Record Counts (All Crime Categories, Overall and",
               "By When Incident Occurred Relative to Testing Window)")
-BDA <- c("...Before", "...During", "...After")
+# Footnote text. 
+FN <- paste("Only offenders with valid testing window start dates are included.",
+            "Before, during, and after refer to when the incident associated",
+            "with the record occurred, not when the arrest date, charge date,",
+            "adjudication date, or conviction date occurred relative to the",
+            "testing window.")
+
+BDA <- c("...Before testing window", 
+         "...During testing window", 
+         "...After testing window")
 rclabs <- c("No. of incidents", BDA, 
             "No. of arrest offenses", BDA,
             "No. of prosecutor charges", BDA,
