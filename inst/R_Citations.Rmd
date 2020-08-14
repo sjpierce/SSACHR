@@ -118,6 +118,9 @@ dependencies:
 # If is_tineytex = TRUE, then we used TinyTeX, otherwise we used MikTeX. 
 tinytex:::is_tinytex()
 
+# RStudio citation.
+rstudioapi::versionInfo()
+
 # Get R citation.
 citation() 
 
