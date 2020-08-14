@@ -961,6 +961,11 @@ ARREW %>%
   ARREWAgg2
 ```
 
+# This solves warnings issued by max() when it is used on an empty vector. 
+# max(numeric(0)) yields warning "no non-missing arguments to min; returning -Inf"
+# So we replace the max() function with one that just returns NA when the vector
+# is empty. This speeds up execution dramatically
+RobustMax <- function(x) {if (length(x)>0) max(x) else NA}
 ### Incidents With Charges
 
 ```{r create_CHGEWAgg2}         
