@@ -670,11 +670,6 @@ kable(ACat12_4[, CNums], format = "latex", booktabs = TRUE, digits = 2,
 Here we summarize the counts of unique incidents where the offender was 
 *arrested for*, *charged with*, and *convicted of* criminal sexual conduct.
 
-Note: We actually have redundant sets of variables that contain these particular
-counts. The variables OCSC1-OCSC3 were created and stored in the SPSS file; the
-variables ACat12_5, CCat12_5, and JCat12_5 contain exactly the same data, but 
-were created above in the **Aggregating Crime Category Variables** section. 
-
 ```{r describe_cscvars}
 # Table caption. 
 TCap <- paste("Offender-Level Criminal Sexual Conduct Incidents (Overall and",
