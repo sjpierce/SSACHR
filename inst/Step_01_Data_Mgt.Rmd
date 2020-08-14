@@ -45,7 +45,7 @@ header-includes:
 ********************************************************************************  
 \FloatBarrier
 
-# Purpose.
+# Purpose
 This file imports copies of publicly archived data files (Campbell, 2019) into 
 R, then performs data management to prepare a new data file for a descriptive 
 paper about the criminal histories of suspected serial sexual perpetrators 
