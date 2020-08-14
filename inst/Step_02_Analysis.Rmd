@@ -46,9 +46,12 @@ header-includes:
 \FloatBarrier
 
 # Purpose.
-This file produces the analysis output required for the paper based on 
-Campbell's (2019), after data management teps performed by another script in 
-this package. 
+This file analyzes data derived from publicly archived data files (Campbell,
+2019) to produce outputs for a descriptive paper about the criminal histories of
+suspected serial sexual perpetrators.^[In this document, we use the terms
+perpetrator and offender interchangeably. Both terms should be interpreted as
+referring to individuals suspected of committing a crime but we occasionally
+omit that qualifier for the sake of brevity.] The data come from Detroit, MI.
 
 \FloatBarrier
 
