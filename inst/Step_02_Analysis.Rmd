@@ -250,6 +250,14 @@ IDNEW %>%
 # Table caption.
 TCap <- paste("Frequency Distributions for Number of Arrest Offenses (All",
               "Crime Categories) Overall and By When Incident Occurred")
+# Footnote text.
+FN <- paste0("N = ", format(nrow(IDNEW), big.mark = ","), ". TW, earliest ",
+            "testing window. ",
+            "Before, during, and after refer to when the incident associated ",
+            "with the record occurred, not when the arrest date occurred ",
+            "relative to the testing window. For example, an offender could be ",
+            "arrested during the testing window for an incident that occurred ",
+            "before it began. That would show up here in the before column.")
 
 # Get frequency distributions. 
 IDNEW %>% 
@@ -281,6 +289,14 @@ IDNEW %>%
 # Table caption.
 TCap <- paste("Frequency Distributions for Number of Prosecutor Charges (All",
               "Crime Categories) Overall and By When Incident Occurred")
+# Footnote text.
+FN <- paste0("N = ", format(nrow(IDNEW), big.mark = ","), ". TW, earliest ",
+            "testing window. ",
+            "Before, during, and after refer to when the incident associated ",
+            "with the record occurred, not when the charge date occurred ",
+            "relative to the testing window. For example, an offender could be ",
+            "charged during the testing window for an incident that occurred ",
+            "before it began. That would show up here in the before column.")
 
 # Get frequency distributions. 
 IDNEW %>% 
@@ -312,6 +328,15 @@ IDNEW %>%
 # Table caption.
 TCap <- paste("Frequency Distributions for Number of Adjudicated Charges (All",
               "Crime Categories) Overall and By When Incident Occurred")
+# Footnote text.
+FN <- paste0("N = ", format(nrow(IDNEW), big.mark = ","), ". TW, earliest ",
+            "testing window. ",
+            "Before, during, and after refer to when the incident associated ",
+            "with the record occurred, not when the adjudication date occurred ",
+            "relative to the testing window. For example, a charge could be ",
+            "adjudicated during the testing window for an incident that ",
+            "occurred before it began. That would show up here in the before ",
+            "column.")
 
 # Get frequency distributions. 
 IDNEW %>% 
@@ -344,6 +369,14 @@ IDNEW %>%
 TCap <- paste("Frequency Distributions for Number of Adjudicated Charges (All",
               "Crime Categories, Convictions) Overall and By When Incident",
               "Occurred")
+# Footnote text.
+FN <- paste0("N = ", format(nrow(IDNEW), big.mark = ","), ". TW, earliest ",
+            "testing window. ",
+            "Before, during, and after refer to when the incident associated ",
+            "with the record occurred, not when the adjudication date occurred ",
+            "relative to the testing window. For example, an offender could be ",
+            "convicted during the testing window for an incident that occurred ",
+            "before it began. That would show up here in the before column.")
 
 # Get frequency distributions. 
 IDNEW %>% 
