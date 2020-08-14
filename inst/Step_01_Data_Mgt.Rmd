@@ -1101,7 +1101,7 @@ IDNEW %>%
              JCat12_Count = "Convicted crime category count (overall)",
              JCat12_Count_Before = "Convicted crime category count (incidents before testing window)",
              JCat12_Count_During = "Convicted crime category count (incidents during testing window)",
-             JCat12_Count_After = "Convicted crime category count (incidents after testing window)")-> 
+             JCat12_Count_After = "Convicted crime category count (incidents after testing window)") -> 
   IDNEW
 ```
 
