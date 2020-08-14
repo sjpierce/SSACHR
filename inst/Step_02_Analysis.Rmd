@@ -172,7 +172,7 @@ NJUD, & NCON) below.
 
 ```{r describe_rcvars}
 TCap <- paste("Offender-Level Record Counts (All Crime Categories, Overall and",
-              "By When Incident Occured Relative to Testing Window)")
+              "By When Incident Occurred Relative to Testing Window)")
 BDA <- c("...Before", "...During", "...After")
 rclabs <- c("No. of incidents", BDA, 
             "No. of arrest offenses", BDA,
