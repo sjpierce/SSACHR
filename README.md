@@ -225,22 +225,21 @@ U.S. Department of Justice.
 ## Task List
 
   - Improve this file.
+  - Remove references to *piercer* package?
   - Create a script to generate a data flow diagram.
-  - Pull analysis code out of `inst/Step_01_Data_mgt.Rmd` into a
-    separate .Rmd file.
   - Create a make-file script once we have multiple .Rmd files.
   - Add citation for the manuscript in preparation to the reference
     list.
-  - Edit code pasted into `inst/Step_01_Data_mgt.Rmd` from previous
-    `CHR_Summary_Step01_2017-01.19.Rmd` script to:
+  - Move RobustMax() function to `R/Data_Mgt_Functions.R` and add proper
+    help documentation.
+  - Test knitting `inst/Step_01_Data_Mgt.Rmd` and check for errors or
+    warnings.
+  - Edit `inst/Step_02_Analysis.Rmd` to:
       - Use tidyverse style where feasible.
-      - Eliminate LaTeX Warning s such as “Label \`tab:unnamed-chunk-8’
-        multiply defined.” that are caused by haivng multiple calls to
-        kabl() in same code chunk.
+      - Create more side-by-side frequency distributions for overall
+        record count, incident count, and crime category count
+        variables, along with corresponding breakdowns by IWhen.
+      - Check for unresolved errors or warnings.
   - Summarize CHRs before, during, and after the testing window, per
-    2020-04-08 email thread.
-  - Create a folder structure diagram in `README.Rmd` and `README.md`.
-    Check the following web links for ideas how to do it.
-      - <https://tex.stackexchange.com/questions/5073/making-a-simple-directory-tree>
-      - <https://tex.stackexchange.com/questions/328886/making-a-directory-tree-of-folders-and-files>
-      - <https://tex.stackexchange.com/questions/361257/make-directory-tree-with-folders-and-files-along-with-comments-in-tikz>
+    2020-04-08 email thread. Still need to create expanded versions of
+    Tables 4 & 5 from *Progress report \#4 (offender crimes).docx*.
