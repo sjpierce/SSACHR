@@ -830,8 +830,16 @@ IDNEW %>%
 ```{r}
 # Check how many offenders had > 1 CSC arrest, > 1 CSC charge, and/or > 1 CSC 
 # conviction in their CHR data. 
-nrow(IDNEW[with(IDNEW, OCSC1 > 1 | OCSC2 > 1 | OCSC3 > 1),]) 
+IDNEW %>% 
+  filter(ACat12_5 > 1 | CCat12_5 > 1 | JCat12_5 > 1) %>% 
+  nrow() -> 
+  CSC_CHR_History
 ```
+
+Only `r CSC_CHR_History` 
+(`r round(100*CSC_CHR_History/nrow(IDNEW), digits = 0)`\%) of these suspected 
+sexual offenders had criminal histories containing at least one CSC arrest, 
+charge, or conviction. 
 
 ```{r , fig.height = 3, warning= FALSE}
 # Rearrange data so we can easily plot multiple variables. 
