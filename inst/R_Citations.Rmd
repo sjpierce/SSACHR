@@ -149,6 +149,9 @@ The current Git commit details and status are:
 GitCheck <- "git2r" %in% installed.packages() & git2r::in_repository(path = ".")
 cat(paste("GitCheck =", GitCheck, "\n"))
 
+# What version of Git are we using?
+system("git --version")
+
 # What commit is this file at? 
 if (GitCheck) git2r::repository(here::here())
 
