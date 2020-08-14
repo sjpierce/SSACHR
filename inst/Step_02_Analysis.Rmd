@@ -206,7 +206,9 @@ IDNEW %>%
   group_rows(" ", 5, 8) %>% 
   group_rows(" ", 9, 12) %>% 
   group_rows(" ", 13, 16) %>% 
-  group_rows(" ", 17, 20)
+  group_rows(" ", 17, 20) %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
 ```
 
 ```{r freq_NINC}
