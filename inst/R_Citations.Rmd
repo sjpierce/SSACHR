@@ -1,0 +1,146 @@
+---
+title: \sffamily{\bfseries{\LARGE Criminal History Records Paper (R Citations)}}
+geometry: "left=.5in,right=.5in,top=.75in,bottom=.75in"
+author: "Steven J. Pierce"
+output:
+ pdf_document:
+   latex_engine: xelatex
+   number_sections: true
+   toc: yes
+   toc_depth: 3
+   includes:
+     in_header: "compact-title.tex"
+urlcolor: blue
+header-includes:
+- \usepackage{fancyhdr}
+- \usepackage[yyyymmdd,hhmmss]{datetime}
+- \usepackage{lastpage}
+- \usepackage{fontspec}
+- \defaultfontfeatures{Ligatures=TeX}
+- \usepackage[font={small}, margin=1cm, skip=2pt]{caption}
+- \usepackage{url}
+- \usepackage{floatrow}
+- \floatplacement{figure}{!ht}
+- \floatplacement{table}{!ht}
+- \usepackage{placeins}
+- \usepackage{booktabs}
+- \usepackage{longtable}
+- \usepackage{dcolumn}
+- \usepackage{titling}
+- \usepackage{threeparttable}
+- \usepackage{threeparttablex}
+- \pretitle{\begin{center}\LARGE\bfseries}
+- \posttitle{\end{center}}
+- \pagestyle{fancy}
+- \lhead{SSA CHR Paper R Citations}
+- \rhead{\today\ \currenttime}
+- \lfoot{\texttt{\small \detokenize{`r sub(".Rmd", ".pdf", knitr:::current_input(dir = FALSE))`}}} 
+- \cfoot{ }
+- \fancyfoot[R]{\thepage\ of \pageref*{LastPage}}
+- \renewcommand{\headrulewidth}{0.4pt}
+- \renewcommand{\footrulewidth}{0.4pt}
+- \fancypagestyle{plain}{\pagestyle{fancy}}
+---
+
+********************************************************************************  
+\FloatBarrier
+
+# Purpose.
+This file just produces a list of R and R package citations so that we can give 
+appropriate credit to the many people who developed or contributed to the 
+software we relied on in doing this work. It's a separate file so that we can 
+reduce redundancy across other PDF files produced by the various scripts. 
+
+Version numbers in citations will be consistent with those used in other scripts 
+if you knit this document from the same computer used for knitting those other 
+scripts. Do that immediately after knitting all the other scripts. 
+
+\FloatBarrier
+
+# Setup
+Set global R chunk options (local chunk options will over-ride global options). 
+The method for creating a size option that controls font size in code chunks and
+their text output is based on an answer to a question posted on   
+[stackoverflow.com](https://stackoverflow.com/questions/25646333/code-chunk-font-size-in-rmarkdown-with-knitr-and-latex/46526740#46526740). 
+
+``` {r global_options, cfsize = "footnotesize"}
+# Create a custom chunk hook/option for controlling font size in chunk & output.
+def.chunk.hook  <- knitr::knit_hooks$get("chunk")
+knitr::knit_hooks$set(chunk = function(x, options) {
+  x <- def.chunk.hook(x, options)
+  ifelse(options$cfsize != "normalsize", paste0("\n \\", options$cfsize,"\n\n", 
+                                              x, "\n\n \\normalsize"), x)
+  })
+
+# Global chunk options (over-ridden by local chunk options)
+knitr::opts_chunk$set(include  = TRUE, echo = TRUE, error = TRUE, 
+                      message = TRUE, warning = TRUE, cfsize = "footnotesize")
+```
+
+\FloatBarrier
+
+## Project Information
+These materials are scholarly products based on research funded by the following 
+grant. 
+
+Campbell, R., Pierce, S. J., & Sharma, D. (01/01/2015–12/31/2018). Serial sexual
+assaults: A longitudinal examination of offending patterns using DNA evidence.
+[NIJ Award # 2014-NE-BX-0006, Awarded, $699,533]. Sponsor: National Institute of
+Justice. Location: Michigan State University, East Lansing, MI.
+
+\FloatBarrier
+
+## Software Information
+We use R Markdown to enhance reproducibility. Knitting the source R Markdown 
+script *`r knitr:::current_input()`* generates this PDF file.
+
+- We use [RStudio (version 1.3.1056 or later)](www.rstudio.org) to work with 
+  R and R markdown files. The software chain looks like this:
+  **Rmd file > RStudio > R > rmarkdown > knitr > pandoc > TinyTeX or MiKTeX > PDF file**.
+- We recommend using [TinyTeX](https://yihui.org/tinytex/) to compile LaTeX files 
+  into PDF files. However, it should be viable to use 
+  [MiKTeX version 2.9](https://miktex.org) instead. 
+- We used [pandoc](https://pandoc.org) version `r pandoc_version()` for this 
+  document. 
+
+This document was generated using the following computational environment and 
+dependencies: 
+
+``` {r show_citations}
+# If is_tineytex = TRUE, then we used TinyTeX, otherwise we used MikTeX. 
+tinytex:::is_tinytex()
+
+# Get R citation.
+citation() 
+
+# Get package citations.
+citation("car")
+citation("descr")
+citation("dplyr")
+citation("haven")
+citation("here")
+citation("kableExtra")
+citation("lattice")
+citation("lubridate")
+citation("knitr")
+citation("plyr")
+citation("psych")
+citation("rmarkdown")
+citation("sjlabelled")
+citation("SSACHR")
+citation("tidyr")
+```
+
+The current Git commit details and status are:
+
+```{r git_details, eval=TRUE}
+# Store whether git2r is installed and we are in a git repository.
+GitCheck <- "git2r" %in% installed.packages() & git2r::in_repository(path = ".")
+cat(paste("GitCheck =", GitCheck, "\n"))
+
+# What commit is this file at? 
+if (GitCheck) git2r::repository(here::here())
+
+# What is the repository status? 
+if (GitCheck) git2r::status()
+```
