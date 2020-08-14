@@ -1106,10 +1106,17 @@ IDNEW %>%
   IDNEW
 ```
 
+# Check Assumptions
+We actually have few redundant incident count variables in *IDNEW* now. The
+variables OCSC1, OCSC2, and OCSC3 were created and stored in the SPSS file
+during the original grant work. The variables ACat12_5, CCat12_5, and JCat12_5
+respectively contain exactly the same data, but were created above in the 
+**Aggregating Crime Category Variables** section. They should agree with one
+another and we can check that as follows to prove that the aggregation logic was
+implemented the same way.
+
 ```{r check_assumptions}
 # Verify that OCSC1 = ACat12_5, OCSC2 = CCat12_5, & OCSC3 = JCat12_5.
-# This compares incident count variables created in SPSS to corresponding 
-# variables created in R above (to prove logic was implemented the same way).
 all(IDNEW$OCSC1 == IDNEW$ACat12_5) # Arrest incident counts
 all(IDNEW$OCSC2 == IDNEW$CCat12_5) # Charge incident counts
 all(IDNEW$OCSC3 == IDNEW$JCat12_5) # Conviction incident counts
