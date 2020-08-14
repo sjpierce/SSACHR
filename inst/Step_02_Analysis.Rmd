@@ -147,7 +147,7 @@ kable(freq(as_factor(IDNEW$Race), user.missing = "Unknown"), format = "latex",
 \FloatBarrier
 
 ## Age (as of 04/15/2016)
-```{r, fig.height = 2}
+```{r examine_Age, fig.height = 2}
 CNums  <- c(2:4,8,9,11:12, 14:16)
 CNames <- c("N", "Mean", "SD", "Min", "Max", "Skew", "Kurtosis", "Q25", "Q50", 
             "Q75")
