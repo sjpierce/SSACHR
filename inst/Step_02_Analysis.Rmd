@@ -167,7 +167,7 @@ We aggregated data to count how many CHR records of each type are associated
 with each offender. We summarize the resulting variables (NINC, NARR, NCHG, 
 NJUD, & NCON) below.
 
-```{r}
+```{r describe_rcvars}
 TCap <- paste("Offender-Level Record Counts (All Crime Categories, Overall and",
               "By When Incident Occured Relative to Testing Window)")
 rcvars <- c("NINC", "NINC_Before", "NINC_During", "NINC_After", 
@@ -195,13 +195,13 @@ describe(IDNEW[, rcvars], quant=c(.25, .50, .75)) %>%
   group_rows(" ", 17, 20)
 ```
 
-```{r}
 kable(freq(IDNEW$NINC), format = "latex", booktabs = TRUE, digits = 2, 
       caption = "Number of Incidents (All Crime Categories)")
 ```
 
 ```{r}
 # Get side-by side frequency tables.
+```{r freq_NINC}
 
 IDNEW %>% 
   group_by(NINC) %>% 
