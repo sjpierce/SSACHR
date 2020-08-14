@@ -431,16 +431,36 @@ variables associated with each crime category in ACat12, CCat12, and JCat12. The
 *Excluded user-missing* value is not counted as a category, so the possible
 range of values for this count is 0-12.
 
-```{r}
-CCC <- describe(IDNEW[, c("ACat12_Count", "CCat12_Count", "JCat12_Count")],
-                quant=c(.25, .50, .75))
-RN.CCC <- c("Crime category count (arrested)", 
-            "Crime category count (charged)", 
-            "Crime category count (convicted)")
-row.names(CCC) <- RN.CCC
-kable(CCC[, CNums], format = "latex", booktabs = TRUE, digits = 2, 
-      col.names = CNames,
-      caption = "Offender-Level Crime Category Counts")
+```{r describe_cccvars}
+# Table caption. 
+TCap <- paste("Offender-Level Crime Category Counts (Overall and By When",
+              "Incident Occurred)")
+# Footnote text. 
+FN <- paste("Only offenders with valid testing window start dates are included.",
+            "Before, during, and after refer to when the incident associated",
+            "with the record occurred, not when the arrest date, charge date,",
+            "adjudication date, or conviction date occurred relative to the",
+            "testing window.")
+
+cclabs <- c("No. of crime categories (arrested)", BDA, 
+            "No. of crime categories (charged)", BDA,
+            "No. of crime categories (convicted)", BDA)
+
+# Summarize crime category counts (both overall and broken down by IWhen).
+IDNEW %>% 
+  select(ACat12_Count, ACat12_Count_Before, ACat12_Count_During, ACat12_Count_After, 
+         CCat12_Count, CCat12_Count_Before, CCat12_Count_During, CCat12_Count_After,
+         JCat12_Count, JCat12_Count_Before, JCat12_Count_During, JCat12_Count_After) %>% 
+  describe(., quant=c(.25, .50, .75)) %>% 
+  bind_cols(data.frame(Variable = cclabs), .) %>% 
+  select(Variable, n, mean, sd, min, max, skew, kurtosis, Q0.25, Q0.5, Q0.75) %>% 
+  kable(., format = "latex", booktabs = TRUE, digits = 2, row.names = FALSE, 
+        col.names = c("Variable", CNames), caption = TCap) %>% 
+  group_rows(" ", 1, 4) %>% 
+  group_rows(" ", 5, 8) %>% 
+  group_rows(" ", 9, 12) %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
 ```
 
 ```{r}
