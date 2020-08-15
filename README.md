@@ -232,14 +232,5 @@ U.S. Department of Justice.
     list.
   - Move RobustMax() function to `R/Data_Mgt_Functions.R` and add proper
     help documentation.
-  - Test knitting `inst/Step_01_Data_Mgt.Rmd` and check for errors or
-    warnings.
-  - Edit `inst/Step_02_Analysis.Rmd` to:
-      - Use tidyverse style where feasible.
-      - Create more side-by-side frequency distributions for overall
-        record count, incident count, and crime category count
-        variables, along with corresponding breakdowns by IWhen.
-      - Check for unresolved errors or warnings.
-  - Summarize CHRs before, during, and after the testing window, per
-    2020-04-08 email thread. Still need to create expanded versions of
-    Tables 4 & 5 from *Progress report \#4 (offender crimes).docx*.
+  - Add more variable labels in `inst/Step_01_Data_Mgt.Rmd`
+    update\_IDNEW chunk.
