@@ -703,8 +703,8 @@ FN <- paste("Only offenders with valid testing window start dates are included."
             "or conviction date occurred relative to the testing window.")
 
 csclabs <- c("No. of CSC incidents (arrested)", BDA, 
-            "No. of CSC incidents (charged)", BDA,
-            "No. of CSC incidents (convicted)", BDA)
+             "No. of CSC incidents (charged)", BDA,
+             "No. of CSC incidents (convicted)", BDA)
 
 # Summarize crime category counts (both overall and broken down by IWhen).
 IDNEW %>% 
