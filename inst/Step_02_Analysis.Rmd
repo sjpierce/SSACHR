@@ -1027,11 +1027,26 @@ kable(freq(as_factor(ARREW$ACat12), user.missing = "Excluded user-missing"),
 \FloatBarrier
 
 ## Age at Arrest for Criminal Sexual Conduct
-```{r}
-OAgeA <- describe(ARREW[ARREW$ACat12 == 5, "OAgeA"],  quant=c(.25, .50, .75))
-kable(OAgeA[, CNums], format = "latex", booktabs = TRUE, digits = 2, 
-      col.names = CNames,
-      caption = "Offender Age at Arrest for Criminal Sexual Conduct")
+```{r describe_OAgeA}
+# Table caption. 
+TCap <- paste("Offender Age at Arrest for Criminal Sexual Conduct (Overall)")
+# Footnote text. 
+FN <- paste("This is an arrest offense record-level summary (offenders with",
+            "multiple arrests contribute one age value per arrest record.",
+            "Only arrest records for offenders with valid testing window start",
+            "dates are included.")
+
+ARREW %>% 
+  filter(ACat12_5 == 1) %>% 
+  select(OAgeA, ALag) %>% 
+  describe(., quant=c(.25, .50, .75)) %>% 
+  filter(vars == 1) %>% 
+  bind_cols(data.frame(Variable = "Age at arrest"), .) %>% 
+  select(Variable, n, mean, sd, min, max, skew, kurtosis, Q0.25, Q0.5, Q0.75) %>% 
+  kable(., format = "latex", booktabs = TRUE, digits = 2, row.names = FALSE, 
+        col.names = c("Variable", CNames), caption = TCap) %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
 ```
 
 ********************************************************************************
