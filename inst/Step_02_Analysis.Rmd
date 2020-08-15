@@ -158,6 +158,13 @@ Age <- describe(IDNEW$Age,  quant=c(.25, .50, .75))
 kable(Age[, CNums], format = "latex", booktabs = TRUE, digits = 2, 
       col.names = CNames,
       caption = "Offender Age (as of 04/15/2016)")
+```
+
+```{r boxplot_Age, fig.height = 1.75, fig.cap=FCap}
+# Figure caption.
+FCap <- paste("Box Plot for Offender Age. Only offenders with valid testing", 
+              "window start dates are included.")
+
 bwplot(~ Age, data = IDNEW, factor = 9, xlim = c(18, 82),
        panel = panel.mybox, par.settings = my.boxes,
        xlab = "Offender Age (as of 04/15/2016)")
