@@ -844,19 +844,19 @@ IDNEW %>%
          threeparttable = TRUE)
 ```
 
-```{r}
-# Check how many offenders had > 1 CSC arrest, > 1 CSC charge, and/or > 1 CSC 
+```{r create_CSC_CHR_History}
+# Check how many offenders had >= 1 CSC arrest, >= 1 CSC charge, and/or >= 1 CSC 
 # conviction in their CHR data. 
 IDNEW %>% 
-  filter(ACat12_5 > 1 | CCat12_5 > 1 | JCat12_5 > 1) %>% 
+  filter(ACat12_5 >= 1 | CCat12_5 >= 1 | JCat12_5 >= 1) %>% 
   nrow() -> 
   CSC_CHR_History
 ```
 
-Only `r CSC_CHR_History` 
-(`r round(100*CSC_CHR_History/nrow(IDNEW), digits = 0)`\%) of these suspected 
-sexual offenders had criminal histories containing at least one CSC arrest, 
-charge, or conviction. 
+Among these `r format(nrow(IDNEW), big.mark = ",")` suspected sexual offenders, 
+there were `r CSC_CHR_History` 
+(`r round(100*CSC_CHR_History/nrow(IDNEW), digits = 0)`\%) offenders who had 
+criminal histories containing at least one CSC arrest, charge, or conviction. 
 
 ```{r , fig.height = 3, warning= FALSE}
 # Rearrange data so we can easily plot multiple variables. 
