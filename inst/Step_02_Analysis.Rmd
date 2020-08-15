@@ -858,17 +858,30 @@ there were `r CSC_CHR_History`
 (`r round(100*CSC_CHR_History/nrow(IDNEW), digits = 0)`\%) offenders who had 
 criminal histories containing at least one CSC arrest, charge, or conviction. 
 
-```{r , fig.height = 3, warning= FALSE}
+```{r create_CSCCOUNTS, fig.height = 3, warning= FALSE}
 # Rearrange data so we can easily plot multiple variables. 
-IDNW <- gather(data = IDNEW[, c("OID", "OCSC1", "OCSC2", "OCSC3")], 
-               key = VName, value = Count, OCSC1:OCSC3)
-IDNW$VName <- ordered(IDNW$VName, levels = c("OCSC1", "OCSC2", "OCSC3"), 
-                      labels = c("Arrests", "Charges", "Convictions"))
-densityplot(~ Count | VName, data = IDNW, layout = c(3,1), 
+cscvars  <- c("ACat12_5", "CCat12_5", "JCat12_5")
+csctypes <- c("Arrests", "Prosecutor Charges", "Convictions")
+
+IDNEW %>% 
+  select(OID, ACat12_5, CCat12_5, JCat12_5) %>% 
+  # Rearrange data so we can easily plot multiple variables. 
+  pivot_longer(cols = -OID, names_to = "VName", values_to = "Count") %>%
+  mutate(VName = ordered(VName, levels = cscvars, labels = csctypes)) ->
+  CSCCOUNTS
+```  
+
+```{r densityplot_CSCCOUNTS, fig.height = 3, fig.width = 8.5, fig.cap=FCap}
+# Figure caption.
+FCap <- paste("Density Plots for Overall Number of Incidents With Evidence of", 
+              "Criminal Sexual Conduct by Criminal History Record Type.", 
+              "Only offenders with valid testing window start dates are", 
+              "included.")
+
+densityplot(~ Count | VName, data = CSCCOUNTS, layout = c(3,1), 
             panel = panel.mydensity, jitter.amount = 0.1,
             strip = strip.custom(par.strip.text = list(cex = 1)),
-            xlab = "Number of Incidents with Criminal Sexual Conduct")
-rm(IDNW)
+            xlab = "Overall Number of Incidents with Criminal Sexual Conduct")
 ```
 
 \FloatBarrier
