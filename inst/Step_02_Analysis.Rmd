@@ -423,13 +423,15 @@ rm(IDNW)
 
 \FloatBarrier
 
-## Crime Category Count
+## Crime Category Counts
 Here we are summarizing how many of 12 different categories of crime each 
 offender was *arrested for*, *charged with*, and *convicted of* according to 
 the CHR data. This sums a set of binary transforms on the incident count 
 variables associated with each crime category in ACat12, CCat12, and JCat12. The
 *Excluded user-missing* value is not counted as a category, so the possible
-range of values for this count is 0-12.
+range of values for this count is 0-12. We report both overall results, and 
+results broken down by when the incidents associated with the arrest, charge, 
+and conviction records occurred relative to the earliest testing window. 
 
 ```{r describe_cccvars}
 # Table caption. 
