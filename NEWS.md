@@ -1,3 +1,28 @@
+# SSACHR 0.5.4, 2020-08-14--2020-08-15
+* Updated `inst/Step_01_Data_Mgt.Rmd` to:
+    * Added more crime category count variables with corresponding variable 
+      labels. 
+    * Removed calls to citation(), because they are now collected in a different
+      script.
+    * Replaced missing values in more crime category count variables with zeros. 
+    * Improved Software Information section.
+* Updated `inst/Step_02_Analysis.Rmd` to: 
+    * Removed calls to citation(), because they are now collected in a different
+      script.
+    * Replaced descriptives and frequencies tables for overall variables with 
+      expanded tables that also show breakdowns by when incident occurred. 
+    * Added better table captions and footnotes. 
+    * Improved figure for offender age. 
+    * Improved plots in CHR Record Counts section.
+    * Changed criteria for identifying offenders with CSC history in CHR data. 
+    * Improved plot in Criminal Sexual Conduct section.
+    * Improved age at arrest for CSC table.
+    * Improved Software Information section.
+    * Added chunk labels. 
+* Added `inst/R_Citations.Rmd` to collect all R and R package citations in one 
+  place. 
+* Updated `README.Rmd` and `README.md` task list.
+
 # SSACHR 0.5.3, 2020-08-13
 * Updated `inst/Step_02_Analysis.Rmd` to: 
     * Create incident count variables for specific crime categories that are 
