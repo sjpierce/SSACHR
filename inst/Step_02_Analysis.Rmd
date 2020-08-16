@@ -856,19 +856,8 @@ IDNEW %>%
          threeparttable = TRUE)
 ```
 
-```{r create_CSC_CHR_History}
-# Check how many offenders had >= 1 CSC arrest, >= 1 CSC charge, and/or >= 1 CSC 
-# conviction in their CHR data. 
 IDNEW %>% 
-  filter(ACat12_5 >= 1 | CCat12_5 >= 1 | JCat12_5 >= 1) %>% 
-  nrow() -> 
-  CSC_CHR_History
 ```
-
-Among these `r format(nrow(IDNEW), big.mark = ",")` suspected sexual offenders, 
-there were `r CSC_CHR_History` 
-(`r round(100*CSC_CHR_History/nrow(IDNEW), digits = 0)`\%) offenders who had 
-criminal histories containing at least one CSC arrest, charge, or conviction. 
 
 ```{r create_CSCCOUNTS, fig.height = 3, warning= FALSE}
 # Rearrange data so we can easily plot multiple variables. 
@@ -895,6 +884,20 @@ densityplot(~ Count | VName, data = CSCCOUNTS, layout = c(3,1),
             strip = strip.custom(par.strip.text = list(cex = 1)),
             xlab = "Overall Number of Incidents with Criminal Sexual Conduct")
 ```
+
+```{r create_CSC_CHR_History}
+# Check how many offenders had >= 1 CSC arrest, charge, or conviction in their CHR data. 
+IDNEW %>% 
+  filter(NCSCHistory >= 1) %>% 
+  nrow() -> 
+  CSC_CHR_History
+```
+
+Among these `r format(nrow(IDNEW), big.mark = ",")` suspected sexual offenders, 
+there were `r CSC_CHR_History` 
+(`r round(100*CSC_CHR_History/nrow(IDNEW), digits = 0)`\%) offenders who had 
+criminal histories containing at least one incident associated with a CSC 
+arrest, charge, or conviction. 
 
 \FloatBarrier
 
