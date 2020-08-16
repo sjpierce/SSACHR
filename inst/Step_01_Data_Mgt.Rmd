@@ -1180,6 +1180,21 @@ all(IDNEW$OCSC2 == IDNEW$CCat12_5) # Charge incident counts
 all(IDNEW$OCSC3 == IDNEW$JCat12_5) # Conviction incident counts
 ```
 
+The variables *CSC_ANY* and *CSCHistory* have very similar definitions. It is 
+possible that they have identical values for all incidents and so the aggregated
+variables *NCSC_ANY* and *NCSCHistory* could be identical. Let's demonstrate 
+that this is false. 
+
+```{r check_assumption2}
+# Are NCSC_ANY and NCSCHistory always the same? 
+addmargins(table(INCEWAgg2$NCSC_ANY == INCEWAgg2$NCSCHistory))
+```
+
+So, they are very similar, but not quite identical. We will retain both 
+variables, but may only analyze one of them. It is important to note that the 
+relation between them is *NCSC_ANY* $\geq$ *NCSCHistory* because the latter 
+variable has a narrower definition.
+
 # Criminal History Record (CHR) Count Overview
 Below is a summary of the record counts for different types of CHR records, 
 along with the numbers of unique incidents and unique offenders represented in
