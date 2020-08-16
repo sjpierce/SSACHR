@@ -712,23 +712,25 @@ FN <- paste("Only offenders with valid testing window start dates are included."
             "with the record occurred, not when the arrest date, charge date,",
             "or conviction date occurred relative to the testing window.")
 
-csclabs <- c("No. of CSC incidents (arrested)", BDA, 
-             "No. of CSC incidents (charged)", BDA,
-             "No. of CSC incidents (convicted)", BDA)
+csclabs <- c("CSC incident count (arrested)", BDA, 
+             "CSC incident count (charged)", BDA,
+             "CSC incident count (convicted)", BDA,
+             "CSC incident count (arrested, charged, or convicted)", BDA)
 
 # Summarize crime category counts (both overall and broken down by IWhen).
 IDNEW %>% 
   select(ACat12_5, ACat12_5_Before, ACat12_5_During, ACat12_5_After, 
          CCat12_5, CCat12_5_Before, CCat12_5_During, CCat12_5_After, 
-         JCat12_5, JCat12_5_Before, JCat12_5_During, JCat12_5_After) %>% 
+         JCat12_5, JCat12_5_Before, JCat12_5_During, JCat12_5_After,
+         NCSCHistory, NCSCHistory_Before, NCSCHistory_During, 
+         NCSCHistory_After) %>% 
   describe(., quant=c(.25, .50, .75)) %>% 
   bind_cols(data.frame(Variable = csclabs), .) %>% 
   select(Variable, n, mean, sd, min, max, skew, kurtosis, Q0.25, Q0.5, Q0.75) %>% 
   kable(., format = "latex", booktabs = TRUE, digits = 2, row.names = FALSE, 
-        col.names = c("Variable", CNames), caption = TCap) %>% 
-  group_rows(" ", 1, 4) %>% 
-  group_rows(" ", 5, 8) %>% 
-  group_rows(" ", 9, 12) %>% 
+        col.names = c("Variable", CNames), caption = TCap,
+        linesep = c('', '', '', '\\addlinespace')) %>% 
+  column_spec(column = 1, width = "6 cm") %>% 
   footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
