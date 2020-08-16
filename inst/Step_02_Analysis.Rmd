@@ -697,7 +697,10 @@ kable(ACat12_4[, CNums], format = "latex", booktabs = TRUE, digits = 2,
 
 ### Criminal Sexual Conduct
 Here we summarize the counts of unique incidents where the offender was 
-*arrested for*, *charged with*, and *convicted of* criminal sexual conduct.
+*arrested for*, *charged with*, and *convicted of* criminal sexual conduct. We 
+also include counts of incidents based on a combined criterion where the 
+offender was *arrested, charged, or convicted* (any of the three, or any 
+combination of them) of criminal sexual conduct. 
 
 ```{r describe_cscvars}
 # Table caption. 
