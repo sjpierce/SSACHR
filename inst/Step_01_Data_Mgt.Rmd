@@ -1039,6 +1039,59 @@ CONEW %>%
   CONEWAgg3
 ```
 
+# Incidents with Any CHR Criminal Sexual Conduct Records
+The *INCEW* data frame contains a binary variable called *CSC_ANY* that marks
+which incidents are associated with any other criminal history records for
+criminal sexual conduct (e.g., arrest offense records, prosecutor charge
+records, or adjudicated charge records, which may or may not be convictions). 
+We are aggregating that variable and also creating a similar binary variable
+called *CSCHistory* that marks incidents which are associated with 1 or more
+criminal history records for criminal sexual conduct that indicate there was an
+arrest, prosecutor charge, or a conviction. This *CSCHistory* variable is a more
+stringent definition than *CSC_ANY* because it codes incidents that had 
+adjudicated charges for CSC that were not convictions (and had no CSC arrests or 
+prosecutor charges) as 0, whereas *CSC_ANY* would code them as 1. 
+
+Here, we aggregate in order to create *NCSC_ANY* and *NCSCHistory*, which will
+respectively be offender-level counts of incidents for which *CSC_ANY* = 1 and
+*CSCHistory* = 1. We will merge these variable into *IDNEW* later.
+
+```{r create_INCEWAgg2} 
+INCEW %>% 
+  mutate(CSCHistory = if_else(CSC_ARR + CSC_CHG + CSC_CON >= 1, 
+                              true = 1, false = 0)) %>% 
+  group_by(OID, .drop = FALSE) %>% 
+  # Aggregate by OID to get count variable
+  summarize(NCSC_ANY = sum(CSC_ANY),
+            NCSCHistory = sum(CSCHistory)) %>% 
+  var_labels(NCSC_ANY = "No. of incidents with >= 1 CSC criminal history records of any type",
+             NCSCHistory = "No. of incidents with >= 1 CSC arrest, charge, or conviction in CHR data") ->
+  INCEWAgg2
+```
+
+Now, we need to get offender-level breakdowns of those CSC incident counts for 
+incidents that occurred before, during, and after the testing window. We can 
+aggregate as follows to get them. We will merge these variables into *IDNEW* 
+later. 
+
+```{r create_INCEWAgg3}
+INCEW %>% 
+  mutate(CSCHistory = if_else(CSC_ARR + CSC_CHG + CSC_CON >= 1, 
+                              true = 1, false = 0)) %>%
+  group_by(OID, IWhen, .drop = FALSE) %>% 
+  # Aggregate by OID and IWhen to get count variables
+  summarize(NCSC_ANY = sum(CSC_ANY),
+            NCSCHistory = sum(CSCHistory)) %>% 
+  pivot_wider(names_from = IWhen, values_from = c(NCSC_ANY, NCSCHistory)) %>% 
+  var_labels(NCSC_ANY_Before = "No. of incidents with >= 1 CSC criminal history records of any type before testing window",
+             NCSC_ANY_During = "No. of incidents with >= 1 CSC criminal history records of any type during testing window",
+             NCSC_ANY_After  = "No. of incidents with >= 1 CSC criminal history records of any type after testing window",
+             NCSCHistory_Before = "No. of incidents with >= 1 CSC arrest, charge, or conviction in CHR data before testing window",
+             NCSCHistory_During = "No. of incidents with >= 1 CSC arrest, charge, or conviction in CHR data during testing window",
+             NCSCHistory_After = "No. of incidents with >= 1 CSC arrest, charge, or conviction in CHR data after testing window") ->
+  INCEWAgg3
+```
+
 # Merge Aggregated Variables onto IDNEW
 First, we merge additional record count variables into *IDNEW* via *left_join()*
 because it preserves variable attributes better than *merge()* and is more
@@ -1050,10 +1103,13 @@ variables as well.
 ```{r update_IDNEW}
 rcvars <- paste(rep(c("NINC", "NARR", "NCHG", "NJUD", "NCON"), each = 3), 
                 rep(IWhenLevels, times = 5), sep = "_")
+ncscanyvars <- c("NCSC_ANY", paste("NCSC_ANY", IWhenLevels, sep = "_"))
 
 IDNEW %>% 
   # Merge in incident record count variables
   left_join(x = ., y = INCEWAgg, by = "OID") %>% 
+  # Merge in incident count variables for CSC_ANY and CSCHistory.
+  left_join(x = ., y = INCEWAgg2, by = "OID") %>% 
   # Merge in arrest record count variables
   left_join(x = ., y = ARREWAgg, by = "OID") %>% 
   # Merge in charge record count variables
@@ -1068,14 +1124,16 @@ IDNEW %>%
   left_join(x = ., y = CHGEWAgg2, by = "OID") %>% 
   # Merge in JCat12 incident count variables (for convictions only)
   left_join(x = ., y = CONEWAgg2, by = "OID") %>% 
-  # Merge in ACat12 incident count variables broken down by IWhen 
+  # Merge in incident count variables for CSC_ANY and CSCHistory split by IWhen
+  left_join(x = ., y = INCEWAgg3, by = "OID") %>%
+  # Merge in ACat12 incident count variables split by IWhen 
   left_join(x = ., y = ARREWAgg3, by = "OID") %>% 
-  # Merge in CCat12 incident count variables broken down by IWhen 
+  # Merge in CCat12 incident count variables split by IWhen 
   left_join(x = ., y = CHGEWAgg3, by = "OID") %>% 
-  # Merge in JCat12 incident count variables (for convictions only) broken down by IWhen 
+  # Merge in JCat12 incident count variables (for convictions only) split by IWhen 
   left_join(x = ., y = CONEWAgg3, by = "OID") %>% 
   # Replace all NA values in the new variables with 0. 
-  mutate(across(.cols = all_of(c(acjvars, acjvarsbda, rcvars)), 
+  mutate(across(.cols = all_of(c(acjvars, acjvarsbda, rcvars, ncscanyvars)), 
                 .fns = replace_na, replace = 0)) %>% 
   # Count the number of crime categories associated w/ each offender.
   rowwise() %>% 
