@@ -904,11 +904,11 @@ IDNEW %>%
 
 ```{r create_CSCCOUNTS, fig.height = 3, warning= FALSE}
 # Rearrange data so we can easily plot multiple variables. 
-cscvars  <- c("ACat12_5", "CCat12_5", "JCat12_5")
-csctypes <- c("Arrests", "Prosecutor Charges", "Convictions")
+cscvars  <- c("ACat12_5", "CCat12_5", "JCat12_5", "NCSCHistory")
+csctypes <- c("Arrested", "Charged", "Convicted", "Arrested, Charged, or Convicted")
 
 IDNEW %>% 
-  select(OID, ACat12_5, CCat12_5, JCat12_5) %>% 
+  select(OID, ACat12_5, CCat12_5, JCat12_5, NCSCHistory) %>% 
   # Rearrange data so we can easily plot multiple variables. 
   pivot_longer(cols = -OID, names_to = "VName", values_to = "Count") %>%
   mutate(VName = ordered(VName, levels = cscvars, labels = csctypes)) ->
@@ -922,9 +922,9 @@ FCap <- paste("Density Plots for Overall Number of Incidents With Evidence of",
               "Only offenders with valid testing window start dates are", 
               "included.")
 
-densityplot(~ Count | VName, data = CSCCOUNTS, layout = c(3,1), 
+densityplot(~ Count | VName, data = CSCCOUNTS, layout = c(4,1), 
             panel = panel.mydensity, jitter.amount = 0.1,
-            strip = strip.custom(par.strip.text = list(cex = 1)),
+            strip = strip.custom(par.strip.text = list(cex = .7)),
             xlab = "Overall Number of Incidents with Criminal Sexual Conduct")
 ```
 
