@@ -1,3 +1,15 @@
+# SSACHR 0.5.5, 2020-08-16
+* Updated `inst/Step_01_Data_Mgt.Rmd` to:
+    * Create and merge NCSC_ANY and NCSCHistory variables (overall and split by 
+      IWhen) onto IDNEW. 
+    * Expand the Check Assumptions section.
+* Updated `inst/Step_02_Analysis.Rmd` to: 
+    * Add more variables to CSC tables. 
+    * Add more frequency table output for NCSCHistory (overall and split by 
+      IWhen). 
+    * Improve the densityplot_CSCCOUNTS chunk and resulting plot. 
+    * Move sme chunks and text. 
+
 # SSACHR 0.5.4, 2020-08-14--2020-08-15
 * Updated `inst/Step_01_Data_Mgt.Rmd` to:
     * Added more crime category count variables with corresponding variable 
