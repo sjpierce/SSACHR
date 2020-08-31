@@ -1,3 +1,8 @@
+# SSACHR 0.6.0, 2020-08-31
+* Updated `inst/R/Data_Mgt_Functions.R` to add robustmax() function.
+* Updated `NAMESPACE` via document(). 
+* Updated `man/robustmax.Rd` help documentation via document(). 
+
 # SSACHR 0.5.5, 2020-08-16
 * Updated `inst/Step_01_Data_Mgt.Rmd` to:
     * Create and merge NCSC_ANY and NCSCHistory variables (overall and split by 
