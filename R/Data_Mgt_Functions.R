@@ -88,3 +88,31 @@ rvlabel <- function(x, from = "Excluded (user-missing)",
   attr(x, "labels") <- y
   return(x)
   }
+
+#'=============================================================================
+#' @name robustmax
+#'
+#' @title Robust maxima
+#'
+#' @description Returns the regular maxima of the input values x using max(x)
+#'   except it just returns NA when x is an empty vector.
+#'
+#' @param x Numeric or character arguments.
+#'
+#' @param na.rm A logical indicating whether missing values should be removed.
+#'
+#' @details This function solves warnings issued by max() when it is used on an
+#'   empty vector. Using max(numeric(0)) yields a warning
+#'   "no non-missing arguments to max; returning -Inf" and is very slow about
+#'   doing that. So, robustmax() is a replacement function that just returns NA
+#'   when the vector is empty. That speeds things up dramatically.
+#'
+#' @seealso \code{\link[base]{Extremes}}
+#'
+#' @return A length one vector. The type of the result will be that of the
+#'   highest of the inputs in the hierarchy integer < double < character.
+#'
+#' @export
+robustmax <- function(x, na.rm = FALSE) {
+  if (length(x) > 0) max(x, na.rm = na.rm) else NA
+  }
