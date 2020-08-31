@@ -963,17 +963,11 @@ ARREW %>%
 ```
 
 ```{r create_ARREWAgg3}
-# This solves warnings issued by max() when it is used on an empty vector. 
-# max(numeric(0)) yields warning "no non-missing arguments to min; returning -Inf"
-# So we replace the max() function with one that just returns NA when the vector
-# is empty. This speeds up execution dramatically
-RobustMax <- function(x) {if (length(x)>0) max(x) else NA}
-
 # Aggregate ACat12 dummy codes to offender level incident counts.
 ARREW %>% 
   group_by(OID, IID, IWhen, .drop = FALSE) %>% 
   # Aggregate dummy codes by OID + IID into binary variables
-  summarize(across(.cols = all_of(avars), .fns = RobustMax)) %>% 
+  summarize(across(.cols = all_of(avars), .fns = robustmax)) %>% 
   pivot_wider(names_from = IWhen, values_from = all_of(avars), 
               values_fill = 0) %>%
   group_by(OID) %>% 
@@ -1001,7 +995,7 @@ CHGEW %>%
 CHGEW %>% 
   group_by(OID, IID, IWhen, .drop = FALSE) %>% 
   # Aggregate dummy codes by OID + IID into binary variables
-  summarize(across(.cols = all_of(cvars), .fns = RobustMax)) %>% 
+  summarize(across(.cols = all_of(cvars), .fns = robustmax)) %>% 
   pivot_wider(names_from = IWhen, values_from = all_of(cvars), 
               values_fill = 0) %>%
   group_by(OID) %>% 
@@ -1030,7 +1024,7 @@ CONEW %>%
 CONEW %>% 
   group_by(OID, IID, IWhen, .drop = FALSE) %>% 
   # Aggregate dummy codes by OID + IID into binary variables
-  summarize(across(.cols = all_of(jvars), .fns = RobustMax)) %>% 
+  summarize(across(.cols = all_of(jvars), .fns = robustmax)) %>% 
   pivot_wider(names_from = IWhen, values_from = all_of(jvars), 
               values_fill = 0) %>%
   group_by(OID) %>% 
