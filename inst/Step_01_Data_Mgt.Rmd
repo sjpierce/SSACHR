@@ -919,10 +919,10 @@ CONEW %>%
 ```
 \FloatBarrier
 
-## Aggregating Crime Category Variables
-Here we aggregate the dummy coded crime category variables data first to the
-incident level to flag presence of each crime category on the incident, then 
-to offender level incident counts for each crime category. 
+## Aggregating Crime Category Dummy Variables to Incident Level Dummy Variables
+Here we aggregate the dummy coded crime category variables data from the record 
+level to the incident level to flag presence or absence of each crime category 
+on the incident. 
 
 ```{r create_acjvars}
 # Create objects with vectors of variable names
@@ -956,6 +956,15 @@ ARREW %>%
   group_by(OID, IID) %>% 
   # Aggregate dummy codes by OID + IID into binary variables
   summarize(across(.cols = all_of(avars), .fns = max)) %>% 
+### Incidents With Charges
+
+### Incidents With Convictions
+
+## Aggregating Crime Category Dummy Variables to Offender Level Count Variables
+Here we aggregate the dummy coded crime category variables data from the
+incident level to offender level incident counts for each crime category. 
+
+### Incidents With Arrests
   group_by(OID) %>% 
   # Aggregate dummy codes by OID into incident count variables
   summarize(across(.cols = all_of(avars), .fns = sum)) ->
