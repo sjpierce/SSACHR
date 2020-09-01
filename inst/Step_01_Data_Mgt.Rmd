@@ -925,7 +925,7 @@ level to the incident level to flag presence or absence of each crime category
 on the incident. 
 
 ```{r create_acjvars}
-# Create objects with vectors of variable names
+# Create objects with vectors of variable names we need later. 
 avars      <- paste("ACat12", c(1:12, 999), sep = "_")
 avarsb     <- paste0(avars, "_Before")
 avarsd     <- paste0(avars, "_During")
