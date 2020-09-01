@@ -1,5 +1,19 @@
+# SSACHR 0.6.1, 2020-08-31
+* Updated `inst/Step_01_Data_Mgt.Rmd` to:
+    * Rename tibbles and relabel chunks to improve clarity.
+    * Split the Aggregating Crime Category Dummy Variables section into multiple 
+      sections (one to incident level, another to offender level).
+    * Split some chunks into multiple pieces to store tibbles aggregated to the
+      incident level for additional uses and move the remaining parts under 
+      the new section on aggregating to offender level. 
+    * Remove RobustMax() function definition and replace it with calls to the 
+      new robustmax() function. 
+    * Improve some comments. 
+* Updated `inst/Step_02_Analysis.Rmd` to add draft code for expanding arson 
+  analysis to match level of detail used for criminal sexual conduct. 
+
 # SSACHR 0.6.0, 2020-08-31
-* Updated `inst/R/Data_Mgt_Functions.R` to add robustmax() function.
+* Updated `inst/R/Data_Mgt_Functions.R` to add a new robustmax() function.
 * Updated `NAMESPACE` via document(). 
 * Updated `man/robustmax.Rd` help documentation via document(). 
 
