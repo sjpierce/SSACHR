@@ -646,6 +646,248 @@ kable(ACat12_1[, CNums], format = "latex", booktabs = TRUE, digits = 2,
       caption = "Offender-Level Arson Incident Counts")
 ```
 
+Here we summarize the counts of unique incidents where the offender was 
+*arrested for*, *charged with*, and *convicted of* arson. We also include 
+counts of incidents based on a combined criterion where the offender was 
+*arrested, charged, or convicted* (any of the three, or any combination of them)
+of arson. 
+
+```{r describe_arsonvars}
+# Table caption. 
+TCap <- paste("Offender-Level Arson Incidents (Overall and By When Incident",
+              "Occurred)")
+# Footnote text. 
+FN <- paste("Only offenders with valid testing window start dates are included.",
+            "Before, during, and after refer to when the incident associated",
+            "with the record occurred, not when the arrest date, charge date,",
+            "or conviction date occurred relative to the testing window.")
+
+TRowLabs <- c("Arson incident count (arrested)", BDA, 
+              "Arson incident count (charged)", BDA,
+              "Arson incident count (convicted)", BDA,
+              "Arson incident count (arrested, charged, or convicted)", BDA)
+
+# Summarize crime category counts (both overall and broken down by IWhen).
+IDNEW %>% 
+  select(ACat12_1, ACat12_1_Before, ACat12_1_During, ACat12_1_After, 
+         CCat12_1, CCat12_1_Before, CCat12_1_During, CCat12_1_After, 
+         JCat12_1, JCat12_1_Before, JCat12_1_During, JCat12_1_After,
+         NArsonHistory, NArsonHistory_Before, NArsonHistory_During, 
+         NArsonHistory_After) %>% 
+  describe(., quant=c(.25, .50, .75)) %>% 
+  bind_cols(data.frame(Variable = csclabs), .) %>% 
+  select(Variable, n, mean, sd, min, max, skew, kurtosis, Q0.25, Q0.5, Q0.75) %>% 
+  kable(., format = "latex", booktabs = TRUE, digits = 2, row.names = FALSE, 
+        col.names = c("Variable", CNames), caption = TCap,
+        linesep = c('', '', '', '\\addlinespace')) %>% 
+  column_spec(column = 1, width = "6 cm") %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
+```
+
+```{r freq_ACat12_1}
+# Table caption.
+TCap <- paste("Frequency Distributions for Number of Arson Incidents for Which",
+              "Offender Was Arrested (Overall and By When Incident Occurred)")
+# Footnote text.
+FN <- paste0("N = ", format(nrow(IDNEW), big.mark = ","), ". TW, earliest ",
+            "testing window. ",
+            "Before, during, and after refer to when the incident associated ",
+            "with the record occurred, not when the arrest date occurred ",
+            "relative to the testing window. For example, an offender could be ",
+            "arrested during the testing window for an incident that occurred ",
+            "before it began. That would show up here in the before column.")
+
+# Get frequency distributions. 
+IDNEW %>% 
+  select(OID, ACat12_1, ACat12_1_Before, ACat12_1_During, ACat12_1_After) %>% 
+  rename(All = ACat12_1, Before = ACat12_1_Before, During = ACat12_1_During, 
+         After = ACat12_1_After) %>% 
+  pivot_longer(cols = -OID, names_to = "When", values_to = "Value") %>% 
+  group_by(When, Value) %>% 
+  count() %>% 
+  arrange(Value) %>% 
+  pivot_wider(names_from = When, values_from = n, values_fill = 0) %>% 
+  mutate(All_p = 100*All/nrow(IDNEW),
+         Before_p = 100*Before/nrow(IDNEW),
+         During_p = 100*During/nrow(IDNEW),
+         After_p = 100*After/nrow(IDNEW)) %>% 
+  select(Value, All, All_p, Before, Before_p, During, During_p, After, 
+         After_p) %>% 
+  kable(format = "latex", booktabs = TRUE, digits = 2, 
+        col.names = c("Value", rep(c("Frequency", "Percent"), 4)),
+        caption = TCap) %>% 
+  kable_styling() %>% 
+  add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
+                   "After TW" = 2)) %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
+```
+
+
+```{r freq_CCat12_1}
+# Table caption.
+TCap <- paste("Frequency Distributions for Number of Arson Incidents for Which",
+              " Offender Was Charged (Overall and By When Incident Occurred)")
+# Footnote text.
+FN <- paste0("N = ", format(nrow(IDNEW), big.mark = ","), ". TW, earliest ",
+            "testing window. ",
+            "Before, during, and after refer to when the incident associated ",
+            "with the record occurred, not when the charge date occurred ",
+            "relative to the testing window. For example, an offender could be ",
+            "charged during the testing window for an incident that occurred ",
+            "before it began. That would show up here in the before column.")
+
+# Get frequency distributions. 
+IDNEW %>% 
+  select(OID, CCat12_1, CCat12_1_Before, CCat12_1_During, CCat12_1_After) %>% 
+  rename(All = CCat12_1, Before = CCat12_1_Before, During = CCat12_1_During, 
+         After = CCat12_1_After) %>% 
+  pivot_longer(cols = -OID, names_to = "When", values_to = "Value") %>% 
+  group_by(When, Value) %>% 
+  count() %>% 
+  arrange(Value) %>% 
+  pivot_wider(names_from = When, values_from = n, values_fill = 0) %>% 
+  mutate(All_p = 100*All/nrow(IDNEW),
+         Before_p = 100*Before/nrow(IDNEW),
+         During_p = 100*During/nrow(IDNEW),
+         After_p = 100*After/nrow(IDNEW)) %>% 
+  select(Value, All, All_p, Before, Before_p, During, During_p, After, 
+         After_p) %>% 
+  kable(format = "latex", booktabs = TRUE, digits = 2, 
+        col.names = c("Value", rep(c("Frequency", "Percent"), 4)),
+        caption = TCap) %>% 
+  kable_styling() %>% 
+  add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
+                   "After TW" = 2)) %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
+```
+
+```{r freq_JCat12_1}
+# Table caption.
+TCap <- paste("Frequency Distributions for Number of Arson Incidents for Which",
+              "Offender Was Convicted (Overall and By When Incident Occurred)")
+# Footnote text.
+FN <- paste0("N = ", format(nrow(IDNEW), big.mark = ","), ". TW, earliest ",
+            "testing window. ",
+            "Before, during, and after refer to when the incident associated ",
+            "with the record occurred, not when the charge date occurred ",
+            "relative to the testing window. For example, an offender could be ",
+            "convicted during the testing window for an incident that occurred ",
+            "before it began. That would show up here in the before column.")
+
+# Get frequency distributions. 
+IDNEW %>% 
+  select(OID, JCat12_1, JCat12_1_Before, JCat12_1_During, JCat12_1_After) %>% 
+  rename(All = JCat12_1, Before = JCat12_1_Before, During = JCat12_1_During, 
+         After = JCat12_1_After) %>% 
+  pivot_longer(cols = -OID, names_to = "When", values_to = "Value") %>% 
+  group_by(When, Value) %>% 
+  count() %>% 
+  arrange(Value) %>% 
+  pivot_wider(names_from = When, values_from = n, values_fill = 0) %>% 
+  mutate(All_p = 100*All/nrow(IDNEW),
+         Before_p = 100*Before/nrow(IDNEW),
+         During_p = 100*During/nrow(IDNEW),
+         After_p = 100*After/nrow(IDNEW)) %>% 
+  select(Value, All, All_p, Before, Before_p, During, During_p, After, 
+         After_p) %>% 
+  kable(format = "latex", booktabs = TRUE, digits = 2, 
+        col.names = c("Value", rep(c("Frequency", "Percent"), 4)),
+        caption = TCap) %>% 
+  kable_styling() %>% 
+  add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
+                   "After TW" = 2)) %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
+```
+
+```{r freq_NArsonHistory}
+# Table caption.
+TCap <- paste("Frequency Distributions for Number of Arson Incidents for Which",
+              "Offender Was Arrested, Charged, or Convicted (Overall and By",
+              "When Incident Occurred)")
+# Footnote text.
+FN <- paste0("N = ", format(nrow(IDNEW), big.mark = ","), ". TW, earliest ",
+            "testing window. ",
+            "Before, during, and after refer to when the incident associated ",
+            "with the record occurred, not when the arrest, charge, or ",
+            "conviction date occurred relative to the testing window. For ",
+            "example, an offender could be arrested during the testing window ",
+            "for an incident that occurred before it began. That would show up",
+            "here in the before column. ", 
+            "An incident is counted as showing an arson history if there are ",
+            "any arson arrest, charge, or conviction records associated with ",
+            "it (any one type, or any combination of them will suffice).")
+
+# Get frequency distributions. 
+IDNEW %>% 
+  select(OID, NArsonHistory, NArsonHistory_Before, NArsonHistory_During, 
+               NArsonHistory_After) %>% 
+  rename(All = NArsonHistory, Before = NArsonHistory_Before, 
+         During = NArsonHistory_During, After = NArsonHistory_After) %>% 
+  pivot_longer(cols = -OID, names_to = "When", values_to = "Value") %>% 
+  group_by(When, Value) %>% 
+  count() %>% 
+  arrange(Value) %>% 
+  pivot_wider(names_from = When, values_from = n, values_fill = 0) %>% 
+  mutate(All_p = 100*All/nrow(IDNEW),
+         Before_p = 100*Before/nrow(IDNEW),
+         During_p = 100*During/nrow(IDNEW),
+         After_p = 100*After/nrow(IDNEW)) %>% 
+  select(Value, All, All_p, Before, Before_p, During, During_p, After, 
+         After_p) %>% 
+  kable(format = "latex", booktabs = TRUE, digits = 2, 
+        col.names = c("Value", rep(c("Frequency", "Percent"), 4)),
+        caption = TCap) %>% 
+  kable_styling() %>% 
+  add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
+                   "After TW" = 2)) %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
+```
+
+```{r create_ArsonCOUNTS, fig.height = 3, warning= FALSE}
+# Rearrange data so we can easily plot multiple variables. 
+arsonvars  <- c("ACat12_1", "CCat12_1", "JCat12_1", "NArsonHistory")
+arsontypes <- c("Arrested", "Charged", "Convicted", "Arrested, Charged, or Convicted")
+
+IDNEW %>% 
+  select(OID, ACat12_1, CCat12_1, JCat12_1, NArsonHistory) %>% 
+  # Rearrange data so we can easily plot multiple variables. 
+  pivot_longer(cols = -OID, names_to = "VName", values_to = "Count") %>%
+  mutate(VName = ordered(VName, levels = cscvars, labels = csctypes)) ->
+  ArsonCOUNTS
+```  
+
+```{r densityplot_ArsonCOUNTS, fig.height = 3, fig.width = 8.5, fig.cap=FCap}
+# Figure caption.
+FCap <- paste("Density Plots for Overall Number of Incidents With Evidence of", 
+              "Criminal Sexual Conduct by Criminal History Record Type.", 
+              "Only offenders with valid testing window start dates are", 
+              "included.")
+
+densityplot(~ Count | VName, data = ArsonCOUNTS, layout = c(4,1), 
+            panel = panel.mydensity, jitter.amount = 0.1,
+            strip = strip.custom(par.strip.text = list(cex = .7)),
+            xlab = "Overall Number of Incidents with Criminal Sexual Conduct")
+```
+
+```{r create_Arson_CHR_History}
+# Check how many offenders had >= 1 CSC arrest, charge, or conviction in their CHR data. 
+IDNEW %>% 
+  filter(NArsonHistory >= 1) %>% 
+  nrow() -> 
+  Arson_CHR_History
+```
+
+Among these `r format(nrow(IDNEW), big.mark = ",")` suspected sexual offenders, 
+there were `r Arson_CHR_History` 
+(`r round(100*Arson_CHR_History/nrow(IDNEW), digits = 0)`\%) offenders who had 
+criminal histories containing at least one incident associated with an arson 
+arrest, charge, or conviction. 
+
 \FloatBarrier
 
 ### Assault - DV, Stalking 
