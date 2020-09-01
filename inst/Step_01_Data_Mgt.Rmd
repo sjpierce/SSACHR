@@ -920,9 +920,9 @@ CONEW %>%
 \FloatBarrier
 
 ## Aggregating Crime Category Dummy Variables to Incident Level Dummy Variables
-Here we aggregate the dummy coded crime category variables data from the record 
-level to the incident level to flag presence or absence of each crime category 
-on the incident. 
+Here we aggregate the dummy coded crime category variables from the record level
+to the incident level to flag presence or absence of each crime category on the
+incident.
 
 ```{r create_acjvars}
 # Create objects with vectors of variable names we need later. 
@@ -949,49 +949,61 @@ acjvarsbda <- c(avarsbda, cvarsbda, jvarsbda)
 ```
 
 ### Incidents With Arrests
+For any given incident (identifed by a unique value of *IID*), there can be
+multiple arrest offense records in *ARREW*. The dummy variables ACat12_1 to
+ACat12_12 and ACat12_999 each mark whether or not a particular arrest offense
+record was associated with a specific type of crime. Here, we aggregate them up
+to the incident level by taking the maximum observed value for each incident.
+The resulting incident-level records will have values of 1 for every crime
+category for which the offender was arrested due to that incident and values of
+0 for every crime category for which the offender was not arrested due to that
+incident.
 
 ```{r create_ARREW_Agg_IID}
-# Aggregate ACat12 dummy codes to incident level binary variables.
+# Aggregate ACat12 dummy codes by OID + IID to incident level binary variables.
 ARREW %>% 
   group_by(OID, IID) %>% 
-  # Aggregate dummy codes by OID + IID into binary variables
   summarize(across(.cols = all_of(avars), .fns = max)) ->
   ARREW_Agg_ACat12_IID
 ```
 
-
-
-
-
 ### Incidents With Charges
+For any given incident (identifed by a unique value of *IID*), there can be
+multiple prosecutor charges records in *CHGEW*. The dummy variables CCat12_1 to
+CCat12_12 and CCat12_999 each mark whether or not a particular prosecutior charge 
+record was associated with a specific type of crime. Here, we aggregate them up
+to the incident level by taking the maximum observed value for each incident.
+The resulting incident-level records will have values of 1 for every crime
+category for which the offender was charged due to that incident and values of
+0 for every crime category for which the offender was not charged due to that
+incident.
 
 ```{r create_CHGEW_Agg_IID}         
-# Aggregate CCat12 dummy codes to incident level binary variables.
+# Aggregate CCat12 dummy codes by OID + IID to incident level binary variables.
 CHGEW %>% 
   group_by(OID, IID) %>% 
-  # Aggregate dummy codes by OID + IID into binary variables
   summarize(across(.cols = all_of(cvars), .fns = max)) ->
   CHGEW_Agg_IID
 ```
 
-
-
-
-
-
 ### Incidents With Convictions
+For any given incident (identifed by a unique value of *IID*), there can be
+multiple conviction records in *CONEW*. The dummy variables JCat12_1 to
+JCat12_12 and JCat12_999 each mark whether or not a particular adjudicated
+conviction charge record was associated with a specific type of crime. Here, we
+aggregate them up to the incident level by taking the maximum observed value for
+each incident. The resulting incident-level records will have values of 1 for
+every crime category for which the offender was convicted  due to that incident
+and values of 0 for every crime category for which the offender was not
+convicted due to that incident.
 
 ```{r create_CONEW_Agg_IID}
-# Aggregate JCat12 dummy codes to incident level binary variables.
+# Aggregate JCat12 dummy codes by OID + IID to incident level binary variables.
 CONEW %>% 
   group_by(OID, IID) %>% 
-  # Aggregate dummy codes by OID + IID into binary variables
   summarize(across(.cols = all_of(jvars), .fns = max)) ->
   CONEW_Agg_IID
 ```
-
-
-
 
 ## Aggregating Crime Category Dummy Variables to Offender Level Count Variables
 Here we aggregate the dummy coded crime category variables data from the
