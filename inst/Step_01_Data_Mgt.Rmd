@@ -1153,11 +1153,11 @@ IDNEW %>%
   # Merge in conviction record count variables
   left_join(x = ., y = CONEW_Agg_NCON_IWhen, by = "OID") %>% 
   # Merge in ACat12 incident count variables 
-  left_join(x = ., y = ARREWAgg2, by = "OID") %>% 
+  left_join(x = ., y = ARREW_Agg_OID, by = "OID") %>% 
   # Merge in CCat12 incident count variables 
-  left_join(x = ., y = CHGEWAgg2, by = "OID") %>% 
+  left_join(x = ., y = CHGEW_Agg_OID, by = "OID") %>% 
   # Merge in JCat12 incident count variables (for convictions only)
-  left_join(x = ., y = CONEWAgg2, by = "OID") %>% 
+  left_join(x = ., y = CONEW_Agg_OID, by = "OID") %>% 
   # Merge in incident count variables for CSC_ANY and CSCHistory split by IWhen
   left_join(x = ., y = INCEWAgg3, by = "OID") %>%
   # Merge in ACat12 incident count variables split by IWhen 
