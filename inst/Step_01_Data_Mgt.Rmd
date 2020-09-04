@@ -1072,8 +1072,7 @@ CONEW %>%
 Here we aggregate the dummy coded crime category variables data from the
 incident level to offender level incident counts for each crime category. 
 
-### Incidents With Arrests
-
+### Incidents With Arrests (Overall Plus Before, During, and After Testing Window)
 For any given offender (identifed by an *OID* value), there can be multiple
 incidents (identified by *IID* values). Aggregating the dummy variables ACat12_1
 to ACat12_12 and ACat12_999 by summing across incidents for each offender allows
@@ -1105,7 +1104,7 @@ ARREW %>%
 ```
 
 
-### Incidents With Charges
+### Incidents With Charges (Overall Plus Before, During, and After Testing Window)
 
 ```{r create_CHGEW_Agg_OID}         
 # Aggregate CCat12 dummy codes to offender level incident counts.
@@ -1130,7 +1129,7 @@ CHGEW %>%
   CHGEWAgg3
 ```
 
-### Incidents With Convictions
+### Incidents With Convictions (Overall Plus Before, During, and After Testing Window)
 
 ```{r create_CONEW_Agg_OID}
 # Aggregate JCat12 dummy codes to offender level incident counts.
