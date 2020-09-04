@@ -1083,29 +1083,38 @@ for various types of crime over the course of the entire (documented) criminal
 history. The aggregated variables merged into *IDNEW* retain the same varable
 names as the source dummy-coded variables.
  
-```{r create_ARREW_Agg_OID}
+```{r merge_Agg_ACat12_IDNEW}
 # Aggregate ACat12 dummy codes to offender level incident counts.
-ARREW_Agg_IID %>% 
+INCEW %>% 
   group_by(OID) %>% 
   # Aggregate dummy codes by OID into incident count variables
-  summarize(across(.cols = all_of(avars), .fns = sum)) ->
-  ARREW_Agg_OID
+  summarize(across(.cols = all_of(avars), .fns = sum))  %>% 
+  # Merge dummy variables onto IDNEW.
+  left_join(x = IDNEW, y = ., by = "OID") %>% 
+  # Replace all NA values in the new variables with 0. 
+  mutate(across(.cols = all_of(avars), .fns = replace_na, replace = 0)) ->
+  IDNEW
 ```
 
-```{r create_ARREWAgg3}
-# Aggregate ACat12 dummy codes to offender level incident counts.
-ARREW %>% 
-  group_by(OID, IID, IWhen, .drop = FALSE) %>% 
-  # Aggregate dummy codes by OID + IID into binary variables
-  summarize(across(.cols = all_of(avars), .fns = robustmax)) %>% 
+We also want to get separate counts for each crime category broken down by when
+the incident occurred relative to the earliest testing window (*IWhen*). This
+next chunk does that. The variable naming convention just adds suffixes to the
+previously defined variable names to indicate the period to which each count
+variable pertains.
+
+```{r merge_Agg_ACat12_BDA_IDNEW}
+# Aggregate ACat12 dummy codes to offender level incident counts by IWhen .
+INCEW %>% 
+  group_by(OID, IWhen, .drop = FALSE) %>% 
   pivot_wider(names_from = IWhen, values_from = all_of(avars), 
               values_fill = 0) %>%
   group_by(OID) %>% 
   # Aggregate dummy codes by OID into incident count variables
-  summarize(across(.cols = all_of(avarsbda), .fns = sum, na.rm = TRUE)) ->
-  ARREWAgg3
+  summarize(across(.cols = all_of(avarsbda), .fns = sum, na.rm = TRUE))  %>% 
+  # Merge count variables onto IDNEW.
+  left_join(x = IDNEW, y = ., by = "OID") -> 
+  IDNEW
 ```
-
 
 ### Incidents With Charges (Overall Plus Before, During, and After Testing Window)
 
