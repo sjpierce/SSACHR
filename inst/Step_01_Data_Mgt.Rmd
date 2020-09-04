@@ -931,22 +931,24 @@ CONEW %>%
 
 ## Aggregating Crime Category Dummy Variables to Incident Level Dummy Variables
 We used the *dcode()* function to create the dummy coded crime category
-variables while importing data from the SPSS data files into the *ARREW*,
-*CHGEW*, and *CONEW* tibbles. In the *ARREW* tibble, the variables 
-*ACat12_1* to *ACat12_12* and *ACat12_999* mark which category of crime the 
-offender was arrested for on a given arrest offense record. The corresponding 
-*CCat12_1* to *CCat12_12* and *CCat12_999* variables in *CHGEW* show which 
-crime category the individual was charged with by a prosecuting attorney on a 
-charge record. Meanwhile, *JCat12_1* to *JCat12_12* and *JCat12_999* variables 
-in *CONEW* show which crime category the offender was convicted of on a given 
-conviction record. 
+variables while importing data from the SPSS data files into the *ARR*,
+*CHG*, and *CON* tibbles, which were each subsequently modified and saved as the 
+*ARREW*, *CHGEW*, and *CONEW* tibbles. 
+
+In the *ARREW* tibble, the variables *ACat12_1* to *ACat12_12* and *ACat12_999*
+mark which category of crime the offender was arrested for on a given arrest
+offense record. The corresponding *CCat12_1* to *CCat12_12* and *CCat12_999*
+variables in *CHGEW* show which crime category the individual was charged with
+by a prosecuting attorney on a charge record. Meanwhile, *JCat12_1* to
+*JCat12_12* and *JCat12_999* variables in *CONEW* show which crime category the
+offender was convicted of on a given conviction record. 
 
 All three of those tibbles can have multiple records per criminal incident. This
-section aggregates those dummy coded crime
-category variables from the record level to the incident level to flag presence
-or absence of each crime category on the incident, then merges the resulting
-variables onto the *INCEW* tibble. That allows us to see which incidents were 
-associated with arrests, charges, and/or convictions for each category of crime. 
+section aggregates those dummy coded crime category variables from the record
+level to the incident level to flag presence or absence of each crime category
+on the incident. It  merges the resulting variables onto the *INCEW* tibble.
+That allows us to see which incidents were associated with arrests, charges,
+and/or convictions for each category of crime. 
 
 The code chunk below creates objects containing vectors of variable names that 
 can be used to simplify subsequent code. 
