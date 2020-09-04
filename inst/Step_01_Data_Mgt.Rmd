@@ -108,9 +108,9 @@ Here we define a few terms mentioned in this file.
 
 * **Data frame.** This is a just a tabular data set comprised of rows 
   (observations or cases) and columns (variables). 
-* **Tibble.** The tidyverse group of R packages use a modified data frames 
-  called tibbles. It is still basically a tabular data set comprised of rows
-  (observations or cases) and columns (variables). 
+* **Tibble.** The tidyverse group of R packages create and use a modified type 
+  of data frame called tibbles. A tibble is still a tabular data set comprised 
+  of rows (observations or cases) and columns (variables). 
 
 # Setup
 Set global R chunk options (local chunk options will over-ride global options). 
