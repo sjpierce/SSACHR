@@ -975,6 +975,30 @@ acjvarsa   <- c(avarsa, cvarsa, jvarsa)
 acjvarsbda <- c(avarsbda, cvarsbda, jvarsbda)
 ```
 
+As a reminder, the crime categories are shown in Table 
+\ref{tab:crime_categories}, along with corresponding variable names. 
+
+```{r crime_categories}
+# Table caption.
+TCap <- paste("Crime Category Labels and Names for Dummy Coded Variables From",
+              "ARREW, CHGEW, and CONEW Data To be Merged Into INCEW Data")
+# Footnote text.
+FN <- paste("ARREW, variables pertaining to arrests;",
+            "CHGEW, variables pertaining to prosecutor charges;",
+            "CONEW, variables pertaining to convictions.")
+
+# Create data for table.
+CrimeCats <- data.frame(Label = get_labels(ARREW$ACat12),
+                        ARREW = avars,
+                        CHGEW = cvars,
+                        CONEW = jvars)
+
+kable(CrimeCats, format = "latex", booktabs = TRUE, caption = TCap) %>% 
+  add_header_above(c(" " = 1, "Source Datasets and Variable Names" = 3)) %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
+```
+
 ### Incidents With Arrests
 For any given incident (identifed by a unique value of *IID*), there can be
 multiple arrest offense records in *ARREW*. The dummy variables ACat12_1 to
