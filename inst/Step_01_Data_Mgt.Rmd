@@ -102,6 +102,16 @@ been prevented if timely testing had been done on the SAKs in this sample.
 
 \FloatBarrier
 
+# Glossary
+
+Here we define a few terms mentioned in this file. 
+
+* **Data frame.** This is a just a tabular data set comprised of rows 
+  (observations or cases) and columns (variables). 
+* **Tibble.** The tidyverse group of R packages use a modified data frames 
+  called tibbles. It is still basically a tabular data set comprised of rows
+  (observations or cases) and columns (variables). 
+
 # Setup
 Set global R chunk options (local chunk options will over-ride global options). 
 The method for creating a size option that controls font size in code chunks and
