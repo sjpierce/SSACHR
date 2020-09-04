@@ -1,3 +1,16 @@
+# SSACHR 0.6.2, 2020-09-03
+* Updated `inst/Step_01_Data_Mgt.Rmd` to:
+    * Commit some changes actually made on 09/01/20.
+    * Add a Glossary section. 
+    * Add a table showing crime category dummy variable names. 
+    * Merge crime category dummy variables onto INCEW.
+    * Update some headings. 
+
+# SSACHR 0.6.2, 2020-09-01
+* Updated `inst/Step_01_Data_Mgt.Rmd` to:
+    * Add explanatory text.
+    * Simplify some comments in code chunks. 
+    
 # SSACHR 0.6.1, 2020-08-31
 * Updated `inst/Step_01_Data_Mgt.Rmd` to:
     * Rename tibbles and relabel chunks to improve clarity.
