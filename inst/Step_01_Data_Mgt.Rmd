@@ -1010,12 +1010,16 @@ category for which the offender was arrested due to that incident and values of
 0 for every crime category for which the offender was not arrested due to that
 incident.
 
-```{r create_ARREW_Agg_IID}
-# Aggregate ACat12 dummy codes by OID + IID to incident level binary variables.
+```{r create_ARREW_Agg_ACat12_IID}
+# Aggregate ACat12 dummy codes by IID to incident level binary variables.
 ARREW %>% 
-  group_by(OID, IID) %>% 
-  summarize(across(.cols = all_of(avars), .fns = max)) ->
-  ARREW_Agg_ACat12_IID
+  group_by(IID) %>% 
+  summarize(across(.cols = all_of(avars), .fns = max)) %>% 
+  # Merge dummy variables onto INCEW.
+  left_join(x = INCEW, y = ., by = "IID") %>% 
+  # Replace all NA values in the new variables with 0. 
+  mutate(across(.cols = all_of(avars), .fns = replace_na, replace = 0)) ->
+  INCEW
 ```
 
 ### Incidents With Charges
@@ -1029,12 +1033,16 @@ category for which the offender was charged due to that incident and values of
 0 for every crime category for which the offender was not charged due to that
 incident.
 
-```{r create_CHGEW_Agg_IID}         
-# Aggregate CCat12 dummy codes by OID + IID to incident level binary variables.
+```{r create_CHGEW_Agg_ACat12_IID}         
+# Aggregate CCat12 dummy codes by IID to incident level binary variables.
 CHGEW %>% 
-  group_by(OID, IID) %>% 
-  summarize(across(.cols = all_of(cvars), .fns = max)) ->
-  CHGEW_Agg_IID
+  group_by(IID) %>% 
+  summarize(across(.cols = all_of(cvars), .fns = max))  %>% 
+  # Merge dummy variables onto INCEW.
+  left_join(x = INCEW, y = ., by = "IID") %>% 
+  # Replace all NA values in the new variables with 0. 
+  mutate(across(.cols = all_of(cvars), .fns = replace_na, replace = 0)) ->
+  INCEW
 ```
 
 ### Incidents With Convictions
@@ -1048,12 +1056,16 @@ every crime category for which the offender was convicted  due to that incident
 and values of 0 for every crime category for which the offender was not
 convicted due to that incident.
 
-```{r create_CONEW_Agg_IID}
-# Aggregate JCat12 dummy codes by OID + IID to incident level binary variables.
+```{r create_CONEW_Agg_ACat12_IID}
+# Aggregate JCat12 dummy codes by IID to incident level binary variables.
 CONEW %>% 
-  group_by(OID, IID) %>% 
-  summarize(across(.cols = all_of(jvars), .fns = max)) ->
-  CONEW_Agg_IID
+  group_by(IID) %>% 
+  summarize(across(.cols = all_of(jvars), .fns = max)) %>% 
+  # Merge dummy variables onto INCEW.
+  left_join(x = INCEW, y = ., by = "IID") %>% 
+  # Replace all NA values in the new variables with 0. 
+  mutate(across(.cols = all_of(jvars), .fns = replace_na, replace = 0)) ->
+  INCEW
 ```
 
 ## Aggregating Crime Category Dummy Variables to Offender Level Count Variables
