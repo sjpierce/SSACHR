@@ -1260,6 +1260,36 @@ INCEW %>%
              HXCat12_999 = "History shows arrested, charged, or convicted for excluded user-missing") ->
   INCEW
 ```
+
+Note that *HXCat12_5* is related to the existing variable *CSC_ANY* variable,
+but a slightly more stringent definition because *HXCat12_5* codes incidents
+that had adjudicated charges for CSC that were not convictions (and had no CSC
+arrests and no CSC prosecutor charges) as 0, whereas *CSC_ANY* would code them
+as 1. We will use *HXCat12_5* in the analyses for this paper instead of
+*CSC_ANY*.
+
+```{r compare_HXCat12_5_to_CSC_ANY}
+# Table caption.
+TCap <- paste("Crosstabulate Incident-Level Criminal Sexual Conduct History",
+              "Variable HXCat12_5 With CSC_ANY")
+# Footnote text.
+FN <- paste("Only incident records for incidents with valid testing window",
+            "start dates were included. The variables disagree when the only",
+            "CHR data for CSC associated with the incident are adjudicated",
+            "charge records that are not convictions.")
+
+# Vector of text values for column labels to be used in the table.
+clabels <- c("HXCat12_5", "CSC_ANY", "Frequency", "Percent")
+
+xtabs(~HXCat12_5 + CSC_ANY, data = INCEW) %>% 
+  as.data.frame() %>% 
+  mutate(Percent = 100*Freq/nrow(INCEW)) %>% 
+  kable(., format = "html", booktabs = TRUE, caption = TCap, digits = 2,
+        col.names = clabels, format.args = list(big.mark = ",")) %>% 
+  column_spec(1:3, width = "1 cm") %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
+```
 # Incidents with Any CHR Criminal Sexual Conduct Records
 The *INCEW* data frame contains a binary variable called *CSC_ANY* that marks
 which incidents are associated with any other criminal history records for
