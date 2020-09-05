@@ -1419,6 +1419,7 @@ Here, we aggregate in order to create *NCSC_ANY* and *NCSCHistory*, which will
 respectively be offender-level counts of incidents for which *CSC_ANY* = 1 and
 *CSCHistory* = 1. We will merge these variable into *IDNEW* later.
 
+
 ```{r create_INCEWAgg2} 
 INCEW %>% 
   mutate(CSCHistory = if_else(CSC_ARR + CSC_CHG + CSC_CON >= 1, 
