@@ -1,3 +1,14 @@
+# SSACHR 0.6.3, 2020-09-04
+* Updated `inst/Step_01_Data_Mgt.Rmd` to:
+    * Improve explanatory text. 
+    * Change chunk labels for clarity.
+    * Revised aggregation of crime category dummy variables to offender-level 
+      incident count variables and how we merge them onto IDNEW. 
+    * Added crime category history variables to INCEW. 
+    * Add a table comparing HXCat12_5 to CSC_ANY. 
+    * Aggregate crime category history variables to incident counts and merge 
+      them onto IDNEW. 
+
 # SSACHR 0.6.2, 2020-09-03
 * Updated `inst/Step_01_Data_Mgt.Rmd` to:
     * Commit some changes actually made on 09/01/20.
