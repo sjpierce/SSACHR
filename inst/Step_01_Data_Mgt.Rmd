@@ -1377,8 +1377,9 @@ INCEW %>%
             NHXCat12_12 = sum(HXCat12_12),
             NHXCat12_999 = sum(HXCat12_999)) %>% 
   pivot_wider(names_from = IWhen, 
-              values_from = c(NHXCat12_1, NHXCat12_2, NHXCat12_3, NHXCat12_4, NHXCat12_5, NHXCat12_6, 
-                              NHXCat12_7, NHXCat12_8, NHXCat12_9, NHXCat12_10, NHXCat12_11, NHXCat12_12,
+              values_from = c(NHXCat12_1, NHXCat12_2, NHXCat12_3, NHXCat12_4, 
+                              NHXCat12_5, NHXCat12_6, NHXCat12_7, NHXCat12_8, 
+                              NHXCat12_9, NHXCat12_10, NHXCat12_11, NHXCat12_12,
                               NHXCat12_999)) %>% 
   # Merge count variables onto IDNEW.
   left_join(x = IDNEW, y = ., by = "OID") %>% 
