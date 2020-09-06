@@ -1313,7 +1313,7 @@ xtabs(~HXCat12_5 + CSC_ANY, data = INCEW) %>%
   mutate(Percent = 100*Freq/nrow(INCEW)) %>% 
   kable(., format = "latex", booktabs = TRUE, caption = TCap, digits = 2,
         col.names = clabels, format.args = list(big.mark = ",")) %>% 
-  column_spec(1:3, width = "1 cm") %>% 
+  column_spec(1:3, width = "1.5 cm") %>% 
   footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
