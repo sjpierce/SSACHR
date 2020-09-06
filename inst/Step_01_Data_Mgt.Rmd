@@ -1293,7 +1293,8 @@ but a slightly more stringent definition because *HXCat12_5* codes incidents
 that had adjudicated charges for CSC that were not convictions (and had no CSC
 arrests and no CSC prosecutor charges) as 0, whereas *CSC_ANY* would code them
 as 1. We will use *HXCat12_5* in the analyses for this paper instead of
-*CSC_ANY*.
+*CSC_ANY*. Table \ref{tab:compare_HXCat12_5_to_CSC_ANY} shows how these two 
+variables cross-tabulate. 
 
 ```{r compare_HXCat12_5_to_CSC_ANY}
 # Table caption.
