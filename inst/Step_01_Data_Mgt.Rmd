@@ -1320,8 +1320,8 @@ xtabs(~HXCat12_5 + CSC_ANY, data = INCEW) %>%
 
 # Aggregate Crime Category History Variables
 Having created the crime category history variables at the incident level, next
-we aggregate them to offender-level incident count varaiables named *NHXCat12_1* 
-to *NHXCat12_12* and *NHXCat12_999*. Each of these will cntain the number of 
+we aggregate them to offender-level incident count varaiables named *HXCat12_1* 
+to *HXCat12_12* and *HXCat12_999*. Each of these will contain the number of 
 incidents that had a history showing the offender was 
 *arrested for, charged with, or convicted of* the offense in question. 
 
@@ -1329,34 +1329,34 @@ incidents that had a history showing the offender was
 INCEW %>% 
   group_by(OID, .drop = FALSE) %>% 
   # Aggregate by OID to get count variables (overall)
-  summarize(NHXCat12_1 = sum(HXCat12_1),
-            NHXCat12_2 = sum(HXCat12_2),
-            NHXCat12_3 = sum(HXCat12_3),
-            NHXCat12_4 = sum(HXCat12_4),
-            NHXCat12_5 = sum(HXCat12_5),
-            NHXCat12_6 = sum(HXCat12_6),
-            NHXCat12_7 = sum(HXCat12_7),
-            NHXCat12_8 = sum(HXCat12_8),
-            NHXCat12_9 = sum(HXCat12_9),
-            NHXCat12_10 = sum(HXCat12_10),
-            NHXCat12_11 = sum(HXCat12_11),
-            NHXCat12_12 = sum(HXCat12_12),
-            NHXCat12_999 = sum(HXCat12_999)) %>% 
+  summarize(HXCat12_1 = sum(HXCat12_1),
+            HXCat12_2 = sum(HXCat12_2),
+            HXCat12_3 = sum(HXCat12_3),
+            HXCat12_4 = sum(HXCat12_4),
+            HXCat12_5 = sum(HXCat12_5),
+            HXCat12_6 = sum(HXCat12_6),
+            HXCat12_7 = sum(HXCat12_7),
+            HXCat12_8 = sum(HXCat12_8),
+            HXCat12_9 = sum(HXCat12_9),
+            HXCat12_10 = sum(HXCat12_10),
+            HXCat12_11 = sum(HXCat12_11),
+            HXCat12_12 = sum(HXCat12_12),
+            HXCat12_999 = sum(HXCat12_999)) %>% 
   # Merge count variables onto IDNEW.
   left_join(x = IDNEW, y = ., by = "OID") %>% 
-  var_labels(NHXCat12_1 = "No. incidents arrested, charged, or convicted for arson",
-             NHXCat12_2 = "No. incidents arrested, charged, or convicted for assault - DV, stalking",
-             NHXCat12_3 = "No. incidents arrested, charged, or convicted for assault - non-sexual, non-DV",
-             NHXCat12_4 = "No. incidents arrested, charged, or convicted for burglary",
-             NHXCat12_5 = "No. incidents arrested, charged, or convicted for riminal sexual conduct",
-             NHXCat12_6 = "No. incidents arrested, charged, or convicted for drug crime",
-             NHXCat12_7 = "No. incidents arrested, charged, or convicted for homicide",
-             NHXCat12_8 = "No. incidents arrested, charged, or convicted for larceny/theft/fraud",
-             NHXCat12_9 = "No. incidents arrested, charged, or convicted for robbery",
-             NHXCat12_10 = "No. incidents arrested, charged, or convicted for sex crime - other, excluding CSC",
-             NHXCat12_11 = "No. incidents arrested, charged, or convicted for traffic/ordinances",
-             NHXCat12_12 = "No. incidents arrested, charged, or convicted for eapons",
-             NHXCat12_999 = "No. incidents arrested, charged, or convicted for excluded user-missing") ->
+  var_labels(HXCat12_1 = "No. incidents arrested, charged, or convicted for arson",
+             HXCat12_2 = "No. incidents arrested, charged, or convicted for assault - DV, stalking",
+             HXCat12_3 = "No. incidents arrested, charged, or convicted for assault - non-sexual, non-DV",
+             HXCat12_4 = "No. incidents arrested, charged, or convicted for burglary",
+             HXCat12_5 = "No. incidents arrested, charged, or convicted for riminal sexual conduct",
+             HXCat12_6 = "No. incidents arrested, charged, or convicted for drug crime",
+             HXCat12_7 = "No. incidents arrested, charged, or convicted for homicide",
+             HXCat12_8 = "No. incidents arrested, charged, or convicted for larceny/theft/fraud",
+             HXCat12_9 = "No. incidents arrested, charged, or convicted for robbery",
+             HXCat12_10 = "No. incidents arrested, charged, or convicted for sex crime - other, excluding CSC",
+             HXCat12_11 = "No. incidents arrested, charged, or convicted for traffic/ordinances",
+             HXCat12_12 = "No. incidents arrested, charged, or convicted for eapons",
+             HXCat12_999 = "No. incidents arrested, charged, or convicted for excluded user-missing") ->
   IDNEW
 ```
 
@@ -1368,65 +1368,65 @@ aggregate as follows to get them and merge them into *IDNEW*.
 INCEW %>% 
   group_by(OID, IWhen, .drop = FALSE) %>% 
   # Aggregate by OID to get count variables (overall)
-  summarize(NHXCat12_1 = sum(HXCat12_1),
-            NHXCat12_2 = sum(HXCat12_2),
-            NHXCat12_3 = sum(HXCat12_3),
-            NHXCat12_4 = sum(HXCat12_4),
-            NHXCat12_5 = sum(HXCat12_5),
-            NHXCat12_6 = sum(HXCat12_6),
-            NHXCat12_7 = sum(HXCat12_7),
-            NHXCat12_8 = sum(HXCat12_8),
-            NHXCat12_9 = sum(HXCat12_9),
-            NHXCat12_10 = sum(HXCat12_10),
-            NHXCat12_11 = sum(HXCat12_11),
-            NHXCat12_12 = sum(HXCat12_12),
-            NHXCat12_999 = sum(HXCat12_999)) %>% 
+  summarize(HXCat12_1 = sum(HXCat12_1),
+            HXCat12_2 = sum(HXCat12_2),
+            HXCat12_3 = sum(HXCat12_3),
+            HXCat12_4 = sum(HXCat12_4),
+            HXCat12_5 = sum(HXCat12_5),
+            HXCat12_6 = sum(HXCat12_6),
+            HXCat12_7 = sum(HXCat12_7),
+            HXCat12_8 = sum(HXCat12_8),
+            HXCat12_9 = sum(HXCat12_9),
+            HXCat12_10 = sum(HXCat12_10),
+            HXCat12_11 = sum(HXCat12_11),
+            HXCat12_12 = sum(HXCat12_12),
+            HXCat12_999 = sum(HXCat12_999)) %>% 
   pivot_wider(names_from = IWhen, 
-              values_from = c(NHXCat12_1, NHXCat12_2, NHXCat12_3, NHXCat12_4, 
-                              NHXCat12_5, NHXCat12_6, NHXCat12_7, NHXCat12_8, 
-                              NHXCat12_9, NHXCat12_10, NHXCat12_11, NHXCat12_12,
-                              NHXCat12_999)) %>% 
+              values_from = c(HXCat12_1, HXCat12_2, HXCat12_3, HXCat12_4, 
+                              HXCat12_5, HXCat12_6, HXCat12_7, HXCat12_8, 
+                              HXCat12_9, HXCat12_10, HXCat12_11, HXCat12_12,
+                              HXCat12_999)) %>% 
   # Merge count variables onto IDNEW.
   left_join(x = IDNEW, y = ., by = "OID") %>% 
-  var_labels(NHXCat12_1_Before = "No. incidents arrested, charged, or convicted for arson before testing window",
-             NHXCat12_2_Before = "No. incidents arrested, charged, or convicted for assault - DV, stalking before testing window",
-             NHXCat12_3_Before = "No. incidents arrested, charged, or convicted for assault - non-sexual, non-DV before testing window ",
-             NHXCat12_4_Before = "No. incidents arrested, charged, or convicted for burglary before testing window",
-             NHXCat12_5_Before = "No. incidents arrested, charged, or convicted for criminal sexual conduct before testing window",
-             NHXCat12_6_Before = "No. incidents arrested, charged, or convicted for drug crime before testing window",
-             NHXCat12_7_Before = "No. incidents arrested, charged, or convicted for homicide before testing window",
-             NHXCat12_8_Before = "No. incidents arrested, charged, or convicted for larceny/theft/fraud before testing window",
-             NHXCat12_9_Before = "No. incidents arrested, charged, or convicted for robbery before testing window",
-             NHXCat12_10_Before = "No. incidents arrested, charged, or convicted for sex crime - other, excluding CSC before testing window",
-             NHXCat12_11_Before = "No. incidents arrested, charged, or convicted for traffic/ordinances before testing window",
-             NHXCat12_12_Before = "No. incidents arrested, charged, or convicted for weapons before testing window",
-             NHXCat12_999_Before = "No. incidents arrested, charged, or convicted for excluded user-missing before testing window",
-             NHXCat12_1_During = "No. incidents arrested, charged, or convicted for arson during testing window",
-             NHXCat12_2_During = "No. incidents arrested, charged, or convicted for assault - DV, stalking during testing window",
-             NHXCat12_3_During = "No. incidents arrested, charged, or convicted for assault - non-sexual, non-DV during testing window",
-             NHXCat12_4_During = "No. incidents arrested, charged, or convicted for burglary during testing window",
-             NHXCat12_5_During = "No. incidents arrested, charged, or convicted for criminal sexual conduct during testing window",
-             NHXCat12_6_During = "No. incidents arrested, charged, or convicted for drug crime during testing window",
-             NHXCat12_7_During = "No. incidents arrested, charged, or convicted for homicide during testing window",
-             NHXCat12_8_During = "No. incidents arrested, charged, or convicted for larceny/theft/fraud during testing window",
-             NHXCat12_9_During = "No. incidents arrested, charged, or convicted for robbery during testing window",
-             NHXCat12_10_During = "No. incidents arrested, charged, or convicted for sex crime - other, excluding CSC during testing window",
-             NHXCat12_11_During = "No. incidents arrested, charged, or convicted for traffic/ordinances during testing window",
-             NHXCat12_12_During = "No. incidents arrested, charged, or convicted for weapons during testing window",
-             NHXCat12_999_During = "No. incidents arrested, charged, or convicted for excluded user-missing during testing window",
-             NHXCat12_1_After = "No. incidents arrested, charged, or convicted for arson after testing window",
-             NHXCat12_2_After = "No. incidents arrested, charged, or convicted for assault - DV, stalking after testing window",
-             NHXCat12_3_After = "No. incidents arrested, charged, or convicted for assault - non-sexual, non-DV after testing window",
-             NHXCat12_4_After = "No. incidents arrested, charged, or convicted for burglary after testing window",
-             NHXCat12_5_After = "No. incidents arrested, charged, or convicted for criminal sexual conduct after testing window",
-             NHXCat12_6_After = "No. incidents arrested, charged, or convicted for drug crime after testing window",
-             NHXCat12_7_After = "No. incidents arrested, charged, or convicted for homicide after testing window",
-             NHXCat12_8_After = "No. incidents arrested, charged, or convicted for larceny/theft/fraud after testing window",
-             NHXCat12_9_After = "No. incidents arrested, charged, or convicted for robbery after testing window",
-             NHXCat12_10_After = "No. incidents arrested, charged, or convicted for sex crime - other, excluding CSC after testing window",
-             NHXCat12_11_After = "No. incidents arrested, charged, or convicted for traffic/ordinances after testing window",
-             NHXCat12_12_After = "No. incidents arrested, charged, or convicted for weapons after testing window",
-             NHXCat12_999_After = "No. incidents arrested, charged, or convicted for excluded user-missing after testing window") ->
+  var_labels(HXCat12_1_Before = "No. incidents arrested, charged, or convicted for arson before testing window",
+             HXCat12_2_Before = "No. incidents arrested, charged, or convicted for assault - DV, stalking before testing window",
+             HXCat12_3_Before = "No. incidents arrested, charged, or convicted for assault - non-sexual, non-DV before testing window ",
+             HXCat12_4_Before = "No. incidents arrested, charged, or convicted for burglary before testing window",
+             HXCat12_5_Before = "No. incidents arrested, charged, or convicted for criminal sexual conduct before testing window",
+             HXCat12_6_Before = "No. incidents arrested, charged, or convicted for drug crime before testing window",
+             HXCat12_7_Before = "No. incidents arrested, charged, or convicted for homicide before testing window",
+             HXCat12_8_Before = "No. incidents arrested, charged, or convicted for larceny/theft/fraud before testing window",
+             HXCat12_9_Before = "No. incidents arrested, charged, or convicted for robbery before testing window",
+             HXCat12_10_Before = "No. incidents arrested, charged, or convicted for sex crime - other, excluding CSC before testing window",
+             HXCat12_11_Before = "No. incidents arrested, charged, or convicted for traffic/ordinances before testing window",
+             HXCat12_12_Before = "No. incidents arrested, charged, or convicted for weapons before testing window",
+             HXCat12_999_Before = "No. incidents arrested, charged, or convicted for excluded user-missing before testing window",
+             HXCat12_1_During = "No. incidents arrested, charged, or convicted for arson during testing window",
+             HXCat12_2_During = "No. incidents arrested, charged, or convicted for assault - DV, stalking during testing window",
+             HXCat12_3_During = "No. incidents arrested, charged, or convicted for assault - non-sexual, non-DV during testing window",
+             HXCat12_4_During = "No. incidents arrested, charged, or convicted for burglary during testing window",
+             HXCat12_5_During = "No. incidents arrested, charged, or convicted for criminal sexual conduct during testing window",
+             HXCat12_6_During = "No. incidents arrested, charged, or convicted for drug crime during testing window",
+             HXCat12_7_During = "No. incidents arrested, charged, or convicted for homicide during testing window",
+             HXCat12_8_During = "No. incidents arrested, charged, or convicted for larceny/theft/fraud during testing window",
+             HXCat12_9_During = "No. incidents arrested, charged, or convicted for robbery during testing window",
+             HXCat12_10_During = "No. incidents arrested, charged, or convicted for sex crime - other, excluding CSC during testing window",
+             HXCat12_11_During = "No. incidents arrested, charged, or convicted for traffic/ordinances during testing window",
+             HXCat12_12_During = "No. incidents arrested, charged, or convicted for weapons during testing window",
+             HXCat12_999_During = "No. incidents arrested, charged, or convicted for excluded user-missing during testing window",
+             HXCat12_1_After = "No. incidents arrested, charged, or convicted for arson after testing window",
+             HXCat12_2_After = "No. incidents arrested, charged, or convicted for assault - DV, stalking after testing window",
+             HXCat12_3_After = "No. incidents arrested, charged, or convicted for assault - non-sexual, non-DV after testing window",
+             HXCat12_4_After = "No. incidents arrested, charged, or convicted for burglary after testing window",
+             HXCat12_5_After = "No. incidents arrested, charged, or convicted for criminal sexual conduct after testing window",
+             HXCat12_6_After = "No. incidents arrested, charged, or convicted for drug crime after testing window",
+             HXCat12_7_After = "No. incidents arrested, charged, or convicted for homicide after testing window",
+             HXCat12_8_After = "No. incidents arrested, charged, or convicted for larceny/theft/fraud after testing window",
+             HXCat12_9_After = "No. incidents arrested, charged, or convicted for robbery after testing window",
+             HXCat12_10_After = "No. incidents arrested, charged, or convicted for sex crime - other, excluding CSC after testing window",
+             HXCat12_11_After = "No. incidents arrested, charged, or convicted for traffic/ordinances after testing window",
+             HXCat12_12_After = "No. incidents arrested, charged, or convicted for weapons after testing window",
+             HXCat12_999_After = "No. incidents arrested, charged, or convicted for excluded user-missing after testing window") ->
   IDNEW
 ```
 
