@@ -992,6 +992,11 @@ jvarsb     <- paste0(jvars, "_Before")
 jvarsd     <- paste0(jvars, "_During")
 jvarsa     <- paste0(jvars, "_After")
 jvarsbda   <- c(jvarsb, jvarsd, jvarsa)
+hxvars     <- paste("HXCat12", c(1:12, 999), sep = "_")
+hxvarsb    <- paste0(hxvars, "_Before")
+hxvarsd    <- paste0(hxvars, "_During")
+hxvarsa    <- paste0(hxvars, "_After")
+hxvarsbda  <- c(hxvarsb, hxvarsd, hxvarsa)
 acjvars    <- c(avars, cvars, jvars)
 acjvarsb   <- c(avarsb, cvarsb, jvarsb)
 acjvarsd   <- c(avarsd, cvarsd, jvarsd)
@@ -1446,7 +1451,11 @@ IDNEW %>%
          JCat12_Count = sum(c_across(all_of(jvars[1:12])) > 0),
          JCat12_Count_Before = sum(c_across(all_of(jvarsb[1:12])) > 0),
          JCat12_Count_During = sum(c_across(all_of(jvarsd[1:12])) > 0),
-         JCat12_Count_After = sum(c_across(all_of(jvarsa[1:12])) > 0)) %>% 
+         JCat12_Count_After = sum(c_across(all_of(jvarsa[1:12])) > 0),
+         HXCat12_Count = sum(c_across(all_of(hxvars[1:12])) > 0),
+         HXCat12_Count_Before = sum(c_across(all_of(hvxarsb[1:12])) > 0),
+         HXCat12_Count_During = sum(c_across(all_of(hxvarsd[1:12])) > 0),
+         HXCat12_Count_After = sum(c_across(all_of(hxvarsa[1:12])) > 0)) %>% 
   var_labels(ACat12_Count = "Arrested crime category count (overall)",
              ACat12_Count_Before = "Arrested crime category count (incidents before testing window)",
              ACat12_Count_During = "Arrested crime category count (incidents during testing window)",
@@ -1458,7 +1467,11 @@ IDNEW %>%
              JCat12_Count = "Convicted crime category count (overall)",
              JCat12_Count_Before = "Convicted crime category count (incidents before testing window)",
              JCat12_Count_During = "Convicted crime category count (incidents during testing window)",
-             JCat12_Count_After = "Convicted crime category count (incidents after testing window)") -> 
+             JCat12_Count_After = "Convicted crime category count (incidents after testing window)",
+             HXCat12_Count = "Arrested, charged, or convicted crime category count (overall)",
+             HXCat12_Count_Before = "Arrested, charged, or convicted crime category count (incidents before testing window)",
+             HXCat12_Count_During = "Arrested, charged, or convicted crime category count (incidents during testing window)",
+             HXCat12_Count_After = "Arrested, charged, or convicted crime category count (incidents after testing window)") -> 
   IDNEW
 ```
 
