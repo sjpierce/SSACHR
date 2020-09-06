@@ -1424,67 +1424,6 @@ INCEW %>%
   IDNEW
 ```
 
-# Incidents with Any CHR Criminal Sexual Conduct Records
-The *INCEW* data frame contains a binary variable called *CSC_ANY* that marks
-which incidents are associated with any other criminal history records for
-criminal sexual conduct (e.g., arrest offense records, prosecutor charge
-records, or adjudicated charge records, which may or may not be convictions). 
-We are aggregating that variable and also creating a similar binary variable
-called *CSCHistory* that marks incidents which are associated with 1 or more
-criminal history records for criminal sexual conduct that indicate there was an
-arrest, prosecutor charge, or a conviction. This *CSCHistory* variable is a more
-stringent definition than *CSC_ANY* because it codes incidents that had 
-adjudicated charges for CSC that were not convictions (and had no CSC arrests or 
-prosecutor charges) as 0, whereas *CSC_ANY* would code them as 1. 
-
-Here, we aggregate in order to create *NCSC_ANY* and *NCSCHistory*, which will
-respectively be offender-level counts of incidents for which *CSC_ANY* = 1 and
-*CSCHistory* = 1. We will merge these variable into *IDNEW* later.
-
-
-```{r create_INCEWAgg2} 
-INCEW %>% 
-  mutate(CSCHistory = if_else(CSC_ARR + CSC_CHG + CSC_CON >= 1, 
-                              true = 1, false = 0)) %>% 
-  group_by(OID, .drop = FALSE) %>% 
-  # Aggregate by OID to get count variable
-  summarize(NCSC_ANY = sum(CSC_ANY),
-            NCSCHistory = sum(CSCHistory)) %>% 
-  var_labels(NCSC_ANY = "No. of incidents with >= 1 CSC criminal history records of any type",
-             NCSCHistory = "No. of incidents with >= 1 CSC arrest, charge, or conviction in CHR data") ->
-  INCEWAgg2
-```
-
-Now, we need to get offender-level breakdowns of those CSC incident counts for 
-incidents that occurred before, during, and after the testing window. We can 
-aggregate as follows to get them. We will merge these variables into *IDNEW* 
-later. 
-
-```{r create_INCEWAgg3}
-INCEW %>% 
-  group_by(OID, IWhen, .drop = FALSE) %>% 
-  # Aggregate by OID and IWhen to get count variables
-  summarize(NHXCat12_1 = sum(HXCat12_1),
-            NHXCat12_2 = sum(HXCat12_2),
-            NHXCat12_3 = sum(HXCat12_3),
-            NHXCat12_4 = sum(HXCat12_4),
-            NHXCat12_5 = sum(HXCat12_5),
-            NHXCat12_6 = sum(HXCat12_6),
-            NHXCat12_7 = sum(HXCat12_7),
-            NHXCat12_8 = sum(HXCat12_8),
-            NHXCat12_9 = sum(HXCat12_9),
-            NHXCat12_10 = sum(HXCat12_10),
-            NHXCat12_11 = sum(HXCat12_11),
-            NHXCat12_12 = sum(HXCat12_12),
-            NHXCat12_999 = sum(HXCat12_999)) %>% 
-  pivot_wider(names_from = IWhen, 
-              values_from = c(NHXCat12_1, NHXCat12_2, NHXCat12_3, NHXCat12_4, NHXCat12_5, NHXCat12_6, 
-                              NHXCat12_7, NHXCat12_8, NHXCat12_9, NHXCat12_10, NHXCat12_11, NHXCat12_12,
-                              NHXCat12_999)) %>% 
-   ->
-  INCEWAgg3
-```
-
 # Compute Crime Category Count Variables in IDNEW
 Here we compute the number of crime categories for which an offender was (a) 
 arrested, (b) charged, (c) convicted, and (d) arrested, charged, or convicted. 
