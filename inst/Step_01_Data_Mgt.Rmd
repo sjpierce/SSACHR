@@ -1298,7 +1298,7 @@ as 1. We will use *HXCat12_5* in the analyses for this paper instead of
 ```{r compare_HXCat12_5_to_CSC_ANY}
 # Table caption.
 TCap <- paste("Crosstabulate Incident-Level Criminal Sexual Conduct History",
-              "Variable HXCat12_5 With CSC_ANY")
+              "Variables")
 # Footnote text.
 FN <- paste("Only incident records for incidents with valid testing window",
             "start dates were included. The variables disagree when the only",
