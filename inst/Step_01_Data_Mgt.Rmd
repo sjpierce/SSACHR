@@ -1454,7 +1454,7 @@ IDNEW %>%
          JCat12_Count_During = sum(c_across(all_of(jvarsd[1:12])) > 0),
          JCat12_Count_After = sum(c_across(all_of(jvarsa[1:12])) > 0),
          HXCat12_Count = sum(c_across(all_of(hxvars[1:12])) > 0),
-         HXCat12_Count_Before = sum(c_across(all_of(hvxarsb[1:12])) > 0),
+         HXCat12_Count_Before = sum(c_across(all_of(hxvarsb[1:12])) > 0),
          HXCat12_Count_During = sum(c_across(all_of(hxvarsd[1:12])) > 0),
          HXCat12_Count_After = sum(c_across(all_of(hxvarsa[1:12])) > 0)) %>% 
   var_labels(ACat12_Count = "Arrested crime category count (overall)",
