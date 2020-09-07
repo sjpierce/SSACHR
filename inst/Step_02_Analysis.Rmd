@@ -841,18 +841,8 @@ distributions underlying the summaries in Table \ref{tab:describe_arsonvars}.
 
 ```{r describe_arsonvars}
 # Table caption. 
-TCap <- paste("Offender-Level Arson Incidents (Overall and By When Incident",
-              "Occurred)")
-# Footnote text. 
-FN <- paste("Only offenders with valid testing window start dates are included.",
-            "Before, during, and after refer to when the incident associated",
-            "with the record occurred, not when the arrest date, charge date,",
-            "or conviction date occurred relative to the testing window.")
-
-TRowLabs <- c("Arson incident count (arrested)", BDA, 
-              "Arson incident count (charged)", BDA,
-              "Arson incident count (convicted)", BDA,
-              "Arson incident count (arrested, charged, or convicted)", BDA)
+TCap <- paste("Offender-Level Arson Incident Counts By CHR Record Type (Overall",
+              "and By When Incident Occurred)")
 
 # Summarize crime category counts (both overall and broken down by IWhen).
 IDNEW %>% 
@@ -867,7 +857,7 @@ IDNEW %>%
         col.names = c("Variable", CNames), caption = TCap,
         linesep = c('', '', '', '\\addlinespace')) %>% 
   column_spec(column = 1, width = "6 cm") %>% 
-  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+  footnote(general = FN1, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
 
@@ -875,14 +865,6 @@ IDNEW %>%
 # Table caption.
 TCap <- paste("Frequency Distributions for Number of Arson Incidents for Which",
               "Offender Was Arrested (Overall and By When Incident Occurred)")
-# Footnote text.
-FN <- paste0("N = ", format(nrow(IDNEW), big.mark = ","), ". TW, earliest ",
-            "testing window. ",
-            "Before, during, and after refer to when the incident associated ",
-            "with the record occurred, not when the arrest date occurred ",
-            "relative to the testing window. For example, an offender could be ",
-            "arrested during the testing window for an incident that occurred ",
-            "before it began. That would show up here in the before column.")
 
 # Get frequency distributions. 
 IDNEW %>% 
@@ -906,7 +888,7 @@ IDNEW %>%
   kable_styling() %>% 
   add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
                    "After TW" = 2)) %>% 
-  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+  footnote(general = FN2, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
 
@@ -915,14 +897,6 @@ IDNEW %>%
 # Table caption.
 TCap <- paste("Frequency Distributions for Number of Arson Incidents for Which",
               " Offender Was Charged (Overall and By When Incident Occurred)")
-# Footnote text.
-FN <- paste0("N = ", format(nrow(IDNEW), big.mark = ","), ". TW, earliest ",
-            "testing window. ",
-            "Before, during, and after refer to when the incident associated ",
-            "with the record occurred, not when the charge date occurred ",
-            "relative to the testing window. For example, an offender could be ",
-            "charged during the testing window for an incident that occurred ",
-            "before it began. That would show up here in the before column.")
 
 # Get frequency distributions. 
 IDNEW %>% 
@@ -946,7 +920,7 @@ IDNEW %>%
   kable_styling() %>% 
   add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
                    "After TW" = 2)) %>% 
-  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+  footnote(general = FN3, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
 
@@ -954,14 +928,6 @@ IDNEW %>%
 # Table caption.
 TCap <- paste("Frequency Distributions for Number of Arson Incidents for Which",
               "Offender Was Convicted (Overall and By When Incident Occurred)")
-# Footnote text.
-FN <- paste0("N = ", format(nrow(IDNEW), big.mark = ","), ". TW, earliest ",
-            "testing window. ",
-            "Before, during, and after refer to when the incident associated ",
-            "with the record occurred, not when the charge date occurred ",
-            "relative to the testing window. For example, an offender could be ",
-            "convicted during the testing window for an incident that occurred ",
-            "before it began. That would show up here in the before column.")
 
 # Get frequency distributions. 
 IDNEW %>% 
@@ -985,7 +951,7 @@ IDNEW %>%
   kable_styling() %>% 
   add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
                    "After TW" = 2)) %>% 
-  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+  footnote(general = FN4, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
 
@@ -994,18 +960,6 @@ IDNEW %>%
 TCap <- paste("Frequency Distributions for Number of Arson Incidents for Which",
               "Offender Was Arrested, Charged, or Convicted (Overall and By",
               "When Incident Occurred)")
-# Footnote text.
-FN <- paste0("N = ", format(nrow(IDNEW), big.mark = ","), ". TW, earliest ",
-            "testing window. ",
-            "Before, during, and after refer to when the incident associated ",
-            "with the record occurred, not when the arrest, charge, or ",
-            "conviction date occurred relative to the testing window. For ",
-            "example, an offender could be arrested during the testing window ",
-            "for an incident that occurred before it began. That would show up",
-            "here in the before column. ", 
-            "An incident is counted as showing an arson history if there are ",
-            "any arson arrest, charge, or conviction records associated with ",
-            "it (any one type, or any combination of them will suffice).")
 
 # Get frequency distributions. 
 IDNEW %>% 
@@ -1030,7 +984,7 @@ IDNEW %>%
   kable_styling() %>% 
   add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
                    "After TW" = 2)) %>% 
-  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+  footnote(general = FN5, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
 
