@@ -206,11 +206,8 @@ participating organization or the U.S. Department of Justice.
 
 ## Task List
 * Improve this file. 
-* Remove references to *piercer* package?
 * Create a script to generate a data flow diagram. 
 * Create a make-file script once we have multiple .Rmd files.
 * Add citation for the manuscript in preparation to the reference list.
-* Move RobustMax() function to `R/Data_Mgt_Functions.R` and add proper help
-  documentation. 
-* Add more variable labels in `inst/Step_01_Data_Mgt.Rmd` update_IDNEW chunk. 
+
 
