@@ -802,7 +802,7 @@ IDNEW %>%
          threeparttable = TRUE)
 ```
 
-```{r freq_NArsonHistory}
+```{r freq_HXCat12_1}
 # Table caption.
 TCap <- paste("Frequency Distributions for Number of Arson Incidents for Which",
               "Offender Was Arrested, Charged, or Convicted (Overall and By",
@@ -1096,7 +1096,7 @@ IDNEW %>%
          threeparttable = TRUE)
 ```
 
-```{r freq_NCSCHistory}
+```{r freq_HXCat12_5}
 # Table caption.
 TCap <- paste("Frequency Distributions for Number of Criminal Sexual Conduct",
               "Incidents for Which Offender Was Arrested, Charged, or",
