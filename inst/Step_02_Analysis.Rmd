@@ -1027,6 +1027,197 @@ kable(ACat12_2[, CNums], format = "latex", booktabs = TRUE, digits = 2,
       caption = "Offender-Level Assault - DV, Stalking Incident Counts")
 ```
 
+Among these `r N_IDNEW` suspected sexual offenders, there were `r N_HXCat12_2`
+(`r P_HXCat12_2`\%) offenders who had criminal histories containing at least one
+incident associated with an assault (involving domestic violence and/or stalking)
+arrest, charge, or conviction. Table \ref{tab:describe_assaultdvvars} summarizes 
+the 
+counts of unique assault incidents by CHR record type and when the incident
+occurred. In the subsections below, Tables \ref{tab:freq_ACat12_2},
+\ref{tab:freq_CCat12_2}, \ref{tab:freq_JCat12_2}, and \ref{tab:freq_HXCat12_2}
+show the frequency distributions underlying the summaries in Table
+\ref{tab:describe_assaultdvvars}.
+
+```{r describe_assaultdvvars}
+# Table caption. 
+TCap <- paste("Offender-Level Assault Involving Domestc Violence and/or",
+              "Stalking Incident Counts By CHR Record Type (Overall and By",
+              "When Incident Occurred)")
+
+# Summarize crime category counts (both overall and broken down by IWhen).
+IDNEW %>% 
+  select(ACat12_2, ACat12_2_Before, ACat12_2_During, ACat12_2_After, 
+         CCat12_2, CCat12_2_Before, CCat12_2_During, CCat12_2_After, 
+         JCat12_2, JCat12_2_Before, JCat12_2_During, JCat12_2_After,
+         HXCat12_2, HXCat12_2_Before, HXCat12_2_During, HXCat12_2_After) %>% 
+  describe(., quant=c(.25, .50, .75)) %>% 
+  bind_cols(data.frame(Variable = TRowLabs), .) %>% 
+  select(Variable, n, mean, sd, min, max, skew, kurtosis, Q0.25, Q0.5, Q0.75) %>% 
+  kable(., format = "latex", booktabs = TRUE, digits = 2, row.names = FALSE, 
+        col.names = c("Variable", CNames), caption = TCap,
+        linesep = c('', '', '', '\\addlinespace')) %>% 
+  column_spec(column = 1, width = "6 cm") %>% 
+  footnote(general = FN1, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
+```
+
+\FloatBarrier
+
+#### Arrested
+Table \ref{tab:freq_ACat12_2} shows the frequency distributions for assault 
+involving domestic violence and/or stalking incidents for which the offender was
+arrested.  
+
+```{r freq_ACat12_2}
+# Table caption.
+TCap <- paste("Frequency Distributions for Number of Assault Involving",
+              "Domestic Violence and/or Stalking Incidents for Which",
+              "Offender Was Arrested (Overall and By When Incident Occurred)")
+
+# Get frequency distributions. 
+IDNEW %>% 
+  select(OID, ACat12_2, ACat12_2_Before, ACat12_2_During, ACat12_2_After) %>% 
+  rename(All = ACat12_2, Before = ACat12_2_Before, During = ACat12_2_During, 
+         After = ACat12_2_After) %>% 
+  pivot_longer(cols = -OID, names_to = "When", values_to = "Value") %>% 
+  group_by(When, Value) %>% 
+  count() %>% 
+  arrange(Value) %>% 
+  pivot_wider(names_from = When, values_from = n, values_fill = 0) %>% 
+  mutate(All_p = 100*All/nrow(IDNEW),
+         Before_p = 100*Before/nrow(IDNEW),
+         During_p = 100*During/nrow(IDNEW),
+         After_p = 100*After/nrow(IDNEW)) %>% 
+  select(Value, All, All_p, Before, Before_p, During, During_p, After, 
+         After_p) %>% 
+  kable(format = "latex", booktabs = TRUE, digits = 2, 
+        col.names = c("Value", rep(c("Frequency", "Percent"), 4)),
+        caption = TCap) %>% 
+  kable_styling() %>% 
+  add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
+                   "After TW" = 2)) %>% 
+  footnote(general = FN2, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
+```
+
+\FloatBarrier
+
+#### Charged
+Table \ref{tab:freq_CCat12_2} shows the frequency distributions for assault 
+involving domestic violence and/or stalking incidents for which the offender was
+charged.  
+
+```{r freq_CCat12_2}
+# Table caption.
+TCap <- paste("Frequency Distributions for Number of Assault Involving",
+              "Domestic Violence and/or Stalking Incidents for Which",
+              "Offender Was Charged (Overall and By When Incident Occurred)")
+
+# Get frequency distributions. 
+IDNEW %>% 
+  select(OID, CCat12_2, CCat12_2_Before, CCat12_2_During, CCat12_2_After) %>% 
+  rename(All = CCat12_2, Before = CCat12_2_Before, During = CCat12_2_During, 
+         After = CCat12_2_After) %>% 
+  pivot_longer(cols = -OID, names_to = "When", values_to = "Value") %>% 
+  group_by(When, Value) %>% 
+  count() %>% 
+  arrange(Value) %>% 
+  pivot_wider(names_from = When, values_from = n, values_fill = 0) %>% 
+  mutate(All_p = 100*All/nrow(IDNEW),
+         Before_p = 100*Before/nrow(IDNEW),
+         During_p = 100*During/nrow(IDNEW),
+         After_p = 100*After/nrow(IDNEW)) %>% 
+  select(Value, All, All_p, Before, Before_p, During, During_p, After, 
+         After_p) %>% 
+  kable(format = "latex", booktabs = TRUE, digits = 2, 
+        col.names = c("Value", rep(c("Frequency", "Percent"), 4)),
+        caption = TCap) %>% 
+  kable_styling() %>% 
+  add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
+                   "After TW" = 2)) %>% 
+  footnote(general = FN3, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
+```
+
+\FloatBarrier
+
+#### Convicted
+Table \ref{tab:freq_JCat12_2} shows the frequency distributions for assault 
+involving domestic violence and/or stalking incidents for which the offender was
+convicted.  
+
+```{r freq_JCat12_2}
+# Table caption.
+TCap <- paste("Frequency Distributions for Number of Assault Involving",
+              "Domestic Violence and/or Stalking Incidents for Which",
+              "Offender Was Convicted (Overall and By When Incident Occurred)")
+
+# Get frequency distributions. 
+IDNEW %>% 
+  select(OID, JCat12_2, JCat12_2_Before, JCat12_2_During, JCat12_2_After) %>% 
+  rename(All = JCat12_2, Before = JCat12_2_Before, During = JCat12_2_During, 
+         After = JCat12_2_After) %>% 
+  pivot_longer(cols = -OID, names_to = "When", values_to = "Value") %>% 
+  group_by(When, Value) %>% 
+  count() %>% 
+  arrange(Value) %>% 
+  pivot_wider(names_from = When, values_from = n, values_fill = 0) %>% 
+  mutate(All_p = 100*All/nrow(IDNEW),
+         Before_p = 100*Before/nrow(IDNEW),
+         During_p = 100*During/nrow(IDNEW),
+         After_p = 100*After/nrow(IDNEW)) %>% 
+  select(Value, All, All_p, Before, Before_p, During, During_p, After, 
+         After_p) %>% 
+  kable(format = "latex", booktabs = TRUE, digits = 2, 
+        col.names = c("Value", rep(c("Frequency", "Percent"), 4)),
+        caption = TCap) %>% 
+  kable_styling() %>% 
+  add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
+                   "After TW" = 2)) %>% 
+  footnote(general = FN4, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
+```
+
+\FloatBarrier
+
+#### Arrested, Charged, or Convicted
+Table \ref{tab:freq_HXCat12_2} shows the frequency distributions for assault 
+involving domestic violence and/or stalking incidents for which the offender was
+arrested, charged, or convicted.  
+
+```{r freq_HXCat12_2}
+# Table caption.
+TCap <- paste("Frequency Distributions for Number of Assault Involving",
+              "Domestic Violence and/or Stalking Incidents for Which",
+              "Offender Was Arrested, Charged, or Convicted (Overall and By",
+              "When Incident Occurred)")
+
+# Get frequency distributions. 
+IDNEW %>% 
+  select(OID, HXCat12_2, HXCat12_2_Before, HXCat12_2_During, HXCat12_2_After) %>% 
+  rename(All = HXCat12_2, Before = HXCat12_2_Before, During = HXCat12_2_During, 
+         After = HXCat12_2_After) %>% 
+  pivot_longer(cols = -OID, names_to = "When", values_to = "Value") %>% 
+  group_by(When, Value) %>% 
+  count() %>% 
+  arrange(Value) %>% 
+  pivot_wider(names_from = When, values_from = n, values_fill = 0) %>% 
+  mutate(All_p = 100*All/nrow(IDNEW),
+         Before_p = 100*Before/nrow(IDNEW),
+         During_p = 100*During/nrow(IDNEW),
+         After_p = 100*After/nrow(IDNEW)) %>% 
+  select(Value, All, All_p, Before, Before_p, During, During_p, After, 
+         After_p) %>% 
+  kable(format = "latex", booktabs = TRUE, digits = 2, 
+        col.names = c("Value", rep(c("Frequency", "Percent"), 4)),
+        caption = TCap) %>% 
+  kable_styling() %>% 
+  add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
+                   "After TW" = 2)) %>% 
+  footnote(general = FN5, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
+```
+
 \FloatBarrier
 
 ### Assault - Non-Sexual, Non-DV 
