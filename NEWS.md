@@ -1,3 +1,24 @@
+# SSACHR 0.6.5, 2020-09-07
+* Updated `inst/Step_01_Data_Mgt.Rmd` to:
+    * Remove code for objects we no longer use.
+* Updated `inst/Step_02_Analysis.Rmd` to:
+    * Improve explanatory text and add table references to text. 
+    * Expand descriptive summary tables to include "arrested, charged, or 
+      convicted" history variables.
+    * Add more crime category-specific frequency tables. 
+    * Reorganize CHR Record Counts section. 
+    * Revise text in Crime Category Counts section and add headings. 
+    * Add chunk to create objects used for constructing dynamic text. 
+    * Add chunk with reusable table settings. 
+    * Revise Incident Counts by Crime Category section text, subheadings, and 
+      content. Removed figures from this section, so we rely only on tables
+      now. Adding more detail tables for additional categories. This is still
+      work in progress. 
+    
+* Updated `README.Rmd` and `README.md` to:
+    * Update task list. 
+    * Remove references to piercer package. 
+
 # SSACHR 0.6.4, 2020-09-06
 * Updated `inst/Step_01_Data_Mgt.Rmd` to:
     * Merge new variables into IDNEW as they are created rather than waiting 
