@@ -1011,21 +1011,6 @@ IDNEW %>%
          threeparttable = TRUE)
 ```
 
-
-```{r create_Arson_CHR_History}
-# Check how many offenders had >= 1 CSC arrest, charge, or conviction in their CHR data. 
-IDNEW %>% 
-  filter(HXCat12_1 >= 1) %>% 
-  nrow() -> 
-  Arson_CHR_History
-```
-
-Among these `r format(nrow(IDNEW), big.mark = ",")` suspected sexual offenders, 
-there were `r Arson_CHR_History` 
-(`r round(100*Arson_CHR_History/nrow(IDNEW), digits = 0)`\%) offenders who had 
-criminal histories containing at least one incident associated with an arson 
-arrest, charge, or conviction. 
-
 \FloatBarrier
 
 ### Assault - DV, Stalking 
