@@ -1268,11 +1268,6 @@ FN <- paste("Only offenders with valid testing window start dates are included."
             "with the record occurred, not when the arrest date, charge date,",
             "or conviction date occurred relative to the testing window.")
 
-TRowLabs <- c("CSC incident count (arrested)", BDA, 
-              "CSC incident count (charged)", BDA,
-              "CSC incident count (convicted)", BDA,
-              "CSC incident count (arrested, charged, or convicted)", BDA)
-
 # Summarize crime category counts (both overall and broken down by IWhen).
 IDNEW %>% 
   select(ACat12_5, ACat12_5_Before, ACat12_5_During, ACat12_5_After, 
