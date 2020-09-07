@@ -987,10 +987,9 @@ TCap <- paste("Frequency Distributions for Number of Arson Incidents for Which",
 
 # Get frequency distributions. 
 IDNEW %>% 
-  select(OID, HXCat12_1, HXCat12_1_Before, HXCat12_1_During, 
-               HXCat12_1_After) %>% 
-  rename(All = HXCat12_1, Before = HXCat12_1_Before, 
-         During = HXCat12_1_During, After = HXCat12_1_After) %>% 
+  select(OID, HXCat12_1, HXCat12_1_Before, HXCat12_1_During, HXCat12_1_After) %>% 
+  rename(All = HXCat12_1, Before = HXCat12_1_Before, During = HXCat12_1_During, 
+         After = HXCat12_1_After) %>% 
   pivot_longer(cols = -OID, names_to = "When", values_to = "Value") %>% 
   group_by(When, Value) %>% 
   count() %>% 
