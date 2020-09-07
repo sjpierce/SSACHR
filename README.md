@@ -119,19 +119,12 @@ To install the package to your R package library, you have to either
 build and install the package from those local files, or install it
 directly from GitHub.
 
-Parts of the *SSACHR* package rely on functions from the *piercer*
-package, which is not yet available from
-[CRAN](https://CRAN.R-project.org). Releasing *piercer* on CRAN is a
-long-term goal but the development version can be obtained from a public
-[GitHub](https://github.com/) repository at
-<https://github.com/sjpierce/piercer>. The following code will install
-*devtools*, *piercer*, and *SSACHR*. We use the *install\_github()*
-function from *devtools* to install the other two packages directly from
-the Github repositories.
+The following code will install *devtools* and *SSACHR*. We use the
+*install\_github()* function from *devtools* to install the *SSACHR*
+pacakge directly from the Github repository.
 
 ``` r
 install.packages("devtools")
-devtools::install_github("sjpierce/piercer")
 devtools::install_github("sjpierce/SSACHR", ref = "main")
 ```
 
@@ -229,4 +222,3 @@ U.S. Department of Justice.
   - Create a make-file script once we have multiple .Rmd files.
   - Add citation for the manuscript in preparation to the reference
     list.
-    update\_IDNEW chunk.
