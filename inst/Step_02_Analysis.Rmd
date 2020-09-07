@@ -768,17 +768,66 @@ P_HXCat12_12 <- round(100*N_HXCat12_12/nrow(IDNEW), digits = 0)
 ### Arson 
 Here we summarize the counts of unique incidents where the offender was 
 *arrested for*, *charged with*, and *convicted of* arson.
+This next chunk creates some objects to store things like standardized footnotes
+that we will re-use. 
 
-```{r}
-RN.ACC <- c("Incident count (arrested)", 
-            "Incident count (charged)", 
-            "Incident count (convicted)")
-ACat12_1 <- describe(IDNEW[, c("ACat12_1", "CCat12_1", "JCat12_1")], 
-                  quant=c(.25, .50, .75))
-row.names(ACat12_1) <- RN.ACC
-kable(ACat12_1[, CNums], format = "latex", booktabs = TRUE, digits = 2, 
-      col.names = CNames,
-      caption = "Offender-Level Arson Incident Counts")
+```{r create_table_settings}
+# Footnote text: Descriptives tables. 
+FN1 <- paste("Only offenders with valid testing window start dates are",
+             "included. Before, during, and after refer to when the incident",
+             "associated with the record occurred, not when the arrest date,",
+             "charge date, or conviction date occurred relative to the testing",
+             "window.")
+
+# Footnote text: Arrested frequencies.
+FN2 <- paste0("N = ", N_IDNEW, ". TW, earliest testing window. Before, ",
+              "during, and after refer to when the incident associated ",
+              "with the record occurred, not when the arrest date occurred ",
+              "relative to the testing window. For example, an offender could ",
+              "be arrested during the testing window for an incident that ",
+              "occurred before it began. That would show up here in the ",
+              "before column.")
+
+# Footnote text: Charged frequencies. 
+FN3 <- paste0("N = ", N_IDNEW, ". TW, earliest testing window. Before, ",
+              "during, and after refer to when the incident associated ",
+              "with the record occurred, not when the charge date occurred ",
+              "relative to the testing window. For example, an offender could ",
+              "be charged during the testing window for an incident that ",
+              "occurred before it began. That would show up here in the ",
+              "before column.")
+
+# Footnote text: Convicted frequencies. 
+FN4 <- paste0("N = ", N_IDNEW, ". TW, earliest testing window. Before, ",
+              "during, and after refer to when the incident associated ",
+              "with the record occurred, not when the charge date occurred ",
+              "relative to the testing window. For example, an offender could ",
+              "be convicted during the testing window for an incident that ",
+              "occurred before it began. That would show up here in the ",
+              "before column.")
+
+# Footnote text.
+FN5 <- paste0("N = ", N_IDNEW, ". TW, earliest testing window. Before, ",
+              "during, and after refer to when the incident associated ",
+              "with the record occurred, not when the arrest, charge, or ",
+              "conviction date occurred relative to the testing window. For ",
+              "example, an offender could be arrested during the testing ",
+              "window for an incident that occurred before it began. That ",
+              "would show up here in the before column. ", 
+              "An incident is counted if there are any arrest, charge, or ",
+              "conviction records (any one type, or any combination of them ",
+              "will suffice) for the specified crime category associated with ",
+              "it.")
+
+# Vector of count types
+counttypes <- c("Arrested", "Charged", "Convicted", 
+                "Arrested, Charged, or Convicted")
+
+# Vector of row labels for descriptives tables. 
+TRowLabs <- c("Incident count (arrested)", BDA, 
+              "Incident count (charged)", BDA,
+              "Incident count (convicted)", BDA,
+              "Incident count (arrested, charged, or convicted)", BDA)
 ```
 
 Here we summarize the counts of unique incidents where the offender was 
