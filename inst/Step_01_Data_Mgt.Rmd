@@ -997,11 +997,6 @@ hxvarsb    <- paste0(hxvars, "_Before")
 hxvarsd    <- paste0(hxvars, "_During")
 hxvarsa    <- paste0(hxvars, "_After")
 hxvarsbda  <- c(hxvarsb, hxvarsd, hxvarsa)
-acjvars    <- c(avars, cvars, jvars)
-acjvarsb   <- c(avarsb, cvarsb, jvarsb)
-acjvarsd   <- c(avarsd, cvarsd, jvarsd)
-acjvarsa   <- c(avarsa, cvarsa, jvarsa)
-acjvarsbda <- c(avarsbda, cvarsbda, jvarsbda)
 ```
 
 As a reminder, the crime categories are shown in Table 
