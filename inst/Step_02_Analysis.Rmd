@@ -478,13 +478,15 @@ FN <- paste("Only offenders with valid testing window start dates are included."
 
 cclabs <- c("No. of crime categories (arrested)", BDA, 
             "No. of crime categories (charged)", BDA,
-            "No. of crime categories (convicted)", BDA)
+            "No. of crime categories (convicted)", BDA,
+            "No. of crime categories (arrested, charged, or convicted)", BDA)
 
 # Summarize crime category counts (both overall and broken down by IWhen).
 IDNEW %>% 
   select(ACat12_Count, ACat12_Count_Before, ACat12_Count_During, ACat12_Count_After, 
          CCat12_Count, CCat12_Count_Before, CCat12_Count_During, CCat12_Count_After,
-         JCat12_Count, JCat12_Count_Before, JCat12_Count_During, JCat12_Count_After) %>% 
+         JCat12_Count, JCat12_Count_Before, JCat12_Count_During, JCat12_Count_After,
+         HXCat12_Count, HXCat12_Count_Before, HXCat12_Count_During, HXCat12_Count_After) %>% 
   describe(., quant=c(.25, .50, .75)) %>% 
   bind_cols(data.frame(Variable = cclabs), .) %>% 
   select(Variable, n, mean, sd, min, max, skew, kurtosis, Q0.25, Q0.5, Q0.75) %>% 
