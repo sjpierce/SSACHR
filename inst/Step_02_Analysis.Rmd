@@ -672,8 +672,7 @@ IDNEW %>%
   select(ACat12_1, ACat12_1_Before, ACat12_1_During, ACat12_1_After, 
          CCat12_1, CCat12_1_Before, CCat12_1_During, CCat12_1_After, 
          JCat12_1, JCat12_1_Before, JCat12_1_During, JCat12_1_After,
-         NArsonHistory, NArsonHistory_Before, NArsonHistory_During, 
-         NArsonHistory_After) %>% 
+         HXCat12_1, HXCat12_1_Before, HXCat12_1_During, HXCat12_1_After) %>% 
   describe(., quant=c(.25, .50, .75)) %>% 
   bind_cols(data.frame(Variable = csclabs), .) %>% 
   select(Variable, n, mean, sd, min, max, skew, kurtosis, Q0.25, Q0.5, Q0.75) %>% 
@@ -823,10 +822,10 @@ FN <- paste0("N = ", format(nrow(IDNEW), big.mark = ","), ". TW, earliest ",
 
 # Get frequency distributions. 
 IDNEW %>% 
-  select(OID, NArsonHistory, NArsonHistory_Before, NArsonHistory_During, 
-               NArsonHistory_After) %>% 
-  rename(All = NArsonHistory, Before = NArsonHistory_Before, 
-         During = NArsonHistory_During, After = NArsonHistory_After) %>% 
+  select(OID, HXCat12_1, HXCat12_1_Before, HXCat12_1_During, 
+               HXCat12_1_After) %>% 
+  rename(All = HXCat12_1, Before = HXCat12_1_Before, 
+         During = HXCat12_1_During, After = HXCat12_1_After) %>% 
   pivot_longer(cols = -OID, names_to = "When", values_to = "Value") %>% 
   group_by(When, Value) %>% 
   count() %>% 
@@ -854,7 +853,7 @@ arsonvars  <- c("ACat12_1", "CCat12_1", "JCat12_1", "NArsonHistory")
 arsontypes <- c("Arrested", "Charged", "Convicted", "Arrested, Charged, or Convicted")
 
 IDNEW %>% 
-  select(OID, ACat12_1, CCat12_1, JCat12_1, NArsonHistory) %>% 
+  select(OID, ACat12_1, CCat12_1, JCat12_1, HXCat12_1) %>% 
   # Rearrange data so we can easily plot multiple variables. 
   pivot_longer(cols = -OID, names_to = "VName", values_to = "Count") %>%
   mutate(VName = ordered(VName, levels = cscvars, labels = csctypes)) ->
@@ -877,7 +876,7 @@ densityplot(~ Count | VName, data = ArsonCOUNTS, layout = c(4,1),
 ```{r create_Arson_CHR_History}
 # Check how many offenders had >= 1 CSC arrest, charge, or conviction in their CHR data. 
 IDNEW %>% 
-  filter(NArsonHistory >= 1) %>% 
+  filter(HXCat12_1 >= 1) %>% 
   nrow() -> 
   Arson_CHR_History
 ```
@@ -964,8 +963,7 @@ IDNEW %>%
   select(ACat12_5, ACat12_5_Before, ACat12_5_During, ACat12_5_After, 
          CCat12_5, CCat12_5_Before, CCat12_5_During, CCat12_5_After, 
          JCat12_5, JCat12_5_Before, JCat12_5_During, JCat12_5_After,
-         NCSCHistory, NCSCHistory_Before, NCSCHistory_During, 
-         NCSCHistory_After) %>% 
+         HXCat12_5, HXCat12_5_Before, HXCat12_5_During, HXCat12_5_After) %>% 
   describe(., quant=c(.25, .50, .75)) %>% 
   bind_cols(data.frame(Variable = csclabs), .) %>% 
   select(Variable, n, mean, sd, min, max, skew, kurtosis, Q0.25, Q0.5, Q0.75) %>% 
@@ -1119,10 +1117,9 @@ FN <- paste0("N = ", format(nrow(IDNEW), big.mark = ","), ". TW, earliest ",
 
 # Get frequency distributions. 
 IDNEW %>% 
-  select(OID, NCSCHistory, NCSCHistory_Before, NCSCHistory_During, 
-               NCSCHistory_After) %>% 
-  rename(All = NCSCHistory, Before = NCSCHistory_Before, 
-         During = NCSCHistory_During, After = NCSCHistory_After) %>% 
+  select(OID, HXCat12_5, HXCat12_5_Before, HXCat12_5_During, HXCat12_5_After) %>% 
+  rename(All = HXCat12_5, Before = HXCat12_5_Before, 
+         During = HXCat12_5_During, After = HXCat12_5_After) %>% 
   pivot_longer(cols = -OID, names_to = "When", values_to = "Value") %>% 
   group_by(When, Value) %>% 
   count() %>% 
@@ -1150,7 +1147,7 @@ cscvars  <- c("ACat12_5", "CCat12_5", "JCat12_5", "NCSCHistory")
 csctypes <- c("Arrested", "Charged", "Convicted", "Arrested, Charged, or Convicted")
 
 IDNEW %>% 
-  select(OID, ACat12_5, CCat12_5, JCat12_5, NCSCHistory) %>% 
+  select(OID, ACat12_5, CCat12_5, JCat12_5, HXCat12_5) %>% 
   # Rearrange data so we can easily plot multiple variables. 
   pivot_longer(cols = -OID, names_to = "VName", values_to = "Count") %>%
   mutate(VName = ordered(VName, levels = cscvars, labels = csctypes)) ->
