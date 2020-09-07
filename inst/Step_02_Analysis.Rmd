@@ -523,6 +523,10 @@ IDNEW %>%
          threeparttable = TRUE)
 ```
 
+\FloatBarrier
+
+### Arrested
+
 ```{r freq_ACat12_Count}
 # Table caption.
 TCap <- paste("Frequency Distributions for Number of Crime Categories for",
@@ -563,6 +567,10 @@ IDNEW %>%
   footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
+
+\FloatBarrier
+
+### Charged
 
 ```{r freq_CCat12_Count}
 # Table caption.
@@ -605,6 +613,10 @@ IDNEW %>%
          threeparttable = TRUE)
 ```
 
+\FloatBarrier
+
+### Convicted
+
 ```{r freq_JCat12_Count}
 # Table caption.
 TCap <- paste("Frequency Distributions for Number of Crime Categories for",
@@ -645,6 +657,10 @@ IDNEW %>%
   footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
+
+\FloatBarrier
+
+### Arrested, Charged or Convicted
 
 ```{r freq_HXCat12_Count}
 # Table caption.
