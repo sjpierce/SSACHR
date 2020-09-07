@@ -713,16 +713,21 @@ IDNEW %>%
 
 ## Incident Counts by Crime Category (12 levels)
 In this section, we analyze variables that contain the number of unique 
-incidents in the offender's criminal history for a given type of crime. We have three separate counts for each category of crime, representing incidents where 
-the offender was *arrested for*, *charged with*, or *convicted of* crimes  
-classified into that category. Note that these variables were created by first
-aggregating ARR, CHG, and JUD records to the incident level to flag incidents
-that fit the relevant category, then aggregated again to get to the offender
-level. It is possible to have multiple arrest offense records, charge records, 
-or adjudication records for convictions on a single incident, but these 
-variables ignore that and only count each incident once. 
+incidents in the offender's criminal history for a given type of crime. We have 
+four separate counts for each category of crime. The first three represent 
+incidents where the offender was *arrested for*, *charged with*, or 
+*convicted of* crimes classified into that category. We also include counts of
+incidents based on a combined criterion where the offender was 
+*arrested for, charged with, or convicted of* (any of the three events, or any 
+combination of them) crimes classified into the relevant category.
 
-\FloatBarrier
+Note that these variables were created by first aggregating ARR, CHG, and JUD 
+records to the incident level to flag incidents that fit the relevant category, 
+then aggregated again to get to the offender level incident counts. It is 
+possible to have multiple arrest offense records, charge records, or 
+adjudication records for convictions on a single incident, but these variables 
+ignore that and only count each incident once. 
+
 The chunk below creates some objects we use to dynamically construct text later 
 in the subsections below. 
 
