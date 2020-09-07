@@ -478,14 +478,15 @@ IDNEW %>%
 \FloatBarrier
 
 ## Crime Category Counts
-Here we are summarizing how many of 12 different categories of crime each 
-offender was *arrested for*, *charged with*, and *convicted of* according to 
-the CHR data. This sums a set of binary transforms on the incident count 
-variables associated with each crime category in ACat12, CCat12, and JCat12. The
+Table \ref{tab:describe_cccvars} summarizes how many of 12 different categories
+of crime each offender was *arrested for*, *charged with*, *convicted of*, and
+*arrested for, charged with, or convicted of* according to the CHR data. This
+sums a set of binary transforms on the incident count variables associated with
+each crime category in *ACat12*, *CCat12*, and *JCat12*. The 
 *Excluded user-missing* value is not counted as a category, so the possible
-range of values for this count is 0-12. We report both overall results, and 
-results broken down by when the incidents associated with the arrest, charge, 
-and conviction records occurred relative to the earliest testing window. 
+range of values for these counts is 0-12. We report both overall results, and
+results broken down by when the incidents associated with the arrest, charge,
+and conviction records occurred relative to the earliest testing window.
 
 ```{r describe_cccvars}
 # Table caption. 
@@ -522,6 +523,11 @@ IDNEW %>%
   footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
+
+In the subsections below, Tables \ref{tab:freq_ACat12_Count}, 
+\ref{tab:freq_CCat12_Count}, \ref{tab:freq_JCat12_Count}, and
+\ref{tab:freq_HXCat12_Count} show the frequency distributions underlying the
+summaries in Table \ref{tab:describe_cccvars}. 
 
 \FloatBarrier
 
@@ -660,7 +666,7 @@ IDNEW %>%
 
 \FloatBarrier
 
-### Arrested, Charged or Convicted
+### Arrested, Charged, or Convicted
 
 ```{r freq_HXCat12_Count}
 # Table caption.
