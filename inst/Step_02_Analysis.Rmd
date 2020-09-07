@@ -1169,7 +1169,7 @@ densityplot(~ Count | VName, data = CSCCOUNTS, layout = c(4,1),
 ```{r create_CSC_CHR_History}
 # Check how many offenders had >= 1 CSC arrest, charge, or conviction in their CHR data. 
 IDNEW %>% 
-  filter(NCSCHistory >= 1) %>% 
+  filter(HXCat12_5 >= 1) %>% 
   nrow() -> 
   CSC_CHR_History
 ```
