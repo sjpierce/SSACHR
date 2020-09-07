@@ -674,7 +674,7 @@ IDNEW %>%
          JCat12_1, JCat12_1_Before, JCat12_1_During, JCat12_1_After,
          HXCat12_1, HXCat12_1_Before, HXCat12_1_During, HXCat12_1_After) %>% 
   describe(., quant=c(.25, .50, .75)) %>% 
-  bind_cols(data.frame(Variable = csclabs), .) %>% 
+  bind_cols(data.frame(Variable = TRowLabs), .) %>% 
   select(Variable, n, mean, sd, min, max, skew, kurtosis, Q0.25, Q0.5, Q0.75) %>% 
   kable(., format = "latex", booktabs = TRUE, digits = 2, row.names = FALSE, 
         col.names = c("Variable", CNames), caption = TCap,
@@ -848,15 +848,15 @@ IDNEW %>%
 ```
 
 ```{r create_ArsonCOUNTS, fig.height = 3, warning= FALSE}
-# Rearrange data so we can easily plot multiple variables. 
-arsonvars  <- c("ACat12_1", "CCat12_1", "JCat12_1", "NArsonHistory")
-arsontypes <- c("Arrested", "Charged", "Convicted", "Arrested, Charged, or Convicted")
+# Vector of variables to plot. 
+countvars  <- c("ACat12_1", "CCat12_1", "JCat12_1", "HXCat12_1")
+counttypes <- c("Arrested", "Charged", "Convicted", "Arrested, Charged, or Convicted")
 
 IDNEW %>% 
   select(OID, ACat12_1, CCat12_1, JCat12_1, HXCat12_1) %>% 
   # Rearrange data so we can easily plot multiple variables. 
   pivot_longer(cols = -OID, names_to = "VName", values_to = "Count") %>%
-  mutate(VName = ordered(VName, levels = cscvars, labels = csctypes)) ->
+  mutate(VName = ordered(VName, levels = countvars, labels = counttypes)) ->
   ArsonCOUNTS
 ```  
 
@@ -953,10 +953,10 @@ FN <- paste("Only offenders with valid testing window start dates are included."
             "with the record occurred, not when the arrest date, charge date,",
             "or conviction date occurred relative to the testing window.")
 
-csclabs <- c("CSC incident count (arrested)", BDA, 
-             "CSC incident count (charged)", BDA,
-             "CSC incident count (convicted)", BDA,
-             "CSC incident count (arrested, charged, or convicted)", BDA)
+TRowLabs <- c("CSC incident count (arrested)", BDA, 
+              "CSC incident count (charged)", BDA,
+              "CSC incident count (convicted)", BDA,
+              "CSC incident count (arrested, charged, or convicted)", BDA)
 
 # Summarize crime category counts (both overall and broken down by IWhen).
 IDNEW %>% 
@@ -965,7 +965,7 @@ IDNEW %>%
          JCat12_5, JCat12_5_Before, JCat12_5_During, JCat12_5_After,
          HXCat12_5, HXCat12_5_Before, HXCat12_5_During, HXCat12_5_After) %>% 
   describe(., quant=c(.25, .50, .75)) %>% 
-  bind_cols(data.frame(Variable = csclabs), .) %>% 
+  bind_cols(data.frame(Variable = TRowLabs), .) %>% 
   select(Variable, n, mean, sd, min, max, skew, kurtosis, Q0.25, Q0.5, Q0.75) %>% 
   kable(., format = "latex", booktabs = TRUE, digits = 2, row.names = FALSE, 
         col.names = c("Variable", CNames), caption = TCap,
@@ -1142,15 +1142,14 @@ IDNEW %>%
 ```
 
 ```{r create_CSCCOUNTS, fig.height = 3, warning= FALSE}
-# Rearrange data so we can easily plot multiple variables. 
-cscvars  <- c("ACat12_5", "CCat12_5", "JCat12_5", "NCSCHistory")
-csctypes <- c("Arrested", "Charged", "Convicted", "Arrested, Charged, or Convicted")
+# Vector of variables to plot. 
+countvars  <- c("ACat12_5", "CCat12_5", "JCat12_5", "HXCat12_5")
 
 IDNEW %>% 
   select(OID, ACat12_5, CCat12_5, JCat12_5, HXCat12_5) %>% 
   # Rearrange data so we can easily plot multiple variables. 
   pivot_longer(cols = -OID, names_to = "VName", values_to = "Count") %>%
-  mutate(VName = ordered(VName, levels = cscvars, labels = csctypes)) ->
+  mutate(VName = ordered(VName, levels = countvars, labels = counttypes)) ->
   CSCCOUNTS
 ```  
 
