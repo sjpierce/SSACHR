@@ -622,6 +622,47 @@ IDNEW %>%
          threeparttable = TRUE)
 ```
 
+```{r freq_HXCat12_Count}
+# Table caption.
+TCap <- paste("Frequency Distributions for Number of Crime Categories for",
+              "Which Offender Was Arrested, Charged, or Convicted (Overall",
+              "and By When Incident Occurred)")
+# Footnote text.
+FN <- paste0("N = ", format(nrow(IDNEW), big.mark = ","), ". TW, earliest ",
+            "testing window. ",
+            "Before, during, and after refer to when the incident associated ",
+            "with the record occurred, not when the charge date occurred ",
+            "relative to the testing window. For example, an offender could be ",
+            "convicted during the testing window for an incident that occurred ",
+            "before it began. That would show up here in the before column.")
+
+# Get frequency distributions. 
+IDNEW %>% 
+  select(OID, HXCat12_Count, HXCat12_Count_Before, HXCat12_Count_During, 
+         HXCat12_Count_After) %>% 
+  rename(All = HXCat12_Count, Before = HXCat12_Count_Before, 
+         During = HXCat12_Count_During, After = HXCat12_Count_After) %>% 
+  pivot_longer(cols = -OID, names_to = "When", values_to = "Value") %>% 
+  group_by(When, Value) %>% 
+  count() %>% 
+  arrange(Value) %>% 
+  pivot_wider(names_from = When, values_from = n, values_fill = 0) %>% 
+  mutate(All_p = 100*All/nrow(IDNEW),
+         Before_p = 100*Before/nrow(IDNEW),
+         During_p = 100*During/nrow(IDNEW),
+         After_p = 100*After/nrow(IDNEW)) %>% 
+  select(Value, All, All_p, Before, Before_p, During, During_p, After, 
+         After_p) %>% 
+  kable(format = "latex", booktabs = TRUE, digits = 2, 
+        col.names = c("Value", rep(c("Frequency", "Percent"), 4)),
+        caption = TCap) %>% 
+  kable_styling() %>% 
+  add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
+                   "After TW" = 2)) %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
+```
+
 \FloatBarrier
 
 ## Incident Counts by Crime Category (12 levels)
