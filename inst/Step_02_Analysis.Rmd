@@ -174,8 +174,13 @@ bwplot(~ Age, data = IDNEW, factor = 9, xlim = c(18, 82),
 
 ## CHR Record Counts
 We aggregated data to count how many CHR records of each type are associated 
-with each offender. We summarize the resulting variables (NINC, NARR, NCHG, 
-NJUD, & NCON) below.
+with each offender. We summarize the resulting variables (*NINC*, *NARR*, 
+*NCHG*, *NJUD*, & *NCON*) below. Table \ref{tab:describe_rcvars} provides 
+overall descriptive statistics for all record types, plus summaries broken down
+by when the associated incidents occurred relative to the testing window. 
+Tables \ref{tab:freq_NINC} to \ref{tab:freq_NCON} show the frequency 
+distributions underlying those statistics. 
+
 
 ```{r describe_rcvars}
 # Table caption. 
