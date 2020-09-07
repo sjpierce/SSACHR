@@ -1,3 +1,23 @@
+# SSACHR 0.6.4, 2020-09-06
+* Updated `inst/Step_01_Data_Mgt.Rmd` to:
+    * Merge new variables into IDNEW as they are created rather than waiting 
+      until later in the script. 
+    * Change section headings and improve explanatory text. 
+    * Remove obsolete section Incidents with Any CHR Criminal Sexual Conduct 
+      Records.
+    * Add new "arrested, charged, or convicted" crime category count variables
+      (both overall and by IWhen). 
+    * Rename chunks to reflect revised code organization. 
+    * Improve variable labels for NHXCat12_1 to NHXCat12_999.
+    * Improve code alignment for readability. 
+    * Remove obsolete code. 
+    * Change a table title to fix formatting problems in rest of document after
+      the table (caused by using underscore characters in title). 
+* Updated `inst/Step_02_Analysis.Rmd` to:
+    * Make variable names match changes made in `inst/Step_01_Data_Mgt.Rmd`. 
+    * Standardize some object names across crime category-specific sections. 
+    * Rename chunks for clarity. 
+    
 # SSACHR 0.6.3, 2020-09-04
 * Updated `inst/Step_01_Data_Mgt.Rmd` to:
     * Improve explanatory text. 
