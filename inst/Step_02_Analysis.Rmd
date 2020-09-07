@@ -497,6 +497,7 @@ IDNEW %>%
   group_rows(" ", 1, 4) %>% 
   group_rows(" ", 5, 8) %>% 
   group_rows(" ", 9, 12) %>% 
+  column_spec(column = 1, width = "6 cm") %>% 
   footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
