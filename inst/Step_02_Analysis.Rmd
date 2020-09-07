@@ -179,9 +179,10 @@ with each offender. We summarize the resulting variables (*NINC*, *NARR*,
 overall descriptive statistics for all record types, plus summaries broken down
 by when the associated incidents occurred relative to the testing window. 
 Tables \ref{tab:freq_NINC}, \ref{tab:freq_NARR}, \ref{tab:freq_NCHG}, 
-\ref{tab:freq_NJUD}, and \ref{tab:freq_NCON} show the frequency distributions
-underlying those statistics. 
-
+\ref{tab:freq_NJUD}, and \ref{tab:freq_NCON} respectively show the frequency 
+distributions underlying those statistics for incident, arrest offenses, 
+prosecutor charges, all adjudicated charges, and adjudicated charges that were 
+convictions. 
 
 ```{r describe_rcvars}
 # Table caption. 
