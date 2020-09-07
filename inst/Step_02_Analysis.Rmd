@@ -723,6 +723,42 @@ or adjudication records for convictions on a single incident, but these
 variables ignore that and only count each incident once. 
 
 \FloatBarrier
+The chunk below creates some objects we use to dynamically construct text later 
+in the subsections below. 
+
+```{r create_History_Vars}
+# Save a formatted value for total number of offenders.
+N_IDNEW <- format(nrow(IDNEW), big.mark = ",")
+
+# Check how many offenders had >= 1 CSC arrest, charge, or conviction in 
+# their CHR data for each crime category.
+IDNEW %>% filter(HXCat12_1  >= 1) %>% nrow() -> N_HXCat12_1
+IDNEW %>% filter(HXCat12_2  >= 1) %>% nrow() -> N_HXCat12_2
+IDNEW %>% filter(HXCat12_3  >= 1) %>% nrow() -> N_HXCat12_3
+IDNEW %>% filter(HXCat12_4  >= 1) %>% nrow() -> N_HXCat12_4
+IDNEW %>% filter(HXCat12_5  >= 1) %>% nrow() -> N_HXCat12_5
+IDNEW %>% filter(HXCat12_6  >= 1) %>% nrow() -> N_HXCat12_6
+IDNEW %>% filter(HXCat12_7  >= 1) %>% nrow() -> N_HXCat12_7
+IDNEW %>% filter(HXCat12_8  >= 1) %>% nrow() -> N_HXCat12_8
+IDNEW %>% filter(HXCat12_9  >= 1) %>% nrow() -> N_HXCat12_9
+IDNEW %>% filter(HXCat12_10 >= 1) %>% nrow() -> N_HXCat12_10
+IDNEW %>% filter(HXCat12_11 >= 1) %>% nrow() -> N_HXCat12_11
+IDNEW %>% filter(HXCat12_12 >= 1) %>% nrow() -> N_HXCat12_12
+
+# Convert those new variables to percentages. 
+P_HXCat12_1  <- round(100*N_HXCat12_1/nrow(IDNEW), digits = 0)
+P_HXCat12_2  <- round(100*N_HXCat12_2/nrow(IDNEW), digits = 0)
+P_HXCat12_3  <- round(100*N_HXCat12_3/nrow(IDNEW), digits = 0)
+P_HXCat12_4  <- round(100*N_HXCat12_4/nrow(IDNEW), digits = 0)
+P_HXCat12_5  <- round(100*N_HXCat12_5/nrow(IDNEW), digits = 0)
+P_HXCat12_6  <- round(100*N_HXCat12_6/nrow(IDNEW), digits = 0)
+P_HXCat12_7  <- round(100*N_HXCat12_7/nrow(IDNEW), digits = 0)
+P_HXCat12_8  <- round(100*N_HXCat12_8/nrow(IDNEW), digits = 0)
+P_HXCat12_9  <- round(100*N_HXCat12_9/nrow(IDNEW), digits = 0)
+P_HXCat12_10 <- round(100*N_HXCat12_10/nrow(IDNEW), digits = 0)
+P_HXCat12_11 <- round(100*N_HXCat12_11/nrow(IDNEW), digits = 0)
+P_HXCat12_12 <- round(100*N_HXCat12_12/nrow(IDNEW), digits = 0)
+```
 
 ### Arson 
 Here we summarize the counts of unique incidents where the offender was 
