@@ -765,9 +765,6 @@ P_HXCat12_11 <- round(100*N_HXCat12_11/nrow(IDNEW), digits = 0)
 P_HXCat12_12 <- round(100*N_HXCat12_12/nrow(IDNEW), digits = 0)
 ```
 
-### Arson 
-Here we summarize the counts of unique incidents where the offender was 
-*arrested for*, *charged with*, and *convicted of* arson.
 This next chunk creates some objects to store things like standardized footnotes
 that we will re-use. 
 
@@ -830,11 +827,17 @@ TRowLabs <- c("Incident count (arrested)", BDA,
               "Incident count (arrested, charged, or convicted)", BDA)
 ```
 
-Here we summarize the counts of unique incidents where the offender was 
-*arrested for*, *charged with*, and *convicted of* arson. We also include 
-counts of incidents based on a combined criterion where the offender was 
-*arrested, charged, or convicted* (any of the three, or any combination of them)
-of arson. 
+\FloatBarrier
+
+### Arson 
+Among these `r N_IDNEW` suspected sexual offenders, there were 
+`r N_HXCat12_1` (`r P_HXCat12_1`\%) offenders who had criminal histories
+containing at least one incident associated with an arson arrest, charge, or
+conviction. Table \ref{tab:describe_arsonvars} summarizes the counts of unique
+arson incidents by CHR record type and when the incident occurred. In the
+subsections below, Tables \ref{tab:freq_ACat12_1}, \ref{tab:freq_CCat12_1},
+\ref{tab:freq_JCat12_1}, and \ref{tab:freq_HXCat12_1} show the frequency
+distributions underlying the summaries in Table \ref{tab:describe_arsonvars}.
 
 ```{r describe_arsonvars}
 # Table caption. 
