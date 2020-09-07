@@ -1011,31 +1011,6 @@ IDNEW %>%
          threeparttable = TRUE)
 ```
 
-```{r create_ArsonCOUNTS, fig.height = 3, warning= FALSE}
-# Vector of variables to plot. 
-countvars  <- c("ACat12_1", "CCat12_1", "JCat12_1", "HXCat12_1")
-counttypes <- c("Arrested", "Charged", "Convicted", "Arrested, Charged, or Convicted")
-
-IDNEW %>% 
-  select(OID, ACat12_1, CCat12_1, JCat12_1, HXCat12_1) %>% 
-  # Rearrange data so we can easily plot multiple variables. 
-  pivot_longer(cols = -OID, names_to = "VName", values_to = "Count") %>%
-  mutate(VName = ordered(VName, levels = countvars, labels = counttypes)) ->
-  ArsonCOUNTS
-```  
-
-```{r densityplot_ArsonCOUNTS, fig.height = 3, fig.width = 8.5, fig.cap=FCap}
-# Figure caption.
-FCap <- paste("Density Plots for Overall Number of Incidents With Evidence of", 
-              "Criminal Sexual Conduct by Criminal History Record Type.", 
-              "Only offenders with valid testing window start dates are", 
-              "included.")
-
-densityplot(~ Count | VName, data = ArsonCOUNTS, layout = c(4,1), 
-            panel = panel.mydensity, jitter.amount = 0.1,
-            strip = strip.custom(par.strip.text = list(cex = .7)),
-            xlab = "Overall Number of Incidents with Criminal Sexual Conduct")
-```
 
 ```{r create_Arson_CHR_History}
 # Check how many offenders had >= 1 CSC arrest, charge, or conviction in their CHR data. 
