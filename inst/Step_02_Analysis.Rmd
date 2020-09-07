@@ -178,11 +178,6 @@ with each offender. We summarize the resulting variables (*NINC*, *NARR*,
 *NCHG*, *NJUD*, & *NCON*) below. Table \ref{tab:describe_rcvars} provides 
 overall descriptive statistics for all record types, plus summaries broken down
 by when the associated incidents occurred relative to the testing window. 
-Tables \ref{tab:freq_NINC}, \ref{tab:freq_NARR}, \ref{tab:freq_NCHG}, 
-\ref{tab:freq_NJUD}, and \ref{tab:freq_NCON} respectively show the frequency 
-distributions underlying those statistics for incidents, arrest offenses, 
-prosecutor charges, all adjudicated charges, and adjudicated charges that were 
-convictions. 
 
 ```{r describe_rcvars}
 # Table caption. 
@@ -225,6 +220,12 @@ IDNEW %>%
          threeparttable = TRUE)
 ```
 
+Tables \ref{tab:freq_NINC}, \ref{tab:freq_NARR}, \ref{tab:freq_NCHG}, 
+\ref{tab:freq_NJUD}, and \ref{tab:freq_NCON} respectively show the frequency 
+distributions underlying those statistics for incidents, arrest offenses, 
+prosecutor charges, all adjudicated charges, and adjudicated charges that were 
+convictions. 
+
 ```{r freq_NINC}
 # Table caption.
 TCap <- paste("Frequency Distributions for Number of Incidents (All Crime",
@@ -258,7 +259,6 @@ IDNEW %>%
   footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
-
 
 ```{r freq_NARR}
 # Table caption.
