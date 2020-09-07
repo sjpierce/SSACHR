@@ -861,6 +861,12 @@ IDNEW %>%
          threeparttable = TRUE)
 ```
 
+\FloatBarrier
+
+#### Arrested
+Table \ref{tab:freq_ACat12_1} shows the frequency distributions for arson
+incidents for which the offender was arrested.  
+
 ```{r freq_ACat12_1}
 # Table caption.
 TCap <- paste("Frequency Distributions for Number of Arson Incidents for Which",
@@ -892,6 +898,11 @@ IDNEW %>%
          threeparttable = TRUE)
 ```
 
+\FloatBarrier
+
+#### Charged
+Table \ref{tab:freq_CCat12_1} shows the frequency distributions for arson
+incidents for which the offender was charged.  
 
 ```{r freq_CCat12_1}
 # Table caption.
@@ -924,6 +935,13 @@ IDNEW %>%
          threeparttable = TRUE)
 ```
 
+\FloatBarrier
+
+#### Convicted
+Table \ref{tab:freq_JCat12_1} shows the frequency distributions for arson
+incidents for which the offender was convicted.  
+
+
 ```{r freq_JCat12_1}
 # Table caption.
 TCap <- paste("Frequency Distributions for Number of Arson Incidents for Which",
@@ -954,6 +972,12 @@ IDNEW %>%
   footnote(general = FN4, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
+
+\FloatBarrier
+
+#### Arrested, Charged, or Convicted
+Table \ref{tab:freq_HXCat12_1} shows the frequency distributions for arson
+incidents for which the offender was arrested, charged, or convicted.  
 
 ```{r freq_HXCat12_1}
 # Table caption.
