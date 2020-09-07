@@ -220,11 +220,52 @@ IDNEW %>%
          threeparttable = TRUE)
 ```
 
-Tables \ref{tab:freq_NINC}, \ref{tab:freq_NARR}, \ref{tab:freq_NCHG}, 
+```{r create_RCCOUNTS}
+# Vectors of variables names and labels. 
+rcvars  <- c("NINC", "NARR", "NCHG", "NJUD", "NCON")
+rctypes <- c("Incidents", "Arrest Offenses", "Prosecutor Charges", 
+             "Adjudicated Charges", "Convictions")
+
+IDNEW %>% 
+  select(OID, NINC, NARR, NCHG, NJUD, NCON) %>% 
+  # Rearrange data so we can easily plot multiple variables. 
+  pivot_longer(cols = -OID, names_to = "VName", values_to = "Count") %>% 
+  mutate(VName = ordered(VName, levels = rcvars, labels = rctypes)) ->
+  RCCOUNTS
+```
+
+```{r boxplot_RCCOUNTS, fig.height = 3, fig.cap=FCap}
+# Figure caption.
+FCap <- paste("Box Plots for Overall Record Counts by Criminal History Record", 
+              "Type. Only offenders with valid testing window start dates are", 
+              "included.")
+
+bwplot(VName ~ Count, data = RCCOUNTS, factor = 1, xlim = c(-4, 64),
+       panel = panel.mybox, par.settings = my.boxes,
+       xlab = "Overall Number of Records for Individual Offender")
+```
+
+``` {r densityplot_RCCOUNTS, fig.height = 3, fig.width = 8.5, fig.cap=FCap}
+# Figure caption.
+FCap <- paste("Density Plots for Overall Record Counts by Criminal History", 
+              "Record Type. Only offenders with valid testing window start", 
+              "dates are included.")
+
+densityplot(~ Count | VName, data = RCCOUNTS, layout = c(5,1), 
+            panel = panel.mydensity, jitter.amount = 0.005,
+            strip = strip.custom(par.strip.text = list(cex = .8)),
+            xlab = "Overall Number of Records for Offender")
+```
+
+In the subsections below, Tables \ref{tab:freq_NINC}, \ref{tab:freq_NARR}, \ref{tab:freq_NCHG}, 
 \ref{tab:freq_NJUD}, and \ref{tab:freq_NCON} respectively show the frequency 
 distributions underlying those statistics for incidents, arrest offenses, 
 prosecutor charges, all adjudicated charges, and adjudicated charges that were 
 convictions. 
+
+\FloatBarrier 
+
+### Incident Records
 
 ```{r freq_NINC}
 # Table caption.
@@ -259,6 +300,10 @@ IDNEW %>%
   footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
+
+\FloatBarrier 
+
+### Arrest Offense Records
 
 ```{r freq_NARR}
 # Table caption.
@@ -299,6 +344,10 @@ IDNEW %>%
          threeparttable = TRUE)
 ```
 
+\FloatBarrier 
+
+### Prosecutor Charge Records
+
 ```{r freq_NCHG}
 # Table caption.
 TCap <- paste("Frequency Distributions for Number of Prosecutor Charges (All",
@@ -337,6 +386,10 @@ IDNEW %>%
   footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
+
+\FloatBarrier 
+
+### Adjudicated Charge Records (All)
 
 ```{r freq_NJUD}
 # Table caption.
@@ -378,6 +431,10 @@ IDNEW %>%
          threeparttable = TRUE)
 ```
 
+\FloatBarrier 
+
+### Adjudicated Charge Records (Convictions)
+
 ```{r freq_NCON}
 # Table caption.
 TCap <- paste("Frequency Distributions for Number of Adjudicated Charges (All",
@@ -416,43 +473,6 @@ IDNEW %>%
                    "After TW" = 2)) %>% 
   footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
-```
-
-```{r create_RCCOUNTS}
-# Vectors of variables names and labels. 
-rcvars  <- c("NINC", "NARR", "NCHG", "NJUD", "NCON")
-rctypes <- c("Incidents", "Arrest Offenses", "Prosecutor Charges", 
-             "Adjudicated Charges", "Convictions")
-
-IDNEW %>% 
-  select(OID, NINC, NARR, NCHG, NJUD, NCON) %>% 
-  # Rearrange data so we can easily plot multiple variables. 
-  pivot_longer(cols = -OID, names_to = "VName", values_to = "Count") %>% 
-  mutate(VName = ordered(VName, levels = rcvars, labels = rctypes)) ->
-  RCCOUNTS
-```
-
-```{r boxplot_RCCOUNTS, fig.height = 3, fig.cap=FCap}
-# Figure caption.
-FCap <- paste("Box Plots for Overall Record Counts by Criminal History Record", 
-              "Type. Only offenders with valid testing window start dates are", 
-              "included.")
-
-bwplot(VName ~ Count, data = RCCOUNTS, factor = 1, xlim = c(-4, 64),
-       panel = panel.mybox, par.settings = my.boxes,
-       xlab = "Overall Number of Records for Individual Offender")
-```
-
-``` {r densityplot_RCCOUNTS, fig.height = 3, fig.width = 8.5, fig.cap=FCap}
-# Figure caption.
-FCap <- paste("Density Plots for Overall Record Counts by Criminal History", 
-              "Record Type. Only offenders with valid testing window start", 
-              "dates are included.")
-
-densityplot(~ Count | VName, data = RCCOUNTS, layout = c(5,1), 
-            panel = panel.mydensity, jitter.amount = 0.005,
-            strip = strip.custom(par.strip.text = list(cex = .8)),
-            xlab = "Overall Number of Records for Offender")
 ```
 
 \FloatBarrier
