@@ -7,7 +7,7 @@ output:
    latex_engine: xelatex
    number_sections: true
    toc: yes
-   toc_depth: 4
+   toc_depth: 3
    includes:
      in_header: "compact-title.tex"
 urlcolor: blue
