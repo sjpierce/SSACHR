@@ -1745,45 +1745,6 @@ IDNEW %>%
          threeparttable = TRUE)
 ```
 
-```{r create_CSCCOUNTS, fig.height = 3, warning= FALSE}
-# Vector of variables to plot. 
-countvars  <- c("ACat12_5", "CCat12_5", "JCat12_5", "HXCat12_5")
-
-IDNEW %>% 
-  select(OID, ACat12_5, CCat12_5, JCat12_5, HXCat12_5) %>% 
-  # Rearrange data so we can easily plot multiple variables. 
-  pivot_longer(cols = -OID, names_to = "VName", values_to = "Count") %>%
-  mutate(VName = ordered(VName, levels = countvars, labels = counttypes)) ->
-  CSCCOUNTS
-```  
-
-```{r densityplot_CSCCOUNTS, fig.height = 3, fig.width = 8.5, fig.cap=FCap}
-# Figure caption.
-FCap <- paste("Density Plots for Overall Number of Incidents With Evidence of", 
-              "Criminal Sexual Conduct by Criminal History Record Type.", 
-              "Only offenders with valid testing window start dates are", 
-              "included.")
-
-densityplot(~ Count | VName, data = CSCCOUNTS, layout = c(4,1), 
-            panel = panel.mydensity, jitter.amount = 0.1,
-            strip = strip.custom(par.strip.text = list(cex = .7)),
-            xlab = "Overall Number of Incidents with Criminal Sexual Conduct")
-```
-
-```{r create_CSC_CHR_History}
-# Check how many offenders had >= 1 CSC arrest, charge, or conviction in their CHR data. 
-IDNEW %>% 
-  filter(HXCat12_5 >= 1) %>% 
-  nrow() -> 
-  CSC_CHR_History
-```
-
-Among these `r format(nrow(IDNEW), big.mark = ",")` suspected sexual offenders, 
-there were `r CSC_CHR_History` 
-(`r round(100*CSC_CHR_History/nrow(IDNEW), digits = 0)`\%) offenders who had 
-criminal histories containing at least one incident associated with a CSC 
-arrest, charge, or conviction. 
-
 \FloatBarrier
 
 ### Drug Crime 
