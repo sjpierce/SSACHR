@@ -830,16 +830,16 @@ TRowLabs <- c("Incident count (arrested)", BDA,
 \FloatBarrier
 
 ### Arson 
-Among these `r N_IDNEW` suspected sexual offenders, there were 
-`r N_HXCat12_1` (`r P_HXCat12_1`\%) offenders who had criminal histories
-containing at least one incident associated with an arson arrest, charge, or
-conviction. Table \ref{tab:describe_arsonvars} summarizes the counts of unique
-arson incidents by CHR record type and when the incident occurred. In the
-subsections below, Tables \ref{tab:freq_ACat12_1}, \ref{tab:freq_CCat12_1},
-\ref{tab:freq_JCat12_1}, and \ref{tab:freq_HXCat12_1} show the frequency
-distributions underlying the summaries in Table \ref{tab:describe_arsonvars}.
+Among these `r N_IDNEW` suspected sexual offenders, there were `r N_HXCat12_1`
+(`r P_HXCat12_1`\%) offenders who had criminal histories containing at least one
+incident associated with an arrest, charge, or conviction for arson. Table
+\ref{tab:describe_arson} summarizes the counts of unique arson incidents by CHR
+record type and when the incident occurred. In the subsections below, Tables
+\ref{tab:freq_ACat12_1}, \ref{tab:freq_CCat12_1}, \ref{tab:freq_JCat12_1}, and
+\ref{tab:freq_HXCat12_1} show the frequency distributions underlying the
+summaries in Table \ref{tab:describe_arson}.
 
-```{r describe_arsonvars}
+```{r describe_arson}
 # Table caption. 
 TCap <- paste("Offender-Level Arson Incident Counts By CHR Record Type (Overall",
               "and By When Incident Occurred)")
