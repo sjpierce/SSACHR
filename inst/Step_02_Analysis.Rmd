@@ -1016,16 +1016,15 @@ IDNEW %>%
 ### Assault - DV, Stalking 
 Among these `r N_IDNEW` suspected sexual offenders, there were `r N_HXCat12_2`
 (`r P_HXCat12_2`\%) offenders who had criminal histories containing at least one
-incident associated with an assault (involving domestic violence and/or stalking)
-arrest, charge, or conviction. Table \ref{tab:describe_assaultdvvars} summarizes 
-the 
-counts of unique assault incidents by CHR record type and when the incident
-occurred. In the subsections below, Tables \ref{tab:freq_ACat12_2},
+incident associated with an arrest, charge, or conviction for assault involving
+domestic violence and/or stalking. Table \ref{tab:describe_assaultdv}
+summarizes the counts of unique assault incidents by CHR record type and when
+the incident occurred. In the subsections below, Tables \ref{tab:freq_ACat12_2},
 \ref{tab:freq_CCat12_2}, \ref{tab:freq_JCat12_2}, and \ref{tab:freq_HXCat12_2}
 show the frequency distributions underlying the summaries in Table
-\ref{tab:describe_assaultdvvars}.
+\ref{tab:describe_assaultdv}.
 
-```{r describe_assaultdvvars}
+```{r describe_assaultdv}
 # Table caption. 
 TCap <- paste("Offender-Level Assault Involving Domestc Violence and/or",
               "Stalking Incident Counts By CHR Record Type (Overall and By",
