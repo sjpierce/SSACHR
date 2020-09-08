@@ -1207,17 +1207,192 @@ IDNEW %>%
 \FloatBarrier
 
 ### Assault - Non-Sexual, Non-DV 
-Here we summarize the counts of unique incidents where the offender was 
-*arrested for*, *charged with*, and *convicted of* assaults that were non-sexual
-and did not involve domestic violence. 
+Among these `r N_IDNEW` suspected sexual offenders, there were 
+`r N_HXCat12_3` (`r P_HXCat12_3`\%) offenders who had criminal histories
+containing at least one incident associated with an arrest, charge, or 
+conviction for a non-sexual, non-domestic violence assault. Table 
+\ref{tab:describe_assaultndv} summarizes the counts of unique
+assault incidents by CHR record type and when the incident occurred. In the
+subsections below, Tables \ref{tab:freq_ACat12_3}, \ref{tab:freq_CCat12_3},
+\ref{tab:freq_JCat12_3}, and \ref{tab:freq_HXCat12_3} show the frequency
+distributions underlying the summaries in Table \ref{tab:describe_assaultndv}.
 
-```{r}
-ACat12_3 <- describe(IDNEW[, c("ACat12_3", "CCat12_3", "JCat12_3")], 
-                  quant=c(.25, .50, .75))
-row.names(ACat12_3) <- RN.ACC
-kable(ACat12_3[, CNums], format = "latex", booktabs = TRUE, digits = 2, 
-      col.names = CNames,
-      caption = "Offender-Level Assault - Non-Sexual, Non-DV Incident Counts")
+```{r describe_assaultndv}
+# Table caption. 
+TCap <- paste("Offender-Level Assault (Non-Sexual, Non-Domestic Violence)",
+              "Incident Counts By CHR Record Type (Overall and By When",
+              "Incident Occurred)")
+
+# Summarize crime category counts (both overall and broken down by IWhen).
+IDNEW %>% 
+  select(ACat12_3, ACat12_3_Before, ACat12_3_During, ACat12_3_After, 
+         CCat12_3, CCat12_3_Before, CCat12_3_During, CCat12_3_After, 
+         JCat12_3, JCat12_3_Before, JCat12_3_During, JCat12_3_After,
+         HXCat12_3, HXCat12_3_Before, HXCat12_3_During, HXCat12_3_After) %>% 
+  describe(., quant=c(.25, .50, .75)) %>% 
+  bind_cols(data.frame(Variable = TRowLabs), .) %>% 
+  select(Variable, n, mean, sd, min, max, skew, kurtosis, Q0.25, Q0.5, Q0.75) %>% 
+  kable(., format = "latex", booktabs = TRUE, digits = 2, row.names = FALSE, 
+        col.names = c("Variable", CNames), caption = TCap,
+        linesep = c('', '', '', '\\addlinespace')) %>% 
+  column_spec(column = 1, width = "6 cm") %>% 
+  footnote(general = FN1, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
+```
+
+\FloatBarrier
+
+#### Arrested
+Table \ref{tab:freq_ACat12_3} shows the frequency distributions for non-sexual, 
+non-domestic violence assault incidents for which the offender was arrested.  
+
+```{r freq_ACat12_3}
+# Table caption.
+TCap <- paste("Frequency Distributions for Number of Assault (Non-Sexual,", 
+              "Non-Domestic Violence) Incidents for Which Offender Was",
+              "Arrested (Overall and By When Incident Occurred)")
+
+# Get frequency distributions. 
+IDNEW %>% 
+  select(OID, ACat12_3, ACat12_3_Before, ACat12_3_During, ACat12_3_After) %>% 
+  rename(All = ACat12_3, Before = ACat12_3_Before, During = ACat12_3_During, 
+         After = ACat12_3_After) %>% 
+  pivot_longer(cols = -OID, names_to = "When", values_to = "Value") %>% 
+  group_by(When, Value) %>% 
+  count() %>% 
+  arrange(Value) %>% 
+  pivot_wider(names_from = When, values_from = n, values_fill = 0) %>% 
+  mutate(All_p = 100*All/nrow(IDNEW),
+         Before_p = 100*Before/nrow(IDNEW),
+         During_p = 100*During/nrow(IDNEW),
+         After_p = 100*After/nrow(IDNEW)) %>% 
+  select(Value, All, All_p, Before, Before_p, During, During_p, After, 
+         After_p) %>% 
+  kable(format = "latex", booktabs = TRUE, digits = 2, 
+        col.names = c("Value", rep(c("Frequency", "Percent"), 4)),
+        caption = TCap) %>% 
+  kable_styling() %>% 
+  add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
+                   "After TW" = 2)) %>% 
+  footnote(general = FN2, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
+```
+
+\FloatBarrier
+
+#### Charged
+Table \ref{tab:freq_CCat12_3} shows the frequency distributions for non-sexual, 
+non-domestic violence assault incidents for which the offender was charged.  
+
+```{r freq_CCat12_3}
+# Table caption.
+TCap <- paste("Frequency Distributions for Number of Assault (Non-Sexual,", 
+              "Non-Domestic Violence) Incidents for Which Offender Was",
+              "Charged (Overall and By When Incident Occurred)")
+
+# Get frequency distributions. 
+IDNEW %>% 
+  select(OID, CCat12_3, CCat12_3_Before, CCat12_3_During, CCat12_3_After) %>% 
+  rename(All = CCat12_3, Before = CCat12_3_Before, During = CCat12_3_During, 
+         After = CCat12_3_After) %>% 
+  pivot_longer(cols = -OID, names_to = "When", values_to = "Value") %>% 
+  group_by(When, Value) %>% 
+  count() %>% 
+  arrange(Value) %>% 
+  pivot_wider(names_from = When, values_from = n, values_fill = 0) %>% 
+  mutate(All_p = 100*All/nrow(IDNEW),
+         Before_p = 100*Before/nrow(IDNEW),
+         During_p = 100*During/nrow(IDNEW),
+         After_p = 100*After/nrow(IDNEW)) %>% 
+  select(Value, All, All_p, Before, Before_p, During, During_p, After, 
+         After_p) %>% 
+  kable(format = "latex", booktabs = TRUE, digits = 2, 
+        col.names = c("Value", rep(c("Frequency", "Percent"), 4)),
+        caption = TCap) %>% 
+  kable_styling() %>% 
+  add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
+                   "After TW" = 2)) %>% 
+  footnote(general = FN3, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
+```
+
+\FloatBarrier
+
+#### Convicted
+Table \ref{tab:freq_JCat12_3} shows the frequency distributions for non-sexual, 
+non-domestic violence assault incidents for which the offender was convicted.  
+
+
+```{r freq_JCat12_3}
+# Table caption.
+TCap <- paste("Frequency Distributions for Number of Assault (Non-Sexual,", 
+              "Non-Domestic Violence) Incidents for Which Offender Was",
+              "Convicted (Overall and By When Incident Occurred)")
+
+# Get frequency distributions. 
+IDNEW %>% 
+  select(OID, JCat12_3, JCat12_3_Before, JCat12_3_During, JCat12_3_After) %>% 
+  rename(All = JCat12_3, Before = JCat12_3_Before, During = JCat12_3_During, 
+         After = JCat12_3_After) %>% 
+  pivot_longer(cols = -OID, names_to = "When", values_to = "Value") %>% 
+  group_by(When, Value) %>% 
+  count() %>% 
+  arrange(Value) %>% 
+  pivot_wider(names_from = When, values_from = n, values_fill = 0) %>% 
+  mutate(All_p = 100*All/nrow(IDNEW),
+         Before_p = 100*Before/nrow(IDNEW),
+         During_p = 100*During/nrow(IDNEW),
+         After_p = 100*After/nrow(IDNEW)) %>% 
+  select(Value, All, All_p, Before, Before_p, During, During_p, After, 
+         After_p) %>% 
+  kable(format = "latex", booktabs = TRUE, digits = 2, 
+        col.names = c("Value", rep(c("Frequency", "Percent"), 4)),
+        caption = TCap) %>% 
+  kable_styling() %>% 
+  add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
+                   "After TW" = 2)) %>% 
+  footnote(general = FN4, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
+```
+
+\FloatBarrier
+
+#### Arrested, Charged, or Convicted
+Table \ref{tab:freq_HXCat12_3} shows the frequency distributions for non-sexual, 
+non-domestic violence assault incidents for which the offender was arrested, 
+charged, or convicted.  
+
+```{r freq_HXCat12_3}
+# Table caption.
+TCap <- paste("Frequency Distributions for Number of Assault (Non-Sexual,", 
+              "Non-Domestic Violence) Incidents for Which Offender Was",
+              "Arrested, Charged, or Convicted (Overall and By When Incident",
+              "Occurred)")
+
+# Get frequency distributions. 
+IDNEW %>% 
+  select(OID, HXCat12_3, HXCat12_3_Before, HXCat12_3_During, HXCat12_3_After) %>% 
+  rename(All = HXCat12_3, Before = HXCat12_3_Before, During = HXCat12_3_During, 
+         After = HXCat12_3_After) %>% 
+  pivot_longer(cols = -OID, names_to = "When", values_to = "Value") %>% 
+  group_by(When, Value) %>% 
+  count() %>% 
+  arrange(Value) %>% 
+  pivot_wider(names_from = When, values_from = n, values_fill = 0) %>% 
+  mutate(All_p = 100*All/nrow(IDNEW),
+         Before_p = 100*Before/nrow(IDNEW),
+         During_p = 100*During/nrow(IDNEW),
+         After_p = 100*After/nrow(IDNEW)) %>% 
+  select(Value, All, All_p, Before, Before_p, During, During_p, After, 
+         After_p) %>% 
+  kable(format = "latex", booktabs = TRUE, digits = 2, 
+        col.names = c("Value", rep(c("Frequency", "Percent"), 4)),
+        caption = TCap) %>% 
+  kable_styling() %>% 
+  add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
+                   "After TW" = 2)) %>% 
+  footnote(general = FN5, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
 ```
 
 \FloatBarrier
