@@ -1726,7 +1726,7 @@ IDNEW %>%
   kable_styling() %>% 
   add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
                    "After TW" = 2)) %>% 
-  footnote(general = FN4 general_title = "Note: ", footnote_as_chunk = TRUE,
+  footnote(general = FN4, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
 
