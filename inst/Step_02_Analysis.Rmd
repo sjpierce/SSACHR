@@ -1616,6 +1616,10 @@ IDNEW %>%
          threeparttable = TRUE)
 ```
 
+#### Arrested
+Table \ref{tab:freq_ACat12_5} shows the frequency distributions for criminal
+sexual conduct incidents for which the offender was arrested.
+
 ```{r freq_ACat12_5}
 # Table caption.
 TCap <- paste("Frequency Distributions for Number of Criminal Sexual Conduct",
@@ -1648,6 +1652,9 @@ IDNEW %>%
          threeparttable = TRUE)
 ```
 
+#### Charged
+Table \ref{tab:freq_CCat12_5} shows the frequency distributions for criminal
+sexual conduct incidents for which the offender was charged.
 
 ```{r freq_CCat12_5}
 # Table caption.
@@ -1681,6 +1688,10 @@ IDNEW %>%
          threeparttable = TRUE)
 ```
 
+#### Convicted
+Table \ref{tab:freq_JCat12_5} shows the frequency distributions for criminal
+sexual conduct incidents for which the offender was convicted.
+
 ```{r freq_JCat12_5}
 # Table caption.
 TCap <- paste("Frequency Distributions for Number of Criminal Sexual Conduct",
@@ -1712,6 +1723,11 @@ IDNEW %>%
   footnote(general = FN4 general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
+
+#### Arrested, Charged or Convicted
+Table \ref{tab:freq_ACat12_5} shows the frequency distributions for criminal
+sexual conduct incidents for which the offender was arrested, charged, or 
+convicted.
 
 ```{r freq_HXCat12_5}
 # Table caption.
