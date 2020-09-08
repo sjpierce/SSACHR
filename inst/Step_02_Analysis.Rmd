@@ -1616,6 +1616,8 @@ IDNEW %>%
          threeparttable = TRUE)
 ```
 
+\FloatBarrier
+
 #### Arrested
 Table \ref{tab:freq_ACat12_5} shows the frequency distributions for criminal
 sexual conduct incidents for which the offender was arrested.
@@ -1651,6 +1653,8 @@ IDNEW %>%
   footnote(general = FN2, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
+
+\FloatBarrier
 
 #### Charged
 Table \ref{tab:freq_CCat12_5} shows the frequency distributions for criminal
@@ -1688,6 +1692,8 @@ IDNEW %>%
          threeparttable = TRUE)
 ```
 
+\FloatBarrier
+
 #### Convicted
 Table \ref{tab:freq_JCat12_5} shows the frequency distributions for criminal
 sexual conduct incidents for which the offender was convicted.
@@ -1723,6 +1729,8 @@ IDNEW %>%
   footnote(general = FN4 general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
+
+\FloatBarrier
 
 #### Arrested, Charged or Convicted
 Table \ref{tab:freq_ACat12_5} shows the frequency distributions for criminal
