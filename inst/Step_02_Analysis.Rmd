@@ -1014,19 +1014,6 @@ IDNEW %>%
 \FloatBarrier
 
 ### Assault - DV, Stalking 
-Here we summarize the counts of unique incidents where the offender was 
-*arrested for*, *charged with*, and *convicted of* assaults involving domestic
-violence and/or stalking.
-
-```{r}
-ACat12_2 <- describe(IDNEW[, c("ACat12_2", "CCat12_2", "JCat12_2")], 
-                  quant=c(.25, .50, .75))
-row.names(ACat12_2) <- RN.ACC
-kable(ACat12_2[, CNums], format = "latex", booktabs = TRUE, digits = 2, 
-      col.names = CNames,
-      caption = "Offender-Level Assault - DV, Stalking Incident Counts")
-```
-
 Among these `r N_IDNEW` suspected sexual offenders, there were `r N_HXCat12_2`
 (`r P_HXCat12_2`\%) offenders who had criminal histories containing at least one
 incident associated with an assault (involving domestic violence and/or stalking)
