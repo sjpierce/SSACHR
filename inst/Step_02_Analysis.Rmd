@@ -1775,8 +1775,8 @@ IDNEW %>%
 Among these `r N_IDNEW` suspected sexual offenders, there were `r N_HXCat12_6`
 (`r P_HXCat12_6`\%) offenders who had criminal histories containing at least one
 incident associated with an arrest, charge, or conviction for drug crime. Table
-\ref{tab:describe_drug} summarizes the counts of unique drug crime incidents by CHR
-record type and when the incident occurred. In the subsections below, Tables
+\ref{tab:describe_drug} summarizes the counts of unique drug crime incidents by
+CHR record type and when the incident occurred. In the subsections below, Tables
 \ref{tab:freq_ACat12_6}, \ref{tab:freq_CCat12_6}, \ref{tab:freq_JCat12_6}, and
 \ref{tab:freq_HXCat12_6} show the frequency distributions underlying the
 summaries in Table \ref{tab:describe_drug}.
