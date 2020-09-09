@@ -2146,26 +2146,26 @@ IDNEW %>%
 \FloatBarrier
 
 ### Larceny/Theft/Fraud 
-Among these `r N_IDNEW` suspected sexual offenders, there were `r N_HXCat12_5`
-(`r P_HXCat12_5`\%) offenders who had criminal histories containing at least one
+Among these `r N_IDNEW` suspected sexual offenders, there were `r N_HXCat12_8`
+(`r P_HXCat12_8`\%) offenders who had criminal histories containing at least one
 incident associated with an arrest, charge, or conviction for larceny, theft, or
-fraud. Table \ref{tab:describe_csc} summarizes the counts of unique larceny,
+fraud. Table \ref{tab:describe_larceny} summarizes the counts of unique larceny,
 theft, or fraud incidents by CHR record type and when the incident occurred. In
-the subsections below, Tables \ref{tab:freq_ACat12_5}, \ref{tab:freq_CCat12_5},
-\ref{tab:freq_JCat12_5}, and \ref{tab:freq_HXCat12_5} show the frequency
-distributions underlying the summaries in Table \ref{tab:describe_csc}.
+the subsections below, Tables \ref{tab:freq_ACat12_8}, \ref{tab:freq_CCat12_8},
+\ref{tab:freq_JCat12_8}, and \ref{tab:freq_HXCat12_8} show the frequency
+distributions underlying the summaries in Table \ref{tab:describe_larceny}.
 
-```{r describe_csc}
+```{r describe_larceny}
 # Table caption. 
 TCap <- paste("Offender-Level Larceny, Theft, or Fraud Incidents (Overall and",
               "By When Incident Occurred)")
 
 # Summarize crime category counts (both overall and broken down by IWhen).
 IDNEW %>% 
-  select(ACat12_5, ACat12_5_Before, ACat12_5_During, ACat12_5_After, 
-         CCat12_5, CCat12_5_Before, CCat12_5_During, CCat12_5_After, 
-         JCat12_5, JCat12_5_Before, JCat12_5_During, JCat12_5_After,
-         HXCat12_5, HXCat12_5_Before, HXCat12_5_During, HXCat12_5_After) %>% 
+  select(ACat12_8, ACat12_8_Before, ACat12_8_During, ACat12_8_After, 
+         CCat12_8, CCat12_8_Before, CCat12_8_During, CCat12_8_After, 
+         JCat12_8, JCat12_8_Before, JCat12_8_During, JCat12_8_After,
+         HXCat12_8, HXCat12_8_Before, HXCat12_8_During, HXCat12_8_After) %>% 
   describe(., quant=c(.25, .50, .75)) %>% 
   bind_cols(data.frame(Variable = TRowLabs), .) %>% 
   select(Variable, n, mean, sd, min, max, skew, kurtosis, Q0.25, Q0.5, Q0.75) %>% 
@@ -2180,10 +2180,10 @@ IDNEW %>%
 \FloatBarrier
 
 #### Arrested
-Table \ref{tab:freq_ACat12_5} shows the frequency distributions for larceny,
+Table \ref{tab:freq_ACat12_8} shows the frequency distributions for larceny,
 theft, or fraud incidents for which the offender was arrested.
 
-```{r freq_ACat12_5}
+```{r freq_ACat12_8}
 # Table caption.
 TCap <- paste("Frequency Distributions for Number of Larceny, Theft, or Fraud",
               "Incidents for Which Offender Was Arrested (Overall and By When",
@@ -2191,9 +2191,9 @@ TCap <- paste("Frequency Distributions for Number of Larceny, Theft, or Fraud",
 
 # Get frequency distributions. 
 IDNEW %>% 
-  select(OID, ACat12_5, ACat12_5_Before, ACat12_5_During, ACat12_5_After) %>% 
-  rename(All = ACat12_5, Before = ACat12_5_Before, During = ACat12_5_During, 
-         After = ACat12_5_After) %>% 
+  select(OID, ACat12_8, ACat12_8_Before, ACat12_8_During, ACat12_8_After) %>% 
+  rename(All = ACat12_8, Before = ACat12_8_Before, During = ACat12_8_During, 
+         After = ACat12_8_After) %>% 
   pivot_longer(cols = -OID, names_to = "When", values_to = "Value") %>% 
   group_by(When, Value) %>% 
   count() %>% 
@@ -2218,10 +2218,10 @@ IDNEW %>%
 \FloatBarrier
 
 #### Charged
-Table \ref{tab:freq_CCat12_5} shows the frequency distributions for larceny,
+Table \ref{tab:freq_CCat12_8} shows the frequency distributions for larceny,
 theft, or fraud  incidents for which the offender was charged.
 
-```{r freq_CCat12_5}
+```{r freq_CCat12_8}
 # Table caption.
 TCap <- paste("Frequency Distributions for Number of Larceny, Theft, or Fraud",
               "Incidents for Which Offender Was Charged (Overall and By When",
@@ -2229,9 +2229,9 @@ TCap <- paste("Frequency Distributions for Number of Larceny, Theft, or Fraud",
 
 # Get frequency distributions. 
 IDNEW %>% 
-  select(OID, CCat12_5, CCat12_5_Before, CCat12_5_During, CCat12_5_After) %>% 
-  rename(All = CCat12_5, Before = CCat12_5_Before, During = CCat12_5_During, 
-         After = CCat12_5_After) %>% 
+  select(OID, CCat12_8, CCat12_8_Before, CCat12_8_During, CCat12_8_After) %>% 
+  rename(All = CCat12_8, Before = CCat12_8_Before, During = CCat12_8_During, 
+         After = CCat12_8_After) %>% 
   pivot_longer(cols = -OID, names_to = "When", values_to = "Value") %>% 
   group_by(When, Value) %>% 
   count() %>% 
@@ -2256,10 +2256,10 @@ IDNEW %>%
 \FloatBarrier
 
 #### Convicted
-Table \ref{tab:freq_JCat12_5} shows the frequency distributions for larceny,
+Table \ref{tab:freq_JCat12_8} shows the frequency distributions for larceny,
 theft, or fraud incidents for which the offender was convicted.
 
-```{r freq_JCat12_5}
+```{r freq_JCat12_8}
 # Table caption.
 TCap <- paste("Frequency Distributions for Number of Larceny, Theft, or Fraud",
               "Incidents for Which Offender Was Convicted (Overall and By When",
@@ -2267,9 +2267,9 @@ TCap <- paste("Frequency Distributions for Number of Larceny, Theft, or Fraud",
 
 # Get frequency distributions. 
 IDNEW %>% 
-  select(OID, JCat12_5, JCat12_5_Before, JCat12_5_During, JCat12_5_After) %>% 
-  rename(All = JCat12_5, Before = JCat12_5_Before, During = JCat12_5_During, 
-         After = JCat12_5_After) %>% 
+  select(OID, JCat12_8, JCat12_8_Before, JCat12_8_During, JCat12_8_After) %>% 
+  rename(All = JCat12_8, Before = JCat12_8_Before, During = JCat12_8_During, 
+         After = JCat12_8_After) %>% 
   pivot_longer(cols = -OID, names_to = "When", values_to = "Value") %>% 
   group_by(When, Value) %>% 
   count() %>% 
@@ -2294,11 +2294,11 @@ IDNEW %>%
 \FloatBarrier
 
 #### Arrested, Charged or Convicted
-Table \ref{tab:freq_ACat12_5} shows the frequency distributions for larceny,
+Table \ref{tab:freq_ACat12_8} shows the frequency distributions for larceny,
 theft, or fraud incidents for which the offender was arrested, charged, or 
 convicted.
 
-```{r freq_HXCat12_5}
+```{r freq_HXCat12_8}
 # Table caption.
 TCap <- paste("Frequency Distributions for Number of Larceny, Theft, or Fraud",
               "Incidents for Which Offender Was Arrested, Charged, or",
@@ -2306,9 +2306,9 @@ TCap <- paste("Frequency Distributions for Number of Larceny, Theft, or Fraud",
 
 # Get frequency distributions. 
 IDNEW %>% 
-  select(OID, HXCat12_5, HXCat12_5_Before, HXCat12_5_During, HXCat12_5_After) %>% 
-  rename(All = HXCat12_5, Before = HXCat12_5_Before, 
-         During = HXCat12_5_During, After = HXCat12_5_After) %>% 
+  select(OID, HXCat12_8, HXCat12_8_Before, HXCat12_8_During, HXCat12_8_After) %>% 
+  rename(All = HXCat12_8, Before = HXCat12_8_Before, 
+         During = HXCat12_8_During, After = HXCat12_8_After) %>% 
   pivot_longer(cols = -OID, names_to = "When", values_to = "Value") %>% 
   group_by(When, Value) %>% 
   count() %>% 
