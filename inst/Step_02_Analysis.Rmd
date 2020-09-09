@@ -1962,11 +1962,11 @@ IDNEW %>%
 Among these `r N_IDNEW` suspected sexual offenders, there were `r N_HXCat12_7`
 (`r P_HXCat12_7`\%) offenders who had criminal histories containing at least one
 incident associated with an arrest, charge, or conviction for homicide. Table
-\ref{tab:describe_homicide} summarizes the counts of unique burglary incidents by CHR
-record type and when the incident occurred. In the subsections below, Tables
-\ref{tab:freq_ACat12_7}, \ref{tab:freq_CCat12_7}, \ref{tab:freq_JCat12_7}, and
-\ref{tab:freq_HXCat12_7} show the frequency distributions underlying the
-summaries in Table \ref{tab:describe_homicide}.
+\ref{tab:describe_homicide} summarizes the counts of unique homicide incidents
+by CHR record type and when the incident occurred. In the subsections below,
+Tables \ref{tab:freq_ACat12_7}, \ref{tab:freq_CCat12_7},
+\ref{tab:freq_JCat12_7}, and \ref{tab:freq_HXCat12_7} show the frequency
+distributions underlying the summaries in Table \ref{tab:describe_homicide}.
 
 ```{r describe_homicide}
 # Table caption. 
