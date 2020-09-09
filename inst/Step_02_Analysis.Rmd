@@ -1587,12 +1587,12 @@ IDNEW %>%
 ### Criminal Sexual Conduct
 Among these `r N_IDNEW` suspected sexual offenders, there were `r N_HXCat12_5`
 (`r P_HXCat12_5`\%) offenders who had criminal histories containing at least one
-incident associated with an arrest, charge, or conviction for criminal sexual conduct. Table
-\ref{tab:describe_csc} summarizes the counts of unique criminal sexual conduct incidents by CHR
-record type and when the incident occurred. In the subsections below, Tables
-\ref{tab:freq_ACat12_5}, \ref{tab:freq_CCat12_5}, \ref{tab:freq_JCat12_5}, and
-\ref{tab:freq_HXCat12_5} show the frequency distributions underlying the
-summaries in Table \ref{tab:describe_csc}.
+incident associated with an arrest, charge, or conviction for criminal sexual
+conduct. Table \ref{tab:describe_csc} summarizes the counts of unique criminal
+sexual conduct incidents by CHR record type and when the incident occurred. In
+the subsections below, Tables \ref{tab:freq_ACat12_5}, \ref{tab:freq_CCat12_5},
+\ref{tab:freq_JCat12_5}, and \ref{tab:freq_HXCat12_5} show the frequency
+distributions underlying the summaries in Table \ref{tab:describe_csc}.
 
 ```{r describe_csc}
 # Table caption. 
