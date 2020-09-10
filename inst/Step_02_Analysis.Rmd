@@ -2858,7 +2858,7 @@ IDNEW %>%
 \FloatBarrier
 
 #### Arrested, Charged or Convicted
-Table \ref{tab:freq_ACat12_11} shows the frequency distributions for traffic and 
+Table \ref{tab:freq_HXCat12_11} shows the frequency distributions for traffic and 
 ordinance incidents for which the offender was arrested, charged, or convicted.
 
 ```{r freq_HXCat12_11}
