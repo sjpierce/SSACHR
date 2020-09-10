@@ -2531,7 +2531,7 @@ Tables \ref{tab:freq_ACat12_10}, \ref{tab:freq_CCat12_10},
 \ref{tab:freq_JCat12_10}, and \ref{tab:freq_HXCat12_10} show the frequency
 distributions underlying the summaries in Table \ref{tab:describe_sexcrime}.
 
-```{r describe_arson}
+```{r describe_sexcrime}
 # Table caption. 
 TCap <- paste("Offender-Level Sex Crime Incident Counts By CHR Record Type",
               "(Overall and By When Incident Occurred)")
