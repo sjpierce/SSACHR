@@ -1,3 +1,17 @@
+# SSACHR 0.6.6, 2020-09-09
+* Updated `inst/Step_02_Analysis.Rmd` to:
+    * Finish revising Incident Counts by Crime Category section text, 
+      subheadings, and content. Add more detail tables for additional 
+      categories. 
+
+# SSACHR 0.6.6, 2020-09-08
+* Updated `inst/Step_02_Analysis.Rmd` to:
+    * Rename some chunks and update table references to them. 
+    * Continue revising Incident Counts by Crime Category section text, 
+      subheadings, and content. Removed figures for criminal sexual conduct for
+      consistency with similar sections. Add more detail tables for additional 
+      categories. This is still work in progress. 
+    
 # SSACHR 0.6.5, 2020-09-07
 * Updated `inst/Step_01_Data_Mgt.Rmd` to:
     * Remove code for objects we no longer use.
