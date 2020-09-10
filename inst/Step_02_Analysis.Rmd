@@ -2744,7 +2744,7 @@ IDNEW %>%
 \FloatBarrier
 
 #### Arrested
-Table \ref{tab:freq_ACat12_11} shows the frequency distributions for traffic ad
+Table \ref{tab:freq_ACat12_11} shows the frequency distributions for traffic and
 ordinance incidents for which the offender was arrested.
 
 ```{r freq_ACat12_11}
