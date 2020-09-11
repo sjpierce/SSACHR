@@ -148,3 +148,4 @@ getIIDs <- function(oid, incidents) {
     as.character() ->
     IIDs
   return(IIDs)
+}
