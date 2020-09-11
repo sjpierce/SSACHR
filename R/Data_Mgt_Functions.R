@@ -116,3 +116,35 @@ rvlabel <- function(x, from = "Excluded (user-missing)",
 robustmax <- function(x, na.rm = FALSE) {
   if (length(x) > 0) max(x, na.rm = na.rm) else NA
   }
+
+#'=============================================================================
+#' @name getIIDs
+#'
+#' @title Get all the incident IDs (IIDs) for an offender.
+#'
+#' @description Returns a vector of all the incident IDs (IIDs) associated with
+#'   the specified offender ID (OID).
+#'
+#' @param oid A single character value for an offender's OID.
+#'
+#' @param incidents A data frame (or tibble) containing criminal history
+#'   incident records.
+#'
+#' @details This function subsets the data frame supplied in the incidents
+#'   parameter to retain only records with OIDs matching the supplied oid
+#'   parameter. It them extracts the incident IDs from the IID variable and
+#'   returns them.
+#'
+#' @seealso \code{\link[SSACHR]{showchr}}
+#'
+#' @return A character vector containing IIDs from all incident records where
+#'   offender OID = oid.
+#'
+#' @export
+getIIDs <- function(oid, incidents) {
+  incidents %>%
+    filter(OID == oid) %>%
+    pull(IID) %>%
+    as.character() ->
+    IIDs
+  return(IIDs)
