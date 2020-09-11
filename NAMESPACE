@@ -2,6 +2,9 @@
 
 export(dcode)
 export(dfsummary)
+export(getARRs)
+export(getIIDs)
+export(getINC)
 export(panel.mybox)
 export(panel.mydensity)
 export(robustmax)
