@@ -149,3 +149,43 @@ getIIDs <- function(oid, incidents) {
     IIDs
   return(IIDs)
 }
+
+#'=============================================================================
+#' @name getINC
+#'
+#' @title Get a criminal history incident record.
+#'
+#' @description Retrieves a criminal history incident record in preparation
+#'   for subsequent display in a case history.
+#'
+#' @param iid A single character value for an incident ID (IID).
+#'
+#' @param incidents A data frame (or tibble) containing criminal history
+#'   incident records.
+#'
+#' @details This function subsets the data frame supplied in the incidents
+#'   parameter down to only the record with an IID matching the supplied iid
+#'   parameter. It also selects a subset of variables. Along the way it renames
+#'   HXCat12_5 to CSC_ACC. That binary history variable represents whether the
+#'   offender was arrested, charged, or convicted of criminal sexual conduct in
+#'   connection with the incident, which is related to but slightly narrower
+#'   than CSC_ANY, which is a binary variable indicating whether the offender
+#'   was arrested, charged, or adjudicated for any criminal sexual conduct
+#'   charges (regardless of judicial disposition) in connection with the
+#'   incident.
+#'
+#' @seealso \code{\link[SSACHR]{showchr}}
+#'
+#' @return A tibble containing the variables OID, IID, IDate, OAgeI, CSC_ARR,
+#'   CSC_CHG, CSC_JUD, CSC_CON, CSC_ANY, and CSC_ACC.
+#'
+#' @export
+getINC <- function(iid, incidents) {
+  incidents %>%
+    filter(IID == iid) %>%
+    rename(CSC_ACC = HXCat12_5) %>%
+    select(OID, IID, IDate, OAgeI, CSC_ARR, CSC_CHG, CSC_JUD, CSC_CON, CSC_ANY,
+           CSC_ACC) ->
+    IRow
+  return(IRow)
+}
