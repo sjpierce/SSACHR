@@ -1,3 +1,12 @@
+# SSACHR 0.7.0, 2020-09-11
+* Updated `R/Data_Mgt_Functions.R` to:
+    * Add getIIDs() function.
+    * Add getINC() function.
+    * Add getARRs() function. 
+* Added `inst/Step_03_Case_Studies.Rmd` as initial draft of a new file. This is
+  not yet ready for use because we need to write and test additional functions
+  to make it easy to extract a complete case study for a specified offender. 
+
 # SSACHR 0.6.6, 2020-09-09
 * Updated `inst/Step_02_Analysis.Rmd` to:
     * Finish revising Incident Counts by Crime Category section text, 
