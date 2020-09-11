@@ -189,3 +189,46 @@ getINC <- function(iid, incidents) {
     IRow
   return(IRow)
 }
+
+#'=============================================================================
+#' @name getARRs
+#'
+#' @title Get criminal history arrest offense records for an incident.
+#'
+#' @description Retrieves the criminal history arrest offense records associated
+#'   with a specific incident in preparation for subsequent display in a case
+#'   history.
+#'
+#' @param iid A single character value for an incident ID (IID).
+#'
+#' @param incidents A data frame (or tibble) containing criminal history
+#'   incident records.
+#'
+#' @param arrests A data frame (or tibble) containing criminal history
+#'   arrest records.
+#'
+#' @details This function subsets the data frame supplied in the arrests
+#'   parameter down to only the records with IIDs matching the supplied iid
+#'   parameter. It also selects a subset of variables.
+#'
+#' @seealso \code{\link[SSACHR]{showchr}}
+#'
+#' @return A tibble containing the variables AID, ADate, OAgeA, ACount, AClass,
+#'   ACat12, AType, ADisp, ACounty, AMImp.
+#'
+#' @export
+getARRs <- function(iid, arrests) {
+  arrests %>%
+    filter(IID == iid) %>%
+    select(AID, ADate, OAgeA, ACount, AClass, ACat12, AType, ADisp, ACounty,
+           AMImp)  %>%
+    mutate(AClass = as_factor(AClass),
+           ACat12 = as_factor(ACat12),
+           AType = as_factor(AType),
+           ADisp = as_factor(ADisp),
+           ACounty = as_factor(ACounty),
+           AMImp = as_factor(AMImp)) ->
+    ARows
+  return(ARows)
+}
+
