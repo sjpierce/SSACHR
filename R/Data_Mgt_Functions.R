@@ -212,6 +212,7 @@ getINC <- function(iid, incidents) {
 #'   parameter. It also selects a subset of variables.
 #'
 #' @import dplyr
+#' @importFrom haven as_factor
 #'
 #' @return A tibble containing the variables AID, ADate, OAgeA, ACount, AClass,
 #'   ACat12, AType, ADisp, ACounty, AMImp.
