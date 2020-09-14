@@ -262,7 +262,8 @@ getCHGs <- function(iid, charges) {
     filter(.data$IID == iid) %>%
     select(.data$CID, .data$CDate, .data$OAgeC, .data$CCount, .data$CCit,
            .data$CCat12, .data$CCounty, .data$CMImp) %>%
-    mutate(CCat12 = as_factor(.data$CCat12),
+    mutate(CCit = as_factor(.data$CCit),
+           CCat12 = as_factor(.data$CCat12),
            CCounty = as_factor(.data$CCounty),
            CMImp = as_factor(.data$CMImp)) ->
     CRows
