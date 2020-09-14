@@ -244,7 +244,7 @@ getARRs <- function(iid, arrests) {
 #' @param iid A single character value for an incident ID (IID).
 #'
 #' @param charges A data frame (or tibble) containing criminal history
-#'   arrest records.
+#'   prosecutor charge records.
 #'
 #' @details This function subsets the data frame supplied in the arrests
 #'   parameter down to only the records with IIDs matching the supplied iid
