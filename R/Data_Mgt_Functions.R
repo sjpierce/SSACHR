@@ -201,9 +201,6 @@ getINC <- function(iid, incidents) {
 #'
 #' @param iid A single character value for an incident ID (IID).
 #'
-#' @param incidents A data frame (or tibble) containing criminal history
-#'   incident records.
-#'
 #' @param arrests A data frame (or tibble) containing criminal history
 #'   arrest records.
 #'
