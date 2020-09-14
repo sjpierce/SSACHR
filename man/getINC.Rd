@@ -34,6 +34,3 @@ This function subsets the data frame supplied in the incidents
   charges (regardless of judicial disposition) in connection with the
   incident.
 }
-\seealso{
-\code{\link[SSACHR]{showchr}}
-}

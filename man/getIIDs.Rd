@@ -28,6 +28,3 @@ This function subsets the data frame supplied in the incidents
   parameter. It them extracts the incident IDs from the IID variable and
   returns them.
 }
-\seealso{
-\code{\link[SSACHR]{showchr}}
-}
