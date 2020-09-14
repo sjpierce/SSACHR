@@ -1,3 +1,13 @@
+# SSACHR 0.7.1, 2020-09-14
+* Updated `R/Data_Mgt_Functions.R` to:
+    * Update getIIDs() function to solve check() warnings.
+    * Update getINC() function to solve check() warnings.
+    * Update getARRs() function to solve check() warnings 
+    * Add getCHGs() function. 
+    * Add getJUDs() function.
+* Updated help files for several functions. 
+* Updated `inst/Step_03_Case_Studies.Rmd` to test new functions. 
+
 # SSACHR 0.7.0, 2020-09-11
 * Updated `R/Data_Mgt_Functions.R` to:
     * Add getIIDs() function.
