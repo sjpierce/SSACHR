@@ -232,3 +232,39 @@ getARRs <- function(iid, arrests) {
   return(ARows)
 }
 
+#'=============================================================================
+#' @name getCHGs
+#'
+#' @title Get criminal history prosecutor charge records for an incident.
+#'
+#' @description Retrieves the criminal history prosecutor charge records
+#'   associated with a specific incident in preparation for subsequent display
+#'   in a case history.
+#'
+#' @param iid A single character value for an incident ID (IID).
+#'
+#' @param charges A data frame (or tibble) containing criminal history
+#'   arrest records.
+#'
+#' @details This function subsets the data frame supplied in the arrests
+#'   parameter down to only the records with IIDs matching the supplied iid
+#'   parameter. It also selects a subset of variables.
+#'
+#' @import dplyr
+#' @importFrom haven as_factor
+#'
+#' @return A tibble containing the variables CID, CDate, OAgeC, CCount, CCit,
+#'   CCat12, CCounty, CMImp.
+#'
+#' @export
+getCHGs <- function(iid, charges) {
+  charges %>%
+    filter(.data$IID == iid) %>%
+    select(.data$CID, .data$CDate, .data$OAgeC, .data$CCount, .data$CCit,
+           .data$CCat12, .data$CCounty, .data$CMImp) %>%
+    mutate(CCat12 = as_factor(.data$CCat12),
+           CCounty = as_factor(.data$CCounty),
+           CMImp = as_factor(.data$CMImp)) ->
+    CRows
+  return(CRows)
+}
