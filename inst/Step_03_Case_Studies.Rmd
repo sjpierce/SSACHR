@@ -140,6 +140,9 @@ prosecutor charge after reviewing other available records for that incident.
 getIIDs(oid = "0069", incidents = INCEW)
 getINC(iid = "01648", incidents = INCEW)
 getARRs(iid = "01648", arrests = ARREW)
+getCHGs(iid = "01648", charges = CHGEW)
+getCHGs(iid = "01681", charges = CHGEW)
+getJUDs(iid = "01681", jcharges = JUDEW)
 #showchr(oid = "xxxx", verbose = TRUE)
 ```
 
