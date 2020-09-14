@@ -135,6 +135,7 @@ robustmax <- function(x, na.rm = FALSE) {
 #'   parameter. It them extracts the incident IDs from the IID variable and
 #'   returns them.
 #'
+#' @import dplyr
 #'
 #' @return A character vector containing IIDs from all incident records where
 #'   offender OID = oid.
@@ -173,6 +174,7 @@ getIIDs <- function(oid, incidents) {
 #'   charges (regardless of judicial disposition) in connection with the
 #'   incident.
 #'
+#' @import dplyr
 #'
 #' @return A tibble containing the variables OID, IID, IDate, OAgeI, CSC_ARR,
 #'   CSC_CHG, CSC_JUD, CSC_CON, CSC_ANY, and CSC_ACC.
@@ -209,6 +211,7 @@ getINC <- function(iid, incidents) {
 #'   parameter down to only the records with IIDs matching the supplied iid
 #'   parameter. It also selects a subset of variables.
 #'
+#' @import dplyr
 #'
 #' @return A tibble containing the variables AID, ADate, OAgeA, ACount, AClass,
 #'   ACat12, AType, ADisp, ACounty, AMImp.

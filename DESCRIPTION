@@ -31,4 +31,5 @@ Suggests:
 VignetteBuilder: knitr
 Imports: 
     assertthat,
+    dplyr,
     lattice
