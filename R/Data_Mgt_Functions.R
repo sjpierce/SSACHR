@@ -269,3 +269,42 @@ getCHGs <- function(iid, charges) {
     CRows
   return(CRows)
 }
+
+#'=============================================================================
+#' @name getJUDs
+#'
+#' @title Get criminal history judicial charge records for an incident.
+#'
+#' @description Retrieves the criminal history judicial charge records
+#'   associated with a specific incident in preparation for subsequent display
+#'   in a case history.
+#'
+#' @param iid A single character value for an incident ID (IID).
+#'
+#' @param jcharges A data frame (or tibble) containing criminal history
+#'   judicial charge records.
+#'
+#' @details This function subsets the data frame supplied in the arrests
+#'   parameter down to only the records with IIDs matching the supplied iid
+#'   parameter. It also selects a subset of variables.
+#'
+#' @import dplyr
+#' @importFrom haven as_factor
+#'
+#' @return A tibble containing the variables JID, JDate, OAgeJ, JCount, JCit,
+#'   JCat12, JCounty, JDateImp.
+#'
+#' @export
+getJUDs <- function(iid, jcharges) {
+  jcharges %>%
+    filter(.data$IID == iid) %>%
+    select(.data$JID, .data$JDate, .data$OAgeJ, .data$JCount, .data$JCit,
+           .data$JCat12, .data$JDisp, .data$JCounty, .data$JDateImp) %>%
+    mutate(JCit = as_factor(.data$JCit),
+           JCat12 = as_factor(.data$JCat12),
+           JDisp = as_factor(.data$JDisp),
+           JCounty = as_factor(.data$JCounty),
+           JDateImp = as_factor(.data$JDateImp)) ->
+    CRows
+  return(CRows)
+}
