@@ -143,8 +143,8 @@ robustmax <- function(x, na.rm = FALSE) {
 #' @export
 getIIDs <- function(oid, incidents) {
   incidents %>%
-    filter(OID == oid) %>%
-    pull(IID) %>%
+    filter(.data$OID == oid) %>%
+    pull(.data$IID) %>%
     as.character() ->
     IIDs
   return(IIDs)
@@ -182,10 +182,11 @@ getIIDs <- function(oid, incidents) {
 #' @export
 getINC <- function(iid, incidents) {
   incidents %>%
-    filter(IID == iid) %>%
-    rename(CSC_ACC = HXCat12_5) %>%
-    select(OID, IID, IDate, OAgeI, CSC_ARR, CSC_CHG, CSC_JUD, CSC_CON, CSC_ANY,
-           CSC_ACC) ->
+    filter(.data$IID == iid) %>%
+    rename(CSC_ACC = .data$HXCat12_5) %>%
+    select(.data$OID, .data$IID, .data$IDate, .data$OAgeI, .data$CSC_ARR,
+           .data$CSC_CHG, .data$CSC_JUD, .data$CSC_CON, .data$CSC_ANY,
+           .data$CSC_ACC) ->
     IRow
   return(IRow)
 }
@@ -217,15 +218,16 @@ getINC <- function(iid, incidents) {
 #' @export
 getARRs <- function(iid, arrests) {
   arrests %>%
-    filter(IID == iid) %>%
-    select(AID, ADate, OAgeA, ACount, AClass, ACat12, AType, ADisp, ACounty,
-           AMImp)  %>%
-    mutate(AClass = as_factor(AClass),
-           ACat12 = as_factor(ACat12),
-           AType = as_factor(AType),
-           ADisp = as_factor(ADisp),
-           ACounty = as_factor(ACounty),
-           AMImp = as_factor(AMImp)) ->
+    filter(.data$IID == iid) %>%
+    select(.data$AID, .data$ADate, .data$OAgeA, .data$ACount, .data$AClass,
+           .data$ACat12, .data$AType, .data$ADisp, .data$ACounty,
+           .data$AMImp) %>%
+    mutate(AClass = as_factor(.data$AClass),
+           ACat12 = as_factor(.data$ACat12),
+           AType = as_factor(.data$AType),
+           ADisp = as_factor(.data$ADisp),
+           ACounty = as_factor(.data$ACounty),
+           AMImp = as_factor(.data$AMImp)) ->
     ARows
   return(ARows)
 }
