@@ -136,12 +136,17 @@ robustmax <- function(x, na.rm = FALSE) {
 #'   returns them.
 #'
 #' @import dplyr
+#' @importFrom assertthat assert_that has_name
 #'
 #' @return A character vector containing IIDs from all incident records where
 #'   offender OID = oid.
 #'
 #' @export
 getIIDs <- function(oid, idata) {
+  assert_that(is.character(oid),
+              msg = "oid must be a character value")
+  assert_that(has_name(idata, "IID"),
+              msg = "idata must contain a variable named IID")
   idata %>%
     filter(.data$OID == oid) %>%
     pull(.data$IID) %>%
@@ -175,12 +180,17 @@ getIIDs <- function(oid, idata) {
 #'   incident.
 #'
 #' @import dplyr
+#' @importFrom assertthat assert_that has_name
 #'
 #' @return A tibble containing the variables OID, IID, IDate, OAgeI, CSC_ARR,
 #'   CSC_CHG, CSC_JUD, CSC_CON, CSC_ANY, and CSC_ACC.
 #'
 #' @export
 getINC <- function(iid, idata) {
+  assert_that(is.character(iid),
+              msg = "iid must be a character value")
+  assert_that(has_name(idata, "IID"),
+              msg = "idata must contain a variable named IID")
   idata %>%
     filter(.data$IID == iid) %>%
     rename(CSC_ACC = .data$HXCat12_5) %>%
@@ -211,12 +221,17 @@ getINC <- function(iid, idata) {
 #'
 #' @import dplyr
 #' @importFrom haven as_factor
+#' @importFrom assertthat assert_that has_name
 #'
 #' @return A tibble containing the variables AID, ADate, OAgeA, ACount, AClass,
 #'   ACat12, AType, ADisp, ACounty, AMImp.
 #'
 #' @export
 getARRs <- function(iid, adata) {
+  assert_that(is.character(iid),
+              msg = "iid must be a character value")
+  assert_that(has_name(Adata, "AID"),
+              msg = "adata must contain a variable named AID")
   adata %>%
     filter(.data$IID == iid) %>%
     select(.data$AID, .data$ADate, .data$OAgeA, .data$ACount, .data$AClass,
@@ -252,12 +267,17 @@ getARRs <- function(iid, adata) {
 #'
 #' @import dplyr
 #' @importFrom haven as_factor
+#' @importFrom assertthat assert_that has_name
 #'
 #' @return A tibble containing the variables CID, CDate, OAgeC, CCount, CCit,
 #'   CCat12, CCounty, CMImp.
 #'
 #' @export
 getCHGs <- function(iid, cdata) {
+  assert_that(is.character(iid),
+              msg = "iid must be a character value")
+  assert_that(has_name(cdata, "CID"),
+              msg = "cdata must contain a variable named CID")
   cdata %>%
     filter(.data$IID == iid) %>%
     select(.data$CID, .data$CDate, .data$OAgeC, .data$CCount, .data$CCit,
@@ -290,12 +310,17 @@ getCHGs <- function(iid, cdata) {
 #'
 #' @import dplyr
 #' @importFrom haven as_factor
+#' @importFrom assertthat assert_that has_name
 #'
 #' @return A tibble containing the variables JID, JDate, OAgeJ, JCount, JCit,
 #'   JCat12, JCounty, JDateImp.
 #'
 #' @export
 getJUDs <- function(iid, jdata) {
+  assert_that(is.character(iid),
+              msg = "iid must be a character value")
+  assert_that(has_name(jdata, "JID"),
+              msg = "jdata must contain a variable named JID")
   jdata %>%
     filter(.data$IID == iid) %>%
     select(.data$JID, .data$JDate, .data$OAgeJ, .data$JCount, .data$JCit,
