@@ -127,8 +127,8 @@ robustmax <- function(x, na.rm = FALSE) {
 #'
 #' @param oid A single character value for an offender's OID.
 #'
-#' @param incidents A data frame (or tibble) containing criminal history
-#'   incident records.
+#' @param idata A data frame (or tibble) containing criminal history incident
+#'   records.
 #'
 #' @details This function subsets the data frame supplied in the incidents
 #'   parameter to retain only records with OIDs matching the supplied oid
@@ -141,8 +141,8 @@ robustmax <- function(x, na.rm = FALSE) {
 #'   offender OID = oid.
 #'
 #' @export
-getIIDs <- function(oid, incidents) {
-  incidents %>%
+getIIDs <- function(oid, idata) {
+  idata %>%
     filter(.data$OID == oid) %>%
     pull(.data$IID) %>%
     as.character() ->
@@ -160,8 +160,8 @@ getIIDs <- function(oid, incidents) {
 #'
 #' @param iid A single character value for an incident ID (IID).
 #'
-#' @param incidents A data frame (or tibble) containing criminal history
-#'   incident records.
+#' @param idata A data frame (or tibble) containing criminal history incident
+#'   records.
 #'
 #' @details This function subsets the data frame supplied in the incidents
 #'   parameter down to only the record with an IID matching the supplied iid
@@ -180,8 +180,8 @@ getIIDs <- function(oid, incidents) {
 #'   CSC_CHG, CSC_JUD, CSC_CON, CSC_ANY, and CSC_ACC.
 #'
 #' @export
-getINC <- function(iid, incidents) {
-  incidents %>%
+getINC <- function(iid, idata) {
+  idata %>%
     filter(.data$IID == iid) %>%
     rename(CSC_ACC = .data$HXCat12_5) %>%
     select(.data$OID, .data$IID, .data$IDate, .data$OAgeI, .data$CSC_ARR,
@@ -202,8 +202,8 @@ getINC <- function(iid, incidents) {
 #'
 #' @param iid A single character value for an incident ID (IID).
 #'
-#' @param arrests A data frame (or tibble) containing criminal history
-#'   arrest records.
+#' @param adata A data frame (or tibble) containing criminal history arrest
+#'   offense records.
 #'
 #' @details This function subsets the data frame supplied in the arrests
 #'   parameter down to only the records with IIDs matching the supplied iid
@@ -216,8 +216,8 @@ getINC <- function(iid, incidents) {
 #'   ACat12, AType, ADisp, ACounty, AMImp.
 #'
 #' @export
-getARRs <- function(iid, arrests) {
-  arrests %>%
+getARRs <- function(iid, adata) {
+  adata %>%
     filter(.data$IID == iid) %>%
     select(.data$AID, .data$ADate, .data$OAgeA, .data$ACount, .data$AClass,
            .data$ACat12, .data$AType, .data$ADisp, .data$ACounty,
@@ -243,7 +243,7 @@ getARRs <- function(iid, arrests) {
 #'
 #' @param iid A single character value for an incident ID (IID).
 #'
-#' @param charges A data frame (or tibble) containing criminal history
+#' @param cdata A data frame (or tibble) containing criminal history
 #'   prosecutor charge records.
 #'
 #' @details This function subsets the data frame supplied in the arrests
@@ -257,8 +257,8 @@ getARRs <- function(iid, arrests) {
 #'   CCat12, CCounty, CMImp.
 #'
 #' @export
-getCHGs <- function(iid, charges) {
-  charges %>%
+getCHGs <- function(iid, cdata) {
+  cdata %>%
     filter(.data$IID == iid) %>%
     select(.data$CID, .data$CDate, .data$OAgeC, .data$CCount, .data$CCit,
            .data$CCat12, .data$CCounty, .data$CMImp) %>%
@@ -281,8 +281,8 @@ getCHGs <- function(iid, charges) {
 #'
 #' @param iid A single character value for an incident ID (IID).
 #'
-#' @param jcharges A data frame (or tibble) containing criminal history
-#'   judicial charge records.
+#' @param jdata A data frame (or tibble) containing criminal history judicial
+#'   charge records (i.e., adjudicated charges).
 #'
 #' @details This function subsets the data frame supplied in the arrests
 #'   parameter down to only the records with IIDs matching the supplied iid
@@ -295,8 +295,8 @@ getCHGs <- function(iid, charges) {
 #'   JCat12, JCounty, JDateImp.
 #'
 #' @export
-getJUDs <- function(iid, jcharges) {
-  jcharges %>%
+getJUDs <- function(iid, jdata) {
+  jdata %>%
     filter(.data$IID == iid) %>%
     select(.data$JID, .data$JDate, .data$OAgeJ, .data$JCount, .data$JCit,
            .data$JCat12, .data$JDisp, .data$JCounty, .data$JDateImp) %>%
