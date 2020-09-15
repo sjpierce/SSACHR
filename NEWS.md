@@ -1,3 +1,12 @@
+# SSACHR 0.7.2, 2020-09-15
+* Updated `R/Data_Mgt_Functions.R` to:
+    * Rename data arguments used by getIIDs(), getINC(), getARRs(), getCHGs(), 
+      and getJUDs().
+    * Add assertions to check inputs to getIIDs(), getINC(), getARRs(), 
+      getCHGs(), and getJUDs(). 
+    * Update help files for getIIDs(), getINC(), getARRs(), getCHGs(), and 
+      getJUDs(). 
+
 # SSACHR 0.7.1, 2020-09-14
 * Updated `R/Data_Mgt_Functions.R` to:
     * Update getIIDs() function to solve check() warnings.
