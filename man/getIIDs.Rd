@@ -4,13 +4,13 @@
 \alias{getIIDs}
 \title{Get all the incident IDs (IIDs) for an offender.}
 \usage{
-getIIDs(oid, incidents)
+getIIDs(oid, idata)
 }
 \arguments{
 \item{oid}{A single character value for an offender's OID.}
 
-\item{incidents}{A data frame (or tibble) containing criminal history
-incident records.}
+\item{idata}{A data frame (or tibble) containing criminal history incident
+records.}
 }
 \value{
 A character vector containing IIDs from all incident records where

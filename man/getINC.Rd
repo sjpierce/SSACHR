@@ -4,13 +4,13 @@
 \alias{getINC}
 \title{Get a criminal history incident record.}
 \usage{
-getINC(iid, incidents)
+getINC(iid, idata)
 }
 \arguments{
 \item{iid}{A single character value for an incident ID (IID).}
 
-\item{incidents}{A data frame (or tibble) containing criminal history
-incident records.}
+\item{idata}{A data frame (or tibble) containing criminal history incident
+records.}
 }
 \value{
 A tibble containing the variables OID, IID, IDate, OAgeI, CSC_ARR,

@@ -4,13 +4,13 @@
 \alias{getJUDs}
 \title{Get criminal history judicial charge records for an incident.}
 \usage{
-getJUDs(iid, jcharges)
+getJUDs(iid, jdata)
 }
 \arguments{
 \item{iid}{A single character value for an incident ID (IID).}
 
-\item{jcharges}{A data frame (or tibble) containing criminal history
-judicial charge records.}
+\item{jdata}{A data frame (or tibble) containing criminal history judicial
+charge records (i.e., adjudicated charges).}
 }
 \value{
 A tibble containing the variables JID, JDate, OAgeJ, JCount, JCit,

@@ -4,13 +4,13 @@
 \alias{getARRs}
 \title{Get criminal history arrest offense records for an incident.}
 \usage{
-getARRs(iid, arrests)
+getARRs(iid, adata)
 }
 \arguments{
 \item{iid}{A single character value for an incident ID (IID).}
 
-\item{arrests}{A data frame (or tibble) containing criminal history
-arrest records.}
+\item{adata}{A data frame (or tibble) containing criminal history arrest
+offense records.}
 }
 \value{
 A tibble containing the variables AID, ADate, OAgeA, ACount, AClass,

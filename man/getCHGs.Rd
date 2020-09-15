@@ -4,12 +4,12 @@
 \alias{getCHGs}
 \title{Get criminal history prosecutor charge records for an incident.}
 \usage{
-getCHGs(iid, charges)
+getCHGs(iid, cdata)
 }
 \arguments{
 \item{iid}{A single character value for an incident ID (IID).}
 
-\item{charges}{A data frame (or tibble) containing criminal history
+\item{cdata}{A data frame (or tibble) containing criminal history
 prosecutor charge records.}
 }
 \value{
