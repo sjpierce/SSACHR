@@ -230,7 +230,7 @@ getINC <- function(iid, idata) {
 getARRs <- function(iid, adata) {
   assert_that(is.character(iid),
               msg = "iid must be a character value")
-  assert_that(has_name(Adata, "AID"),
+  assert_that(has_name(adata, "AID"),
               msg = "adata must contain a variable named AID")
   adata %>%
     filter(.data$IID == iid) %>%
