@@ -19,3 +19,7 @@
 
 # Omit text file that should not be treated as actual data.
 ^data/Read_This_Note\.txt$
+
+# Omit SPSS data files that should be downloaded from NACJD archive
+# instead of distributed via GitHub.
+^inst/extdata/*\.sav$
