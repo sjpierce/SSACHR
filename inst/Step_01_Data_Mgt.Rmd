@@ -751,6 +751,8 @@ INCEW %>%
   right_join(x = ., y = CHG, by = "IID") %>% 
   # Retain only CHG records for offenders with non-missing WDate values. 
   filter(is.na(WDate) == FALSE) %>% 
+  # Retain only CHG records for the main 12 crime categories, dropping 999.
+  filter(CCat12_Any == 1) %>% 
   # Retain only variables we need, in sensible order. 
   select(all_of(c(names(CHG), twvars))) %>% 
   # Add a variable label that was otherwise being dropped. 
