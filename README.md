@@ -12,7 +12,7 @@ status](https://www.r-pkg.org/badges/version/cstatops)](https://CRAN.R-project.o
 <!-- badges: end -->
 
 This package and corresponding GitHub repository are intended to enhance
-the reproducibility of a research paper (**ADD CITATION\!**) by serving
+the reproducibility of a research paper (**ADD CITATION!**) by serving
 as a research compendium (Marwick, Boettiger, & Mullen, 2018). The
 principal investigator for the study is Dr. Rebecca Campbell (Professor,
 Department of Psychology, Michigan State University). The paper will
@@ -47,58 +47,58 @@ conventions governing the structure of R packages. It deviates a bit
 from the example research compendium folder structures discussed by
 Marwick et al. (2018).
 
-  - **SSACHR**: This is the root folder for the repository.
-      - **inst**: This folder is where you can find the key files you
+-   **SSACHR**: This is the root folder for the repository.
+    -   **inst**: This folder is where you can find the key files you
         will need to use if you want to re-run our analyses on your own
         computer. The unintuitive name for this folder is a result of R
         package building conventions (it is where you put files that
         should be installed with the package).
-          - **extdata**: This subfolder is where you will need to put
+        -   **extdata**: This subfolder is where you will need to put
             the SPSS data files mentioned in the Obtaining Data Files
             section below.
-              - *Read\_This\_Note.txt*: This text file is just present
+            -   *Read\_This\_Note.txt*: This text file is just present
                 to ensure that the **extdata** subfolder will be created
                 when you clone the repository or extract files from ZIP
                 file copy of the repository obtained from GitHub.
-          - *compact-title.tex*: This LaTeX file is used when you knit
+        -   *compact-title.tex*: This LaTeX file is used when you knit
             .Rmd files  
             into PDF files. It helps control formatting of the title
             section.
-          - *Development\_Tools.R*: This file just contains R code
+        -   *Development\_Tools.R*: This file just contains R code
             reminders that I use while developing the package.
-          - *Step\_01\_Data\_Mgt.Rmd*: Knitting this file requires that
+        -   *Step\_01\_Data\_Mgt.Rmd*: Knitting this file requires that
             you have already obtained the data files mentioned in the
             Obtaining Data Files section below. It performs initial data
             management steps to prepare the data for use in other
             scripts.
-      - **man**: This folder contains R help files (*.Rd*) for the
+    -   **man**: This folder contains R help files (*.Rd*) for the
         package and  
         its custom functions. It is required by R package building
         conventions.
-      - **R**: This folder contains the source code for the package’s
+    -   **R**: This folder contains the source code for the package’s
         custom functions in a set of *.R* script files. It is required
         by R package building conventions
-      - *.gitignore*: This file tells Git what files to ignore and omit
+    -   *.gitignore*: This file tells Git what files to ignore and omit
         from synchrnizing with the main repository on GitHub.
-      - *.Rbuildignore*: This file tells R what files to ignore when
+    -   *.Rbuildignore*: This file tells R what files to ignore when
         building the package from the source code.
-      - *DESCRIPTION*: This file is a brief, structured description of
+    -   *DESCRIPTION*: This file is a brief, structured description of
         the package that is required by R package building conventions.
-      - *NAMESPACE*: This file is created automatically by R when
+    -   *NAMESPACE*: This file is created automatically by R when
         building the package. You should not edit it manually. It is
         required by R package building conventions
-      - *NEWS.md*: This file contains an list of comments about the
+    -   *NEWS.md*: This file contains an list of comments about the
         changes made with each version of this package. It is required
         by R package building conventions
-      - *README.md*: This file is obtained by knitting the *README.Rmd*
+    -   *README.md*: This file is obtained by knitting the *README.Rmd*
         file and is used by GitHub to display information about the
         package. Do not edit it manually. In R Studio, you can read the
         formatted version by opening the file and clicking the Preview
         button.
-      - *README.Rmd*: This file gives an introduction to the package.
+    -   *README.Rmd*: This file gives an introduction to the package.
         Knitting it produces the *README.md* file and opens the preview
         automatically.
-      - *SSACHR.Rproj*: This is an RStudio project file. It contains
+    -   *SSACHR.Rproj*: This is an RStudio project file. It contains
         some settings for working with the project in that software.
 
 Note that the package code uses relative rather than absolute folder
@@ -156,13 +156,13 @@ excellent support for generating dynamic reports (Mair, 2016). Knitting
 our R Markdown scripts generates PDF output files containing explanatory
 text, R code, plus R output (both text and graphics).
 
-  - We use [RStudio](www.rstudio.org) to work with R and R Markdown
-    files. The software chain looks like this: **Rmd file -\> RStudio
-    -\> R -\> knitr -\> pandoc -\> TinyTex -\> PDF file**.
-  - A version of [pandoc](https://pandoc.org/) comes bundled with
+-   We use [RStudio](www.rstudio.org) to work with R and R Markdown
+    files. The software chain looks like this: **Rmd file -&gt; RStudio
+    -&gt; R -&gt; knitr -&gt; pandoc -&gt; TinyTex -&gt; PDF file**.
+-   A version of [pandoc](https://pandoc.org/) comes bundled with
     RStudio, but if you want the most recent version, download it from
     <https://pandoc.org/>.
-  - We recommend using [TinyTeX](https://yihui.org/tinytex/) to compile
+-   We recommend using [TinyTeX](https://yihui.org/tinytex/) to compile
     LaTeX files produced by pandoc into PDF files. However, it may be
     viable to use [MiKTeX](https://miktex.org) instead.
 
@@ -182,7 +182,7 @@ ICPSR37134-v1. Ann Arbor, MI: Inter-university Consortium for Political
 and Social Research \[distributor\], 2019-02-28. Retrieved from:
 <https://doi.org/10.3886/ICPSR37134.v1>
 
-Mair, P. (2016). Thou shalt be reproducible\! A technology perspective.
+Mair, P. (2016). Thou shalt be reproducible! A technology perspective.
 *Frontiers in Psychology, 7*(1079), 1-17.
 [doi:10.3389/fpsyg.2016.01079](http://dx.doi.org/10.3389/fpsyg.2016.01079)
 
@@ -217,8 +217,12 @@ U.S. Department of Justice.
 
 ## Task List
 
-  - Improve this file.
-  - Create a script to generate a data flow diagram.
-  - Create a make-file script once we have multiple .Rmd files.
-  - Add citation for the manuscript in preparation to the reference
+-   Finish updating case selection and variable construction to reflect
+    focus on incidents where offender was arrested for, charged with, or
+    convicted of an offense from one or more of 12 crime categories of
+    interest.
+-   Improve this file.
+-   Create a script to generate a data flow diagram.
+-   Create a make-file script to sequence running multiple .Rmd files.
+-   Add citation for the manuscript in preparation to the reference
     list.
