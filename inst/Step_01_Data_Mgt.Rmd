@@ -912,11 +912,11 @@ we need to keep before saving a new tibble called *CONEW*.
 
 ```{r create_CONEW}
 INCEW %>% 
-  # Retain only variables we need to merge into ARR.
+  # Retain only variables we need to merge into CON.
   select(IID, ESAKID, ESAK_IID, WDate, TWindow, IWhen) %>% 
-  # Merge INCEW variables onto JUD rows. 
+  # Merge INCEW variables onto CON rows. 
   right_join(x = ., y = CON, by = "IID") %>% 
-  # Retain only CHG records for offenders with non-missing WDate values. 
+  # Retain only CON records for offenders with non-missing WDate values. 
   filter(is.na(WDate) == FALSE) %>% 
   # Retain only variables we need, in sensible order. 
   select(all_of(c(names(JUD), twvars))) %>% 
