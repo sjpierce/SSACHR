@@ -164,7 +164,11 @@ library(SSACHR)           # for rvlabel()
 # Import Files
 The SPSS files we will need to import, plus documentation about their contents
 and relationships between them, are available from an online archive (Campbell,
-2019).
+2019). After you have a local copy of this SSACHR git repository on your 
+computer, place the downloaded data files in the subfolder *SSACHR/inst/extdata* 
+without changing the file names to minimize the effort involved in using this
+script. Otherwise, you will need to update the file name references in the code
+below. 
 
 \FloatBarrier
 
