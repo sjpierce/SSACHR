@@ -184,7 +184,7 @@ labels that contain parentheses that are problematic when supplied to the
 labels at import.
 
 ```{r import_IDN}
-read_sav(here::here("./inst/extdata/SSA_IDN_Offenders_2018-09-03.sav"), 
+read_sav(here::here("inst/extdata/SSA_IDN_Offenders_2018-09-03.sav"), 
          user_na = TRUE) %>% 
   # Set variable label to match other core CHR files.
   var_labels(OID = "Offender ID (de-identified)") -> 
@@ -195,13 +195,13 @@ attr(IDN$OID, "format.spss") <- "A4"
 ```
 
 ```{r import_INC}
-read_sav(here::here("./inst/extdata/SSA_INC_Incidents_Imputed_2018-09-03.sav"), 
+read_sav(here::here("inst/extdata/SSA_INC_Incidents_Imputed_2018-09-03.sav"), 
          user_na = TRUE) ->
   INC
 ```
 
 ```{r import_ARR}
-read_sav(here::here("./inst/extdata/SSA_ARR_Arrests_Imputed_2018-09-03.sav"), 
+read_sav(here::here("inst/extdata/SSA_ARR_Arrests_Imputed_2018-09-03.sav"), 
          user_na = TRUE) %>% 
   # Replace user-missing value labels.
   mutate(ACat12 = rvlabel(ACat12),
@@ -213,7 +213,7 @@ read_sav(here::here("./inst/extdata/SSA_ARR_Arrests_Imputed_2018-09-03.sav"),
 ```
 
 ```{r import_CHG}
-read_sav(here::here("./inst/extdata/SSA_CHG_PA_Charges_Imputed_2018-09-03.sav"), 
+read_sav(here::here("inst/extdata/SSA_CHG_PA_Charges_Imputed_2018-09-03.sav"), 
          user_na = TRUE) %>% 
   # Replace user-missing value labels.
   mutate(CCat12 = rvlabel(CCat12),
@@ -225,7 +225,7 @@ read_sav(here::here("./inst/extdata/SSA_CHG_PA_Charges_Imputed_2018-09-03.sav"),
 ```
 
 ```{r import_JUD}
-read_sav(here::here("./inst/extdata/SSA_JUD_Judicial_Charges_Imputed_2018-09-03.sav"), 
+read_sav(here::here("inst/extdata/SSA_JUD_Judicial_Charges_Imputed_2018-09-03.sav"), 
          user_na = TRUE) %>% 
   # Replace user-missing value labels.
   mutate(JCat12 = rvlabel(JCat12),
@@ -244,7 +244,7 @@ each offender. See Campbell (2019) for details on this file.
 
 ``` {r import_SPD}
 # Read SPSS data file.
-read_sav(here::here("./inst/extdata/SAK_PERP_2018-04-03.sav"), 
+read_sav(here::here("inst/extdata/SAK_PERP_2018-04-03.sav"), 
          user_na = TRUE) %>% 
   # Sort by OID and SAK collection date (but NAs are last in sort order).
   arrange(OID, SDate.Yr, SDate.Mt, SDate) %>% 
