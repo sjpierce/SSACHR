@@ -918,6 +918,8 @@ INCEW %>%
   right_join(x = ., y = CON, by = "IID") %>% 
   # Retain only CON records for offenders with non-missing WDate values. 
   filter(is.na(WDate) == FALSE) %>% 
+  # Retain only CON records for the main 12 crime categories, dropping 999.
+  filter(JCat12_Any == 1) %>% 
   # Retain only variables we need, in sensible order. 
   select(all_of(c(names(JUD), twvars))) %>% 
   # Add a variable label that was otherwise being dropped. 
