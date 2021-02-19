@@ -762,7 +762,7 @@ INCEW %>%
 
 The original *CHG* tibble had `r nrow(CHG)` prosecutor charge records. Dropping
 the records associated with offenders whose earliest testing window could not be
-identified or that were coded ACat12 = 999 (excluded user-missing) leaves 
+identified or that were coded CCat12 = 999 (excluded user-missing) leaves 
 `r nrow(CHGEW)` prosecutor charge  records in *CHGEW*. Table
 \ref{tab:examine_CHGEW_IWhen} shows how many prosecutor charge records were
 associated with incidents that occurred before, during, and after the testing
