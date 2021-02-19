@@ -314,8 +314,8 @@ offender who has criminal history data and store those in a new dataset. Along
 the way, we need to do several intermediate tasks. 
 
 According to the help files, *dplyr::arrange* always puts NA values last in 
-the sort order. That may affect whether we use that function or another one 
-for sorting the data. 
+the sort order. That means we need to use a trick to adjust for that when we 
+use that function to sort the data. 
 
 First, we have to trim the SPD data down to just the SAKs associated with 
 offenders for whom we have criminal history data (SPDCHR). 
