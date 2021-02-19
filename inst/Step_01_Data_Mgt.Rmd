@@ -668,6 +668,8 @@ INCEW %>%
   right_join(x = ., y = ARR, by = "IID") %>% 
   # Retain only ARR records for offenders with non-missing WDate values. 
   filter(is.na(WDate) == FALSE) %>% 
+  # Retain only ARR records for the main 12 crime categories, dropping 999.
+  filter(ACat12_Any == 1) %>% 
   # Retain only variables we need, in sensible order. 
   select(all_of(c(names(ARR), twvars))) %>% 
   # Add a variable label that was otherwise being dropped. 
