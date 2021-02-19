@@ -1,3 +1,18 @@
+# SSACHR 0.8.0, 2021-02-19 
+* Updated `inst/Step_01_Data_Mgt.Rmd` to:
+    * Declare script location via *here::i_am()*. 
+    * Fix file paths for SPSS data files work with updated *here* package. 
+    * Add new variables for flagging ARR, CHG, JUD, & CON records associated 
+      with any of the 12 crime categories of interest. 
+    * Improve explanatory text. 
+    * Fix object names referenced in some comments.
+    * Change some case selection criteria to focus on incidents where the 
+      offender was arrested for, charged with, or convicted of one of 12 crime
+      crime categories of interest. 
+* Updated `inst/Step_02_Analysis.Rmd` to:
+    * Declare script location via *here::i_am()*. 
+* Updated `README.Rmd` and `README.md` task list. 
+
 # SSACHR 0.7.2, 2020-09-15
 * Updated `R/Data_Mgt_Functions.R` to:
     * Rename data arguments used by getIIDs(), getINC(), getARRs(), getCHGs(), 
