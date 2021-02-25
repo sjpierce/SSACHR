@@ -1034,34 +1034,40 @@ by a prosecuting attorney on a charge record. Meanwhile, *JCat12_1* to
 *JCat12_12* and *JCat12_999* variables in *CONEW* show which crime category the
 offender was convicted of on a given conviction record. 
 
+Similarly, the *ACat12_Any*, *CCat12_Any*, and *JCat12_Any* dummy code variables
+mark *ARREW*, *CHGEW*, and *CONEW* records that show an offender was
+respectively arrested for, charged with, or convicted of one of the 12 main
+crime categories of interest.
+
 All three of those tibbles can have multiple records per criminal incident. This
 section aggregates those dummy coded crime category variables from the record
 level to the incident level to flag presence or absence of each crime category
-on the incident. It  merges the resulting variables onto the *INCEW* tibble.
+on the incident. It merges the resulting variables onto the *INCEW* tibble.
 That allows us to see which incidents were associated with arrests, charges,
-and/or convictions for each category of crime. 
+and/or convictions for each category of crime or for any of the 12 main 
+categories. 
 
 The code chunk below creates objects containing vectors of variable names that 
 can be used to simplify subsequent code. 
 
 ```{r create_acjvars}
 # Create objects with vectors of variable names we need later. 
-avars      <- paste("ACat12", c(1:12, 999), sep = "_")
+avars      <- paste("ACat12", c(1:12, 999, "Any"), sep = "_")
 avarsb     <- paste0(avars, "_Before")
 avarsd     <- paste0(avars, "_During")
 avarsa     <- paste0(avars, "_After")
 avarsbda   <- c(avarsb, avarsd, avarsa)
-cvars      <- paste("CCat12", c(1:12, 999), sep = "_")
+cvars      <- paste("CCat12", c(1:12, 999, "Any"), sep = "_")
 cvarsb     <- paste0(cvars, "_Before")
 cvarsd     <- paste0(cvars, "_During")
 cvarsa     <- paste0(cvars, "_After")
 cvarsbda   <- c(cvarsb, cvarsd, cvarsa)
-jvars      <- paste("JCat12", c(1:12, 999), sep = "_")
+jvars      <- paste("JCat12", c(1:12, 999, "Any"), sep = "_")
 jvarsb     <- paste0(jvars, "_Before")
 jvarsd     <- paste0(jvars, "_During")
 jvarsa     <- paste0(jvars, "_After")
 jvarsbda   <- c(jvarsb, jvarsd, jvarsa)
-hxvars     <- paste("HXCat12", c(1:12, 999), sep = "_")
+hxvars     <- paste("HXCat12", c(1:12, 999, "Any"), sep = "_")
 hxvarsb    <- paste0(hxvars, "_Before")
 hxvarsd    <- paste0(hxvars, "_During")
 hxvarsa    <- paste0(hxvars, "_After")
@@ -1081,7 +1087,8 @@ FN <- paste("ARREW, variables pertaining to arrests;",
             "CONEW, variables pertaining to convictions.")
 
 # Create data for table.
-CrimeCats <- data.frame(Label = get_labels(ARREW$ACat12),
+CrimeCats <- data.frame(Label = c(get_labels(ARREW$ACat12), 
+                                  "Any of 12 main categories (arson to weapons)"),
                         ARREW = avars,
                         CHGEW = cvars,
                         CONEW = jvars)
