@@ -1270,6 +1270,18 @@ xtabs(~HXCat12_5 + CSC_ANY, data = INCEW) %>%
          threeparttable = TRUE)
 ```
 
+## Filter Incident Records 
+Now we need to subset the *INCEW* data to contain only records for which
+*HXCat12_Any* = 1 so that we only retain incidents associated where the offender
+was offender was *arrested for, charged with, or convicted of* one or more of 
+the 12 main crime categories.
+
+```{r filter_INCEW}
+INCEW %>% 
+  filter(HXCat12_Any == 1) -> 
+  INCEW
+```
+
 ## Aggregating Crime Category Dummy Variables to Offender Level Count Variables
 Here we aggregate the dummy coded crime category variables data from the
 incident level to offender level incident counts for each crime category. 
