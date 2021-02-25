@@ -1101,14 +1101,15 @@ kable(CrimeCats, format = "latex", booktabs = TRUE, caption = TCap) %>%
 
 ### Incidents With Arrests
 For any given incident (identifed by a unique value of *IID*), there can be
-multiple arrest offense records in *ARREW*. The dummy variables ACat12_1 to
-ACat12_12 and ACat12_999 each mark whether or not a particular arrest offense
-record was associated with a specific type of crime. Here, we aggregate them up
-to the incident level by taking the maximum observed value for each incident.
-The resulting incident-level records will have values of 1 for every crime
-category for which the offender was arrested due to that incident and values of
-0 for every crime category for which the offender was not arrested due to that
-incident.
+multiple arrest offense records in *ARREW*. The dummy variables *ACat12_1* to
+*ACat12_12* and *ACat12_999* each mark whether or not a particular arrest
+offense record was associated with a specific type of crime, while *ACat12_Any*
+marks whether or not the arrest offense was associated any of the 12 main
+categories of crime. Here, we aggregate them up to the incident level by taking
+the maximum observed value for each incident. The resulting incident-level
+records will have values of 1 for every crime category for which the offender
+was arrested due to that incident and values of 0 for every crime category for
+which the offender was not arrested due to that incident.
 
 ```{r merge_Agg_ACat12_INCEW}
 # Aggregate ACat12 dummy codes by IID to incident level binary variables.
@@ -1124,14 +1125,15 @@ ARREW %>%
 
 ### Incidents With Charges
 For any given incident (identifed by a unique value of *IID*), there can be
-multiple prosecutor charges records in *CHGEW*. The dummy variables CCat12_1 to
-CCat12_12 and CCat12_999 each mark whether or not a particular prosecutior charge 
-record was associated with a specific type of crime. Here, we aggregate them up
-to the incident level by taking the maximum observed value for each incident.
-The resulting incident-level records will have values of 1 for every crime
-category for which the offender was charged due to that incident and values of
-0 for every crime category for which the offender was not charged due to that
-incident.
+multiple prosecutor charges records in *CHGEW*. The dummy variables *CCat12_1*
+to *CCat12_12* and *CCat12_999* each mark whether or not a particular prosecutor
+charge record was associated with a specific type of crime, while *CCat12_Any*
+marks whether or not the charge was associated any of the 12 main categories of
+crime. Here, we aggregate them up to the incident level by taking the maximum
+observed value for each incident. The resulting incident-level records will have
+values of 1 for every crime category for which the offender was charged due to
+that incident and values of 0 for every crime category for which the offender
+was not charged due to that incident.
 
 ```{r merge_Agg_CCat12_INCEW}         
 # Aggregate CCat12 dummy codes by IID to incident level binary variables.
@@ -1147,14 +1149,15 @@ CHGEW %>%
 
 ### Incidents With Convictions
 For any given incident (identifed by a unique value of *IID*), there can be
-multiple conviction records in *CONEW*. The dummy variables JCat12_1 to
-JCat12_12 and JCat12_999 each mark whether or not a particular adjudicated
-conviction charge record was associated with a specific type of crime. Here, we
-aggregate them up to the incident level by taking the maximum observed value for
-each incident. The resulting incident-level records will have values of 1 for
-every crime category for which the offender was convicted  due to that incident
-and values of 0 for every crime category for which the offender was not
-convicted due to that incident.
+multiple conviction records in *CONEW*. The dummy variables *JCat12_1* to
+*JCat12_12* and *JCat12_999* each mark whether or not a particular adjudicated
+conviction charge record was associated with a specific type of crime, while
+*JCat12_Any* marks whether or not the charge was associated any of the 12 main
+categories of crime. Here, we aggregate them up to the incident level by taking
+the maximum observed value for each incident. The resulting incident-level
+records will have values of 1 for every crime category for which the offender
+was convicted due to that incident and values of 0 for every crime category for
+which the offender was not convicted due to that incident.
 
 ```{r merge_Agg_JCat12_INCEW}
 # Aggregate JCat12 dummy codes by IID to incident level binary variables.
