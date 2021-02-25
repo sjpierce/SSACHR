@@ -1342,6 +1342,8 @@ INCEW %>%
          HXCat12_12 = if_else(ACat12_12 + CCat12_12 + JCat12_12 >= 1, 
                               true = 1, false = 0),
          HXCat12_999 = if_else(ACat12_999 + CCat12_999 + JCat12_999 >= 1, 
+                              true = 1, false = 0),
+         HXCat12_Any = if_else(ACat12_Any + CCat12_Any + JCat12_Any >= 1, 
                               true = 1, false = 0)) %>% 
   var_labels(HXCat12_1 = "History shows arrested, charged, or convicted for arson",
              HXCat12_2 = "History shows arrested, charged, or convicted for assault - DV, stalking arrest",
@@ -1355,7 +1357,8 @@ INCEW %>%
              HXCat12_10 = "History shows arrested, charged, or convicted for sex crime - other, excludinng CSC",
              HXCat12_11 = "History shows arrested, charged, or convicted for traffic/ordinances",
              HXCat12_12 = "History shows arrested, charged, or convicted for weapons",
-             HXCat12_999 = "History shows arrested, charged, or convicted for excluded user-missing") ->
+             HXCat12_999 = "History shows arrested, charged, or convicted for excluded user-missing",
+             HXCat12_Any = "History shows arrested, charged, or convicted for any of 12 main crime categories") ->
   INCEW
 ```
 
