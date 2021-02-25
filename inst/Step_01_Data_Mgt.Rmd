@@ -1178,7 +1178,7 @@ incidents (identified by *IID* values). Aggregating the dummy variables ACat12_1
 to ACat12_12 and ACat12_999 by summing across incidents for each offender allows
 us to get overall incident counts showing how often the offender was arrested
 for various types of crime over the course of the entire (documented) criminal
-history. The aggregated variables merged into *IDNEW* retain the same varable
+history. The aggregated variables merged into *IDNEW* retain the same variable
 names as the source dummy-coded variables.
  
 ```{r merge_Agg_ACat12_IDNEW}
