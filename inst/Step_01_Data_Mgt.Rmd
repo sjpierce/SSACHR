@@ -1168,6 +1168,105 @@ CONEW %>%
   INCEW
 ```
 
+## Create Incident-Level Crime Category History Variables 
+For each crime category, the *INCEW* dataset now contains three separate dummy
+variables showing whether the offender was (a) arrested, (b) charged, or (c)
+convicted of the offense associated with that category as a result of that
+incident. However, we still need to create a single dummy variable for each
+crime category that combines data across those three types of criminal history
+events. The resulting set of history variables will be called *HXCat12_1* to
+*HXCat12_12* and *HXCat12_999*. Values of 1 will mean the CHR data shows that
+the offender was *arrested for, charged with, or convicted of* the offense in
+question for that incident. It does not matter which of the three events
+occurred: any one of them (and any combination of them) is sufficient to set
+this value to 1. In contrast, a value of 0 will mean the CHR data shows that the
+offender was *not arrested for, not charged with, and not convicted of* the
+offense in question for that incident. The new variables will be added to the
+*INCEW* dataset.
+
+Meanwhile, the *HXCat12_Any* variable will show whether the offender was 
+*arrested for, charged with, or convicted of* any of the 12 main categories of 
+crime. 
+
+```{r create_HXCat12_INCEW} 
+INCEW %>% 
+  # Create history variables
+  mutate(HXCat12_1 = if_else(ACat12_1 + CCat12_1 + JCat12_1 >= 1, 
+                              true = 1, false = 0),
+         HXCat12_2 = if_else(ACat12_2 + CCat12_2 + JCat12_2 >= 1, 
+                              true = 1, false = 0), 
+         HXCat12_3 = if_else(ACat12_3 + CCat12_3 + JCat12_3 >= 1, 
+                              true = 1, false = 0),
+         HXCat12_4 = if_else(ACat12_4 + CCat12_4 + JCat12_4 >= 1, 
+                              true = 1, false = 0),
+         HXCat12_5 = if_else(ACat12_5 + CCat12_5 + JCat12_5 >= 1, 
+                              true = 1, false = 0),
+         HXCat12_6 = if_else(ACat12_6 + CCat12_6 + JCat12_6 >= 1, 
+                              true = 1, false = 0),
+         HXCat12_7 = if_else(ACat12_7 + CCat12_7 + JCat12_7 >= 1, 
+                              true = 1, false = 0), 
+         HXCat12_8 = if_else(ACat12_8 + CCat12_8 + JCat12_8 >= 1, 
+                              true = 1, false = 0), 
+         HXCat12_9 = if_else(ACat12_9 + CCat12_9 + JCat12_9 >= 1, 
+                              true = 1, false = 0),
+         HXCat12_10 = if_else(ACat12_10 + CCat12_10 + JCat12_10 >= 1, 
+                              true = 1, false = 0),
+         HXCat12_11 = if_else(ACat12_11 + CCat12_11 + JCat12_11 >= 1, 
+                              true = 1, false = 0),
+         HXCat12_12 = if_else(ACat12_12 + CCat12_12 + JCat12_12 >= 1, 
+                              true = 1, false = 0),
+         HXCat12_999 = if_else(ACat12_999 + CCat12_999 + JCat12_999 >= 1, 
+                              true = 1, false = 0),
+         HXCat12_Any = if_else(ACat12_Any + CCat12_Any + JCat12_Any >= 1, 
+                              true = 1, false = 0)) %>% 
+  var_labels(HXCat12_1 = "History shows arrested, charged, or convicted for arson",
+             HXCat12_2 = "History shows arrested, charged, or convicted for assault - DV, stalking arrest",
+             HXCat12_3 = "History shows arrested, charged, or convicted for assault - non-sexual, non-DV",
+             HXCat12_4 = "History shows arrested, charged, or convicted for burglary",
+             HXCat12_5 = "History shows arrested, charged, or convicted for criminal sexual conduct",
+             HXCat12_6 = "History shows arrested, charged, or convicted for drug crime",
+             HXCat12_7 = "History shows arrested, charged, or convicted for homicide",
+             HXCat12_8 = "History shows arrested, charged, or convicted for larceny/theft/fraud ",
+             HXCat12_9 = "History shows arrested, charged, or convicted for robbery",
+             HXCat12_10 = "History shows arrested, charged, or convicted for sex crime - other, excludinng CSC",
+             HXCat12_11 = "History shows arrested, charged, or convicted for traffic/ordinances",
+             HXCat12_12 = "History shows arrested, charged, or convicted for weapons",
+             HXCat12_999 = "History shows arrested, charged, or convicted for excluded user-missing",
+             HXCat12_Any = "History shows arrested, charged, or convicted for any of 12 main crime categories") ->
+  INCEW
+```
+
+Note that *HXCat12_5* is related to the existing variable *CSC_ANY* variable,
+but a slightly more stringent definition because *HXCat12_5* codes incidents
+that had adjudicated charges for CSC that were not convictions (and had no CSC
+arrests and no CSC prosecutor charges) as 0, whereas *CSC_ANY* would code them
+as 1. We will use *HXCat12_5* in the analyses for this paper instead of
+*CSC_ANY*. Table \ref{tab:compare_HXCat12_5_to_CSC_ANY} shows how these two 
+variables cross-tabulate. 
+
+```{r compare_HXCat12_5_to_CSC_ANY}
+# Table caption.
+TCap <- paste("Crosstabulate Incident-Level Criminal Sexual Conduct History",
+              "Variables")
+# Footnote text.
+FN <- paste("Only incident records for incidents with valid testing window",
+            "start dates were included. The variables disagree when the only",
+            "CHR data for CSC associated with the incident are adjudicated",
+            "charge records that are not convictions.")
+
+# Vector of text values for column labels to be used in the table.
+clabels <- c("HXCat12_5", "CSC_ANY", "Frequency", "Percent")
+
+xtabs(~HXCat12_5 + CSC_ANY, data = INCEW) %>% 
+  as.data.frame() %>% 
+  mutate(Percent = 100*Freq/nrow(INCEW)) %>% 
+  kable(., format = "latex", booktabs = TRUE, caption = TCap, digits = 2,
+        col.names = clabels, format.args = list(big.mark = ",")) %>% 
+  column_spec(1:3, width = "1.5 cm") %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
+```
+
 ## Aggregating Crime Category Dummy Variables to Offender Level Count Variables
 Here we aggregate the dummy coded crime category variables data from the
 incident level to offender level incident counts for each crime category. 
@@ -1296,101 +1395,6 @@ INCEW %>%
   # Merge count variables onto IDNEW.
   left_join(x = IDNEW, y = ., by = "OID") -> 
   IDNEW
-```
-
-# Create Incident-Level Crime Category History Variables 
-For each crime category, the *INCEW* dataset now contains three separate dummy
-variables showing whether the offender was (a) arrested, (b) charged, or (c)
-convicted of the offense associated with that category as a result of that
-incident. However, we still need to create a single dummy variable for each
-crime category that combines data across those three types of criminal history
-events. The resulting set of history variables will be called *HXCat12_1* to
-*HXCat12_12* and *HXCat12_999*. Values of 1 will mean the CHR data shows that
-the offender was *arrested for, charged with, or convicted of* the offense in
-question for that incident. It does not matter which of the three events
-occurred: any one of them (and any combination of them) is sufficient to set
-this value to 1. In contrast, a value of 0 will mean the CHR data shows that the
-offender was *not arrested for, not charged with, and not convicted of* the
-offense in question for that incident. The new variables will be added to the
-*INCEW* dataset.
-
-```{r create_HXCat12_INCEW} 
-INCEW %>% 
-  # Create history variables
-  mutate(HXCat12_1 = if_else(ACat12_1 + CCat12_1 + JCat12_1 >= 1, 
-                              true = 1, false = 0),
-         HXCat12_2 = if_else(ACat12_2 + CCat12_2 + JCat12_2 >= 1, 
-                              true = 1, false = 0), 
-         HXCat12_3 = if_else(ACat12_3 + CCat12_3 + JCat12_3 >= 1, 
-                              true = 1, false = 0),
-         HXCat12_4 = if_else(ACat12_4 + CCat12_4 + JCat12_4 >= 1, 
-                              true = 1, false = 0),
-         HXCat12_5 = if_else(ACat12_5 + CCat12_5 + JCat12_5 >= 1, 
-                              true = 1, false = 0),
-         HXCat12_6 = if_else(ACat12_6 + CCat12_6 + JCat12_6 >= 1, 
-                              true = 1, false = 0),
-         HXCat12_7 = if_else(ACat12_7 + CCat12_7 + JCat12_7 >= 1, 
-                              true = 1, false = 0), 
-         HXCat12_8 = if_else(ACat12_8 + CCat12_8 + JCat12_8 >= 1, 
-                              true = 1, false = 0), 
-         HXCat12_9 = if_else(ACat12_9 + CCat12_9 + JCat12_9 >= 1, 
-                              true = 1, false = 0),
-         HXCat12_10 = if_else(ACat12_10 + CCat12_10 + JCat12_10 >= 1, 
-                              true = 1, false = 0),
-         HXCat12_11 = if_else(ACat12_11 + CCat12_11 + JCat12_11 >= 1, 
-                              true = 1, false = 0),
-         HXCat12_12 = if_else(ACat12_12 + CCat12_12 + JCat12_12 >= 1, 
-                              true = 1, false = 0),
-         HXCat12_999 = if_else(ACat12_999 + CCat12_999 + JCat12_999 >= 1, 
-                              true = 1, false = 0),
-         HXCat12_Any = if_else(ACat12_Any + CCat12_Any + JCat12_Any >= 1, 
-                              true = 1, false = 0)) %>% 
-  var_labels(HXCat12_1 = "History shows arrested, charged, or convicted for arson",
-             HXCat12_2 = "History shows arrested, charged, or convicted for assault - DV, stalking arrest",
-             HXCat12_3 = "History shows arrested, charged, or convicted for assault - non-sexual, non-DV",
-             HXCat12_4 = "History shows arrested, charged, or convicted for burglary",
-             HXCat12_5 = "History shows arrested, charged, or convicted for criminal sexual conduct",
-             HXCat12_6 = "History shows arrested, charged, or convicted for drug crime",
-             HXCat12_7 = "History shows arrested, charged, or convicted for homicide",
-             HXCat12_8 = "History shows arrested, charged, or convicted for larceny/theft/fraud ",
-             HXCat12_9 = "History shows arrested, charged, or convicted for robbery",
-             HXCat12_10 = "History shows arrested, charged, or convicted for sex crime - other, excludinng CSC",
-             HXCat12_11 = "History shows arrested, charged, or convicted for traffic/ordinances",
-             HXCat12_12 = "History shows arrested, charged, or convicted for weapons",
-             HXCat12_999 = "History shows arrested, charged, or convicted for excluded user-missing",
-             HXCat12_Any = "History shows arrested, charged, or convicted for any of 12 main crime categories") ->
-  INCEW
-```
-
-Note that *HXCat12_5* is related to the existing variable *CSC_ANY* variable,
-but a slightly more stringent definition because *HXCat12_5* codes incidents
-that had adjudicated charges for CSC that were not convictions (and had no CSC
-arrests and no CSC prosecutor charges) as 0, whereas *CSC_ANY* would code them
-as 1. We will use *HXCat12_5* in the analyses for this paper instead of
-*CSC_ANY*. Table \ref{tab:compare_HXCat12_5_to_CSC_ANY} shows how these two 
-variables cross-tabulate. 
-
-```{r compare_HXCat12_5_to_CSC_ANY}
-# Table caption.
-TCap <- paste("Crosstabulate Incident-Level Criminal Sexual Conduct History",
-              "Variables")
-# Footnote text.
-FN <- paste("Only incident records for incidents with valid testing window",
-            "start dates were included. The variables disagree when the only",
-            "CHR data for CSC associated with the incident are adjudicated",
-            "charge records that are not convictions.")
-
-# Vector of text values for column labels to be used in the table.
-clabels <- c("HXCat12_5", "CSC_ANY", "Frequency", "Percent")
-
-xtabs(~HXCat12_5 + CSC_ANY, data = INCEW) %>% 
-  as.data.frame() %>% 
-  mutate(Percent = 100*Freq/nrow(INCEW)) %>% 
-  kable(., format = "latex", booktabs = TRUE, caption = TCap, digits = 2,
-        col.names = clabels, format.args = list(big.mark = ",")) %>% 
-  column_spec(1:3, width = "1.5 cm") %>% 
-  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
-         threeparttable = TRUE)
 ```
 
 # Aggregate Crime Category History Variables
