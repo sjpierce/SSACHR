@@ -677,8 +677,9 @@ The next step is to merge variables from *INCEW* onto the arrest data in *ARR*
 so that we can classify each arrest offense record according to whether the
 incident associated with it occurred before, during, or after the earliest
 testing window for the offender by using *IWhen*. Then we subset down to the
-*ARR* records that have non-missing *WDate* values and select only the variables
-we need to keep before saving a new tibble called *ARREW*.
+*ARR* records that have non-missing *WDate* values plus *ACat12_Any* = 1, then
+select only the variables we need to keep before saving a new tibble called
+*ARREW*.
 
 ```{r create_ARREW}
 INCEW %>% 
@@ -699,8 +700,8 @@ INCEW %>%
 
 The original *ARR* tibble had `r nrow(ARR)` arrest offense records. Dropping the
 records associated with offenders whose earliest testing window could not be
-identified or that were coded ACat12 = 999 (excluded user-missing) leaves 
-`r nrow(ARREW)` arrest offense records in *ARREW*. Table 
+identified or that were coded *ACat12_Any* = 0 because *ACat12* = 999 (excluded 
+user-missing) leaves `r nrow(ARREW)` arrest offense records in *ARREW*. Table 
 \ref{tab:examine_ARREW_IWhen} shows how many arrest offense records were 
 associated with incidents that occurred before, during, and after the testing 
 window. 
@@ -760,8 +761,9 @@ The next step is to merge variables from *INCEW* onto the charge data in *CHG*
 so that we can classify each prosecutor charge record according to whether the
 incident associated with it occurred before, during, or after the earliest
 testing window for the offender by using *IWhen*. Then we subset down to the
-*CHG* records that have non-missing *WDate* values and select only the variables
-we need to keep before saving a new tibble called *CHGEW*.
+*CHG* records that have non-missing *WDate* values plus *CCat12_Any* = 1, then
+select only the variables we need to keep before saving a new tibble called 
+*CHGEW*.
 
 ```{r create_CHGEW}
 INCEW %>% 
@@ -782,8 +784,8 @@ INCEW %>%
 
 The original *CHG* tibble had `r nrow(CHG)` prosecutor charge records. Dropping
 the records associated with offenders whose earliest testing window could not be
-identified or that were coded CCat12 = 999 (excluded user-missing) leaves 
-`r nrow(CHGEW)` prosecutor charge records in *CHGEW*. Table
+identified or that were coded *CCat12_Any* = 0 because *CCat12* = 999 (excluded 
+user-missing) leaves `r nrow(CHGEW)` prosecutor charge records in *CHGEW*. Table
 \ref{tab:examine_CHGEW_IWhen} shows how many prosecutor charge records were
 associated with incidents that occurred before, during, and after the testing
 window.
@@ -844,8 +846,9 @@ The next step is to merge variables from *INCEW* onto the charge data in *JUD*
 so that we can classify each judicial charge record according to whether the
 incident associated with it occurred before, during, or after the earliest
 testing window for the offender by using *IWhen*. Then we subset down to the
-*JUD* records that have non-missing *WDate* values and select only the variables
-we need to keep before saving a new tibble called *JUDEW*.
+*JUD* records that have non-missing *WDate* values plus *JCat12_Any* = 1, then 
+select only the variables we need to keep before saving a new tibble called
+*JUDEW*.
 
 ```{r create_JUDEW}
 INCEW %>% 
@@ -866,8 +869,8 @@ INCEW %>%
 
 The original *JUD* tibble had `r nrow(JUD)` judicial charge records. Dropping
 the records associated with offenders whose earliest testing window could not be
-identified or that were coded JCat12 = 999 (excluded user-missing) leaves
-`r nrow(JUDEW)` judicial charge records in *JUDEW*. Table
+identified or that were coded *JCat12_Any* = 0 because *JCat12* = 999 (excluded 
+user-missing) leaves `r nrow(JUDEW)` judicial charge records in *JUDEW*. Table
 \ref{tab:examine_JUDEW_IWhen} shows how many judicial charge records were
 associated with incidents that occurred before, during, and after the testing
 window.
@@ -927,8 +930,9 @@ The next step is to merge variables from *INCEW* onto the charge data in *CON*
 so that we can classify each conviction record according to whether the
 incident associated with it occurred before, during, or after the earliest
 testing window for the offender by using *IWhen*. Then we subset down to the
-*CON* records that have non-missing *WDate* values and select only the variables
-we need to keep before saving a new tibble called *CONEW*.
+*CON* records that have non-missing *WDate* values plus *JCat12_Any* = 1, then 
+select only the variables we need to keep before saving a new tibble called
+*CONEW*.
 
 ```{r create_CONEW}
 INCEW %>% 
@@ -949,8 +953,8 @@ INCEW %>%
 
 The original *CON* tibble had `r nrow(CON)` conviction records. Dropping
 the records associated with offenders whose earliest testing window could not be
-identified or that were coded JCat12 = 999 (excluded user-missing) leaves
-`r nrow(CONEW)` judicial charge records in *CONEW*. Table
+identified or that were coded *JCat12_Any* = 0 because *JCat12* = 999 (excluded 
+user-missing) leaves `r nrow(CONEW)` judicial charge records in *CONEW*. Table
 \ref{tab:examine_CONEW_IWhen} shows how many conviction records were
 associated with incidents that occurred before, during, and after the testing
 window.
