@@ -226,7 +226,7 @@ read_sav(here::here("inst/extdata/SSA_CHG_PA_Charges_Imputed_2018-09-03.sav"),
   dcode(x = ., y = factor(.$CCat12), stem = "CCat12") %>% 
   # Dummy code any of the 12 main crime categories, set user-missing values to 0. 
   mutate(CCat12_Any = if_else(CCat12 %in% 1:12, true = 1, false = 0)) %>% 
-  var_labels(ACat12_Any = "Charged for any of 12 main crime categories") ->
+  var_labels(CCat12_Any = "Charged for any of 12 main crime categories") ->
   CHG
 ```
 
