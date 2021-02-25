@@ -732,7 +732,7 @@ xtabs(~IWhen, data = ARREW) %>%
 
 Now, we need to get offender-level counts of arrest offense records associated 
 with incidents that occurred before, during, and after the testing window 
-respectively called *NARR_Before*, *NARR_During*, and *NARR_After*. We can 
+respectively called *NARR12_Before*, *NARR12_During*, and *NARR12_After*. We can 
 aggregate as follows to get them. We merge these variables into *IDNEW* too. 
 These new aggregated variables respect the criterion of counting only offenses 
 in the 12 main crime categories of interest because of the case selection that
@@ -740,19 +740,19 @@ went into building the *ARREW* data.
 
 ```{r merge_Agg_NARR_IWhen_IDNEW}
 ARREW %>% 
-  mutate(NARR = 1) %>% 
+  mutate(NARR12 = 1) %>% 
   group_by(OID, IWhen, .drop = FALSE) %>% 
   # Aggregate by OID and IWhen to get count variables
-  summarize(NARR = sum(NARR)) %>% 
-  pivot_wider(names_from = IWhen, values_from = NARR, 
-              names_glue = "NARR_{IWhen}") %>% 
-  var_labels(NARR_Before = "No. of arrest offense records before testing window",
-             NARR_During = "No. of arrest offense records during testing window",
-             NARR_After  = "No. of arrest offense records after testing window")  %>% 
+  summarize(NARR12 = sum(NARR12)) %>% 
+  pivot_wider(names_from = IWhen, values_from = NARR12, 
+              names_glue = "NARR12_{IWhen}") %>% 
+  var_labels(NARR12_Before = "No. of arrest offense records from 12 main crime categories before testing window",
+             NARR12_During = "No. of arrest offense records from 12 main crime categories during testing window",
+             NARR12_After  = "No. of arrest offense records from 12 main crime categories after testing window")  %>% 
   # Merge arrest offense record count variables onto IDNEW.
   left_join(x = IDNEW, y = ., by = "OID") %>% 
   # Replace all NA values in the new variables with 0. 
-  mutate(across(.cols = all_of(c("NARR_Before", "NARR_During", "NARR_After")), 
+  mutate(across(.cols = all_of(c("NARR12_Before", "NARR12_During", "NARR12_After")), 
                 .fns = replace_na, replace = 0)) ->
   IDNEW
 ```
@@ -819,7 +819,7 @@ xtabs(~IWhen, data = CHGEW) %>%
 
 Now, we need to get offender-level counts of prosecutor charge records
 associated with incidents that occurred before, during, and after the testing
-window  respectively called *NCHG_Before*, *NCHG_During*, and *NCHG_After*. We
+window respectively called *NCHG12_Before*, *NCHG12_During*, and *NCHG12_After*. We
 can aggregate as follows to get them. We merge these variables into *IDNEW* too.
 These new aggregated variables respect the criterion of counting only offenses
 in the 12 main crime categories of interest because of the case selection that
@@ -828,19 +828,19 @@ went into building the *CHGEW* data.
 
 ```{r merge_Agg_NCHG_IWhen_IDNEW}
 CHGEW %>% 
-  mutate(NCHG = 1) %>% 
+  mutate(NCHG12 = 1) %>% 
   group_by(OID, IWhen, .drop = FALSE) %>% 
   # Aggregate by OID and IWhen to get count variables
-  summarize(NCHG = sum(NCHG)) %>% 
-  pivot_wider(names_from = IWhen, values_from = NCHG, 
-              names_glue = "NCHG_{IWhen}") %>% 
-  var_labels(NCHG_Before = "No. of prosecutor charge records before testing window",
-             NCHG_During = "No. of prosecutor charge records during testing window",
-             NCHG_After  = "No. of prosecutor charge records after testing window") %>% 
+  summarize(NCHG12 = sum(NCHG12)) %>% 
+  pivot_wider(names_from = IWhen, values_from = NCHG12, 
+              names_glue = "NCHG12_{IWhen}") %>% 
+  var_labels(NCHG12_Before = "No. of prosecutor charge records from 12 main crime categories before testing window",
+             NCHG12_During = "No. of prosecutor charge records from 12 main crime categories during testing window",
+             NCHG12_After  = "No. of prosecutor charge records from 12 main crime categories after testing window") %>% 
   # Merge charge record count variables onto IDNEW.
   left_join(x = IDNEW, y = ., by = "OID") %>% 
   # Replace all NA values in the new variables with 0. 
-  mutate(across(.cols = all_of(c("NCHG_Before", "NCHG_During", "NCHG_After")), 
+  mutate(across(.cols = all_of(c("NCHG12_Before", "NCHG12_During", "NCHG12_After")), 
                 .fns = replace_na, replace = 0)) ->
   IDNEW
 ```
@@ -907,7 +907,7 @@ xtabs(~IWhen, data = JUDEW) %>%
 
 Now, we need to get offender-level counts of judicial charge records associated
 with incidents that occurred before, during, and after the testing window
-respectively called *NJUD_Before*, *NJUD_During*, and *NJUD_After*. We can
+respectively called *NJUD12_Before*, *NJUD12_During*, and *NJUD12_After*. We can
 aggregate as follows to get them. We merge these variables into *IDNEW* too.
 These new aggregated variables respect the criterion of counting only offenses
 in the 12 main crime categories of interest because of the case selection that
@@ -915,19 +915,19 @@ went into building the *JUDEW* data.
 
 ```{r merge_Agg_NJUD_IWhen_IDNEW}
 JUDEW %>% 
-  mutate(NJUD = 1) %>% 
+  mutate(NJUD12 = 1) %>% 
   group_by(OID, IWhen, .drop = FALSE) %>% 
   # Aggregate by OID and IWhen to get count variables
-  summarize(NJUD = sum(NJUD)) %>% 
-  pivot_wider(names_from = IWhen, values_from = NJUD, 
-              names_glue = "NJUD_{IWhen}") %>% 
-  var_labels(NJUD_Before = "No. of adjudicated charge records before testing window",
-             NJUD_During = "No. of adjudicated charge records during testing window",
-             NJUD_After  = "No. of adjudicated charge records after testing window") %>% 
+  summarize(NJUD12 = sum(NJUD12)) %>% 
+  pivot_wider(names_from = IWhen, values_from = NJUD12, 
+              names_glue = "NJUD12_{IWhen}") %>% 
+  var_labels(NJUD12_Before = "No. of adjudicated charge records from 12 main crime categories before testing window",
+             NJUD12_During = "No. of adjudicated charge records from 12 main crime categories during testing window",
+             NJUD12_After  = "No. of adjudicated charge records from 12 main crime categories after testing window") %>% 
   # Merge adjudicated charge record count variables onto IDNEW.
   left_join(x = IDNEW, y = ., by = "OID") %>% 
   # Replace all NA values in the new variables with 0. 
-  mutate(across(.cols = all_of(c("NJUD_Before", "NJUD_During", "NJUD_After")), 
+  mutate(across(.cols = all_of(c("NJUD12_Before", "NJUD12_During", "NJUD12_After")), 
                 .fns = replace_na, replace = 0)) ->
   IDNEW
 ```
@@ -994,7 +994,7 @@ xtabs(~IWhen, data = CONEW) %>%
 
 Now, we need to get offender-level counts of conviction records associated
 with incidents that occurred before, during, and after the testing window
-respectively called *NCON_Before*, *NCON_During*, and *NCON_After*. We can
+respectively called *NCON12_Before*, *NCON12_During*, and *NCON12_After*. We can
 aggregate as follows to get them. We merge these variables into *IDNEW* too.
 These new aggregated variables respect the criterion of counting only offenses
 in the 12 main crime categories of interest because of the case selection that
@@ -1002,19 +1002,19 @@ went into building the *CONEW* data.
 
 ```{r merge_Agg_NCON_IWhen_IDNEW}
 CONEW %>% 
-  mutate(NCON = 1) %>% 
+  mutate(NCON12 = 1) %>% 
   group_by(OID, IWhen, .drop = FALSE) %>% 
   # Aggregate by OID and IWhen to get count variables
-  summarize(NCON = sum(NCON)) %>% 
-  pivot_wider(names_from = IWhen, values_from = NCON, 
-              names_glue = "NCON_{IWhen}") %>% 
-  var_labels(NCON_Before = "No. of conviction records before testing window",
-             NCON_During = "No. of conviction records during testing window",
-             NCON_After  = "No. of conviction records after testing window") %>% 
+  summarize(NCON12 = sum(NCON12)) %>% 
+  pivot_wider(names_from = IWhen, values_from = NCON12, 
+              names_glue = "NCON12_{IWhen}") %>% 
+  var_labels(NCON12_Before = "No. of conviction records from 12 main crime categories before testing window",
+             NCON12_During = "No. of conviction records from 12 main crime categories during testing window",
+             NCON12_After  = "No. of conviction records from 12 main crime categories after testing window") %>% 
   # Merge convicted charge record count variables onto IDNEW.
   left_join(x = IDNEW, y = ., by = "OID") %>% 
   # Replace all NA values in the new variables with 0. 
-  mutate(across(.cols = all_of(c("NCON_Before", "NCON_During", "NCON_After")), 
+  mutate(across(.cols = all_of(c("NCON12_Before", "NCON12_During", "NCON12_After")), 
                 .fns = replace_na, replace = 0)) ->
   IDNEW
 ```
