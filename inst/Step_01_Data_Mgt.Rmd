@@ -282,7 +282,9 @@ read_sav(here::here("inst/extdata/SAK_PERP_2018-04-03.sav"),
 ## Create Conviction Dataset
 Convictions are the subset of adjudicated charges that have a specific 
 disposition code indicating that the offender was convicted. For simplicity, we 
-extract them to a new tibble. 
+extract them to a new tibble. Note that in this *CON* tibble, the *NCON* 
+variable is marking all convictions, even those for crimes that fall into the
+user-missing category *JCat12* = 999. 
  
 ```{r create_CON}
 # Create a subset of JUD containing only charges where offender was convicted.
