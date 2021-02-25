@@ -183,6 +183,14 @@ labels that contain parentheses that are problematic when supplied to the
 *user.missing* argument in *freq()*, so we just remove the parentheses from the 
 labels at import.
 
+For the *ARR*, *CHG*, and *JUD* data, we use *dcode()* to convert the
+categorical variables *ACat12*, *CCat12*, and *JCat12* into a set of dummy-code
+variables with suffixes of the form *_x* where *x* includes the values 1-12 and
+999. We also compute an new dummy code variable with the suffix *_Any* to code
+records where the relevant crime category was any of the 12 main codes treated
+as valid values instead of the user-missing code 999. These additional variables
+facilitate later record selection and aggregation operations.
+
 ```{r import_IDN}
 read_sav(here::here("inst/extdata/SSA_IDN_Offenders_2018-09-03.sav"), 
          user_na = TRUE) %>% 
