@@ -734,6 +734,9 @@ Now, we need to get offender-level counts of arrest offense records associated
 with incidents that occurred before, during, and after the testing window 
 respectively called *NARR_Before*, *NARR_During*, and *NARR_After*. We can 
 aggregate as follows to get them. We merge these variables into *IDNEW* too. 
+These new aggregated variables respect the criterion of counting only offenses 
+in the 12 main crime categories of interest because of the case selection that
+went into building the *ARREW* data. 
 
 ```{r merge_Agg_NARR_IWhen_IDNEW}
 ARREW %>% 
@@ -817,8 +820,11 @@ xtabs(~IWhen, data = CHGEW) %>%
 Now, we need to get offender-level counts of prosecutor charge records
 associated with incidents that occurred before, during, and after the testing
 window  respectively called *NCHG_Before*, *NCHG_During*, and *NCHG_After*. We
-can aggregate as follows to get them. We merge these variables into *IDNEW*
-too.
+can aggregate as follows to get them. We merge these variables into *IDNEW* too.
+These new aggregated variables respect the criterion of counting only offenses
+in the 12 main crime categories of interest because of the case selection that
+went into building the *CHGEW* data.
+
 
 ```{r merge_Agg_NCHG_IWhen_IDNEW}
 CHGEW %>% 
@@ -903,6 +909,9 @@ Now, we need to get offender-level counts of judicial charge records associated
 with incidents that occurred before, during, and after the testing window
 respectively called *NJUD_Before*, *NJUD_During*, and *NJUD_After*. We can
 aggregate as follows to get them. We merge these variables into *IDNEW* too.
+These new aggregated variables respect the criterion of counting only offenses
+in the 12 main crime categories of interest because of the case selection that
+went into building the *JUDEW* data.
 
 ```{r merge_Agg_NJUD_IWhen_IDNEW}
 JUDEW %>% 
@@ -987,6 +996,9 @@ Now, we need to get offender-level counts of conviction records associated
 with incidents that occurred before, during, and after the testing window
 respectively called *NCON_Before*, *NCON_During*, and *NCON_After*. We can
 aggregate as follows to get them. We merge these variables into *IDNEW* too.
+These new aggregated variables respect the criterion of counting only offenses
+in the 12 main crime categories of interest because of the case selection that
+went into building the *CONEW* data.
 
 ```{r merge_Agg_NCON_IWhen_IDNEW}
 CONEW %>% 
