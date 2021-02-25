@@ -648,8 +648,8 @@ Now, we need to get offender-level counts of incidents that occurred before,
 during, and after the testing window respectively called *NINC_Before*,
 *NINC_During*, and *NINC_After*. We can aggregate as follows to get them. We
 also merge these variables into *IDNEW*. However, these incident count variables
-are not restricted to incidents involving arrests, charge, or conviction for one
-of the 12 main crime categories. We will construct additional variables
+are not restricted to incidents involving arrest, charge, or conviction for one
+or more of the 12 main crime categories. We will construct additional variables
 consistent with that criterion later.
 
 ```{r merge_Agg_NINC_IWhen_IDNEW}
