@@ -536,7 +536,14 @@ during, or after the earliest testing window for the offender in the new *IWhen*
 variable. Along the way we rename some variables and update variable labels for
 clarity. Then we select only the variables we need to keep and subset down to
 the records that have non-missing *WDate* values and save to a new tibble called
-*INCEW*.
+*INCEW*. 
+
+The *INCEW* tibble still contains one record for every incident associated with
+the offenders contained in *IDNEW*, regardless of what crime categories were
+associated with the incident. This will change later in the script, after we 
+construct and merge in additional variables that make it easy to subset *INCEW*
+to records for incidents associated with at least one arrest, charge, or 
+conviction for one of the 12 main crime categories of interest. 
 
 ```{r create_INCEW}
 # Object to hold names of IWhen levels.
@@ -637,10 +644,13 @@ xtabs(~IDate %within% TWindow + (ESAK_IID == IID), addNA = TRUE, data = INCEW) %
          threeparttable = TRUE)
 ```
 
-Now, we need to get offender-level counts of incidents that occurred before, 
-during, and after the testing window respectively called *NINC_Before*, 
-*NINC_During*, and *NINC_After*. We can aggregate as follows to get them. We 
-also merge these variables into *IDNEW*. 
+Now, we need to get offender-level counts of incidents that occurred before,
+during, and after the testing window respectively called *NINC_Before*,
+*NINC_During*, and *NINC_After*. We can aggregate as follows to get them. We
+also merge these variables into *IDNEW*. However, these incident count variables
+are not restricted to incidents involving arrests, charge, or conviction for one
+of the 12 main crime categories. We will construct additional variables
+consistent with that criterion later.
 
 ```{r merge_Agg_NINC_IWhen_IDNEW}
 INCEW %>% 
