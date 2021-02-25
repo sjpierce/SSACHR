@@ -1412,7 +1412,7 @@ INCEW %>%
   IDNEW
 ```
 
-# Aggregate Crime Category History Variables
+### Incidents with Any History (Arrest, Charge, or Conviction)
 Having created the crime category history variables at the incident level, next
 we aggregate them to offender-level incident count varaiables named *HXCat12_1* 
 to *HXCat12_12* and *HXCat12_999*. Each of these will contain the number of 
@@ -1435,7 +1435,8 @@ INCEW %>%
             HXCat12_10 = sum(HXCat12_10),
             HXCat12_11 = sum(HXCat12_11),
             HXCat12_12 = sum(HXCat12_12),
-            HXCat12_999 = sum(HXCat12_999)) %>% 
+            HXCat12_999 = sum(HXCat12_999),
+            HXCat12_Any = sum(HXCat12_Any)) %>% 
   # Merge count variables onto IDNEW.
   left_join(x = IDNEW, y = ., by = "OID") %>% 
   var_labels(HXCat12_1 = "No. incidents arrested, charged, or convicted for arson",
@@ -1450,7 +1451,8 @@ INCEW %>%
              HXCat12_10 = "No. incidents arrested, charged, or convicted for sex crime - other, excluding CSC",
              HXCat12_11 = "No. incidents arrested, charged, or convicted for traffic/ordinances",
              HXCat12_12 = "No. incidents arrested, charged, or convicted for eapons",
-             HXCat12_999 = "No. incidents arrested, charged, or convicted for excluded user-missing") ->
+             HXCat12_999 = "No. incidents arrested, charged, or convicted for excluded user-missing", 
+             HXCat12_Any = "No. incidents arrested, charged, or convicted for any of 12 main crime categories") ->
   IDNEW
 ```
 
@@ -1474,12 +1476,13 @@ INCEW %>%
             HXCat12_10 = sum(HXCat12_10),
             HXCat12_11 = sum(HXCat12_11),
             HXCat12_12 = sum(HXCat12_12),
-            HXCat12_999 = sum(HXCat12_999)) %>% 
+            HXCat12_999 = sum(HXCat12_999),
+            HXCat12_999 = sum(HXCat12_Any)) %>% 
   pivot_wider(names_from = IWhen, 
               values_from = c(HXCat12_1, HXCat12_2, HXCat12_3, HXCat12_4, 
                               HXCat12_5, HXCat12_6, HXCat12_7, HXCat12_8, 
                               HXCat12_9, HXCat12_10, HXCat12_11, HXCat12_12,
-                              HXCat12_999)) %>% 
+                              HXCat12_999, HXCat12_Any)) %>% 
   # Merge count variables onto IDNEW.
   left_join(x = IDNEW, y = ., by = "OID") %>% 
   var_labels(HXCat12_1_Before = "No. incidents arrested, charged, or convicted for arson before testing window",
