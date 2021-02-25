@@ -294,7 +294,7 @@ JUD %>%
   # Add a variable to CON to simplify aggregation later. 
   mutate(NCON = 1) %>% 
   # Add variable label. 
-  var_labels(NCON = "No. of adjudicated charge records w/ convictions") ->
+  var_labels(NCON = "Adjudicated charge record w/ conviction") ->
   CON
 ```
 
