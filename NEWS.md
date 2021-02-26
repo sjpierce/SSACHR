@@ -1,6 +1,15 @@
+# SSACHR 0.8.1, 2021-02-25
+* Updated `inst/Step_01_Data_Mgt.Rmd` to:
+    * Fix some variable names in code. 
+    * Added and improved explanatory text.
+    * Adapted to focus on creating tibbles and variables to implement focus on 
+      incidents where offender was arrested for, charged with, or convicted of 
+      one or more of the main 12 crime categories. 
+    * Updated table and figure captions. 
+
 # SSACHR 0.8.0, 2021-02-19 
 * Updated `inst/Step_01_Data_Mgt.Rmd` to:
-    * Declare script location via *here::i_am()*. 
+    * Declare script location via here::i_am(). 
     * Fix file paths for SPSS data files work with updated *here* package. 
     * Add new variables for flagging ARR, CHG, JUD, & CON records associated 
       with any of the 12 crime categories of interest. 
@@ -10,7 +19,7 @@
       offender was arrested for, charged with, or convicted of one of 12 crime
       crime categories of interest. 
 * Updated `inst/Step_02_Analysis.Rmd` to:
-    * Declare script location via *here::i_am()*. 
+    * Declare script location via here::i_am(). 
 * Updated `README.Rmd` and `README.md` task list. 
 
 # SSACHR 0.7.2, 2020-09-15
