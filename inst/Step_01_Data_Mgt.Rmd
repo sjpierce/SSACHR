@@ -1399,7 +1399,7 @@ previously defined variable names to indicate the period to which each count
 variable pertains.
 
 ```{r merge_Agg_JCat12_BDA_IDNEW}
-# Aggregate CCat12 dummy codes to offender level incident counts by IWhen .
+# Aggregate JCat12 dummy codes to offender level incident counts by IWhen.
 INCEW %>% 
   group_by(OID, IWhen, .drop = FALSE) %>% 
   pivot_wider(names_from = IWhen, values_from = all_of(jvars), 
