@@ -1282,6 +1282,8 @@ INCEW %>%
   INCEW
 ```
 
+That reduces *INCEW* to `r nrow(INCEW)` records. 
+
 ## Aggregating Crime Category Dummy Variables to Offender Level Count Variables
 Here we aggregate the dummy coded crime category variables data from the
 incident level to offender level incident counts for each crime category. 
