@@ -1422,23 +1422,12 @@ incidents that had a history showing the offender was
 ```{r merge_Agg_HXCat12_IDNEW} 
 INCEW %>% 
   group_by(OID, .drop = FALSE) %>% 
-  # Aggregate by OID to get count variables (overall)
-  summarize(HXCat12_1 = sum(HXCat12_1),
-            HXCat12_2 = sum(HXCat12_2),
-            HXCat12_3 = sum(HXCat12_3),
-            HXCat12_4 = sum(HXCat12_4),
-            HXCat12_5 = sum(HXCat12_5),
-            HXCat12_6 = sum(HXCat12_6),
-            HXCat12_7 = sum(HXCat12_7),
-            HXCat12_8 = sum(HXCat12_8),
-            HXCat12_9 = sum(HXCat12_9),
-            HXCat12_10 = sum(HXCat12_10),
-            HXCat12_11 = sum(HXCat12_11),
-            HXCat12_12 = sum(HXCat12_12),
-            HXCat12_999 = sum(HXCat12_999),
-            HXCat12_Any = sum(HXCat12_Any)) %>% 
+  # Aggregate dummy codes by OID into incident count variables
+  summarize(across(.cols = all_of(hxvars), .fns = sum))  %>% 
   # Merge count variables onto IDNEW.
   left_join(x = IDNEW, y = ., by = "OID") %>% 
+  # Replace all NA values in the new variables with 0. 
+  mutate(across(.cols = all_of(hxvars), .fns = replace_na, replace = 0)) %>% 
   var_labels(HXCat12_1 = "No. incidents arrested, charged, or convicted for arson",
              HXCat12_2 = "No. incidents arrested, charged, or convicted for assault - DV, stalking",
              HXCat12_3 = "No. incidents arrested, charged, or convicted for assault - non-sexual, non-DV",
@@ -1461,28 +1450,14 @@ incidents that occurred before, during, and after the testing window. We can
 aggregate as follows to get them and merge them into *IDNEW*.  
 
 ```{r merge_Agg_HXCat12_BDA_IDNEW} 
+# Aggregate HXCat12 dummy codes to offender level incident counts by IWhen.
 INCEW %>% 
   group_by(OID, IWhen, .drop = FALSE) %>% 
-  # Aggregate by OID to get count variables (overall)
-  summarize(HXCat12_1 = sum(HXCat12_1),
-            HXCat12_2 = sum(HXCat12_2),
-            HXCat12_3 = sum(HXCat12_3),
-            HXCat12_4 = sum(HXCat12_4),
-            HXCat12_5 = sum(HXCat12_5),
-            HXCat12_6 = sum(HXCat12_6),
-            HXCat12_7 = sum(HXCat12_7),
-            HXCat12_8 = sum(HXCat12_8),
-            HXCat12_9 = sum(HXCat12_9),
-            HXCat12_10 = sum(HXCat12_10),
-            HXCat12_11 = sum(HXCat12_11),
-            HXCat12_12 = sum(HXCat12_12),
-            HXCat12_999 = sum(HXCat12_999),
-            HXCat12_999 = sum(HXCat12_Any)) %>% 
-  pivot_wider(names_from = IWhen, 
-              values_from = c(HXCat12_1, HXCat12_2, HXCat12_3, HXCat12_4, 
-                              HXCat12_5, HXCat12_6, HXCat12_7, HXCat12_8, 
-                              HXCat12_9, HXCat12_10, HXCat12_11, HXCat12_12,
-                              HXCat12_999, HXCat12_Any)) %>% 
+  pivot_wider(names_from = IWhen, values_from = all_of(hxvars), 
+              values_fill = 0) %>%
+  group_by(OID) %>% 
+  # Aggregate dummy codes by OID into incident count variables
+  summarize(across(.cols = all_of(hxvarsbda), .fns = sum, na.rm = TRUE))  %>% 
   # Merge count variables onto IDNEW.
   left_join(x = IDNEW, y = ., by = "OID") %>% 
   var_labels(HXCat12_1_Before = "No. incidents arrested, charged, or convicted for arson before testing window",
@@ -1498,6 +1473,7 @@ INCEW %>%
              HXCat12_11_Before = "No. incidents arrested, charged, or convicted for traffic/ordinances before testing window",
              HXCat12_12_Before = "No. incidents arrested, charged, or convicted for weapons before testing window",
              HXCat12_999_Before = "No. incidents arrested, charged, or convicted for excluded user-missing before testing window",
+             HXCat12_Any_Before = "No. incidents arrested, charged, or convicted for any of 12 main crime categories before testing window",
              HXCat12_1_During = "No. incidents arrested, charged, or convicted for arson during testing window",
              HXCat12_2_During = "No. incidents arrested, charged, or convicted for assault - DV, stalking during testing window",
              HXCat12_3_During = "No. incidents arrested, charged, or convicted for assault - non-sexual, non-DV during testing window",
@@ -1511,6 +1487,7 @@ INCEW %>%
              HXCat12_11_During = "No. incidents arrested, charged, or convicted for traffic/ordinances during testing window",
              HXCat12_12_During = "No. incidents arrested, charged, or convicted for weapons during testing window",
              HXCat12_999_During = "No. incidents arrested, charged, or convicted for excluded user-missing during testing window",
+             HXCat12_Any_During = "No. incidents arrested, charged, or convicted for any of 12 main crime categories during testing window",
              HXCat12_1_After = "No. incidents arrested, charged, or convicted for arson after testing window",
              HXCat12_2_After = "No. incidents arrested, charged, or convicted for assault - DV, stalking after testing window",
              HXCat12_3_After = "No. incidents arrested, charged, or convicted for assault - non-sexual, non-DV after testing window",
@@ -1523,7 +1500,8 @@ INCEW %>%
              HXCat12_10_After = "No. incidents arrested, charged, or convicted for sex crime - other, excluding CSC after testing window",
              HXCat12_11_After = "No. incidents arrested, charged, or convicted for traffic/ordinances after testing window",
              HXCat12_12_After = "No. incidents arrested, charged, or convicted for weapons after testing window",
-             HXCat12_999_After = "No. incidents arrested, charged, or convicted for excluded user-missing after testing window") ->
+             HXCat12_999_After = "No. incidents arrested, charged, or convicted for excluded user-missing after testing window",
+             HXCat12_Any_After = "No. incidents arrested, charged, or convicted for any of 12 main crime categories after testing window") ->
   IDNEW
 ```
 
