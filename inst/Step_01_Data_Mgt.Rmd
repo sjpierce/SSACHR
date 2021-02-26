@@ -1249,8 +1249,8 @@ variables cross-tabulate.
 
 ```{r compare_HXCat12_5_to_CSC_ANY}
 # Table caption.
-TCap <- paste("Crosstabulate Incident-Level Criminal Sexual Conduct History",
-              "Variables")
+TCap <- paste0("Crosstabulate Incident-Level Criminal Sexual Conduct History ",
+              "Variables (N = ", nrow(INCEW), ")")
 # Footnote text.
 FN <- paste("Only incident records for incidents with valid testing window",
             "start dates were included. The variables disagree when the only",
