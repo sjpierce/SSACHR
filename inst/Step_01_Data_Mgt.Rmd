@@ -229,7 +229,7 @@ read_sav(here::here("inst/extdata/SSA_ARR_Arrests_Imputed_2018-09-03.sav"),
              ACat12_8   = "Arrested for larceny/theft/fraud",
              ACat12_9   = "Arrested for robbery", 
              ACat12_10  = "Arrested for sex crime, other excluding CSC",
-             ACat12_11  = "Arrested for traffice & ordinances",
+             ACat12_11  = "Arrested for traffic/ordinances",
              ACat12_12  = "Arrested for weapons",
              ACat12_999 = "Arrested for excluded user-missing",
              ACat12_Any = "Arrested for any of 12 main crime categories") ->
@@ -247,20 +247,20 @@ read_sav(here::here("inst/extdata/SSA_CHG_PA_Charges_Imputed_2018-09-03.sav"),
   dcode(x = ., y = factor(.$CCat12), stem = "CCat12") %>% 
   # Dummy code any of the 12 main crime categories, set user-missing values to 0. 
   mutate(CCat12_Any = if_else(CCat12 %in% 1:12, true = 1, false = 0)) %>% 
-  var_labels(CCat12_1   = "Charged with arson",
-             CCat12_2   = "Charged with assault - DV, stalking",
-             CCat12_3   = "Charged with assault - non-sexual, non-DV",
-             CCat12_4   = "Charged with burglary",
-             CCat12_5   = "Charged with criminal sexual conduct",
-             CCat12_6   = "Charged with drug crime",
-             CCat12_7   = "Charged with homicide",
-             CCat12_8   = "Charged with larceny/theft/fraud",
-             CCat12_9   = "Charged with robbery", 
-             CCat12_10  = "Charged with sex crime, other excluding CSC",
-             CCat12_11  = "Charged with traffice & ordinances",
-             CCat12_12  = "Charged with weapons",
-             CCat12_999 = "Charged with excluded user-missing",
-             CCat12_Any = "Charged with any of 12 main crime categories") ->
+  var_labels(CCat12_1   = "Charged for arson",
+             CCat12_2   = "Charged for assault - DV, stalking",
+             CCat12_3   = "Charged for assault - non-sexual, non-DV",
+             CCat12_4   = "Charged for burglary",
+             CCat12_5   = "Charged for criminal sexual conduct",
+             CCat12_6   = "Charged for drug crime",
+             CCat12_7   = "Charged for homicide",
+             CCat12_8   = "Charged for larceny/theft/fraud",
+             CCat12_9   = "Charged for robbery", 
+             CCat12_10  = "Charged for sex crime, other excluding CSC",
+             CCat12_11  = "Charged for traffic/ordinances",
+             CCat12_12  = "Charged for weapons",
+             CCat12_999 = "Charged for excluded user-missing",
+             CCat12_Any = "Charged for any of 12 main crime categories") ->
   CHG
 ```
 
@@ -285,7 +285,7 @@ read_sav(here::here("inst/extdata/SSA_JUD_Judicial_Charges_Imputed_2018-09-03.sa
              JCat12_8   = "Adjudicated for larceny/theft/fraud",
              JCat12_9   = "Adjudicated for robbery", 
              JCat12_10  = "Adjudicated for sex crime, other excluding CSC",
-             JCat12_11  = "Adjudicated for traffice & ordinances",
+             JCat12_11  = "Adjudicated for traffic/ordinances",
              JCat12_12  = "Adjudicated for weapons",
              JCat12_999 = "Adjudicated for excluded user-missing",
              JCat12_Any = "Adjudicated for any of 12 main crime categories") ->
@@ -333,20 +333,20 @@ JUD %>%
   # Add a variable to CON to simplify aggregation later. 
   mutate(NCON = 1) %>% 
   # Add variable label. 
-  var_labels(JCat12_1   = "Convicted of arson",
-             JCat12_2   = "Convicted of assault - DV, stalking",
-             JCat12_3   = "Convicted of assault - non-sexual, non-DV",
-             JCat12_4   = "Convicted of burglary",
-             JCat12_5   = "Convicted of criminal sexual conduct",
-             JCat12_6   = "Convicted of drug crime",
-             JCat12_7   = "Convicted of homicide",
-             JCat12_8   = "Convicted of larceny/theft/fraud",
-             JCat12_9   = "Convicted of robbery", 
-             JCat12_10  = "Convicted of sex crime, other excluding CSC",
-             JCat12_11  = "Convicted of traffice & ordinances",
-             JCat12_12  = "Convicted of weapons",
-             JCat12_999 = "Convicted of excluded user-missing",
-             JCat12_Any = "Convicted of any of 12 main crime categories",
+  var_labels(JCat12_1   = "Convicted for arson",
+             JCat12_2   = "Convicted for assault - DV, stalking",
+             JCat12_3   = "Convicted for assault - non-sexual, non-DV",
+             JCat12_4   = "Convicted for burglary",
+             JCat12_5   = "Convicted for criminal sexual conduct",
+             JCat12_6   = "Convicted for drug crime",
+             JCat12_7   = "Convicted for homicide",
+             JCat12_8   = "Convicted for larceny/theft/fraud",
+             JCat12_9   = "Convicted for robbery", 
+             JCat12_10  = "Convicted for sex crime, other excluding CSC",
+             JCat12_11  = "Convicted for traffic/ordinances",
+             JCat12_12  = "Convicted for weapons",
+             JCat12_999 = "Convicted for excluded user-missing",
+             JCat12_Any = "Convicted for any of 12 main crime categories",
              NCON       = "Adjudicated charge record w/ conviction") ->
   CON
 ```
@@ -1195,7 +1195,7 @@ ARREW %>%
              ACat12_8   = "Arrested for larceny/theft/fraud",
              ACat12_9   = "Arrested for robbery", 
              ACat12_10  = "Arrested for sex crime, other excluding CSC",
-             ACat12_11  = "Arrested for traffice & ordinances",
+             ACat12_11  = "Arrested for traffic/ordinances",
              ACat12_12  = "Arrested for weapons",
              ACat12_999 = "Arrested for excluded user-missing",
              ACat12_Any = "Arrested for any of 12 main crime categories") ->
@@ -1223,20 +1223,20 @@ CHGEW %>%
   left_join(x = INCEW, y = ., by = "IID") %>% 
   # Replace all NA values in the new variables with 0. 
   mutate(across(.cols = all_of(cvars), .fns = replace_na, replace = 0)) %>% 
-  var_labels(CCat12_1   = "Charged with arson",
-             CCat12_2   = "Charged with assault - DV, stalking",
-             CCat12_3   = "Charged with assault - non-sexual, non-DV",
-             CCat12_4   = "Charged with burglary",
-             CCat12_5   = "Charged with criminal sexual conduct",
-             CCat12_6   = "Charged with drug crime",
-             CCat12_7   = "Charged with homicide",
-             CCat12_8   = "Charged with larceny/theft/fraud",
-             CCat12_9   = "Charged with robbery", 
-             CCat12_10  = "Charged with sex crime, other excluding CSC",
-             CCat12_11  = "Charged with traffice & ordinances",
-             CCat12_12  = "Charged with weapons",
-             CCat12_999 = "Charged with excluded user-missing",
-             CCat12_Any = "Charged with any of 12 main crime categories") ->
+  var_labels(CCat12_1   = "Charged for arson",
+             CCat12_2   = "Charged for assault - DV, stalking",
+             CCat12_3   = "Charged for assault - non-sexual, non-DV",
+             CCat12_4   = "Charged for burglary",
+             CCat12_5   = "Charged for criminal sexual conduct",
+             CCat12_6   = "Charged for drug crime",
+             CCat12_7   = "Charged for homicide",
+             CCat12_8   = "Charged for larceny/theft/fraud",
+             CCat12_9   = "Charged for robbery", 
+             CCat12_10  = "Charged for sex crime, other excluding CSC",
+             CCat12_11  = "Charged for traffic/ordinances",
+             CCat12_12  = "Charged for weapons",
+             CCat12_999 = "Charged for excluded user-missing",
+             CCat12_Any = "Charged for any of 12 main crime categories") ->
   INCEW
 ```
 
@@ -1261,20 +1261,20 @@ CONEW %>%
   left_join(x = INCEW, y = ., by = "IID") %>% 
   # Replace all NA values in the new variables with 0. 
   mutate(across(.cols = all_of(jvars), .fns = replace_na, replace = 0)) %>% 
-  var_labels(JCat12_1   = "Convicted of arson",
-             JCat12_2   = "Convicted of assault - DV, stalking",
-             JCat12_3   = "Convicted of assault - non-sexual, non-DV",
-             JCat12_4   = "Convicted of burglary",
-             JCat12_5   = "Convicted of criminal sexual conduct",
-             JCat12_6   = "Convicted of drug crime",
-             JCat12_7   = "Convicted of homicide",
-             JCat12_8   = "Convicted of larceny/theft/fraud",
-             JCat12_9   = "Convicted of robbery", 
-             JCat12_10  = "Convicted of sex crime, other excluding CSC",
-             JCat12_11  = "Convicted of traffice & ordinances",
-             JCat12_12  = "Convicted of weapons",
-             JCat12_999 = "Convicted of excluded user-missing",
-             JCat12_Any = "Convicted of any of 12 main crime categories") ->
+  var_labels(JCat12_1   = "Convicted for arson",
+             JCat12_2   = "Convicted for assault - DV, stalking",
+             JCat12_3   = "Convicted for assault - non-sexual, non-DV",
+             JCat12_4   = "Convicted for burglary",
+             JCat12_5   = "Convicted for criminal sexual conduct",
+             JCat12_6   = "Convicted for drug crime",
+             JCat12_7   = "Convicted for homicide",
+             JCat12_8   = "Convicted for larceny/theft/fraud",
+             JCat12_9   = "Convicted for robbery", 
+             JCat12_10  = "Convicted for sex crime, other excluding CSC",
+             JCat12_11  = "Convicted for traffic/ordinances",
+             JCat12_12  = "Convicted for weapons",
+             JCat12_999 = "Convicted for excluded user-missing",
+             JCat12_Any = "Convicted for any of 12 main crime categories") ->
   INCEW
 ```
 
@@ -1413,7 +1413,21 @@ INCEW %>%
   # Merge dummy variables onto IDNEW.
   left_join(x = IDNEW, y = ., by = "OID") %>% 
   # Replace all NA values in the new variables with 0. 
-  mutate(across(.cols = all_of(avars), .fns = replace_na, replace = 0)) ->
+  mutate(across(.cols = all_of(avars), .fns = replace_na, replace = 0)) %>% 
+  var_labels(ACat12_1 = "No. incidents arrested for arson",
+             ACat12_2 = "No. incidents arrested for assault - DV, stalking",
+             ACat12_3 = "No. incidents arrested for assault - non-sexual, non-DV",
+             ACat12_4 = "No. incidents arrested for burglary",
+             ACat12_5 = "No. incidents arrested for criminal sexual conduct",
+             ACat12_6 = "No. incidents arrested for drug crime",
+             ACat12_7 = "No. incidents arrested for homicide",
+             ACat12_8 = "No. incidents arrested for larceny/theft/fraud",
+             ACat12_9 = "No. incidents arrested for robbery",
+             ACat12_10 = "No. incidents arrested for sex crime - other, excluding CSC",
+             ACat12_11 = "No. incidents arrested for traffic/ordinances",
+             ACat12_12 = "No. incidents arrested for weapons",
+             ACat12_999 = "No. incidents arrested for excluded user-missing", 
+             ACat12_Any = "No. incidents arrested for any of 12 main crime categories") ->
   IDNEW
 ```
 
@@ -1433,7 +1447,49 @@ INCEW %>%
   # Aggregate dummy codes by OID into incident count variables
   summarize(across(.cols = all_of(avarsbda), .fns = sum, na.rm = TRUE))  %>% 
   # Merge count variables onto IDNEW.
-  left_join(x = IDNEW, y = ., by = "OID") -> 
+  left_join(x = IDNEW, y = ., by = "OID") %>% 
+  var_labels(ACat12_1_Before = "No. incidents arrested for arson before testing window before testing window",
+             ACat12_2_Before = "No. incidents arrested for assault - DV, stalking before testing window",
+             ACat12_3_Before = "No. incidents arrested for assault - non-sexual, non-DV before testing window",
+             ACat12_4_Before = "No. incidents arrested for burglary before testing window",
+             ACat12_5_Before = "No. incidents arrested for criminal sexual conduct before testing window",
+             ACat12_6_Before = "No. incidents arrested for drug crime before testing window",
+             ACat12_7_Before = "No. incidents arrested for homicide before testing window",
+             ACat12_8_Before = "No. incidents arrested for larceny/theft/fraud before testing window",
+             ACat12_9_Before = "No. incidents arrested for robbery before testing window",
+             ACat12_10_Before = "No. incidents arrested for sex crime - other, excluding CSC before testing window",
+             ACat12_11_Before = "No. incidents arrested for traffic/ordinances before testing window",
+             ACat12_12_Before = "No. incidents arrested for weapons before testing window",
+             ACat12_999_Before = "No. incidents arrested for excluded user-missing before testing window", 
+             ACat12_Any_Before = "No. incidents arrested for any of 12 main crime categories before testing window",
+             ACat12_1_During = "No. incidents arrested for arson during testing window",
+             ACat12_2_During = "No. incidents arrested for assault - DV, stalking during testing window",
+             ACat12_3_During = "No. incidents arrested for assault - non-sexual, non-DV during testing window",
+             ACat12_4_During = "No. incidents arrested for burglary during testing window",
+             ACat12_5_During = "No. incidents arrested for criminal sexual conduct during testing window",
+             ACat12_6_During = "No. incidents arrested for drug crime during testing window",
+             ACat12_7_During = "No. incidents arrested for homicide during testing window",
+             ACat12_8_During = "No. incidents arrested for larceny/theft/fraud during testing window",
+             ACat12_9_During = "No. incidents arrested for robbery during testing window",
+             ACat12_10_During = "No. incidents arrested for sex crime - other, excluding CSC during testing window",
+             ACat12_11_During = "No. incidents arrested for traffic/ordinances during testing window",
+             ACat12_12_During = "No. incidents arrested for weapons during testing window",
+             ACat12_999_During = "No. incidents arrested for excluded user-missing during testing window", 
+             ACat12_Any_During = "No. incidents arrested for any of 12 main crime categories during testing window",
+             ACat12_1_After = "No. incidents arrested for arson after testing window",
+             ACat12_2_After = "No. incidents arrested for assault - DV, stalking after testing window",
+             ACat12_3_After = "No. incidents arrested for assault - non-sexual, non-DV after testing window",
+             ACat12_4_After = "No. incidents arrested for burglary after testing window",
+             ACat12_5_After = "No. incidents arrested for criminal sexual conduct after testing window",
+             ACat12_6_After = "No. incidents arrested for drug crime after testing window",
+             ACat12_7_After = "No. incidents arrested for homicide after testing window",
+             ACat12_8_After = "No. incidents arrested for larceny/theft/fraud after testing window",
+             ACat12_9_After = "No. incidents arrested for robbery after testing window",
+             ACat12_10_After = "No. incidents arrested for sex crime - other, excluding CSC after testing window",
+             ACat12_11_After = "No. incidents arrested for traffic/ordinances after testing window",
+             ACat12_12_After = "No. incidents arrested for weapons after testing window",
+             ACat12_999_After = "No. incidents arrested for excluded user-missing", 
+             ACat12_Any_After = "No. incidents arrested for any of 12 main crime categories after testing window") -> 
   IDNEW
 ```
 
@@ -1455,7 +1511,21 @@ INCEW %>%
   # Merge dummy variables onto IDNEW.
   left_join(x = IDNEW, y = ., by = "OID") %>% 
   # Replace all NA values in the new variables with 0. 
-  mutate(across(.cols = all_of(cvars), .fns = replace_na, replace = 0)) ->
+  mutate(across(.cols = all_of(cvars), .fns = replace_na, replace = 0)) %>% 
+  var_labels(CCat12_1 = "No. incidents charged for arson",
+             CCat12_2 = "No. incidents charged for assault - DV, stalking",
+             CCat12_3 = "No. incidents charged for assault - non-sexual, non-DV",
+             CCat12_4 = "No. incidents charged for burglary",
+             CCat12_5 = "No. incidents charged for criminal sexual conduct",
+             CCat12_6 = "No. incidents charged for drug crime",
+             CCat12_7 = "No. incidents charged for homicide",
+             CCat12_8 = "No. incidents charged for larceny/theft/fraud",
+             CCat12_9 = "No. incidents charged for robbery",
+             CCat12_10 = "No. incidents charged for sex crime - other, excluding CSC",
+             CCat12_11 = "No. incidents charged for traffic/ordinances",
+             CCat12_12 = "No. incidents charged for weapons",
+             CCat12_999 = "No. incidents charged for excluded user-missing", 
+             CCat12_Any = "No. incidents charged for any of 12 main crime categories") ->
   IDNEW
 ```
 
@@ -1475,7 +1545,49 @@ INCEW %>%
   # Aggregate dummy codes by OID into incident count variables
   summarize(across(.cols = all_of(cvarsbda), .fns = sum, na.rm = TRUE))  %>% 
   # Merge count variables onto IDNEW.
-  left_join(x = IDNEW, y = ., by = "OID") -> 
+  left_join(x = IDNEW, y = ., by = "OID") %>% 
+  var_labels(CCat12_1_Before = "No. incidents charged for arson before testing window before testing window",
+             CCat12_2_Before = "No. incidents charged for assault - DV, stalking before testing window",
+             CCat12_3_Before = "No. incidents charged for assault - non-sexual, non-DV before testing window",
+             CCat12_4_Before = "No. incidents charged for burglary before testing window",
+             CCat12_5_Before = "No. incidents charged for criminal sexual conduct before testing window",
+             CCat12_6_Before = "No. incidents charged for drug crime before testing window",
+             CCat12_7_Before = "No. incidents charged for homicide before testing window",
+             CCat12_8_Before = "No. incidents charged for larceny/theft/fraud before testing window",
+             CCat12_9_Before = "No. incidents charged for robbery before testing window",
+             CCat12_10_Before = "No. incidents charged for sex crime - other, excluding CSC before testing window",
+             CCat12_11_Before = "No. incidents charged for traffic/ordinances before testing window",
+             CCat12_12_Before = "No. incidents charged for weapons before testing window",
+             CCat12_999_Before = "No. incidents charged for excluded user-missing before testing window", 
+             CCat12_Any_Before = "No. incidents charged for any of 12 main crime categories before testing window",
+             CCat12_1_During = "No. incidents charged for arson during testing window",
+             CCat12_2_During = "No. incidents charged for assault - DV, stalking during testing window",
+             CCat12_3_During = "No. incidents charged for assault - non-sexual, non-DV during testing window",
+             CCat12_4_During = "No. incidents charged for burglary during testing window",
+             CCat12_5_During = "No. incidents charged for criminal sexual conduct during testing window",
+             CCat12_6_During = "No. incidents charged for drug crime during testing window",
+             CCat12_7_During = "No. incidents charged for homicide during testing window",
+             CCat12_8_During = "No. incidents charged for larceny/theft/fraud during testing window",
+             CCat12_9_During = "No. incidents charged for robbery during testing window",
+             CCat12_10_During = "No. incidents charged for sex crime - other, excluding CSC during testing window",
+             CCat12_11_During = "No. incidents charged for traffic/ordinances during testing window",
+             CCat12_12_During = "No. incidents charged for weapons during testing window",
+             CCat12_999_During = "No. incidents charged for excluded user-missing during testing window", 
+             CCat12_Any_During = "No. incidents charged for any of 12 main crime categories during testing window",
+             CCat12_1_After = "No. incidents charged for arson after testing window",
+             CCat12_2_After = "No. incidents charged for assault - DV, stalking after testing window",
+             CCat12_3_After = "No. incidents charged for assault - non-sexual, non-DV after testing window",
+             CCat12_4_After = "No. incidents charged for burglary after testing window",
+             CCat12_5_After = "No. incidents charged for criminal sexual conduct after testing window",
+             CCat12_6_After = "No. incidents charged for drug crime after testing window",
+             CCat12_7_After = "No. incidents charged for homicide after testing window",
+             CCat12_8_After = "No. incidents charged for larceny/theft/fraud after testing window",
+             CCat12_9_After = "No. incidents charged for robbery after testing window",
+             CCat12_10_After = "No. incidents charged for sex crime - other, excluding CSC after testing window",
+             CCat12_11_After = "No. incidents charged for traffic/ordinances after testing window",
+             CCat12_12_After = "No. incidents charged for weapons after testing window",
+             CCat12_999_After = "No. incidents charged for excluded user-missing", 
+             CCat12_Any_After = "No. incidents charged for any of 12 main crime categories after testing window") -> 
   IDNEW
 ```
 
@@ -1497,7 +1609,21 @@ INCEW %>%
   # Merge dummy variables onto IDNEW.
   left_join(x = IDNEW, y = ., by = "OID") %>% 
   # Replace all NA values in the new variables with 0. 
-  mutate(across(.cols = all_of(jvars), .fns = replace_na, replace = 0)) ->
+  mutate(across(.cols = all_of(jvars), .fns = replace_na, replace = 0)) %>% 
+  var_labels(JCat12_1 = "No. incidents convicted for arson",
+             JCat12_2 = "No. incidents convicted for assault - DV, stalking",
+             JCat12_3 = "No. incidents convicted for assault - non-sexual, non-DV",
+             JCat12_4 = "No. incidents convicted for burglary",
+             JCat12_5 = "No. incidents convicted for criminal sexual conduct",
+             JCat12_6 = "No. incidents convicted for drug crime",
+             JCat12_7 = "No. incidents convicted for homicide",
+             JCat12_8 = "No. incidents convicted for larceny/theft/fraud",
+             JCat12_9 = "No. incidents convicted for robbery",
+             JCat12_10 = "No. incidents convicted for sex crime - other, excluding CSC",
+             JCat12_11 = "No. incidents convicted for traffic/ordinances",
+             JCat12_12 = "No. incidents convicted for weapons",
+             JCat12_999 = "No. incidents convicted for excluded user-missing", 
+             JCat12_Any = "No. incidents convicted for any of 12 main crime categories") ->
   IDNEW
 ```
 
@@ -1517,7 +1643,49 @@ INCEW %>%
   # Aggregate dummy codes by OID into incident count variables
   summarize(across(.cols = all_of(jvarsbda), .fns = sum, na.rm = TRUE))  %>% 
   # Merge count variables onto IDNEW.
-  left_join(x = IDNEW, y = ., by = "OID") -> 
+  left_join(x = IDNEW, y = ., by = "OID") %>% 
+  var_labels(JCat12_1_Before = "No. incidents convicted for arson before testing window before testing window",
+             JCat12_2_Before = "No. incidents convicted for assault - DV, stalking before testing window",
+             JCat12_3_Before = "No. incidents convicted for assault - non-sexual, non-DV before testing window",
+             JCat12_4_Before = "No. incidents convicted for burglary before testing window",
+             JCat12_5_Before = "No. incidents convicted for criminal sexual conduct before testing window",
+             JCat12_6_Before = "No. incidents convicted for drug crime before testing window",
+             JCat12_7_Before = "No. incidents convicted for homicide before testing window",
+             JCat12_8_Before = "No. incidents convicted for larceny/theft/fraud before testing window",
+             JCat12_9_Before = "No. incidents convicted for robbery before testing window",
+             JCat12_10_Before = "No. incidents convicted for sex crime - other, excluding CSC before testing window",
+             JCat12_11_Before = "No. incidents convicted for traffic/ordinances before testing window",
+             JCat12_12_Before = "No. incidents convicted for weapons before testing window",
+             JCat12_999_Before = "No. incidents convicted for excluded user-missing before testing window", 
+             JCat12_Any_Before = "No. incidents convicted for any of 12 main crime categories before testing window",
+             JCat12_1_During = "No. incidents convicted for arson during testing window",
+             JCat12_2_During = "No. incidents convicted for assault - DV, stalking during testing window",
+             JCat12_3_During = "No. incidents convicted for assault - non-sexual, non-DV during testing window",
+             JCat12_4_During = "No. incidents convicted for burglary during testing window",
+             JCat12_5_During = "No. incidents convicted for criminal sexual conduct during testing window",
+             JCat12_6_During = "No. incidents convicted for drug crime during testing window",
+             JCat12_7_During = "No. incidents convicted for homicide during testing window",
+             JCat12_8_During = "No. incidents convicted for larceny/theft/fraud during testing window",
+             JCat12_9_During = "No. incidents convicted for robbery during testing window",
+             JCat12_10_During = "No. incidents convicted for sex crime - other, excluding CSC during testing window",
+             JCat12_11_During = "No. incidents convicted for traffic/ordinances during testing window",
+             JCat12_12_During = "No. incidents convicted for weapons during testing window",
+             JCat12_999_During = "No. incidents convicted for excluded user-missing during testing window", 
+             JCat12_Any_During = "No. incidents convicted for any of 12 main crime categories during testing window",
+             JCat12_1_After = "No. incidents convicted for arson after testing window",
+             JCat12_2_After = "No. incidents convicted for assault - DV, stalking after testing window",
+             JCat12_3_After = "No. incidents convicted for assault - non-sexual, non-DV after testing window",
+             JCat12_4_After = "No. incidents convicted for burglary after testing window",
+             JCat12_5_After = "No. incidents convicted for criminal sexual conduct after testing window",
+             JCat12_6_After = "No. incidents convicted for drug crime after testing window",
+             JCat12_7_After = "No. incidents convicted for homicide after testing window",
+             JCat12_8_After = "No. incidents convicted for larceny/theft/fraud after testing window",
+             JCat12_9_After = "No. incidents convicted for robbery after testing window",
+             JCat12_10_After = "No. incidents convicted for sex crime - other, excluding CSC after testing window",
+             JCat12_11_After = "No. incidents convicted for traffic/ordinances after testing window",
+             JCat12_12_After = "No. incidents convicted for weapons after testing window",
+             JCat12_999_After = "No. incidents convicted for excluded user-missing", 
+             JCat12_Any_After = "No. incidents convicted for any of 12 main crime categories after testing window") -> 
   IDNEW
 ```
 
@@ -1541,14 +1709,14 @@ INCEW %>%
              HXCat12_2 = "No. incidents arrested, charged, or convicted for assault - DV, stalking",
              HXCat12_3 = "No. incidents arrested, charged, or convicted for assault - non-sexual, non-DV",
              HXCat12_4 = "No. incidents arrested, charged, or convicted for burglary",
-             HXCat12_5 = "No. incidents arrested, charged, or convicted for riminal sexual conduct",
+             HXCat12_5 = "No. incidents arrested, charged, or convicted for criminal sexual conduct",
              HXCat12_6 = "No. incidents arrested, charged, or convicted for drug crime",
              HXCat12_7 = "No. incidents arrested, charged, or convicted for homicide",
              HXCat12_8 = "No. incidents arrested, charged, or convicted for larceny/theft/fraud",
              HXCat12_9 = "No. incidents arrested, charged, or convicted for robbery",
              HXCat12_10 = "No. incidents arrested, charged, or convicted for sex crime - other, excluding CSC",
              HXCat12_11 = "No. incidents arrested, charged, or convicted for traffic/ordinances",
-             HXCat12_12 = "No. incidents arrested, charged, or convicted for eapons",
+             HXCat12_12 = "No. incidents arrested, charged, or convicted for weapons",
              HXCat12_999 = "No. incidents arrested, charged, or convicted for excluded user-missing", 
              HXCat12_Any = "No. incidents arrested, charged, or convicted for any of 12 main crime categories") ->
   IDNEW
