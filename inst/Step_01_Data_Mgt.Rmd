@@ -806,7 +806,10 @@ ARREW %>%
   left_join(x = IDNEW, y = ., by = "OID") %>% 
   # Replace all NA values in the new variables with 0. 
   mutate(across(.cols = all_of(c("NARR12_Before", "NARR12_During", "NARR12_After")), 
-                .fns = replace_na, replace = 0)) ->
+                .fns = replace_na, replace = 0)) %>% 
+  # Compute alternate NARR for records from 12 main crime categories. 
+  mutate(NARR12 = NARR12_Before + NARR12_During + NARR12_After) %>% 
+  var_labels(NARR12 = "No. of arrest offense records from 12 main crime categories") ->
   IDNEW
 ```
 
@@ -894,7 +897,10 @@ CHGEW %>%
   left_join(x = IDNEW, y = ., by = "OID") %>% 
   # Replace all NA values in the new variables with 0. 
   mutate(across(.cols = all_of(c("NCHG12_Before", "NCHG12_During", "NCHG12_After")), 
-                .fns = replace_na, replace = 0)) ->
+                .fns = replace_na, replace = 0)) %>% 
+  # Compute alternate NCHG for records from 12 main crime categories.
+  mutate(NCHG12 = NCHG12_Before + NCHG12_During + NCHG12_After) %>% 
+  var_labels(NCHG12 = "No of prosecutor charge records from 12 main crime categories") ->
   IDNEW
 ```
 
@@ -981,7 +987,10 @@ JUDEW %>%
   left_join(x = IDNEW, y = ., by = "OID") %>% 
   # Replace all NA values in the new variables with 0. 
   mutate(across(.cols = all_of(c("NJUD12_Before", "NJUD12_During", "NJUD12_After")), 
-                .fns = replace_na, replace = 0)) ->
+                .fns = replace_na, replace = 0)) %>% 
+  # Compute alternate NJUD for records from 12 main crime categories.
+  mutate(NJUD12 = NJUD12_Before + NJUD12_During + NJUD12_After) %>% 
+  var_labels(NJUD12 = "No of judicial charge records from 12 main crime categories")->
   IDNEW
 ```
 
@@ -1068,7 +1077,10 @@ CONEW %>%
   left_join(x = IDNEW, y = ., by = "OID") %>% 
   # Replace all NA values in the new variables with 0. 
   mutate(across(.cols = all_of(c("NCON12_Before", "NCON12_During", "NCON12_After")), 
-                .fns = replace_na, replace = 0)) ->
+                .fns = replace_na, replace = 0)) %>% 
+  # Compute alternate NCON for records from 12 main crime categories.
+  mutate(NCON12 = NCON12_Before + NCON12_During + NCON12_After) %>% 
+  var_labels(NCON12 = "No of conviction records from 12 main crime categories")->
   IDNEW
 ```
 \FloatBarrier
