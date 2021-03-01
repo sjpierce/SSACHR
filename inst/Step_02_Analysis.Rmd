@@ -176,11 +176,14 @@ bwplot(~ Age, data = IDNEW, factor = 9, xlim = c(18, 82),
 \FloatBarrier
 
 ## CHR Record Counts
-We aggregated data to count how many CHR records of each type are associated 
-with each offender. We summarize the resulting variables (*NINC*, *NARR*, 
-*NCHG*, *NJUD*, & *NCON*) below. Table \ref{tab:describe_rcvars} provides 
-overall descriptive statistics for all record types, plus summaries broken down
-by when the associated incidents occurred relative to the testing window. 
+We aggregated data to count how many CHR records of each type are associated
+with each offender. Here we are counting only records associated with incidents
+for which the offender was arrested for, charged with, or convicted of at least
+one offense from the 12 main crime categories. We summarize the resulting
+variables (*NINC12*, *NARR12*, *NCHG12*, *NJUD12*, & *NCON12*) below. Table
+\ref{tab:describe_rcvars} provides overall descriptive statistics for all record
+types, plus summaries broken down by when the associated incidents occurred
+relative to the testing window.
 
 ```{r describe_rcvars}
 # Table caption. 
@@ -188,6 +191,9 @@ TCap <- paste("Offender-Level Record Counts (All Crime Categories, Overall and",
               "By When Incident Occurred Relative to Testing Window)")
 # Footnote text. 
 FN <- paste("Only offenders with valid testing window start dates are included.",
+            "Only records associated with incidents where the offender was",
+            "arrested for, charged with, or convicted of at least one offense",
+            "from one of the 12 main crime categories were counted.",
             "Before, during, and after refer to when the incident associated",
             "with the record occurred, not when the arrest date, charge date,",
             "adjudication date, or conviction date occurred relative to the",
@@ -204,11 +210,13 @@ rclabs <- c("No. of incidents", BDA,
 
 # Summarize CHR record counts (both overall and broken down by IWhen).
 IDNEW %>% 
-  select(NINC, NINC_Before, NINC_During, NINC_After, 
-         NARR, NARR_Before, NARR_During, NARR_After,
-         NCHG, NCHG_Before, NCHG_During, NCHG_After,
-         NJUD, NJUD_Before, NJUD_During, NJUD_After,
-         NCON, NCON_Before, NCON_During, NCON_After) %>% 
+  rename(NINC12 = HXCat12_Any, NINC12_Before = HXCat12_Any_Before, 
+         NINC12_During = HXCat12_Any_During, NINC12_After = HXCat12_Any_After) %>% 
+  select(NINC12, NINC12_Before, NINC12_During, NINC12_After, 
+         NARR12, NARR12_Before, NARR12_During, NARR12_After,
+         NCHG12, NCHG12_Before, NCHG12_During, NCHG12_After,
+         NJUD12, NJUD12_Before, NJUD12_During, NJUD12_After,
+         NCON12, NCON12_Before, NCON12_During, NCON12_After) %>% 
   describe(., quant=c(.25, .50, .75)) %>% 
   bind_cols(data.frame(Variable = rclabs), .) %>% 
   select(Variable, n, mean, sd, min, max, skew, kurtosis, Q0.25, Q0.5, Q0.75) %>% 
@@ -225,12 +233,13 @@ IDNEW %>%
 
 ```{r create_RCCOUNTS}
 # Vectors of variables names and labels. 
-rcvars  <- c("NINC", "NARR", "NCHG", "NJUD", "NCON")
+rcvars  <- c("NINC12", "NARR12", "NCHG12", "NJUD12", "NCON12")
 rctypes <- c("Incidents", "Arrest Offenses", "Prosecutor Charges", 
              "Adjudicated Charges", "Convictions")
 
 IDNEW %>% 
-  select(OID, NINC, NARR, NCHG, NJUD, NCON) %>% 
+  rename(NINC12 = HXCat12_Any) %>% 
+  select(OID, NINC12, NARR12, NCHG12, NJUD12, NCON12) %>% 
   # Rearrange data so we can easily plot multiple variables. 
   pivot_longer(cols = -OID, names_to = "VName", values_to = "Count") %>% 
   mutate(VName = ordered(VName, levels = rcvars, labels = rctypes)) ->
