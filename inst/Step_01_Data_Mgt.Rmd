@@ -1696,6 +1696,12 @@ to *HXCat12_12* and *HXCat12_999*. Each of these will contain the number of
 incidents that had a history showing the offender was 
 *arrested for, charged with, or convicted of* the offense in question. 
 
+Aggregating the *INCEW* data on HXCat12_Any to offender-level record counts and 
+merging them onto *IDNEW* effectively creates creates an alternate version of 
+*NINC* called *HXCat12_Any* that only counts records associated with incidents 
+where the offender was *arrested for, charged with, or convicted of* one or more
+of the 12 main crime categories. 
+
 ```{r merge_Agg_HXCat12_IDNEW} 
 INCEW %>% 
   group_by(OID, .drop = FALSE) %>% 
@@ -1724,7 +1730,13 @@ INCEW %>%
 
 Now, we need to get offender-level breakdowns of those incident counts for 
 incidents that occurred before, during, and after the testing window. We can 
-aggregate as follows to get them and merge them into *IDNEW*.  
+aggregate as follows to get them and merge them into *IDNEW*. 
+
+This means that *HXCat12_Any_Before*, *HXCat12_Any_During*, and
+*HXCat12_Any_After* are respectively alternate versions of *NINC_Before*,
+*NINC_During*, and *NINC_After* that only count records associated with
+incidents where the offender was *arrested for, charged with, or convicted of*
+one or more of the 12 main crime categories.
 
 ```{r merge_Agg_HXCat12_BDA_IDNEW} 
 # Aggregate HXCat12 dummy codes to offender level incident counts by IWhen.
