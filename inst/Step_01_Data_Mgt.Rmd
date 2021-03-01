@@ -1954,7 +1954,8 @@ The current Git commit details and status are:
 ```{r git_details, eval=TRUE}
 # Store whether git2r is installed and we are in a git repository.
 GitCheck <- "git2r" %in% installed.packages() & git2r::in_repository(path = ".")
-cat(paste("GitCheck =", GitCheck, "\n"))
+if(!GitCheck) cat(paste0("GitCheck = ", GitCheck, 
+                         ". Version control details not available. \n"))
 
 # What commit is this file at? 
 if (GitCheck) git2r::repository(here::here())
