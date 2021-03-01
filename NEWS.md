@@ -1,3 +1,15 @@
+# SSACHR 0.9.0, 2021-02-28
+* Updated `inst/Step_01_Data_Mgt.Rmd` to:
+    * Added and improved variable labels for several tibbles. 
+    * Improved explanatory text. 
+    * Improved Git status info code. 
+* Updated `inst/Step_02_Analysis.Rmd` to:
+    * Improved Git status info code. 
+    * Improved some explanatory text and table captions in CHR Record Counts 
+      section after adapting to focus on records for incidents where offender
+      was arrested, charged, or convicted of any of the 12 main crime 
+      categories. 
+
 # SSACHR 0.8.1, 2021-02-25
 * Updated `inst/Step_01_Data_Mgt.Rmd` to:
     * Fix some variable names in code. 
