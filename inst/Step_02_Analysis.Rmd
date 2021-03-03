@@ -421,6 +421,9 @@ TCap <- paste("Frequency Distributions for Number of Adjudicated Charges (All",
 # Footnote text.
 FN <- paste0("N = ", format(nrow(IDNEW), big.mark = ","), ". TW, earliest ",
             "testing window. ",
+            "Only records associated with incidents where the offender was ",
+            "arrested for, charged with, or convicted of at least one offense ",
+            "from one of the 12 main crime categories were counted. ",
             "Before, during, and after refer to when the incident associated ",
             "with the record occurred, not when the adjudication date occurred ",
             "relative to the testing window. For example, a charge could be ",
@@ -430,9 +433,9 @@ FN <- paste0("N = ", format(nrow(IDNEW), big.mark = ","), ". TW, earliest ",
 
 # Get frequency distributions. 
 IDNEW %>% 
-  select(OID, NJUD, NJUD_Before, NJUD_During, NJUD_After) %>% 
-  rename(All = NJUD, Before = NJUD_Before, During = NJUD_During, 
-         After = NJUD_After) %>% 
+  select(OID, NJUD12, NJUD12_Before, NJUD12_During, NJUD12_After) %>% 
+  rename(All = NJUD12, Before = NJUD12_Before, During = NJUD12_During, 
+         After = NJUD12_After) %>% 
   pivot_longer(cols = -OID, names_to = "When", values_to = "Value") %>% 
   group_by(When, Value) %>% 
   count() %>% 
