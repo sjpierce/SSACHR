@@ -375,6 +375,9 @@ TCap <- paste("Frequency Distributions for Number of Prosecutor Charges (All",
 # Footnote text.
 FN <- paste0("N = ", format(nrow(IDNEW), big.mark = ","), ". TW, earliest ",
             "testing window. ",
+            "Only records associated with incidents where the offender was ",
+            "arrested for, charged with, or convicted of at least one offense ",
+            "from one of the 12 main crime categories were counted. ",
             "Before, during, and after refer to when the incident associated ",
             "with the record occurred, not when the charge date occurred ",
             "relative to the testing window. For example, an offender could be ",
@@ -383,9 +386,9 @@ FN <- paste0("N = ", format(nrow(IDNEW), big.mark = ","), ". TW, earliest ",
 
 # Get frequency distributions. 
 IDNEW %>% 
-  select(OID, NCHG, NCHG_Before, NCHG_During, NCHG_After) %>% 
-  rename(All = NCHG, Before = NCHG_Before, During = NCHG_During, 
-         After = NCHG_After) %>% 
+  select(OID, NCHG12, NCHG12_Before, NCHG12_During, NCHG12_After) %>% 
+  rename(All = NCHG12, Before = NCHG12_Before, During = NCHG12_During, 
+         After = NCHG12_After) %>% 
   pivot_longer(cols = -OID, names_to = "When", values_to = "Value") %>% 
   group_by(When, Value) %>% 
   count() %>% 
