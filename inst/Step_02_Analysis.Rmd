@@ -506,12 +506,11 @@ IDNEW %>%
 
 \FloatBarrier
 
-## Crime Category Counts
+## Crime Category Counts (Arrested, Charged, or Convicted)
 Table \ref{tab:describe_cccvars} summarizes how many of 12 different categories
-of crime each offender was *arrested for*, *charged with*, *convicted of*, and
-*arrested for, charged with, or convicted of* according to the CHR data. This
-sums a set of binary transforms on the incident count variables associated with
-each crime category in *ACat12*, *CCat12*, and *JCat12*. The 
+of crime each offender was *arrested for, charged with, or convicted of*
+according to the CHR data. This sums a set of binary transforms on the incident
+count variables associated with each crime category in *HXCat12*. The 
 *Excluded user-missing* value is not counted as a category, so the possible
 range of values for these counts is 0-12. We report both overall results, and
 results broken down by when the incidents associated with the arrest, charge,
@@ -528,17 +527,12 @@ FN <- paste("Only offenders with valid testing window start dates are included."
             "adjudication date, or conviction date occurred relative to the",
             "testing window.")
 
-cclabs <- c("No. of crime categories (arrested)", BDA, 
-            "No. of crime categories (charged)", BDA,
-            "No. of crime categories (convicted)", BDA,
-            "No. of crime categories (arrested, charged, or convicted)", BDA)
+cclabs <- c("No. of crime categories (arrested, charged, or convicted)", BDA)
 
 # Summarize crime category counts (both overall and broken down by IWhen).
 IDNEW %>% 
-  select(ACat12_Count, ACat12_Count_Before, ACat12_Count_During, ACat12_Count_After, 
-         CCat12_Count, CCat12_Count_Before, CCat12_Count_During, CCat12_Count_After,
-         JCat12_Count, JCat12_Count_Before, JCat12_Count_During, JCat12_Count_After,
-         HXCat12_Count, HXCat12_Count_Before, HXCat12_Count_During, HXCat12_Count_After) %>% 
+  select(HXCat12_Count, HXCat12_Count_Before, HXCat12_Count_During, 
+         HXCat12_Count_After) %>% 
   describe(., quant=c(.25, .50, .75)) %>% 
   bind_cols(data.frame(Variable = cclabs), .) %>% 
   select(Variable, n, mean, sd, min, max, skew, kurtosis, Q0.25, Q0.5, Q0.75) %>% 
@@ -553,149 +547,8 @@ IDNEW %>%
          threeparttable = TRUE)
 ```
 
-In the subsections below, Tables \ref{tab:freq_ACat12_Count}, 
-\ref{tab:freq_CCat12_Count}, \ref{tab:freq_JCat12_Count}, and
-\ref{tab:freq_HXCat12_Count} show the frequency distributions underlying the
-summaries in Table \ref{tab:describe_cccvars}. 
-
-\FloatBarrier
-
-### Arrested
-
-```{r freq_ACat12_Count}
-# Table caption.
-TCap <- paste("Frequency Distributions for Number of Crime Categories for",
-              "Which Offender Was Arrested (Overall and By When Incident",
-              "Occurred)")
-# Footnote text.
-FN <- paste0("N = ", format(nrow(IDNEW), big.mark = ","), ". TW, earliest ",
-            "testing window. ",
-            "Before, during, and after refer to when the incident associated ",
-            "with the record occurred, not when the arrest date occurred ",
-            "relative to the testing window. For example, an offender could be ",
-            "arrested during the testing window for an incident that occurred ",
-            "before it began. That would show up here in the before column.")
-
-# Get frequency distributions. 
-IDNEW %>% 
-  select(OID, ACat12_Count, ACat12_Count_Before, ACat12_Count_During, 
-         ACat12_Count_After) %>% 
-  rename(All = ACat12_Count, Before = ACat12_Count_Before, 
-         During = ACat12_Count_During, After = ACat12_Count_After) %>% 
-  pivot_longer(cols = -OID, names_to = "When", values_to = "Value") %>% 
-  group_by(When, Value) %>% 
-  count() %>% 
-  arrange(Value) %>% 
-  pivot_wider(names_from = When, values_from = n, values_fill = 0) %>% 
-  mutate(All_p = 100*All/nrow(IDNEW),
-         Before_p = 100*Before/nrow(IDNEW),
-         During_p = 100*During/nrow(IDNEW),
-         After_p = 100*After/nrow(IDNEW)) %>% 
-  select(Value, All, All_p, Before, Before_p, During, During_p, After, 
-         After_p) %>% 
-  kable(format = "latex", booktabs = TRUE, digits = 2, 
-        col.names = c("Value", rep(c("Frequency", "Percent"), 4)),
-        caption = TCap) %>% 
-  kable_styling() %>% 
-  add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
-                   "After TW" = 2)) %>% 
-  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
-         threeparttable = TRUE)
-```
-
-\FloatBarrier
-
-### Charged
-
-```{r freq_CCat12_Count}
-# Table caption.
-TCap <- paste("Frequency Distributions for Number of Crime Categories for",
-              "Which Offender Was Charged (Overall and By When Incident",
-              "Occurred)")
-# Footnote text.
-FN <- paste0("N = ", format(nrow(IDNEW), big.mark = ","), ". TW, earliest ",
-            "testing window. ",
-            "Before, during, and after refer to when the incident associated ",
-            "with the record occurred, not when the charge date occurred ",
-            "relative to the testing window. For example, an offender could be ",
-            "charged during the testing window for an incident that occurred ",
-            "before it began. That would show up here in the before column.")
-
-# Get frequency distributions. 
-IDNEW %>% 
-  select(OID, CCat12_Count, CCat12_Count_Before, CCat12_Count_During, 
-         CCat12_Count_After) %>% 
-  rename(All = CCat12_Count, Before = CCat12_Count_Before, 
-         During = CCat12_Count_During, After = CCat12_Count_After) %>% 
-  pivot_longer(cols = -OID, names_to = "When", values_to = "Value") %>% 
-  group_by(When, Value) %>% 
-  count() %>% 
-  arrange(Value) %>% 
-  pivot_wider(names_from = When, values_from = n, values_fill = 0) %>% 
-  mutate(All_p = 100*All/nrow(IDNEW),
-         Before_p = 100*Before/nrow(IDNEW),
-         During_p = 100*During/nrow(IDNEW),
-         After_p = 100*After/nrow(IDNEW)) %>% 
-  select(Value, All, All_p, Before, Before_p, During, During_p, After, 
-         After_p) %>% 
-  kable(format = "latex", booktabs = TRUE, digits = 2, 
-        col.names = c("Value", rep(c("Frequency", "Percent"), 4)),
-        caption = TCap) %>% 
-  kable_styling() %>% 
-  add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
-                   "After TW" = 2)) %>% 
-  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
-         threeparttable = TRUE)
-```
-
-\FloatBarrier
-
-### Convicted
-
-```{r freq_JCat12_Count}
-# Table caption.
-TCap <- paste("Frequency Distributions for Number of Crime Categories for",
-              "Which Offender Was Convicted (Overall and By When Incident",
-              "Occurred)")
-# Footnote text.
-FN <- paste0("N = ", format(nrow(IDNEW), big.mark = ","), ". TW, earliest ",
-            "testing window. ",
-            "Before, during, and after refer to when the incident associated ",
-            "with the record occurred, not when the charge date occurred ",
-            "relative to the testing window. For example, an offender could be ",
-            "convicted during the testing window for an incident that occurred ",
-            "before it began. That would show up here in the before column.")
-
-# Get frequency distributions. 
-IDNEW %>% 
-  select(OID, JCat12_Count, JCat12_Count_Before, JCat12_Count_During, 
-         JCat12_Count_After) %>% 
-  rename(All = JCat12_Count, Before = JCat12_Count_Before, 
-         During = JCat12_Count_During, After = JCat12_Count_After) %>% 
-  pivot_longer(cols = -OID, names_to = "When", values_to = "Value") %>% 
-  group_by(When, Value) %>% 
-  count() %>% 
-  arrange(Value) %>% 
-  pivot_wider(names_from = When, values_from = n, values_fill = 0) %>% 
-  mutate(All_p = 100*All/nrow(IDNEW),
-         Before_p = 100*Before/nrow(IDNEW),
-         During_p = 100*During/nrow(IDNEW),
-         After_p = 100*After/nrow(IDNEW)) %>% 
-  select(Value, All, All_p, Before, Before_p, During, During_p, After, 
-         After_p) %>% 
-  kable(format = "latex", booktabs = TRUE, digits = 2, 
-        col.names = c("Value", rep(c("Frequency", "Percent"), 4)),
-        caption = TCap) %>% 
-  kable_styling() %>% 
-  add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
-                   "After TW" = 2)) %>% 
-  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
-         threeparttable = TRUE)
-```
-
-\FloatBarrier
-
-### Arrested, Charged, or Convicted
+Below, Table \ref{tab:freq_HXCat12_Count} shows the frequency distributions 
+underlying the summaries in Table \ref{tab:describe_cccvars}. 
 
 ```{r freq_HXCat12_Count}
 # Table caption.
@@ -705,6 +558,9 @@ TCap <- paste("Frequency Distributions for Number of Crime Categories for",
 # Footnote text.
 FN <- paste0("N = ", format(nrow(IDNEW), big.mark = ","), ". TW, earliest ",
             "testing window. ",
+            "Only records associated with incidents where the offender was ",
+            "arrested for, charged with, or convicted of at least one offense ",
+            "from one of the 12 main crime categories were counted. ",
             "Before, during, and after refer to when the incident associated ",
             "with the record occurred, not when the charge date occurred ",
             "relative to the testing window. For example, an offender could be ",
