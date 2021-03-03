@@ -329,6 +329,9 @@ TCap <- paste("Frequency Distributions for Number of Arrest Offenses (All",
 # Footnote text.
 FN <- paste0("N = ", format(nrow(IDNEW), big.mark = ","), ". TW, earliest ",
             "testing window. ",
+            "Only records associated with incidents where the offender was ",
+            "arrested for, charged with, or convicted of at least one offense ",
+            "from one of the 12 main crime categories were counted. ",
             "Before, during, and after refer to when the incident associated ",
             "with the record occurred, not when the arrest date occurred ",
             "relative to the testing window. For example, an offender could be ",
@@ -337,9 +340,9 @@ FN <- paste0("N = ", format(nrow(IDNEW), big.mark = ","), ". TW, earliest ",
 
 # Get frequency distributions. 
 IDNEW %>% 
-  select(OID, NARR, NARR_Before, NARR_During, NARR_After) %>% 
-  rename(All = NARR, Before = NARR_Before, During = NARR_During, 
-         After = NARR_After) %>% 
+  select(OID, NARR12, NARR12_Before, NARR12_During, NARR12_After) %>% 
+  rename(All = NAR12R, Before = NARR12_Before, During = NARR12_During, 
+         After = NARR12_After) %>% 
   pivot_longer(cols = -OID, names_to = "When", values_to = "Value") %>% 
   group_by(When, Value) %>% 
   count() %>% 
