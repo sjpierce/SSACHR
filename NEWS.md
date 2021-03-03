@@ -1,3 +1,12 @@
+# SSACHR 0.9.1, 2021-03-02
+* Updated `inst/Step_02_Analysis.Rmd` to continue adapting to focus on records 
+  for incidents where offender was arrested, charged, or convicted of any of the
+  12 main crime categories. 
+    * Removed separate outputs for "arrested", "charged"", and "convicted" 
+      criteria.
+    * Revised headings because we don't need as many subheadings.
+    * Revised table and figure footnotes. 
+
 # SSACHR 0.9.0, 2021-02-28
 * Updated `inst/Step_01_Data_Mgt.Rmd` to:
     * Added and improved variable labels for several tibbles. 
