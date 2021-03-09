@@ -341,7 +341,7 @@ FN <- paste0("N = ", format(nrow(IDNEW), big.mark = ","), ". TW, earliest ",
 # Get frequency distributions. 
 IDNEW %>% 
   select(OID, NARR12, NARR12_Before, NARR12_During, NARR12_After) %>% 
-  rename(All = NAR12R, Before = NARR12_Before, During = NARR12_During, 
+  rename(All = NARR12, Before = NARR12_Before, During = NARR12_During, 
          After = NARR12_After) %>% 
   pivot_longer(cols = -OID, names_to = "When", values_to = "Value") %>% 
   group_by(When, Value) %>% 
