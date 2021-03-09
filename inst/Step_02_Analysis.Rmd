@@ -706,10 +706,7 @@ TCap <- paste("Offender-Level Arson Incident Counts By CHR Record Type (Overall"
 
 # Summarize crime category counts (both overall and broken down by IWhen).
 IDNEW %>% 
-  select(ACat12_1, ACat12_1_Before, ACat12_1_During, ACat12_1_After, 
-         CCat12_1, CCat12_1_Before, CCat12_1_During, CCat12_1_After, 
-         JCat12_1, JCat12_1_Before, JCat12_1_During, JCat12_1_After,
-         HXCat12_1, HXCat12_1_Before, HXCat12_1_During, HXCat12_1_After) %>% 
+  select(HXCat12_1, HXCat12_1_Before, HXCat12_1_During, HXCat12_1_After) %>% 
   describe(., quant=c(.25, .50, .75)) %>% 
   bind_cols(data.frame(Variable = TRowLabs), .) %>% 
   select(Variable, n, mean, sd, min, max, skew, kurtosis, Q0.25, Q0.5, Q0.75) %>% 
@@ -778,10 +775,7 @@ TCap <- paste("Offender-Level Assault Involving Domestc Violence and/or",
 
 # Summarize crime category counts (both overall and broken down by IWhen).
 IDNEW %>% 
-  select(ACat12_2, ACat12_2_Before, ACat12_2_During, ACat12_2_After, 
-         CCat12_2, CCat12_2_Before, CCat12_2_During, CCat12_2_After, 
-         JCat12_2, JCat12_2_Before, JCat12_2_During, JCat12_2_After,
-         HXCat12_2, HXCat12_2_Before, HXCat12_2_During, HXCat12_2_After) %>% 
+  select(HXCat12_2, HXCat12_2_Before, HXCat12_2_During, HXCat12_2_After) %>% 
   describe(., quant=c(.25, .50, .75)) %>% 
   bind_cols(data.frame(Variable = TRowLabs), .) %>% 
   select(Variable, n, mean, sd, min, max, skew, kurtosis, Q0.25, Q0.5, Q0.75) %>% 
@@ -853,10 +847,7 @@ TCap <- paste("Offender-Level Assault (Non-Sexual, Non-Domestic Violence)",
 
 # Summarize crime category counts (both overall and broken down by IWhen).
 IDNEW %>% 
-  select(ACat12_3, ACat12_3_Before, ACat12_3_During, ACat12_3_After, 
-         CCat12_3, CCat12_3_Before, CCat12_3_During, CCat12_3_After, 
-         JCat12_3, JCat12_3_Before, JCat12_3_During, JCat12_3_After,
-         HXCat12_3, HXCat12_3_Before, HXCat12_3_During, HXCat12_3_After) %>% 
+  select(HXCat12_3, HXCat12_3_Before, HXCat12_3_During, HXCat12_3_After) %>% 
   describe(., quant=c(.25, .50, .75)) %>% 
   bind_cols(data.frame(Variable = TRowLabs), .) %>% 
   select(Variable, n, mean, sd, min, max, skew, kurtosis, Q0.25, Q0.5, Q0.75) %>% 
@@ -926,10 +917,7 @@ TCap <- paste("Offender-Level Burglary Incident Counts By CHR Record Type (Overa
 
 # Summarize crime category counts (both overall and broken down by IWhen).
 IDNEW %>% 
-  select(ACat12_4, ACat12_4_Before, ACat12_4_During, ACat12_4_After, 
-         CCat12_4, CCat12_4_Before, CCat12_4_During, CCat12_4_After, 
-         JCat12_4, JCat12_4_Before, JCat12_4_During, JCat12_4_After,
-         HXCat12_4, HXCat12_4_Before, HXCat12_4_During, HXCat12_4_After) %>% 
+  select(HXCat12_4, HXCat12_4_Before, HXCat12_4_During, HXCat12_4_After) %>% 
   describe(., quant=c(.25, .50, .75)) %>% 
   bind_cols(data.frame(Variable = TRowLabs), .) %>% 
   select(Variable, n, mean, sd, min, max, skew, kurtosis, Q0.25, Q0.5, Q0.75) %>% 
@@ -997,10 +985,7 @@ TCap <- paste("Offender-Level Criminal Sexual Conduct Incidents (Overall and",
 
 # Summarize crime category counts (both overall and broken down by IWhen).
 IDNEW %>% 
-  select(ACat12_5, ACat12_5_Before, ACat12_5_During, ACat12_5_After, 
-         CCat12_5, CCat12_5_Before, CCat12_5_During, CCat12_5_After, 
-         JCat12_5, JCat12_5_Before, JCat12_5_During, JCat12_5_After,
-         HXCat12_5, HXCat12_5_Before, HXCat12_5_During, HXCat12_5_After) %>% 
+  select(HXCat12_5, HXCat12_5_Before, HXCat12_5_During, HXCat12_5_After) %>% 
   describe(., quant=c(.25, .50, .75)) %>% 
   bind_cols(data.frame(Variable = TRowLabs), .) %>% 
   select(Variable, n, mean, sd, min, max, skew, kurtosis, Q0.25, Q0.5, Q0.75) %>% 
@@ -1069,10 +1054,7 @@ TCap <- paste("Offender-Level Drug Crime Incident Counts By CHR Record Type",
 
 # Summarize crime category counts (both overall and broken down by IWhen).
 IDNEW %>% 
-  select(ACat12_6, ACat12_6_Before, ACat12_6_During, ACat12_6_After, 
-         CCat12_6, CCat12_6_Before, CCat12_6_During, CCat12_6_After, 
-         JCat12_6, JCat12_6_Before, JCat12_6_During, JCat12_6_After,
-         HXCat12_6, HXCat12_6_Before, HXCat12_6_During, HXCat12_6_After) %>% 
+  select(HXCat12_6, HXCat12_6_Before, HXCat12_6_During, HXCat12_6_After) %>% 
   describe(., quant=c(.25, .50, .75)) %>% 
   bind_cols(data.frame(Variable = TRowLabs), .) %>% 
   select(Variable, n, mean, sd, min, max, skew, kurtosis, Q0.25, Q0.5, Q0.75) %>% 
@@ -1140,10 +1122,7 @@ TCap <- paste("Offender-Level Homicide Incident Counts By CHR Record Type",
 
 # Summarize crime category counts (both overall and broken down by IWhen).
 IDNEW %>% 
-  select(ACat12_7, ACat12_7_Before, ACat12_7_During, ACat12_7_After, 
-         CCat12_7, CCat12_7_Before, CCat12_7_During, CCat12_7_After, 
-         JCat12_7, JCat12_7_Before, JCat12_7_During, JCat12_7_After,
-         HXCat12_7, HXCat12_7_Before, HXCat12_7_During, HXCat12_7_After) %>% 
+  select(HXCat12_7, HXCat12_7_Before, HXCat12_7_During, HXCat12_7_After) %>% 
   describe(., quant=c(.25, .50, .75)) %>% 
   bind_cols(data.frame(Variable = TRowLabs), .) %>% 
   select(Variable, n, mean, sd, min, max, skew, kurtosis, Q0.25, Q0.5, Q0.75) %>% 
@@ -1211,10 +1190,7 @@ TCap <- paste("Offender-Level Larceny, Theft, or Fraud Incidents (Overall and",
 
 # Summarize crime category counts (both overall and broken down by IWhen).
 IDNEW %>% 
-  select(ACat12_8, ACat12_8_Before, ACat12_8_During, ACat12_8_After, 
-         CCat12_8, CCat12_8_Before, CCat12_8_During, CCat12_8_After, 
-         JCat12_8, JCat12_8_Before, JCat12_8_During, JCat12_8_After,
-         HXCat12_8, HXCat12_8_Before, HXCat12_8_During, HXCat12_8_After) %>% 
+  select(HXCat12_8, HXCat12_8_Before, HXCat12_8_During, HXCat12_8_After) %>% 
   describe(., quant=c(.25, .50, .75)) %>% 
   bind_cols(data.frame(Variable = TRowLabs), .) %>% 
   select(Variable, n, mean, sd, min, max, skew, kurtosis, Q0.25, Q0.5, Q0.75) %>% 
@@ -1283,10 +1259,7 @@ TCap <- paste("Offender-Level Robbery Incident Counts By CHR Record Type",
 
 # Summarize crime category counts (both overall and broken down by IWhen).
 IDNEW %>% 
-  select(ACat12_9, ACat12_9_Before, ACat12_9_During, ACat12_9_After, 
-         CCat12_9, CCat12_9_Before, CCat12_9_During, CCat12_9_After, 
-         JCat12_9, JCat12_9_Before, JCat12_9_During, JCat12_9_After,
-         HXCat12_9, HXCat12_9_Before, HXCat12_9_During, HXCat12_9_After) %>% 
+  select(HXCat12_9, HXCat12_9_Before, HXCat12_9_During, HXCat12_9_After) %>% 
   describe(., quant=c(.25, .50, .75)) %>% 
   bind_cols(data.frame(Variable = TRowLabs), .) %>% 
   select(Variable, n, mean, sd, min, max, skew, kurtosis, Q0.25, Q0.5, Q0.75) %>% 
@@ -1354,10 +1327,7 @@ TCap <- paste("Offender-Level Sex Crime Incident Counts By CHR Record Type",
 
 # Summarize crime category counts (both overall and broken down by IWhen).
 IDNEW %>% 
-  select(ACat12_10, ACat12_10_Before, ACat12_10_During, ACat12_10_After, 
-         CCat12_10, CCat12_10_Before, CCat12_10_During, CCat12_10_After, 
-         JCat12_10, JCat12_10_Before, JCat12_10_During, JCat12_10_After,
-         HXCat12_10, HXCat12_10_Before, HXCat12_10_During, HXCat12_10_After) %>% 
+  select(HXCat12_10, HXCat12_10_Before, HXCat12_10_During, HXCat12_10_After) %>% 
   describe(., quant=c(.25, .50, .75)) %>% 
   bind_cols(data.frame(Variable = TRowLabs), .) %>% 
   select(Variable, n, mean, sd, min, max, skew, kurtosis, Q0.25, Q0.5, Q0.75) %>% 
@@ -1425,10 +1395,7 @@ TCap <- paste("Offender-Level Traffic and Ordinance Incidents (Overall and",
 
 # Summarize crime category counts (both overall and broken down by IWhen).
 IDNEW %>% 
-  select(ACat12_11, ACat12_11_Before, ACat12_11_During, ACat12_11_After, 
-         CCat12_11, CCat12_11_Before, CCat12_11_During, CCat12_11_After, 
-         JCat12_11, JCat12_11_Before, JCat12_11_During, JCat12_11_After,
-         HXCat12_11, HXCat12_11_Before, HXCat12_11_During, HXCat12_11_After) %>% 
+  select(HXCat12_11, HXCat12_11_Before, HXCat12_11_During, HXCat12_11_After) %>% 
   describe(., quant=c(.25, .50, .75)) %>% 
   bind_cols(data.frame(Variable = TRowLabs), .) %>% 
   select(Variable, n, mean, sd, min, max, skew, kurtosis, Q0.25, Q0.5, Q0.75) %>% 
@@ -1496,10 +1463,7 @@ TCap <- paste("Offender-Level Weapons Crime Incident Counts By CHR Record Type",
 
 # Summarize crime category counts (both overall and broken down by IWhen).
 IDNEW %>% 
-  select(ACat12_12, ACat12_12_Before, ACat12_12_During, ACat12_12_After, 
-         CCat12_12, CCat12_12_Before, CCat12_12_During, CCat12_12_After, 
-         JCat12_12, JCat12_12_Before, JCat12_12_During, JCat12_12_After,
-         HXCat12_12, HXCat12_12_Before, HXCat12_12_During, HXCat12_12_After) %>% 
+  select(HXCat12_12, HXCat12_12_Before, HXCat12_12_During, HXCat12_12_After) %>% 
   describe(., quant=c(.25, .50, .75)) %>% 
   bind_cols(data.frame(Variable = TRowLabs), .) %>% 
   select(Variable, n, mean, sd, min, max, skew, kurtosis, Q0.25, Q0.5, Q0.75) %>% 
