@@ -267,7 +267,8 @@ FCap <- paste("Density Plots for Overall Record Counts by Criminal History",
               "dates are included.",
               "Only records associated with incidents where the offender was",
               "arrested for, charged with, or convicted of at least one offense",
-              "from one of the 12 main crime categories were counted.")
+              "from one of the 12 main crime categories were counted.", 
+              "Dashed red lines are normal distribution curves (for comparison).")
 
 densityplot(~ Count | VName, data = RCCOUNTS, layout = c(5,1), 
             panel = panel.mydensity, jitter.amount = 0.005,
