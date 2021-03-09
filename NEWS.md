@@ -1,3 +1,14 @@
+# SSACHR 0.9.2, 2021-03-08
+* Updated `inst/Step_02_Analysis.Rmd` to continue adapting to focus on records 
+  for incidents where offender was arrested, charged, or convicted of any of the
+  12 main crime categories. 
+    * Removed subheadings made obsolete by removing other content. 
+    * Improved figure captions and a table footnote.
+    * Improved explanatory text and removed references to tables that were 
+      removed.
+    * Simplified tables by removing variables inconsistent with the narrower 
+      focus we have now adopted. 
+
 # SSACHR 0.9.1, 2021-03-02
 * Updated `inst/Step_02_Analysis.Rmd` to continue adapting to focus on records 
   for incidents where offender was arrested, charged, or convicted of any of the
