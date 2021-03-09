@@ -718,12 +718,6 @@ IDNEW %>%
          threeparttable = TRUE)
 ```
 
-\FloatBarrier
-
-#### Arrested, Charged, or Convicted
-Table \ref{tab:freq_HXCat12_1} shows the frequency distributions for arson
-incidents for which the offender was arrested, charged, or convicted.  
-
 ```{r freq_HXCat12_1}
 # Table caption.
 TCap <- paste("Frequency Distributions for Number of Arson Incidents for Which",
@@ -786,13 +780,6 @@ IDNEW %>%
   footnote(general = FN1, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
-
-\FloatBarrier
-
-#### Arrested, Charged, or Convicted
-Table \ref{tab:freq_HXCat12_2} shows the frequency distributions for assault 
-involving domestic violence and/or stalking incidents for which the offender was
-arrested, charged, or convicted.  
 
 ```{r freq_HXCat12_2}
 # Table caption.
@@ -859,13 +846,6 @@ IDNEW %>%
          threeparttable = TRUE)
 ```
 
-\FloatBarrier
-
-#### Arrested, Charged, or Convicted
-Table \ref{tab:freq_HXCat12_3} shows the frequency distributions for non-sexual, 
-non-domestic violence assault incidents for which the offender was arrested, 
-charged, or convicted.  
-
 ```{r freq_HXCat12_3}
 # Table caption.
 TCap <- paste("Frequency Distributions for Number of Assault (Non-Sexual,", 
@@ -929,12 +909,6 @@ IDNEW %>%
          threeparttable = TRUE)
 ```
 
-\FloatBarrier
-
-#### Arrested, Charged, or Convicted
-Table \ref{tab:freq_HXCat12_4} shows the frequency distributions for burglary
-incidents for which the offender was arrested, charged, or convicted.  
-
 ```{r freq_HXCat12_4}
 # Table caption.
 TCap <- paste("Frequency Distributions for Number of Burglary Incidents for",
@@ -996,13 +970,6 @@ IDNEW %>%
   footnote(general = FN1, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
-
-\FloatBarrier
-
-#### Arrested, Charged or Convicted
-Table \ref{tab:freq_ACat12_5} shows the frequency distributions for criminal
-sexual conduct incidents for which the offender was arrested, charged, or 
-convicted.
 
 ```{r freq_HXCat12_5}
 # Table caption.
@@ -1066,12 +1033,6 @@ IDNEW %>%
          threeparttable = TRUE)
 ```
 
-\FloatBarrier
-
-#### Arrested, Charged, or Convicted
-Table \ref{tab:freq_HXCat12_6} shows the frequency distributions for drug crime
-incidents for which the offender was arrested, charged, or convicted.  
-
 ```{r freq_HXCat12_6}
 # Table caption.
 TCap <- paste("Frequency Distributions for Number of Drug Crime Incidents for",
@@ -1133,12 +1094,6 @@ IDNEW %>%
   footnote(general = FN1, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
-
-\FloatBarrier
-
-#### Arrested, Charged, or Convicted
-Table \ref{tab:freq_HXCat12_7} shows the frequency distributions for homicide
-incidents for which the offender was arrested, charged, or convicted.  
 
 ```{r freq_HXCat12_7}
 # Table caption.
@@ -1202,13 +1157,6 @@ IDNEW %>%
          threeparttable = TRUE)
 ```
 
-\FloatBarrier
-
-#### Arrested, Charged or Convicted
-Table \ref{tab:freq_ACat12_8} shows the frequency distributions for larceny,
-theft, or fraud incidents for which the offender was arrested, charged, or 
-convicted.
-
 ```{r freq_HXCat12_8}
 # Table caption.
 TCap <- paste("Frequency Distributions for Number of Larceny, Theft, or Fraud",
@@ -1270,12 +1218,6 @@ IDNEW %>%
   footnote(general = FN1, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
-
-\FloatBarrier
-
-#### Arrested, Charged, or Convicted
-Table \ref{tab:freq_HXCat12_9} shows the frequency distributions for robbery
-incidents for which the offender was arrested, charged, or convicted.  
 
 ```{r freq_HXCat12_9}
 # Table caption.
@@ -1339,12 +1281,6 @@ IDNEW %>%
          threeparttable = TRUE)
 ```
 
-\FloatBarrier
-
-#### Arrested, Charged, or Convicted
-Table \ref{tab:freq_HXCat12_10} shows the frequency distributions for sex crime
-incidents for which the offender was arrested, charged, or convicted.  
-
 ```{r freq_HXCat12_10}
 # Table caption.
 TCap <- paste("Frequency Distributions for Number of Sex Crime Incidents for",
@@ -1407,12 +1343,6 @@ IDNEW %>%
          threeparttable = TRUE)
 ```
 
-\FloatBarrier
-
-#### Arrested, Charged or Convicted
-Table \ref{tab:freq_HXCat12_11} shows the frequency distributions for traffic and 
-ordinance incidents for which the offender was arrested, charged, or convicted.
-
 ```{r freq_HXCat12_11}
 # Table caption.
 TCap <- paste("Frequency Distributions for Number of Traffic and Ordinance",
@@ -1474,12 +1404,6 @@ IDNEW %>%
   footnote(general = FN1, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
-
-\FloatBarrier
-
-#### Arrested, Charged, or Convicted
-Table \ref{tab:freq_HXCat12_12} shows the frequency distributions for weapons
-crime incidents for which the offender was arrested, charged, or convicted.
 
 ```{r freq_HXCat12_12}
 # Table caption.
