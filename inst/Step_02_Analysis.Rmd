@@ -522,7 +522,8 @@ count variables associated with each crime category in *HXCat12*. The
 *Excluded user-missing* value is not counted as a category, so the possible
 range of values for these counts is 0-12. We report both overall results, and
 results broken down by when the incidents associated with the arrest, charge,
-and conviction records occurred relative to the earliest testing window.
+and conviction records occurred relative to the earliest testing window. Table \ref{tab:freq_HXCat12_Count} shows the frequency distributions underlying those
+summaries. 
 
 ```{r describe_cccvars}
 # Table caption. 
@@ -553,9 +554,6 @@ IDNEW %>%
   footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
-
-Below, Table \ref{tab:freq_HXCat12_Count} shows the frequency distributions 
-underlying the summaries in Table \ref{tab:describe_cccvars}. 
 
 ```{r freq_HXCat12_Count}
 # Table caption.
