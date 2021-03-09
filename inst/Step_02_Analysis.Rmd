@@ -290,11 +290,12 @@ charges that were convictions.
 TCap <- paste("Frequency Distributions for Number of Incidents",
               "Overall and By When Incident Occurred")
 # Footnote text.
-FN <- paste0("Only incidents where the offender was arrested for, charged with, ",
-            "or convicted of at least one offense from one of the 12 main crime ",
-            "categories were counted. ",
-            "N = ", format(nrow(IDNEW), big.mark = ","), ". TW, earliest ",
-            "testing window.")
+FN <- paste0("Only offenders with valid testing window start dates are", 
+             "included. Only incidents where the offender was arrested for, ",
+             "charged with, or convicted of at least one offense from one of ",
+             "the 12 main crime categories were counted. ",
+             "N = ", format(nrow(IDNEW), big.mark = ","), ". TW, earliest ",
+             "testing window.")
 
 # Get frequency distributions. 
 IDNEW %>% 
