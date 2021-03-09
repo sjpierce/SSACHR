@@ -538,10 +538,6 @@ IDNEW %>%
   select(Variable, n, mean, sd, min, max, skew, kurtosis, Q0.25, Q0.5, Q0.75) %>% 
   kable(., format = "latex", booktabs = TRUE, digits = 2, row.names = FALSE, 
         col.names = c("Variable", CNames), caption = TCap) %>% 
-  group_rows(" ", 1, 4) %>% 
-  group_rows(" ", 5, 8) %>% 
-  group_rows(" ", 9, 12) %>% 
-  group_rows(" ", 13, 16) %>% 
   column_spec(column = 1, width = "6 cm") %>% 
   footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
