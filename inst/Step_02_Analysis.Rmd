@@ -637,7 +637,6 @@ IDNEW %>% filter(HXCat12_9  >= 1) %>% nrow() -> N_HXCat12_9
 IDNEW %>% filter(HXCat12_10 >= 1) %>% nrow() -> N_HXCat12_10
 IDNEW %>% filter(HXCat12_11 >= 1) %>% nrow() -> N_HXCat12_11
 IDNEW %>% filter(HXCat12_12 >= 1) %>% nrow() -> N_HXCat12_12
-IDNEW %>% filter(HXCat12_999 >= 1) %>% nrow() -> N_HXCat12_999
 
 # Convert those new variables to percentages. 
 P_HXCat12_1  <- round(100*N_HXCat12_1/nrow(IDNEW), digits = 0)
@@ -652,7 +651,6 @@ P_HXCat12_9  <- round(100*N_HXCat12_9/nrow(IDNEW), digits = 0)
 P_HXCat12_10 <- round(100*N_HXCat12_10/nrow(IDNEW), digits = 0)
 P_HXCat12_11 <- round(100*N_HXCat12_11/nrow(IDNEW), digits = 0)
 P_HXCat12_12 <- round(100*N_HXCat12_12/nrow(IDNEW), digits = 0)
-P_HXCat12_999 <- round(100*N_HXCat12_999/nrow(IDNEW), digits = 0)
 ```
 
 This next chunk creates some objects to store things like standardized footnotes
