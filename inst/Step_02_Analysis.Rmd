@@ -1499,7 +1499,6 @@ incident or offender level.
 
 \FloatBarrier
 
-## Crime Category (12 levels)
 ```{r, fig.height = 2}
 FN <- paste("Only offenders with valid testing window start dates are included.",
             "Only records associated with incidents where the offender was",
