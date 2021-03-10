@@ -1542,13 +1542,12 @@ kable(freq(as_factor(JUDEW$JCat12), user.missing = "Excluded user-missing"),
 
 ## Crime Category (12 levels, convictions)
 ```{r, fig.height = 2}
-kable(freq(as_factor(JUDEW$JCat12[JUDEW$JDispCat == 1]), 
-           user.missing = "Excluded user-missing"), 
 FN <- paste("Only offenders with valid testing window start dates are included.",
             "Only records associated with incidents where the offender was",
             "arrested for, charged with, or convicted of at least one offense",
             "from one of the 12 main crime categories were counted.")
 
+kable(freq(as_factor(CONEW$JCat12), user.missing = "Excluded user-missing"), 
       format = "latex", booktabs = TRUE, digits = 2, 
       format.args = list(big.mark = ','),
       caption = "Number of Adjudicated Charge Records (Convictions Only) by Crime Category (12 levels)") %>% 
