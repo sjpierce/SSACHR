@@ -1,3 +1,13 @@
+# SSACHR 0.9.3, 2021-03-09 & 2021-03-10
+* Updated `inst/Step_02_Analysis.Rmd` to continue adapting to focus on records 
+  for incidents where offender was arrested, charged, or convicted of any of the
+  12 main crime categories. 
+    * Removed computations for variables we are not going to use in the paper. 
+    * Improved table footnotes.
+    * Switched source data for one table from JUDEW to CONEW to simplify code. 
+    * Improved explanatory text.
+    * Removed unnecessary subheading.
+  
 # SSACHR 0.9.2, 2021-03-08
 * Updated `inst/Step_02_Analysis.Rmd` to continue adapting to focus on records 
   for incidents where offender was arrested, charged, or convicted of any of the
