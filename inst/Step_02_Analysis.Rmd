@@ -1494,8 +1494,8 @@ ARREW %>%
 \FloatBarrier
 
 # Prosecutor Charge Record Summaries
-All summaries in this section directly summarize the CHG data without first 
-aggregating to the incident or offender level. 
+This section directly summarizes the CHG data without first aggregating to the 
+incident or offender level. 
 
 \FloatBarrier
 
@@ -1519,9 +1519,8 @@ kable(freq(as_factor(CHGEW$CCat12), user.missing = "Excluded user-missing"),
 
 # Judicial Charge Record Summaries
 All summaries in this section directly summarize the JUD data without first 
-aggregating to the incident or offender level. Note that here we do not
-distinguish between adjudicated charge records based on disposition. While
-some of these records are convictions, others will have other dispositions.
+aggregating to the incident or offender level. While some of these records are 
+convictions, others will have other dispositions.
 
 \FloatBarrier
 
