@@ -1451,10 +1451,17 @@ aggregating to the incident or offender level.
 
 ## Crime Category (12 levels)
 ```{r}
+FN <- paste("Only offenders with valid testing window start dates are included.",
+            "Only records associated with incidents where the offender was",
+            "arrested for, charged with, or convicted of at least one offense",
+            "from one of the 12 main crime categories were counted.")
+
 kable(freq(as_factor(ARREW$ACat12), user.missing = "Excluded user-missing"), 
       format = "latex", booktabs = TRUE, digits = 2, 
       format.args = list(big.mark = ','),
-      caption = "Number of Arrest Offense Records by Crime Category (12 levels)")
+      caption = "Number of Arrest Offense Records by Crime Category (12 levels)") %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
 ```
 
 \FloatBarrier
@@ -1467,7 +1474,8 @@ TCap <- paste("Offender Age at Arrest for Criminal Sexual Conduct (Overall)")
 FN <- paste("This is an arrest offense record-level summary (offenders with",
             "multiple arrests contribute one age value per arrest record.",
             "Only arrest records for offenders with valid testing window start",
-            "dates are included.")
+            "dates and where the arrest was for criminal sexual conduct are",
+            "included.")
 
 ARREW %>% 
   filter(ACat12_5 == 1) %>% 
@@ -1493,10 +1501,17 @@ aggregating to the incident or offender level.
 
 ## Crime Category (12 levels)
 ```{r, fig.height = 2}
+FN <- paste("Only offenders with valid testing window start dates are included.",
+            "Only records associated with incidents where the offender was",
+            "arrested for, charged with, or convicted of at least one offense",
+            "from one of the 12 main crime categories were counted.")
+
 kable(freq(as_factor(CHGEW$CCat12), user.missing = "Excluded user-missing"), 
       format = "latex", booktabs = TRUE, digits = 2, 
       format.args = list(big.mark = ','),
-      caption = "Number of Prosecutor Charge Records by Crime Category (12 levels)")
+      caption = "Number of Prosecutor Charge Records by Crime Category (12 levels)") %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
 ```
 
 ********************************************************************************
@@ -1512,6 +1527,11 @@ some of these records are convictions, others will have other dispositions.
 
 ## Crime Category (12 levels, all dispositions)
 ```{r, fig.height = 2}
+FN <- paste("Only offenders with valid testing window start dates are included.",
+            "Only records associated with incidents where the offender was",
+            "arrested for, charged with, or convicted of at least one offense",
+            "from one of the 12 main crime categories were counted.")
+
 kable(freq(as_factor(JUDEW$JCat12), user.missing = "Excluded user-missing"), 
       format = "latex", booktabs = TRUE, digits = 2, 
       format.args = list(big.mark = ','),
@@ -1524,9 +1544,16 @@ kable(freq(as_factor(JUDEW$JCat12), user.missing = "Excluded user-missing"),
 ```{r, fig.height = 2}
 kable(freq(as_factor(JUDEW$JCat12[JUDEW$JDispCat == 1]), 
            user.missing = "Excluded user-missing"), 
+FN <- paste("Only offenders with valid testing window start dates are included.",
+            "Only records associated with incidents where the offender was",
+            "arrested for, charged with, or convicted of at least one offense",
+            "from one of the 12 main crime categories were counted.")
+
       format = "latex", booktabs = TRUE, digits = 2, 
       format.args = list(big.mark = ','),
-      caption = "Number of Adjudicated Charge Records (Convictions Only) by Crime Category (12 levels)")
+      caption = "Number of Adjudicated Charge Records (Convictions Only) by Crime Category (12 levels)") %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
 ```
 
 ********************************************************************************
