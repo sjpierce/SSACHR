@@ -129,7 +129,7 @@ criminal history records for arrests, prosecutor charges, and adjudicated
 charges. 
 
 All the CHR summaries in this section focus on variables that have been 
-aggregated to offender level. That is why the sample size for all of these
+aggregated to the offender level. That is why the sample size for all of these
 variables is N = `r nrow(IDNEW)` (the number of offenders for whom Michigan CHR 
 data were available and the start date for the earliest SAK testing window could
 be established). 
@@ -515,11 +515,13 @@ IDNEW %>%
 \FloatBarrier
 
 ## Crime Category Counts (Arrested, Charged, or Convicted)
-Table \ref{tab:describe_cccvars} summarizes how many of 12 different categories
-of crime each offender was *arrested for, charged with, or convicted of*
+Table \ref{tab:describe_cccvars} summarizes how many of 12 different crime 
+categories each offender was *arrested for, charged with, or convicted of*
 according to the CHR data. This sums a set of binary transforms on the incident
-count variables associated with each crime category in *HXCat12*. The 
-*Excluded user-missing* value is not counted as a category, so the possible
+count variables associated with each crime category in *HXCat12*. It is possible
+to have multiple arrest offense records, charge records, or conviction records 
+for a specific category, but we only count each distinct category once at most.
+The *Excluded user-missing* value is not counted as a category, so the possible
 range of values for these counts is 0-12. We report both overall results, and
 results broken down by when the incidents associated with the arrest, charge,
 and conviction records occurred relative to the earliest testing window. Table \ref{tab:freq_HXCat12_Count} shows the frequency distributions underlying those
@@ -696,8 +698,8 @@ TRowLabs <- c("Incident count (arrested, charged, or convicted)", BDA)
 Among these `r N_IDNEW` suspected sexual offenders, there were `r N_HXCat12_1`
 (`r P_HXCat12_1`\%) offenders who had criminal histories containing at least one
 incident associated with an arrest, charge, or conviction for arson. Table
-\ref{tab:describe_arson} summarizes the counts of unique arson incidents by CHR
-record type and when the incident occurred, while Table \ref{tab:freq_HXCat12_1} 
+\ref{tab:describe_arson} summarizes the counts of unique arson incidents 
+overall and by when the incident occurred, while Table \ref{tab:freq_HXCat12_1} 
 shows the frequency distributions underlying those summaries.
 
 ```{r describe_arson}
@@ -758,8 +760,8 @@ Among these `r N_IDNEW` suspected sexual offenders, there were `r N_HXCat12_2`
 (`r P_HXCat12_2`\%) offenders who had criminal histories containing at least one
 incident associated with an arrest, charge, or conviction for assault involving
 domestic violence and/or stalking. Table \ref{tab:describe_assaultdv}
-summarizes the counts of unique assault incidents by CHR record type and when
-the incident occurred, while Table \ref{tab:freq_HXCat12_2} shows the frequency
+summarizes the counts of unique assault incidents overall and by when the
+incident occurred, while Table \ref{tab:freq_HXCat12_2} shows the frequency
 distributions underlying those summaries.
 
 ```{r describe_assaultdv}
@@ -823,9 +825,8 @@ Among these `r N_IDNEW` suspected sexual offenders, there were
 containing at least one incident associated with an arrest, charge, or 
 conviction for a non-sexual, non-domestic violence assault. Table 
 \ref{tab:describe_assaultndv} summarizes the counts of unique assault incidents
-by CHR record type and when the incident occurred, while Table
-\ref{tab:freq_HXCat12_3} shows the frequency distributions underlying those
-summaries.
+overall and by when the incident occurred, while Table \ref{tab:freq_HXCat12_3}
+shows the frequency distributions underlying those summaries.
 
 ```{r describe_assaultndv}
 # Table caption. 
@@ -887,9 +888,8 @@ Among these `r N_IDNEW` suspected sexual offenders, there were `r N_HXCat12_4`
 (`r P_HXCat12_4`\%) offenders who had criminal histories containing at least one
 incident associated with an arrest, charge, or conviction for burglary. Table
 \ref{tab:describe_burglary} summarizes the counts of unique burglary incidents
-by CHR record type and when the incident occurred, while Table
-\ref{tab:freq_HXCat12_4} shows the frequency distributions underlying those
-summaries.
+overall and by when the incident occurred, while Table \ref{tab:freq_HXCat12_4}
+shows the frequency distributions underlying those summaries.
 
 ```{r describe_burglary}
 # Table caption. 
@@ -949,9 +949,9 @@ Among these `r N_IDNEW` suspected sexual offenders, there were `r N_HXCat12_5`
 (`r P_HXCat12_5`\%) offenders who had criminal histories containing at least one
 incident associated with an arrest, charge, or conviction for criminal sexual
 conduct. Table \ref{tab:describe_csc} summarizes the counts of unique criminal
-sexual conduct incidents by CHR record type and when the incident occurred,
-while Table \ref{tab:freq_HXCat12_5} shows the frequency distributions
-underlying those summaries.
+sexual conduct incidents overall and by when the incident occurred, while Table
+\ref{tab:freq_HXCat12_5} shows the frequency distributions underlying those
+summaries.
 
 ```{r describe_csc}
 # Table caption. 
@@ -1010,8 +1010,8 @@ IDNEW %>%
 Among these `r N_IDNEW` suspected sexual offenders, there were `r N_HXCat12_6`
 (`r P_HXCat12_6`\%) offenders who had criminal histories containing at least one
 incident associated with an arrest, charge, or conviction for drug crime. Table
-\ref{tab:describe_drug} summarizes the counts of unique drug crime incidents by
-CHR record type and when the incident occurred, while Table
+\ref{tab:describe_drug} summarizes the counts of unique drug crime incidents 
+overall and by and when the incident occurred, while Table
 \ref{tab:freq_HXCat12_6} shows the frequency distributions underlying those
 summaries.
 
@@ -1073,9 +1073,8 @@ Among these `r N_IDNEW` suspected sexual offenders, there were `r N_HXCat12_7`
 (`r P_HXCat12_7`\%) offenders who had criminal histories containing at least one
 incident associated with an arrest, charge, or conviction for homicide. Table
 \ref{tab:describe_homicide} summarizes the counts of unique homicide incidents
-by CHR record type and when the incident occurred, while Table
-\ref{tab:freq_HXCat12_7} shows the frequency distributions underlying those
-summaries.
+overall and by when the incident occurred, while Table \ref{tab:freq_HXCat12_7} 
+shows the frequency distributions underlying those summaries.
 
 ```{r describe_homicide}
 # Table caption. 
@@ -1135,9 +1134,9 @@ Among these `r N_IDNEW` suspected sexual offenders, there were `r N_HXCat12_8`
 (`r P_HXCat12_8`\%) offenders who had criminal histories containing at least one
 incident associated with an arrest, charge, or conviction for larceny, theft, or
 fraud. Table \ref{tab:describe_larceny} summarizes the counts of unique larceny,
-theft, or fraud incidents by CHR record type and when the incident occurred,
-while Table \ref{tab:freq_HXCat12_8} shows the frequency distributions
-underlying those summaries.
+theft, or fraud incidents overall and by when the incident occurred, while
+Table \ref{tab:freq_HXCat12_8} shows the frequency distributions underlying 
+those summaries.
 
 ```{r describe_larceny}
 # Table caption. 
@@ -1196,10 +1195,9 @@ IDNEW %>%
 Among these `r N_IDNEW` suspected sexual offenders, there were `r N_HXCat12_9`
 (`r P_HXCat12_9`\%) offenders who had criminal histories containing at least one
 incident associated with an arrest, charge, or conviction for robbery. Table
-\ref{tab:describe_robbery} summarizes the counts of unique robbery incidents by
-CHR record type and when the incident occurred, while Table
-\ref{tab:freq_HXCat12_9} shows the frequency distributions underlying those
-summaries.
+\ref{tab:describe_robbery} summarizes the counts of unique robbery incidents 
+overall and by when the incident occurred, while Table \ref{tab:freq_HXCat12_9} 
+shows the frequency distributions underlying those summaries.
 
 ```{r describe_robbery}
 # Table caption. 
@@ -1259,9 +1257,8 @@ Among these `r N_IDNEW` suspected sexual offenders, there were `r N_HXCat12_10`
 (`r P_HXCat12_10`\%) offenders who had criminal histories containing at least one
 incident associated with an arrest, charge, or conviction for sex crimes. Table
 \ref{tab:describe_sexcrime} summarizes the counts of unique sex crime incidents
-by CHR record type and when the incident occurred, while Table 
-\ref{tab:freq_HXCat12_10} shows the frequency
-distributions underlying those summaries.
+overall and by when the incident occurred, while Table \ref{tab:freq_HXCat12_10} 
+shows the frequency distributions underlying those summaries.
 
 ```{r describe_sexcrime}
 # Table caption. 
@@ -1321,7 +1318,7 @@ Among these `r N_IDNEW` suspected sexual offenders, there were `r N_HXCat12_11`
 (`r P_HXCat12_11`\%) offenders who had criminal histories containing at least one
 incident associated with an arrest, charge, or conviction for traffic and
 ordinance violations. Table \ref{tab:describe_traffic} summarizes the counts of
-unique traffic and ordinance incidents by CHR record type and when the incident
+unique traffic and ordinance incidents overall and by when the incident
 occurred, while Table \ref{tab:freq_HXCat12_11} shows the frequency
 distributions underlying those summaries.
 
@@ -1383,7 +1380,7 @@ Among these `r N_IDNEW` suspected sexual offenders, there were `r N_HXCat12_12`
 (`r P_HXCat12_12`\%) offenders who had criminal histories containing at least one
 incident associated with an arrest, charge, or conviction for weapons crimes.
 Table \ref{tab:describe_weapons} summarizes the counts of unique weapons crime
-incidents by CHR record type and when the incident occurred, while Table
+incidents overall and by when the incident occurred, while Table
 \ref{tab:freq_HXCat12_12} shows the frequency distributions underlying those
 summaries.
 
