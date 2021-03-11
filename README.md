@@ -217,10 +217,6 @@ U.S. Department of Justice.
 
 ## Task List
 
--   Finish updating case selection and variable construction to reflect
-    focus on incidents where offender was arrested for, charged with, or
-    convicted of an offense from one or more of 12 crime categories of
-    interest.
 -   Improve this file.
 -   Create a script to generate a data flow diagram.
 -   Create a make-file script to sequence running multiple .Rmd files.
