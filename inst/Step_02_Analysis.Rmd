@@ -294,7 +294,7 @@ TCap <- paste("Frequency Distributions for Number of Incidents",
 FN <- paste0("Only offenders with valid testing window start dates are ", 
              "included. Only incidents where the offender was arrested for, ",
              "charged with, or convicted of at least one offense from one of ",
-             "the 12 main crime categories were counted. ",
+             "the 12 main crime categories were included. ",
              "N = ", format(nrow(IDNEW), big.mark = ","), ". TW, earliest ",
              "testing window.")
 
@@ -337,9 +337,9 @@ TCap <- paste("Frequency Distributions for Number of Arrest Offenses (All",
 # Footnote text.
 FN <- paste0("N = ", format(nrow(IDNEW), big.mark = ","), ". TW, earliest ",
             "testing window. ",
-            "Only records associated with incidents where the offender was ",
-            "arrested for, charged with, or convicted of at least one offense ",
-            "from one of the 12 main crime categories were counted. ",
+            "Only arrest records for offenders with valid testing window start ",
+            "dates and with offenses from the 12 main crime categories were ",
+            "included. ",
             "Before, during, and after refer to when the incident associated ",
             "with the record occurred, not when the arrest date occurred ",
             "relative to the testing window. For example, an offender could be ",
@@ -383,9 +383,9 @@ TCap <- paste("Frequency Distributions for Number of Prosecutor Charges (All",
 # Footnote text.
 FN <- paste0("N = ", format(nrow(IDNEW), big.mark = ","), ". TW, earliest ",
             "testing window. ",
-            "Only records associated with incidents where the offender was ",
-            "arrested for, charged with, or convicted of at least one offense ",
-            "from one of the 12 main crime categories were counted. ",
+            "Only charge records for offenders with valid testing window start ",
+            "dates and with charges from the 12 main crime categories were ",
+            "included. ",
             "Before, during, and after refer to when the incident associated ",
             "with the record occurred, not when the charge date occurred ",
             "relative to the testing window. For example, an offender could be ",
@@ -429,9 +429,9 @@ TCap <- paste("Frequency Distributions for Number of Adjudicated Charges (All",
 # Footnote text.
 FN <- paste0("N = ", format(nrow(IDNEW), big.mark = ","), ". TW, earliest ",
             "testing window. ",
-            "Only records associated with incidents where the offender was ",
-            "arrested for, charged with, or convicted of at least one offense ",
-            "from one of the 12 main crime categories were counted. ",
+            "Only records for offenders with valid testing window start dates ",
+            "and with charges from one of the 12 main crime categories were ",
+            "included. ", 
             "Before, during, and after refer to when the incident associated ",
             "with the record occurred, not when the adjudication date occurred ",
             "relative to the testing window. For example, a charge could be ",
@@ -477,9 +477,9 @@ TCap <- paste("Frequency Distributions for Number of Adjudicated Charges (All",
 # Footnote text.
 FN <- paste0("N = ", format(nrow(IDNEW), big.mark = ","), ". TW, earliest ",
             "testing window. ",
-            "Only records associated with incidents where the offender was ",
-            "arrested for, charged with, or convicted of at least one offense ",
-            "from one of the 12 main crime categories were counted. ",
+            "Only conviction records for offenders with valid testing window ",
+            "start dates and with charges from one of the 12 main crime ",
+            "categories were included. ", 
             "Before, during, and after refer to when the incident associated ",
             "with the record occurred, not when the adjudication date occurred ",
             "relative to the testing window. For example, an offender could be ",
@@ -704,8 +704,8 @@ shows the frequency distributions underlying those summaries.
 
 ```{r describe_arson}
 # Table caption. 
-TCap <- paste("Offender-Level Arson Incident Counts By CHR Record Type (Overall",
-              "and By When Incident Occurred)")
+TCap <- paste("Offender-Level Arson Incident Counts (Overall and By When",
+              "Incident Occurred)")
 
 # Summarize crime category counts (both overall and broken down by IWhen).
 IDNEW %>% 
@@ -767,8 +767,7 @@ distributions underlying those summaries.
 ```{r describe_assaultdv}
 # Table caption. 
 TCap <- paste("Offender-Level Assault Involving Domestc Violence and/or",
-              "Stalking Incident Counts By CHR Record Type (Overall and By",
-              "When Incident Occurred)")
+              "Stalking Incident Counts (Overall and By When Incident Occurred)")
 
 # Summarize crime category counts (both overall and broken down by IWhen).
 IDNEW %>% 
@@ -831,8 +830,7 @@ shows the frequency distributions underlying those summaries.
 ```{r describe_assaultndv}
 # Table caption. 
 TCap <- paste("Offender-Level Assault (Non-Sexual, Non-Domestic Violence)",
-              "Incident Counts By CHR Record Type (Overall and By When",
-              "Incident Occurred)")
+              "Incident Counts (Overall and By When Incident Occurred)")
 
 # Summarize crime category counts (both overall and broken down by IWhen).
 IDNEW %>% 
@@ -893,8 +891,8 @@ shows the frequency distributions underlying those summaries.
 
 ```{r describe_burglary}
 # Table caption. 
-TCap <- paste("Offender-Level Burglary Incident Counts By CHR Record Type (Overall",
-              "and By When Incident Occurred)")
+TCap <- paste("Offender-Level Burglary Incident Counts (Overall and By When",
+              "Incident Occurred)")
 
 # Summarize crime category counts (both overall and broken down by IWhen).
 IDNEW %>% 
@@ -1017,8 +1015,8 @@ summaries.
 
 ```{r describe_drug}
 # Table caption. 
-TCap <- paste("Offender-Level Drug Crime Incident Counts By CHR Record Type",
-              "(Overall and By When Incident Occurred)")
+TCap <- paste("Offender-Level Drug Crime Incident Counts (Overall and By When",
+              "Incident Occurred)")
 
 # Summarize crime category counts (both overall and broken down by IWhen).
 IDNEW %>% 
@@ -1078,8 +1076,8 @@ shows the frequency distributions underlying those summaries.
 
 ```{r describe_homicide}
 # Table caption. 
-TCap <- paste("Offender-Level Homicide Incident Counts By CHR Record Type",
-              "(Overall and By When Incident Occurred)")
+TCap <- paste("Offender-Level Homicide Incident Counts (Overall and By When",
+              "Incident Occurred)")
 
 # Summarize crime category counts (both overall and broken down by IWhen).
 IDNEW %>% 
@@ -1201,8 +1199,8 @@ shows the frequency distributions underlying those summaries.
 
 ```{r describe_robbery}
 # Table caption. 
-TCap <- paste("Offender-Level Robbery Incident Counts By CHR Record Type",
-              "(Overall and By When Incident Occurred)")
+TCap <- paste("Offender-Level Robbery Incident Counts (Overall and By When",
+              "Incident Occurred)")
 
 # Summarize crime category counts (both overall and broken down by IWhen).
 IDNEW %>% 
@@ -1262,8 +1260,8 @@ shows the frequency distributions underlying those summaries.
 
 ```{r describe_sexcrime}
 # Table caption. 
-TCap <- paste("Offender-Level Sex Crime Incident Counts By CHR Record Type",
-              "(Overall and By When Incident Occurred)")
+TCap <- paste("Offender-Level Sex Crime Incident Counts (Overall and By When",
+              "Incident Occurred)")
 
 # Summarize crime category counts (both overall and broken down by IWhen).
 IDNEW %>% 
@@ -1386,8 +1384,8 @@ summaries.
 
 ```{r describe_weapons}
 # Table caption. 
-TCap <- paste("Offender-Level Weapons Crime Incident Counts By CHR Record Type",
-              "(Overall and By When Incident Occurred)")
+TCap <- paste("Offender-Level Weapons Crime Incident Counts (Overall and By",
+              "When Incident Occurred)")
 
 # Summarize crime category counts (both overall and broken down by IWhen).
 IDNEW %>% 
@@ -1448,10 +1446,9 @@ aggregating to the incident or offender level.
 
 ## Crime Category (12 levels)
 ```{r}
-FN <- paste("Only offenders with valid testing window start dates are included.",
-            "Only records associated with incidents where the offender was",
-            "arrested for, charged with, or convicted of at least one offense",
-            "from one of the 12 main crime categories were counted.")
+FN <- paste("Only arrest records for offenders with valid testing window start",
+            "dates and with offenses from the 12 main crime categories were",
+            "included.")
 
 kable(freq(as_factor(ARREW$ACat12), user.missing = "Excluded user-missing"), 
       format = "latex", booktabs = TRUE, digits = 2, 
@@ -1497,10 +1494,9 @@ incident or offender level.
 \FloatBarrier
 
 ```{r, fig.height = 2}
-FN <- paste("Only offenders with valid testing window start dates are included.",
-            "Only records associated with incidents where the offender was",
-            "arrested for, charged with, or convicted of at least one offense",
-            "from one of the 12 main crime categories were counted.")
+FN <- paste("Only charge records for offenders with valid testing window start",
+            "dates and with charges from the 12 main crime categories were",
+            "included.")
 
 kable(freq(as_factor(CHGEW$CCat12), user.missing = "Excluded user-missing"), 
       format = "latex", booktabs = TRUE, digits = 2, 
@@ -1522,10 +1518,9 @@ convictions, others will have other dispositions.
 
 ## Crime Category (12 levels, all dispositions)
 ```{r, fig.height = 2}
-FN <- paste("Only offenders with valid testing window start dates are included.",
-            "Only records associated with incidents where the offender was",
-            "arrested for, charged with, or convicted of at least one offense",
-            "from one of the 12 main crime categories were counted.")
+FN <- paste("Only records for offenders with valid testing window start dates",
+            "and with charges from one of the 12 main crime categories were",
+            "included.")
 
 kable(freq(as_factor(JUDEW$JCat12), user.missing = "Excluded user-missing"), 
       format = "latex", booktabs = TRUE, digits = 2, 
@@ -1537,10 +1532,9 @@ kable(freq(as_factor(JUDEW$JCat12), user.missing = "Excluded user-missing"),
 
 ## Crime Category (12 levels, convictions)
 ```{r, fig.height = 2}
-FN <- paste("Only offenders with valid testing window start dates are included.",
-            "Only records associated with incidents where the offender was",
-            "arrested for, charged with, or convicted of at least one offense",
-            "from one of the 12 main crime categories were counted.")
+FN <- paste("Only conviction records for offenders with valid testing window",
+            "start dates and with charges from one of the 12 main crime",
+            "categories were included.")
 
 kable(freq(as_factor(CONEW$JCat12), user.missing = "Excluded user-missing"), 
       format = "latex", booktabs = TRUE, digits = 2, 
