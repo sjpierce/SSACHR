@@ -1864,7 +1864,7 @@ record type (i.e., birth, incident, arrest, charge, and adjudication dates).
 ```{r chr_overview, warning = FALSE}
 # Table caption.
 TCap <- paste("Criminal History Record Counts and Date Ranges Before Versus",
-              "After Case Selection Based on Testing Window Data")
+              "After Case Selection")
 
 # Summarize record counts before & after case selection for this study.
 bind_rows(dfsummary(IDN, label = "Offenders...Before", dvar = IDN$DOB),
