@@ -725,6 +725,39 @@ INCEW %>%
 ```
 \FloatBarrier
 
+## Merge First & Last Incident Dates Onto IDNEW Data
+Here we pause to aggregate *INCEW* data to identify the first and last incident
+dates in each offender's criminal history and merge those onto the IDNEW data as
+*FIDate* and *LIDate*, compute the date intervals corresponding to the before
+and after testing window periods (*BWindow* and *AWindow*), and the durations of 
+the before, during, and after testing window period in years (*BTYears*, 
+*DTYears*, *ATYears*). We will eventually use these variables as offsets into 
+some models of count variables that need to adjust for period duration to 
+produce crime incidence rate variables.
+
+```{r }
+
+INCEW %>% 
+  group_by(OID, .drop = FALSE) %>% 
+  # Aggregate by OID to get new date variables.
+  summarize(FIDate = min(IDate),
+            LIDate = max(IDate)) %>%
+  # Merge those new date variables onto IDNEW.
+  left_join(x = IDNEW, y = ., by = "OID") %>% 
+  # Create date intervals for before and after testing window periods.
+  mutate(BWindow = case_when(
+      FIDate < WDate ~ interval(FIDate, WDate - 1),
+      FIDate == WDate ~ interval(WDate - 1, WDate - 1),
+      FIDate > WDate ~ interval(WDate - 1, WDate - 1),
+    AWindow = case_when(
+      LIDate > int_end(TWindow) ~ interval(int_end(TWindow) + 1, LIDate),
+      LIDate == int_end(TWindow) ~ interval(int_end(TWindow) + 1, int_end(TWindow) + 1),
+      LIDate < int_end(TWindow) ~ interval(int_end(TWindow) + 1, int_end(TWindow) + 1))) %>% 
+  summary()
+```
+
+
+
 ## Merge Testing Window Variables Onto Arrest Records
 The next step is to merge variables from *INCEW* onto the arrest data in *ARR*
 so that we can classify each arrest offense record according to whether the
