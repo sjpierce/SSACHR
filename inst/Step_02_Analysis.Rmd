@@ -100,6 +100,8 @@ library(lattice)          # For xyplot(), bwplot(), etc.
 library(psych)            # For describe()
 library(car)              # For recode()
 library(SSACHR)           # for rvlabel()
+library(geepack)          # for geeglm()
+library(emmeans)          # for emmeans()
 ```
 
 Create objects to hold settings we plan to reuse often. 
