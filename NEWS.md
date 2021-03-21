@@ -1,3 +1,14 @@
+# SSACHR 0.9.6, 2021-03-20
+* Updated `inst/Step_01_Data_Mgt.Rmd` to:
+    * Remove first and last incident date variables from IDNEW.
+    * Add more date, date interval, and period duration variables to IDNEW so 
+      we can eventually adjust count data models with offsets based on duration
+      of the periods before, during, and after the testing window. 
+  
+# SSACHR 0.9.5, 2021-03-16
+* Updated `inst/Step_01_Data_Mgt.Rmd` to start adding first and last incident
+  date variables to IDNEW. 
+
 # SSACHR 0.9.4, 2021-03-10
 * Updated `inst/Step_01_Data_Mgt.Rmd` to improve a table caption.
 * Updated `inst/Step_02_Analysis.Rmd`.
