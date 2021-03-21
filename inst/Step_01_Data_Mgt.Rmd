@@ -564,6 +564,37 @@ step. Then we subset down to the records that have non-missing *WDate* values
 and select only the variables we need to keep before setting a variable label
 and saving to a new tibble called *IDNEW*.
 
+After merging in *TWindow*, it is now possible to compute date intervals for 
+the periods of the recorded criminal history observed before and after the 
+testing window. We call those new variables *BWindow* and *AWindow* and 
+supplement all three date intervals with duration variables measuring the 
+duration of the before, during, and after periods in years (*DurationBP*, 
+*DurationDP*, and *DurationAP*, respectively). We will eventually use these 
+duration variables as offsets when modeling count outcome variables that need to
+adjust for period duration to produce crime incidence rate variables.
+
+We are working with adult criminal history records that only include data for
+crimes committed since each offender reached 16 years of age. Therefore, the
+offender's 16th birth day (*Age16Date*) is the obvious start date for the before
+period. However, because *WDate* is derived from when the earliest
+SAK for the offender was collected rather than the criminal history data,
+*WDate* can in principle either precede or occur on *Age16Date* (which can be 
+computed from from date of birth *DOB*). We create variables below that help us 
+determine how often that occurred and adjust the before period date interval in
+a sensible way when it does. 
+
+We defined the before period as starting on the offender's 16th birthday 
+(*Age16Date*) and ending one day before the earliest SAK was collected (*WDate*)
+when *Age16Date* < *WDate*, and otherwise as both starting and ending the day 
+before *WDate*. That yields a before period with a positive duration for most 
+offenders but zero years for those whose earliest SAK was collected before they 
+reached age 16 years. 
+
+For all offenders, the after period starts on the 119th day after *WDate*
+(because the testing window is 118 days long) and ends on the data collection
+date when the criminal history data were extracted from the state data
+warehouse: April 15, 2016. 
+
 ```{r create_IDNEW}
 SPDCHREW %>% 
   # Retain only variables we need to merge into IDN.
@@ -572,15 +603,57 @@ SPDCHREW %>%
   right_join(x = ., y = IDN, by = "OID") %>% 
   # Retain only IDN records for offenders with non-missing WDate values. 
   filter(is.na(WDate) == FALSE) %>%
+  # Create more variables.
+  mutate(
+    # Offender 16th birthday (start of before period).
+    Age16Date = DOB + dyears(16),
+    # Did offender turn 16 before WDate (start of testing window, TWindow)?
+    Turn16_Before_WDate = (Age16Date < WDate),
+    # Did offender turn 16 on or after WDate (start of testing window, TWindow)?
+    Turn16_After_WDate = (Age16Date >= WDate),
+    # Data Collection Date (end of after period)
+    DCDate = ymd("2016-04-15", tz = "UTC"),  
+    # Did testing window end before data collection date?
+    End_TWindow_Before_DC = (WDate + 118 < DCDate),
+    # Before testing window date interval
+    BWindow = case_when(
+      # If offender turned 16 before WDate, before period lasts > 0 years.
+      Turn16_Before_WDate ~ interval(Age16Date, WDate - 1),
+      # If offender turned 16 on or after WDate, before period lasts 0 years.
+      Turn16_After_WDate ~ interval(WDate - 1, WDate - 1)),
+    # After testing window date interval. 
+    AWindow = interval(WDate + 119, DCDate),
+    # Duration of before testing window period (years).
+    DurationBP = BWindow/dyears(1),
+    # Duration of testing window period (years)
+    DurationDP = TWindow/dyears(1),
+    # Duration of after testing window period (years)
+    DurationAP = AWindow/dyears(1)) %>% 
+  var_labels(
+    Age16Date = "Offender 16th Birthday (Date Turned Age 16 Years)",
+    Turn16_Before_WDate = "Offender Turned 16 Before Start of Testing Window",
+    Turn16_After_WDate = "Offender Turned 16 On or After Start of Testing Window",
+    DCDate = "Data Collection Date for Criminal history Records",
+    End_TWindow_Before_DC = "Testing Window Ended Before Data Collection Date",
+    DurationBP = "Duration of before testing window period (years)",
+    DurationDP = "Duration of during testing window period (years)",
+    DurationAP = "Duration of after testing window period (years)",
+    BWindow = "Before Testing Window Date Interval",
+    TWindow = "Testing Window Date Interval",
+    AWindow = "After Testing Window Date Interval") %>% 
   # Retain only variables we need, in sensible order. 
-  select(all_of(c(names(IDN), "ESAKID", "ESAK_IID", "WDate", "TWindow"))) %>% 
-  # Add a variable label that was otherwise being dropped. 
-  var_labels(TWindow = "Testing Window Date Interval") ->
+  select(all_of(c(names(IDN), "Age16Date", "ESAKID", "ESAK_IID", "WDate", 
+                  "TWindow", "Turn16_Before_WDate", "Turn16_After_WDate", 
+                  "DCDate", "End_TWindow_Before_DC", "BWindow", "AWindow", 
+                  "DurationBP", "DurationDP", "DurationAP"))) ->
   IDNEW
 ```
 
 We end up with an *IDNEW* tibble that has `r nrow(IDNEW)` of the original 
-`r nrow(IDN)` perpetrators with CHR data. 
+`r nrow(IDN)` perpetrators with CHR data. Only `r sum(IDNEW$Turn16_After_WDate)`
+of the `r nrow(IDNEW)` offenders turned 16 on or after their earliest SAK was 
+collected and the testing window had started; they therefore have *DurationBP* 
+= 0 years. 
 
 ## Merge Testing Window Variables Onto Incident Data
 The next step is to merge variables from *IDNEW* onto the incident data in *INC*
@@ -724,39 +797,6 @@ INCEW %>%
   IDNEW
 ```
 \FloatBarrier
-
-## Merge First & Last Incident Dates Onto IDNEW Data
-Here we pause to aggregate *INCEW* data to identify the first and last incident
-dates in each offender's criminal history and merge those onto the IDNEW data as
-*FIDate* and *LIDate*, compute the date intervals corresponding to the before
-and after testing window periods (*BWindow* and *AWindow*), and the durations of 
-the before, during, and after testing window period in years (*BTYears*, 
-*DTYears*, *ATYears*). We will eventually use these variables as offsets into 
-some models of count variables that need to adjust for period duration to 
-produce crime incidence rate variables.
-
-```{r }
-
-INCEW %>% 
-  group_by(OID, .drop = FALSE) %>% 
-  # Aggregate by OID to get new date variables.
-  summarize(FIDate = min(IDate),
-            LIDate = max(IDate)) %>%
-  # Merge those new date variables onto IDNEW.
-  left_join(x = IDNEW, y = ., by = "OID") %>% 
-  # Create date intervals for before and after testing window periods.
-  mutate(BWindow = case_when(
-      FIDate < WDate ~ interval(FIDate, WDate - 1),
-      FIDate == WDate ~ interval(WDate - 1, WDate - 1),
-      FIDate > WDate ~ interval(WDate - 1, WDate - 1),
-    AWindow = case_when(
-      LIDate > int_end(TWindow) ~ interval(int_end(TWindow) + 1, LIDate),
-      LIDate == int_end(TWindow) ~ interval(int_end(TWindow) + 1, int_end(TWindow) + 1),
-      LIDate < int_end(TWindow) ~ interval(int_end(TWindow) + 1, int_end(TWindow) + 1))) %>% 
-  summary()
-```
-
-
 
 ## Merge Testing Window Variables Onto Arrest Records
 The next step is to merge variables from *INCEW* onto the arrest data in *ARR*
