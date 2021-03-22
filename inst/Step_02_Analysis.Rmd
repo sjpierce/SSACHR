@@ -159,7 +159,7 @@ kable(freq(as_factor(IDNEW$Race), user.missing = "Unknown"), format = "latex",
 CNums  <- c(2:4,8,9,11:12, 14:16)
 CNames <- c("N", "Mean", "SD", "Min", "Max", "Skew", "Kurtosis", "Q25", "Q50", 
             "Q75")
-Age <- describe(IDNEW$Age,  quant=c(.25, .50, .75))
+Age <- describe(IDNEW$Age, quant=c(.25, .50, .75))
 kable(Age[, CNums], format = "latex", booktabs = TRUE, digits = 2, 
       col.names = CNames,
       caption = "Offender Age (as of 04/15/2016)")
@@ -176,6 +176,50 @@ bwplot(~ Age, data = IDNEW, factor = 9, xlim = c(18, 82),
 ```
 
 \FloatBarrier
+
+## CHR Periods
+The observed portions of these offenders' adult criminal histories include 
+incident, arrest, prosecutor charge, and judicial charge records associated with
+crimes that occurred between the offender's 16th birthday and April 15, 2016
+(when the CHR data were collected from the official statewide CHR database). 
+That time frame can be divided into three important periods for the purposes of
+this study: before, during, and after the testing window associated with the 
+offender's earliest sexual assault kit (SAK). Here we provide descriptive data 
+about those periods. Note that for offenders whose earliest SAK was collected 
+before their 16th birthday, the before period was set to both start and end the 
+day before the SAK was collected to make sure that it had a duration of zero 
+years because it was effectively unobserved. 
+
+
+```{r boxplot_Age16Date, fig.height = 1.75, fig.cap=FCap}
+# Figure caption.
+FCap <- paste("Box Plot for Date of Offender's 16th Birtday. Only offenders", 
+              "with valid testing window start dates are included.")
+
+bwplot(~ Age16Date, data = IDNEW, factor = 9, 
+       xlim = c(ymd("1950-01-01"), ymd("2020-12-31")),
+       panel = panel.mybox, par.settings = my.boxes,
+       xlab = "Offender's 16th Birthday")
+```
+
+
+```{r describe_windows}
+rlabs <- c("Before testing window", "During testing window", "After testing window")
+
+IDNEW %>% 
+  select(DurationBP, DurationDP, DurationAP) %>% 
+  describe(., quant=c(.25, .50, .75)) %>% 
+  bind_cols(data.frame(Variable = rlabs), .) %>% 
+  select(Variable, n, mean, sd, min, max, skew, kurtosis, Q0.25, Q0.5, Q0.75) %>% 
+  kable(., format = "html", booktabs = TRUE, digits = 2, row.names = FALSE,
+      col.names = c("Variable", CNames),
+      caption = "Durations (Years)")
+
+```
+
+
+
+
 
 ## CHR Record Counts
 We aggregated data to count how many CHR records of each type are associated
