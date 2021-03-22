@@ -607,6 +607,10 @@ SPDCHREW %>%
   mutate(
     # Offender 16th birthday (start of before period).
     Age16Date = DOB + dyears(16),
+    # Offender age at start of earliest SAK testing window
+    AgeTWStart = interval(DOB, WDate)/dyears(1),
+    # Offender age at end of earliest SAK testing window
+    AgeTWEnd = interval(DOB, WDate + 118)/dyears(1),
     # Did offender turn 16 before WDate (start of testing window, TWindow)?
     Turn16_Before_WDate = (Age16Date < WDate),
     # Did offender turn 16 on or after WDate (start of testing window, TWindow)?
@@ -615,6 +619,8 @@ SPDCHREW %>%
     DCDate = ymd("2016-04-15", tz = "UTC"),  
     # Did testing window end before data collection date?
     End_TWindow_Before_DC = (WDate + 118 < DCDate),
+    # Observed window date interval
+    
     # Before testing window date interval
     BWindow = case_when(
       # If offender turned 16 before WDate, before period lasts > 0 years.
@@ -631,6 +637,7 @@ SPDCHREW %>%
     DurationAP = AWindow/dyears(1)) %>% 
   var_labels(
     Age16Date = "Offender 16th Birthday (Date Turned Age 16 Years)",
+    AgeWDate = "Offender Age at Start of Earliest SAK Testing Window (Years)",
     Turn16_Before_WDate = "Offender Turned 16 Before Start of Testing Window",
     Turn16_After_WDate = "Offender Turned 16 On or After Start of Testing Window",
     DCDate = "Data Collection Date for Criminal history Records",
