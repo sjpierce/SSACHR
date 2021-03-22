@@ -1,3 +1,9 @@
+# SSACHR 0.9.7, 2021-03-20
+* Updated `inst/Step_01_Data_Mgt.Rmd` to refine variables used to compute 
+  observed period durations. This is still work in progress. 
+* Updated `inst/Step_02_Analysis.Rmd` to add a new section to show data on 
+  observed period durations. This is still work in progress. 
+
 # SSACHR 0.9.6, 2021-03-20
 * Updated `inst/Step_01_Data_Mgt.Rmd` to:
     * Remove first and last incident date variables from IDNEW.
