@@ -23,3 +23,6 @@
 # Omit SPSS data files that should be downloaded from NACJD archive
 # instead of distributed via GitHub.
 ^inst/extdata/*\.sav$
+
+# Omit log files created by knitting to PDF.
+^inst/*.log
