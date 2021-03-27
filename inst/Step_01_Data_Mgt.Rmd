@@ -667,10 +667,10 @@ SPDCHREW %>%
     TWindow = "Testing Window Date Interval",
     AWindow = "After Testing Window Date Interval") %>% 
   # Retain only variables we need, in sensible order. 
-  select(all_of(c(names(IDN), "Age16Date", "ESAKID", "ESAK_IID", "WDate", 
+  select(all_of(c(names(IDN), "Age16Date", "AgeWDate", "ESAKID", "ESAK_IID", "WDate", 
                   "TWindow", "Turn16_Before_WDate", "Turn16_After_WDate", 
-                  "DCDate", "End_TWindow_Before_DC", "BWindow", "AWindow", 
-                  "DurationBP", "DurationDP", "DurationAP"))) ->
+                  "DCDate", "End_TWindow_Before_DC", "OWindow", "BWindow", 
+                  "AWindow", "DurationBP", "DurationDP", "DurationAP"))) ->
   IDNEW
 ```
 
