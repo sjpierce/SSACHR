@@ -638,11 +638,21 @@ SPDCHREW %>%
     # After testing window date interval. 
     AWindow = interval(WDate + 119, DCDate),
     # Duration of before testing window period (years).
-    DurationBP = BWindow/dyears(1),
-    # Duration of testing window period (years)
-    DurationDP = TWindow/dyears(1),
+    DurationBP = case_when(
+      Age16Date <  WDate - 1 ~ (as.duration(BWindow) + ddays(1))/dyears(1),
+      Age16Date == WDate - 1 ~ ddays(1)/dyears(1),
+      Age16Date >  WDate - 1 ~ 0),
+    # Duration of during testing window period (years)
+    DurationDP = case_when(
+      Age16Date < WDate ~ ddays(119)/dyears(1),
+      Age16Date %within% TWindow ~ 
+        (as.duration(intersect(OWindow, TWindow)) + ddays(1))/dyears(1),
+      Age16Date > WDate + 118 ~ 0),
     # Duration of after testing window period (years)
-    DurationAP = AWindow/dyears(1)) %>% 
+    DurationAP = case_when(
+      Age16Date <= WDate + 119 ~ (as.duration(AWindow) + ddays(1))/dyears(1),
+      Age16Date >  WDate + 119 ~ 
+        (as.duration(intersect(OWindow, AWindow)) + ddays(1))/dyears(1))) %>% 
   var_labels(
     Age16Date = "Offender 16th Birthday (Date Turned Age 16 Years)",
     AgeWDate = "Offender Age at Start of Earliest SAK Testing Window (Years)",
