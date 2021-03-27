@@ -628,7 +628,7 @@ SPDCHREW %>%
     # Did testing window end before data collection date?
     End_TWindow_Before_DC = (WDate + 118 < DCDate),
     # Observed window date interval
-    
+    OWindow = interval(Age16Date, DCDate),
     # Before testing window date interval
     BWindow = case_when(
       # If offender turned 16 before WDate, before period lasts > 0 years.
