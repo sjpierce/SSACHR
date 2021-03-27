@@ -1,3 +1,9 @@
+# SSACHR 0.9.8, 2021-03-26
+* Updated `inst/Step_01_Data_Mgt.Rmd` to refine variables used to compute 
+  observed period durations. This is still work in progress. 
+* Updated `.gitignore` and `.Rbuildignore` to omit *.log files created by 
+  knitting to PDF. 
+  
 # SSACHR 0.9.7, 2021-03-20
 * Updated `inst/Step_01_Data_Mgt.Rmd` to refine variables used to compute 
   observed period durations. This is still work in progress. 
