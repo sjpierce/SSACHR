@@ -157,6 +157,7 @@ library(lattice)          # For xyplot(), bwplot(), etc.
 library(psych)            # For describe()
 library(car)              # For recode()
 library(SSACHR)           # for rvlabel()
+library(vistime)          # for gg_vistime()
 ```
 
 \FloatBarrier
