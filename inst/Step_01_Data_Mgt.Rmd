@@ -372,6 +372,8 @@ CON %>%
   IDN
 ```
 
+\FloatBarrier
+
 ## Identify Earliest SAK for Each Offender
 For the paper, we need to identify the earliest SAK associated with each 
 offender who has criminal history data and store those in a new dataset. Along 
@@ -681,6 +683,8 @@ of the `r nrow(IDNEW)` offenders turned 16 on or after their earliest SAK was
 collected and the testing window had started; they therefore have *DurationBP* 
 = 0 years. 
 
+\FloatBarrier
+
 ## Merge Testing Window Variables Onto Incident Data
 The next step is to merge variables from *IDNEW* onto the incident data in *INC*
 so that we can classify each incident according to whether it occurred before,
@@ -822,6 +826,7 @@ INCEW %>%
                 .fns = replace_na, replace = 0)) ->
   IDNEW
 ```
+
 \FloatBarrier
 
 ## Merge Testing Window Variables Onto Arrest Records
