@@ -640,6 +640,8 @@ SPDCHREW %>%
       Turn16_After_WDate ~ interval(WDate - 1, WDate - 1)),
     # After testing window date interval. 
     AWindow = interval(WDate + 119, DCDate),
+    # Duration of observed period (from age 16 to data collection date)
+    DurationOP = (as.duration(OWindow) + ddays(1))/dyears(1),
     # Duration of before testing window period (years).
     DurationBP = case_when(
       Age16Date <  WDate - 1 ~ (as.duration(BWindow) + ddays(1))/dyears(1),
@@ -663,6 +665,7 @@ SPDCHREW %>%
     Turn16_After_WDate = "Offender Turned 16 On or After Start of Testing Window",
     DCDate = "Data Collection Date for Criminal history Records",
     End_TWindow_Before_DC = "Testing Window Ended Before Data Collection Date",
+    DurationOP = "Duration of observed period (years)",
     DurationBP = "Duration of before testing window period (years)",
     DurationDP = "Duration of during testing window period (years)",
     DurationAP = "Duration of after testing window period (years)",
@@ -673,7 +676,8 @@ SPDCHREW %>%
   select(all_of(c(names(IDN), "Age16Date", "AgeWDate", "ESAKID", "ESAK_IID", "WDate", 
                   "TWindow", "Turn16_Before_WDate", "Turn16_After_WDate", 
                   "DCDate", "End_TWindow_Before_DC", "OWindow", "BWindow", 
-                  "AWindow", "DurationBP", "DurationDP", "DurationAP"))) ->
+                  "AWindow", "DurationOP", "DurationBP", "DurationDP", 
+                  "DurationAP"))) ->
   IDNEW
 ```
 
