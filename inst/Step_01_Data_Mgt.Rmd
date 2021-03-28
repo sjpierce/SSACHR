@@ -612,6 +612,23 @@ For all offenders, the after period starts on the 119th day after *WDate*
 date when the criminal history data were extracted from the state data
 warehouse: April 15, 2016. 
 
+```{r scenarios_table}
+# Table caption.
+TCap <- paste("Scenarios for Alignment of Before, During, and After Testing", 
+              "Window Periods with Observed Criminal History Records Period.")
+# Footnote text.
+FN <- paste0("Offsets from specific dates (e.g., - 1) are in units of days.")
+
+Scenarios %>% 
+  filter(type == "comment") %>% 
+  select(scenario, event, criteria) %>% 
+  kable(format = "latex", booktabs = TRUE, 
+        col.names = c("Scenario", "Description", "Criteria"),
+        caption = TCap) %>% 
+  kable_styling() %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
+```
 
 **Insert a figure here** to illustrate computation of the durations of the 
 before, during, and after periods. Use the SSACHR_Period_Durations.xlsx as 
