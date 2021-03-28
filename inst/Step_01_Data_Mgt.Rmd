@@ -630,14 +630,25 @@ Scenarios %>%
          threeparttable = TRUE)
 ```
 
-**Insert a figure here** to illustrate computation of the durations of the 
-before, during, and after periods. Use the SSACHR_Period_Durations.xlsx as 
-a guide, implement the figure with [vistime package](https://cran.r-project.org/web/packages/vistime/vignettes/vistime-vignette.html)
 
-```{r plot_periods}
-# Plot a figure showing how we compute observed period durations.
+```{r plot_periods, fig.height=7.75, fig.width=7.5, fig.cap=FCap}
+# RColorBrewer::display.brewer.all(type = "qual")
+# RColorBrewer::brewer.pal(8, "Set2")
+#[1] "#66C2A5" "#FC8D62" "#8DA0CB" "#E78AC3" "#A6D854" "#FFD92F" "#E5C494" "#B3B3B3"
+
+# Figure caption.
+FCap <- paste("Scenarios for Alignment of Before, During, and After Testing", 
+              "Window Periods with Observed Criminal History Records Period.",
+              "These are based on hypothetical data for a cohort of offenders",
+              "offenders born on 1998-04-16 with CHR data collected on ", 
+              "2016-04-15. Age 16, date of offender's 16th birthday;", 
+              "CHR, criminal history records; SAK, sexual assault kit. ")
+
+Scenarios %>% 
+  filter(type == "event") %>% 
+  gg_vistime(., optimize_y = TRUE, col.group = "scenario") -> F1
+F1 
 ```
-
 
 ```{r create_IDNEW}
 SPDCHREW %>% 
