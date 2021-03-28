@@ -315,6 +315,20 @@ read_sav(here::here("inst/extdata/SAK_PERP_2018-04-03.sav"),
 
 \FloatBarrier
 
+## Scenarios for Alignment of Periods
+The file read in below contains a data file used to show 
+various potential scenarios how the before, during, and after testing window 
+periods can align with the observed portion of the criminal history records. 
+These are *hypothetical data* manually constructed to yield a compact figure
+rather than examples from the actual data on specific offenders. 
+
+```{r import_TWindow_Scenarios}
+Scenarios <- read.csv(file = here::here("inst/extdata/TWindow_Scenarios.csv"), 
+                      sep = "\t")
+```
+
+\FloatBarrier
+
 # Data Management
 
 \FloatBarrier
