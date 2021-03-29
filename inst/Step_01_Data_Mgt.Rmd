@@ -657,17 +657,20 @@ RColorBrewer::brewer.pal(12, "Paired")
 ```
 
 
+```{r plot_periods, fig.height=9, fig.width=7.5, fig.cap=FCap}
 # Figure caption.
 FCap <- paste("Scenarios for Alignment of Before, During, and After Testing", 
-              "Window Periods with Observed Criminal History Records Period.",
+              "Window Periods with Observed Adult Criminal History Records",
+              "Period.",
               "These are based on hypothetical data for a cohort of offenders",
-              "offenders born on 1998-04-16 with CHR data collected on ", 
-              "2016-04-15. Age 16, date of offender's 16th birthday;", 
+              "born on 1998-04-16 with CHR data collected on 2016-04-15.", 
+              "Age 16, date of offender's 16th birthday;", 
               "CHR, criminal history records; SAK, sexual assault kit. ")
 
 Scenarios %>% 
   filter(type == "event") %>% 
-  gg_vistime(., optimize_y = TRUE, col.group = "scenario") -> F1
+  gg_vistime(., optimize_y = FALSE, col.group = "scenario", linewidth = 6) -> 
+  F1
 F1 
 ```
 
