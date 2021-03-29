@@ -669,7 +669,7 @@ FCap <- paste("Scenarios for Alignment of Before, During, and After Testing",
 
 Scenarios %>% 
   filter(type == "event") %>% 
-  gg_vistime(., optimize_y = FALSE, col.group = "scenario", linewidth = 6) -> 
+  gg_vistime(., optimize_y = FALSE, col.group = "scenario", linewidth = 4) -> 
   F1
 F1 
 ```
