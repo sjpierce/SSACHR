@@ -316,11 +316,12 @@ read_sav(here::here("inst/extdata/SAK_PERP_2018-04-03.sav"),
 \FloatBarrier
 
 ## Scenarios for Alignment of Periods
-The file read in below contains a data file used to show 
-various potential scenarios how the before, during, and after testing window 
-periods can align with the observed portion of the criminal history records. 
-These are *hypothetical data* manually constructed to yield a compact figure
-rather than examples from the actual data on specific offenders. 
+The file read in below contains a data file used to show various potential
+scenarios for how the before, during, and after testing window periods can align
+with the observed portion of the criminal history records. These are
+*hypothetical data* manually constructed to yield a compact figure rather than
+examples from the actual data on specific offenders. The Scenarios data frame
+is designed to be used with the *vistime::gg_vistime()* function. 
 
 ```{r import_TWindow_Scenarios}
 Scenarios <- read.csv(file = here::here("inst/extdata/TWindow_Scenarios.csv"), 
@@ -582,7 +583,7 @@ and select only the variables we need to keep before setting a variable label
 and saving to a new tibble called *IDNEW*.
 
 After merging in *TWindow*, it is now possible to compute date intervals for 
-the periods of the recorded criminal history observed before and after the 
+the periods of the recorded adult criminal history observed before and after the 
 testing window. We call those new variables *BWindow* and *AWindow* and 
 supplement all three date intervals with duration variables measuring the 
 duration of the before, during, and after periods in years (*DurationBP*, 
@@ -591,14 +592,19 @@ duration variables as offsets when modeling count outcome variables that need to
 adjust for period duration to produce crime incidence rate variables.
 
 We are working with adult criminal history records that only include data for
-crimes committed since each offender reached 16 years of age. Therefore, the
-offender's 16th birth day (*Age16Date*) is the obvious start date for the before
-period. However, because *WDate* is derived from when the earliest
-SAK for the offender was collected rather than the criminal history data,
-*WDate* can in principle either precede or occur on *Age16Date* (which can be 
-computed from from date of birth *DOB*). We create variables below that help us 
-determine how often that occurred and adjust the before period date interval in
-a sensible way when it does. 
+crimes committed since each offender reached 16 years of age. We create a date
+interval variable called *OWindow* that starts on the the offender's 16th
+birthday (*Age16Date*, which can be computed from from date of birth *DOB*) and
+ends on the data collection date when the criminal history data were extracted
+from the state data warehouse: April 15, 2016 (*DCDate*). The duration (in 
+years) of that observed adult CHR period is 
+
+One might assume that the offender's 16th birth day (*Age16Date*) should be the
+start date for the before period. However, because *WDate* is derived from when
+the earliest SAK for the offender was collected rather than the criminal history
+data, *WDate* can in principle either precede or occur on *Age16Date* . We
+create variables below that help us determine how often that occurred and adjust
+the before period date interval in a sensible way when it does.
 
 We defined the before period as starting on the offender's 16th birthday 
 (*Age16Date*) and ending one day before the earliest SAK was collected (*WDate*)
@@ -608,9 +614,8 @@ offenders but zero years for those whose earliest SAK was collected before they
 reached age 16 years. 
 
 For all offenders, the after period starts on the 119th day after *WDate*
-(because the testing window is 118 days long) and ends on the data collection
-date when the criminal history data were extracted from the state data
-warehouse: April 15, 2016. 
+(because the testing window is 118 days long) and ends on the CHR data
+collection date (*DCDate*). 
 
 ```{r scenarios_table}
 # Table caption.
@@ -634,6 +639,15 @@ Scenarios %>%
 ```{r plot_periods, fig.height=7.75, fig.width=7.5, fig.cap=FCap}
 # RColorBrewer::display.brewer.all(type = "qual")
 # RColorBrewer::brewer.pal(8, "Set2")
+The chunk below was used interactively to select a color palette for Figure 
+\ref{fig:plot_periods} that is good for visual discrimination of qualitative 
+categories that are not ordered. We wanted colors light enough to have adequate
+contrast with black text. Using the Paired color palette to encode whether a 
+period was unobserved versus observed by intensity of the hue ended up looking
+too cluttered and contrast was poor, so we used selected colors from Set2. 
+The chunk is disabled now to reduce clutter in the output. The colors assigned
+for events and fonts are stored as columns in the Scenarios data frame. 
+
 #[1] "#66C2A5" "#FC8D62" "#8DA0CB" "#E78AC3" "#A6D854" "#FFD92F" "#E5C494" "#B3B3B3"
 
 # Figure caption.
