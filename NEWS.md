@@ -1,3 +1,13 @@
+# SSACHR 0.9.10, 2021-03-28
+* Updated `inst/extdata/TWindow_Scenarios.csv` data file to improve figure of
+  scenarios illustrating alignment of before, during, and after testing window
+  periods with observed CHR period. 
+* Updated `inst/Step_01_Data_Mgt.Rmd` to:
+    * Improve figure showing alignment of before, during, and after testing 
+      window periods with observed CHR period. 
+    * Improve explanatory text. 
+    * Move and disable some code used to seelct a color palette for a figure. 
+
 # SSACHR 0.9.9, 2021-03-27
 * Added `inst/extdata/TWindow_Scenarios.csv` data file required for plotting 
   scenarios illustrating alignment of before, during, and after testing window
