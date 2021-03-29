@@ -1,57 +1,64 @@
 scenario	group	type	event	criteria	start	end	color	color.name	fontcolor	fontcolor.name
+A	Scenario A, TW Periods	comment	Before (all), During (all), After (all)	Age16Date < WDate - 1	2013-06-29	2016-04-16	#FFFFFF	white	#000000	black
 A	Scenario A, CHR data	event	Age 16		2014-04-16	2014-04-16	#000000	black	#000000	black
 A	Scenario A, CHR data	event	CHR collected		2016-04-15	2016-04-15	#000000	black	#000000	black
-A	Scenario A, CHR data	event	Observed CHR		2014-04-16	2016-04-15	#B3B3B3	gray	#000000	black
+A	Scenario A, CHR data	event	Unobserved juvenile CHR		2013-06-30	2014-04-15	#E5C494	tan	#000000	black
+A	Scenario A, CHR data	event	Observed adult CHR		2014-04-16	2016-04-15	#B3B3B3	gray	#000000	black
 A	Scenario A, TW Periods	event	SAK		2014-09-13	2014-09-13	#FC8D62	orange	#FC8D62	orange
 A	Scenario A, TW Periods	event	Before		2013-07-01	2014-09-12	#8DA0CB	blue	#000000	black
 A	Scenario A, TW Periods	event	During		2014-09-13	2015-01-09	#FC8D62	orange	#000000	black
 A	Scenario A, TW Periods	event	After		2015-01-10	2016-04-15	#FFD92F	yellow	#000000	black
-A	Scenario A, TW Periods	comment	Before (all), During (all), After (all)	Age16Date < WDate - 1	2013-01-01	2014-04-16	#FFFFFF	white	#000000	black
+B	Scenario B, TW Periods	comment	Before (1 day), During (all), After (all)	Age16Date = WDate - 1	2013-06-29	2016-04-16	#FFFFFF	white	#000000	black
 B	Scenario B, CHR data	event	Age 16		2014-04-16	2014-04-16	#000000	black	#000000	black
 B	Scenario B, CHR data	event	CHR collected		2016-04-15	2016-04-15	#000000	black	#000000	black
-B	Scenario B, CHR data	event	Observed CHR		2014-04-16	2016-04-15	#B3B3B3	gray	#000000	black
+B	Scenario B, CHR data	event	Unobserved juvenile CHR		2013-06-30	2014-04-15	#E5C494	tan	#000000	black
+B	Scenario B, CHR data	event	Observed adult CHR		2014-04-16	2016-04-15	#B3B3B3	gray	#000000	black
 B	Scenario B, TW Periods	event	SAK		2014-04-17	2014-04-17	#FC8D62	orange	#FC8D62	orange
 B	Scenario B, TW Periods	event	Before		2013-07-01	2014-04-16	#8DA0CB	blue	#000000	black
 B	Scenario B, TW Periods	event	During		2014-04-17	2014-08-13	#FC8D62	orange	#000000	black
 B	Scenario B, TW Periods	event	After		2014-08-14	2016-04-15	#FFD92F	yellow	#000000	black
-B	Scenario B, TW Periods	comment	Before (1 day), During (all), After (all)	Age16Date = WDate - 1	2013-01-01	2014-04-16	#FFFFFF	white	#000000	black
+C	Scenario C, TW Periods	comment	Before (none), During (all), After (all)	Age16Date = WDate	2013-06-29	2016-04-16	#FFFFFF	white	#000000	black
 C	Scenario C, CHR data	event	Age 16		2014-04-16	2014-04-16	#000000	black	#000000	black
 C	Scenario C, CHR data	event	CHR collected		2016-04-15	2016-04-15	#000000	black	#000000	black
-C	Scenario C, CHR data	event	Observed CHR		2014-04-16	2016-04-15	#B3B3B3	gray	#000000	black
+C	Scenario C, CHR data	event	Unobserved juvenile CHR		2013-06-30	2014-04-15	#E5C494	tan	#000000	black
+C	Scenario C, CHR data	event	Observed adult CHR		2014-04-16	2016-04-15	#B3B3B3	gray	#000000	black
 C	Scenario C, TW Periods	event	SAK		2014-04-16	2014-04-16	#FC8D62	orange	#FC8D62	orange
 C	Scenario C, TW Periods	event	Before		2013-07-01	2014-04-15	#8DA0CB	blue	#000000	black
 C	Scenario C, TW Periods	event	During		2014-04-16	2014-08-12	#FC8D62	orange	#000000	black
 C	Scenario C, TW Periods	event	After		2014-08-13	2016-04-15	#FFD92F	yellow	#000000	black
-C	Scenario C, TW Periods	comment	Before (none), During (all), After (all)	Age16Date = WDate	2013-01-01	2014-04-16	#FFFFFF	white	#000000	black
+D	Scenario D, TW Periods	comment	Before (none), During (part), After (all)	WDate < Age16Date < WDate + 118	2013-06-29	2016-04-16	#FFFFFF	white	#000000	black
 D	Scenario D, CHR data	event	Age 16		2014-04-16	2014-04-16	#000000	black	#000000	black
 D	Scenario D, CHR data	event	CHR collected		2016-04-15	2016-04-15	#000000	black	#000000	black
-D	Scenario D, CHR data	event	Observed CHR		2014-04-16	2016-04-15	#B3B3B3	gray	#000000	black
+D	Scenario D, CHR data	event	Unobserved juvenile CHR		2013-06-30	2014-04-15	#E5C494	tan	#000000	black
+D	Scenario D, CHR data	event	Observed adult CHR		2014-04-16	2016-04-15	#B3B3B3	gray	#000000	black
 D	Scenario D, TW Periods	event	SAK		2014-02-25	2014-02-25	#FC8D62	orange	#FC8D62	orange
 D	Scenario D, TW Periods	event	Before		2013-07-01	2014-02-24	#8DA0CB	blue	#000000	black
 D	Scenario D, TW Periods	event	During		2014-02-25	2014-06-23	#FC8D62	orange	#000000	black
 D	Scenario D, TW Periods	event	After		2014-06-24	2016-04-15	#FFD92F	yellow	#000000	black
-D	Scenario D, TW Periods	comment	Before (none), During (part), After (all)	WDate < Age16Date < WDate + 118	2013-01-01	2014-04-16	#FFFFFF	white	#000000	black
+E	Scenario E, TW Periods	comment	Before (none), During (1 day), After (all)	Age16Date = WDate + 118	2013-06-29	2016-04-16	#FFFFFF	white	#000000	black
 E	Scenario E, CHR data	event	Age 16		2014-04-16	2014-04-16	#000000	black	#000000	black
 E	Scenario E, CHR data	event	CHR collected		2016-04-15	2016-04-15	#000000	black	#000000	black
-E	Scenario E, CHR data	event	Observed CHR		2014-04-16	2016-04-15	#B3B3B3	gray	#000000	black
+E	Scenario E, CHR data	event	Unobserved juvenile CHR		2013-06-30	2014-04-15	#E5C494	tan	#000000	black
+E	Scenario E, CHR data	event	Observed adult CHR		2014-04-16	2016-04-15	#B3B3B3	gray	#000000	black
 E	Scenario E, TW Periods	event	SAK		2013-12-19	2013-12-19	#FC8D62	orange	#FC8D62	orange
 E	Scenario E, TW Periods	event	Before		2013-07-01	2013-12-18	#8DA0CB	blue	#000000	black
 E	Scenario E, TW Periods	event	During		2013-12-19	2014-04-16	#FC8D62	orange	#000000	black
 E	Scenario E, TW Periods	event	After		2014-04-17	2016-04-15	#FFD92F	yellow	#000000	black
-E	Scenario E, TW Periods	comment	Before (none), During (1 day), After (all)	Age16Date = WDate + 118	2013-01-01	2014-04-16	#FFFFFF	white	#000000	black
+F	Scenario F, TW Periods	comment	Before (none), During (none), After (all)	Age16Date = WDate + 119	2013-06-29	2016-04-16	#FFFFFF	white	#000000	black
 F	Scenario F, CHR data	event	Age 16		2014-04-16	2014-04-16	#000000	black	#000000	black
 F	Scenario F, CHR data	event	CHR collected		2016-04-15	2016-04-15	#000000	black	#000000	black
-F	Scenario F, CHR data	event	Observed CHR		2014-04-16	2016-04-15	#B3B3B3	gray	#000000	black
+F	Scenario F, CHR data	event	Unobserved juvenile CHR		2013-06-30	2014-04-15	#E5C494	tan	#000000	black
+F	Scenario F, CHR data	event	Observed adult CHR		2014-04-16	2016-04-15	#B3B3B3	gray	#000000	black
 F	Scenario F, TW Periods	event	SAK		2013-12-18	2013-12-18	#FC8D62	orange	#FC8D62	orange
 F	Scenario F, TW Periods	event	Before		2013-07-01	2013-12-17	#8DA0CB	blue	#000000	black
 F	Scenario F, TW Periods	event	During		2013-12-18	2014-04-15	#FC8D62	orange	#000000	black
 F	Scenario F, TW Periods	event	After		2014-04-16	2016-04-15	#FFD92F	yellow	#000000	black
-F	Scenario F, TW Periods	comment	Before (none), During (none), After (all)	Age16Date = WDate + 119	2013-01-01	2014-04-16	#FFFFFF	white	#000000	black
+G	Scenario G, TW Periods	comment	Before (none), During (none), After (part)	Age16Date > WDate + 119	2013-06-29	2016-04-16	#FFFFFF	white	#000000	black
 G	Scenario G, CHR data	event	Age 16		2014-04-16	2014-04-16	#000000	black	#000000	black
 G	Scenario G, CHR data	event	CHR collected		2016-04-15	2016-04-15	#000000	black	#000000	black
-G	Scenario G, CHR data	event	Observed CHR		2014-04-16	2016-04-15	#B3B3B3	gray	#000000	black
+G	Scenario G, CHR data	event	Unobserved juvenile CHR		2013-06-30	2014-04-15	#E5C494	tan	#000000	black
+G	Scenario G, CHR data	event	Observed adult CHR		2014-04-16	2016-04-15	#B3B3B3	gray	#000000	black
 G	Scenario G, TW Periods	event	SAK		2013-10-18	2013-10-18	#FC8D62	orange	#FC8D62	orange
 G	Scenario G, TW Periods	event	Before		2013-07-01	2013-10-17	#8DA0CB	blue	#000000	black
 G	Scenario G, TW Periods	event	During		2013-10-18	2014-02-13	#FC8D62	orange	#000000	black
 G	Scenario G, TW Periods	event	After		2014-02-14	2016-04-15	#FFD92F	yellow	#000000	black
-G	Scenario G, TW Periods	comment	Before (none), During (none), After (part)	Age16Date > WDate + 119	2013-01-01	2014-04-16	#FFFFFF	white	#000000	black
