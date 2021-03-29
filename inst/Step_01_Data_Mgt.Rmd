@@ -635,10 +635,6 @@ Scenarios %>%
          threeparttable = TRUE)
 ```
 
-
-```{r plot_periods, fig.height=7.75, fig.width=7.5, fig.cap=FCap}
-# RColorBrewer::display.brewer.all(type = "qual")
-# RColorBrewer::brewer.pal(8, "Set2")
 The chunk below was used interactively to select a color palette for Figure 
 \ref{fig:plot_periods} that is good for visual discrimination of qualitative 
 categories that are not ordered. We wanted colors light enough to have adequate
@@ -648,7 +644,18 @@ too cluttered and contrast was poor, so we used selected colors from Set2.
 The chunk is disabled now to reduce clutter in the output. The colors assigned
 for events and fonts are stored as columns in the Scenarios data frame. 
 
+```{r color_palette, eval = FALSE}
+# Show a range of color palettes that might work. 
+RColorBrewer::display.brewer.all(type = "qual")
+
+# Show hexadecimal codes for colors from specific palettes. 
+RColorBrewer::brewer.pal(8, "Set2")
 #[1] "#66C2A5" "#FC8D62" "#8DA0CB" "#E78AC3" "#A6D854" "#FFD92F" "#E5C494" "#B3B3B3"
+RColorBrewer::brewer.pal(12, "Paired")
+#[1] "#A6CEE3" "#1F78B4" "#B2DF8A" "#33A02C" "#FB9A99" "#E31A1C" "#FDBF6F" "#FF7F00"
+#[9] "#CAB2D6" "#6A3D9A" "#FFFF99" "#B15928"
+```
+
 
 # Figure caption.
 FCap <- paste("Scenarios for Alignment of Before, During, and After Testing", 
