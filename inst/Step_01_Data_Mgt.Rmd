@@ -709,7 +709,7 @@ F1 + theme(text = element_text(size = 15, color = "black")) +
   annotate(geom = "text", x = as_datetime("2013-06-30"), y = 8, size = 3, 
               label = "Age16Date > (WDate + 119)", hjust = 0.19) +
   annotate(geom = "text", x = as_datetime("2014-02-14"), y = 1, size = 3, 
-              label = "Some days unobserved", hjust = 0) 
+              label = "Most but not all days observed", hjust = 0) 
 
 ```
 
