@@ -658,7 +658,7 @@ RColorBrewer::brewer.pal(12, "Paired")
 ```
 
 
-```{r plot_periods, fig.height=9, fig.width=7.5, fig.cap=FCap}
+```{r plot_periods, fig.height=9, fig.width=7.5, fig.cap=FCap, out.extra = ""}
 # Figure caption.
 FCap <- paste("Scenarios for Alignment of Before, During, and After Testing", 
               "Window Periods with Observed Adult Criminal History Records",
@@ -672,17 +672,8 @@ Scenarios %>%
   filter(type == "event") %>% 
   gg_vistime(., optimize_y = FALSE, col.group = "scenario", linewidth = 4) -> 
   F1
-F1
-```
 
-```{r update_F1, fig.height=9, fig.width=7.5}
-
-Scenarios %>% 
-  filter(type == "comment") %>% 
-  mutate(label = paste(event, criteria, sep = ": ")) ->
-  SLabels
-
-
+# Plot with annotations 
 F1 + theme(text = element_text(size = 15, color = "black")) +
   annotate(geom = "text", x = as_datetime("2013-06-30"), y = 65, size = 3, 
               label = "Age16Date < (WDate - 1)", hjust = 0.21) +
@@ -710,7 +701,6 @@ F1 + theme(text = element_text(size = 15, color = "black")) +
               label = "Age16Date > (WDate + 119)", hjust = 0.19) +
   annotate(geom = "text", x = as_datetime("2014-02-14"), y = 1, size = 3, 
               label = "Most but not all days observed", hjust = 0) 
-
 ```
 
 ```{r create_IDNEW}
