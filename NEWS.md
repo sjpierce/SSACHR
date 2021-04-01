@@ -1,3 +1,6 @@
+# SSACHR 0.9.11, 2021-03-31
+* Updated `inst/Step_01_Data_Mgt.Rmd` to improve Figure 1. 
+
 # SSACHR 0.9.10, 2021-03-28
 * Updated `inst/extdata/TWindow_Scenarios.csv` data file to improve figure of
   scenarios illustrating alignment of before, during, and after testing window
