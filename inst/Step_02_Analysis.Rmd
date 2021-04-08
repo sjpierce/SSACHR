@@ -229,17 +229,26 @@ bwplot(~ WDate, data = IDNEW, factor = 9,
 ```
 
 ```{r describe_windows}
-rlabs <- c("Before testing window", "During testing window", "After testing window")
+# Table caption.
+TCap <- paste("Observed Period Durations (Years)")
+# Footnote text.
+FN <- paste0("Only offenders with valid testing window start dates are ", 
+             "included. ",
+             "N = ", format(nrow(IDNEW), big.mark = ","), ". TW, earliest ",
+             "testing window.")
+
+rlabs <- c("Before TW", "During TW", "After TW")
 
 IDNEW %>% 
   select(DurationBP, DurationDP, DurationAP) %>% 
   describe(., quant=c(.25, .50, .75)) %>% 
   bind_cols(data.frame(Variable = rlabs), .) %>% 
   select(Variable, n, mean, sd, min, max, skew, kurtosis, Q0.25, Q0.5, Q0.75) %>% 
-  kable(., format = "html", booktabs = TRUE, digits = 2, row.names = FALSE,
-      col.names = c("Variable", CNames),
-      caption = "Durations (Years)")
-
+  kable(., format = "latex", booktabs = TRUE, digits = 2, row.names = FALSE,
+      col.names = CNames,
+      caption = TCap) %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
 ```
 
 
