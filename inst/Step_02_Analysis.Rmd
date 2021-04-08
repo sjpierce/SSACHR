@@ -156,6 +156,10 @@ kable(freq(as_factor(IDNEW$Race), user.missing = "Unknown"), format = "latex",
 \FloatBarrier
 
 ## Age
+Table \ref{tab:examine_Age} presents descriptive statistics for offender 
+age at the start of the earliest testing window and at the time of CHR 
+collection. Figure \ref{fig:boxplot_Age} shows boxplots of the distributions 
+for both of these age variables. 
 
 ```{r examine_Age, fig.height = 2}
 CNames <- c("Variable", "N", "Mean", "SD", "Min", "Max", "Skew", "Kurtosis", 
@@ -202,9 +206,11 @@ That time frame can be divided into three important periods for the purposes of
 this study: before, during, and after the testing window associated with the 
 offender's earliest sexual assault kit (SAK). Here we provide descriptive data 
 about those periods. Note that the relative timing of an offender's earliest SAK
-realative to their 16th birthday controls how much of the before and during
-periods were observed unobserved. 
-
+relative to their 16th birthday controls how much of the before and during
+periods were observed versus unobserved. Figures \ref{fig:boxplot_Age16Date} and 
+\ref{fig:boxplot_WDate} respectively show boxplots for the date of the offenders
+16th birthday and the start date of the earliest testing window (which is the 
+date the earliest SAK was collected). 
 
 ```{r boxplot_Age16Date, fig.height = 1.75, fig.width = 7, fig.cap=FCap}
 # Figure caption.
@@ -227,6 +233,14 @@ bwplot(~ WDate, data = IDNEW, factor = 9,
        panel = panel.mybox, par.settings = my.boxes,
        xlab = "Start of Earliest Testing Window")
 ```
+
+Those dates were used in the previous data management script to compute the 
+durations of the observed portions of adult CHR that correspond to the periods 
+before, during, and after the earliest testing window. Table
+\ref{tab:describe_windows} shows descriptive statistics for the these durations
+and \ref{fig:boxplot_windows} shows corresponding boxplots. These provide 
+crucial context for interpreting the numbers of crimes observed in each of those 
+periods and provide the denominators for translating them into incidence rates. 
 
 ```{r describe_windows}
 # Table caption.
