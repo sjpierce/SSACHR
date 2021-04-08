@@ -201,10 +201,9 @@ crimes that occurred between the offender's 16th birthday and April 15, 2016
 That time frame can be divided into three important periods for the purposes of
 this study: before, during, and after the testing window associated with the 
 offender's earliest sexual assault kit (SAK). Here we provide descriptive data 
-about those periods. Note that for offenders whose earliest SAK was collected 
-before their 16th birthday, the before period was set to both start and end the 
-day before the SAK was collected to make sure that it had a duration of zero 
-years because it was effectively unobserved. 
+about those periods. Note that the relative timing of an offender's earliest SAK
+realative to their 16th birthday controls how much of the before and during
+periods were observed unobserved. 
 
 
 ```{r boxplot_Age16Date, fig.height = 1.75, fig.cap=FCap}
