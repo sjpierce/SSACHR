@@ -308,7 +308,7 @@ IDNEW %>%
   RCCOUNTS
 ```
 
-```{r boxplot_RCCOUNTS, fig.height = 3, fig.cap=FCap}
+```{r boxplot_RCCOUNTS, fig.height = 3, fig.width = 7, fig.cap=FCap}
 # Figure caption.
 FCap <- paste("Box Plots for Overall Record Counts by Criminal History Record", 
               "Type. Only offenders with valid testing window start dates are", 
