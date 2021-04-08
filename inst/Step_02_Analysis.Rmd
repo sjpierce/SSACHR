@@ -234,8 +234,7 @@ TCap <- paste("Observed Period Durations (Years)")
 # Footnote text.
 FN <- paste0("Only offenders with valid testing window start dates are ", 
              "included. ",
-             "N = ", format(nrow(IDNEW), big.mark = ","), ". TW, earliest ",
-             "testing window.")
+             "TW, earliest testing window.")
 
 rlabs <- c("Before TW", "During TW", "After TW")
 
@@ -257,7 +256,7 @@ FCap <- paste("Box Plots for Duration of Observed Portions of Periods.",
               "window start dates are included. The red line marks age 16",
               "years, which is the start of observed adult CHR, which was ",
               "collected on 04/15/2016.",
-              "TW, testing window.")
+              "TW, earliest testing window.")
 
 IDNEW %>% 
   select(OID, DurationBP, DurationDP, DurationAP) %>% 
