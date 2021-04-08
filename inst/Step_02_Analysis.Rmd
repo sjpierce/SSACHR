@@ -678,10 +678,10 @@ IDNEW %>%
 summary(cccvar_gee)
 cccvar_emmeans <- emmeans(cccvar_gee, specs = pairwise ~ When, type = "response", ref = "During")
 cccvar_emmeans$emmeans %>% 
-  kable(format = "html")
+  kable(format = "latex")
 cccvar_emmeans$contrasts %>% 
   confint() %>%
-  kable(format = "html")
+  kable(format = "latex")
 ```
 
 \FloatBarrier
