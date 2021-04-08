@@ -217,6 +217,16 @@ bwplot(~ Age16Date, data = IDNEW, factor = 9,
        xlab = "Offender's 16th Birthday")
 ```
 
+```{r boxplot_WDate, fig.height = 1.75, fig.width = 7, fig.cap=FCap}
+# Figure caption.
+FCap <- paste("Box Plot for Start Date of Earliest Testing Window. Only", 
+              "offenders with valid testing window start dates are included.")
+
+bwplot(~ WDate, data = IDNEW, factor = 9, 
+       xlim = c(ymd("1984-01-01"), ymd("2016-12-31")),
+       panel = panel.mybox, par.settings = my.boxes,
+       xlab = "Start of Earliest Testing Window")
+```
 
 ```{r describe_windows}
 rlabs <- c("Before testing window", "During testing window", "After testing window")
