@@ -245,8 +245,7 @@ IDNEW %>%
   bind_cols(data.frame(Variable = rlabs), .) %>% 
   select(Variable, n, mean, sd, min, max, skew, kurtosis, Q0.25, Q0.5, Q0.75) %>% 
   kable(., format = "latex", booktabs = TRUE, digits = 2, row.names = FALSE,
-      col.names = CNames,
-      caption = TCap) %>% 
+      col.names = CNames, caption = TCap) %>% 
   footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
@@ -318,7 +317,7 @@ IDNEW %>%
   bind_cols(data.frame(Variable = rclabs), .) %>% 
   select(Variable, n, mean, sd, min, max, skew, kurtosis, Q0.25, Q0.5, Q0.75) %>% 
   kable(., format = "latex", booktabs = TRUE, digits = 2, row.names = FALSE, 
-        col.names = c("Variable", CNames), caption = TCap) %>% 
+        col.names = CNames, caption = TCap) %>% 
   group_rows(" ", 1, 4) %>% 
   group_rows(" ", 5, 8) %>% 
   group_rows(" ", 9, 12) %>% 
@@ -648,7 +647,7 @@ IDNEW %>%
   bind_cols(data.frame(Variable = cclabs), .) %>% 
   select(Variable, n, mean, sd, min, max, skew, kurtosis, Q0.25, Q0.5, Q0.75) %>% 
   kable(., format = "latex", booktabs = TRUE, digits = 2, row.names = FALSE, 
-        col.names = c("Variable", CNames), caption = TCap) %>% 
+        col.names = CNames, caption = TCap) %>% 
   column_spec(column = 1, width = "6 cm") %>% 
   footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
@@ -832,7 +831,7 @@ IDNEW %>%
   bind_cols(data.frame(Variable = TRowLabs), .) %>% 
   select(Variable, n, mean, sd, min, max, skew, kurtosis, Q0.25, Q0.5, Q0.75) %>% 
   kable(., format = "latex", booktabs = TRUE, digits = 2, row.names = FALSE, 
-        col.names = c("Variable", CNames), caption = TCap,
+        col.names = CNames, caption = TCap,
         linesep = c('', '', '', '\\addlinespace')) %>% 
   column_spec(column = 1, width = "6 cm") %>% 
   footnote(general = FN1, general_title = "Note: ", footnote_as_chunk = TRUE,
@@ -894,7 +893,7 @@ IDNEW %>%
   bind_cols(data.frame(Variable = TRowLabs), .) %>% 
   select(Variable, n, mean, sd, min, max, skew, kurtosis, Q0.25, Q0.5, Q0.75) %>% 
   kable(., format = "latex", booktabs = TRUE, digits = 2, row.names = FALSE, 
-        col.names = c("Variable", CNames), caption = TCap,
+        col.names = CNames, caption = TCap,
         linesep = c('', '', '', '\\addlinespace')) %>% 
   column_spec(column = 1, width = "6 cm") %>% 
   footnote(general = FN1, general_title = "Note: ", footnote_as_chunk = TRUE,
@@ -957,7 +956,7 @@ IDNEW %>%
   bind_cols(data.frame(Variable = TRowLabs), .) %>% 
   select(Variable, n, mean, sd, min, max, skew, kurtosis, Q0.25, Q0.5, Q0.75) %>% 
   kable(., format = "latex", booktabs = TRUE, digits = 2, row.names = FALSE, 
-        col.names = c("Variable", CNames), caption = TCap,
+        col.names = CNames, caption = TCap,
         linesep = c('', '', '', '\\addlinespace')) %>% 
   column_spec(column = 1, width = "6 cm") %>% 
   footnote(general = FN1, general_title = "Note: ", footnote_as_chunk = TRUE,
@@ -1019,7 +1018,7 @@ IDNEW %>%
   bind_cols(data.frame(Variable = TRowLabs), .) %>% 
   select(Variable, n, mean, sd, min, max, skew, kurtosis, Q0.25, Q0.5, Q0.75) %>% 
   kable(., format = "latex", booktabs = TRUE, digits = 2, row.names = FALSE, 
-        col.names = c("Variable", CNames), caption = TCap,
+        col.names = CNames, caption = TCap,
         linesep = c('', '', '', '\\addlinespace')) %>% 
   column_spec(column = 1, width = "6 cm") %>% 
   footnote(general = FN1, general_title = "Note: ", footnote_as_chunk = TRUE,
@@ -1081,7 +1080,7 @@ IDNEW %>%
   bind_cols(data.frame(Variable = TRowLabs), .) %>% 
   select(Variable, n, mean, sd, min, max, skew, kurtosis, Q0.25, Q0.5, Q0.75) %>% 
   kable(., format = "latex", booktabs = TRUE, digits = 2, row.names = FALSE, 
-        col.names = c("Variable", CNames), caption = TCap,
+        col.names = CNames, caption = TCap,
         linesep = c('', '', '', '\\addlinespace')) %>% 
   column_spec(column = 1, width = "6 cm") %>% 
   footnote(general = FN1, general_title = "Note: ", footnote_as_chunk = TRUE,
@@ -1143,7 +1142,7 @@ IDNEW %>%
   bind_cols(data.frame(Variable = TRowLabs), .) %>% 
   select(Variable, n, mean, sd, min, max, skew, kurtosis, Q0.25, Q0.5, Q0.75) %>% 
   kable(., format = "latex", booktabs = TRUE, digits = 2, row.names = FALSE, 
-        col.names = c("Variable", CNames), caption = TCap,
+        col.names = CNames, caption = TCap,
         linesep = c('', '', '', '\\addlinespace')) %>% 
   column_spec(column = 1, width = "6 cm") %>% 
   footnote(general = FN1, general_title = "Note: ", footnote_as_chunk = TRUE,
@@ -1204,7 +1203,7 @@ IDNEW %>%
   bind_cols(data.frame(Variable = TRowLabs), .) %>% 
   select(Variable, n, mean, sd, min, max, skew, kurtosis, Q0.25, Q0.5, Q0.75) %>% 
   kable(., format = "latex", booktabs = TRUE, digits = 2, row.names = FALSE, 
-        col.names = c("Variable", CNames), caption = TCap,
+        col.names = CNames, caption = TCap,
         linesep = c('', '', '', '\\addlinespace')) %>% 
   column_spec(column = 1, width = "6 cm") %>% 
   footnote(general = FN1, general_title = "Note: ", footnote_as_chunk = TRUE,
@@ -1266,7 +1265,7 @@ IDNEW %>%
   bind_cols(data.frame(Variable = TRowLabs), .) %>% 
   select(Variable, n, mean, sd, min, max, skew, kurtosis, Q0.25, Q0.5, Q0.75) %>% 
   kable(., format = "latex", booktabs = TRUE, digits = 2, row.names = FALSE, 
-        col.names = c("Variable", CNames), caption = TCap,
+        col.names = CNames, caption = TCap,
         linesep = c('', '', '', '\\addlinespace')) %>% 
   column_spec(column = 1, width = "6 cm") %>% 
   footnote(general = FN1, general_title = "Note: ", footnote_as_chunk = TRUE,
@@ -1327,7 +1326,7 @@ IDNEW %>%
   bind_cols(data.frame(Variable = TRowLabs), .) %>% 
   select(Variable, n, mean, sd, min, max, skew, kurtosis, Q0.25, Q0.5, Q0.75) %>% 
   kable(., format = "latex", booktabs = TRUE, digits = 2, row.names = FALSE, 
-        col.names = c("Variable", CNames), caption = TCap,
+        col.names = CNames, caption = TCap,
         linesep = c('', '', '', '\\addlinespace')) %>% 
   column_spec(column = 1, width = "6 cm") %>% 
   footnote(general = FN1, general_title = "Note: ", footnote_as_chunk = TRUE,
@@ -1388,7 +1387,7 @@ IDNEW %>%
   bind_cols(data.frame(Variable = TRowLabs), .) %>% 
   select(Variable, n, mean, sd, min, max, skew, kurtosis, Q0.25, Q0.5, Q0.75) %>% 
   kable(., format = "latex", booktabs = TRUE, digits = 2, row.names = FALSE, 
-        col.names = c("Variable", CNames), caption = TCap,
+        col.names = CNames, caption = TCap,
         linesep = c('', '', '', '\\addlinespace')) %>% 
   column_spec(column = 1, width = "6 cm") %>% 
   footnote(general = FN1, general_title = "Note: ", footnote_as_chunk = TRUE,
@@ -1450,7 +1449,7 @@ IDNEW %>%
   bind_cols(data.frame(Variable = TRowLabs), .) %>% 
   select(Variable, n, mean, sd, min, max, skew, kurtosis, Q0.25, Q0.5, Q0.75) %>% 
   kable(., format = "latex", booktabs = TRUE, digits = 2, row.names = FALSE, 
-        col.names = c("Variable", CNames), caption = TCap,
+        col.names = CNames, caption = TCap,
         linesep = c('', '', '', '\\addlinespace')) %>% 
   column_spec(column = 1, width = "6 cm") %>% 
   footnote(general = FN1, general_title = "Note: ", footnote_as_chunk = TRUE,
@@ -1512,7 +1511,7 @@ IDNEW %>%
   bind_cols(data.frame(Variable = TRowLabs), .) %>% 
   select(Variable, n, mean, sd, min, max, skew, kurtosis, Q0.25, Q0.5, Q0.75) %>% 
   kable(., format = "latex", booktabs = TRUE, digits = 2, row.names = FALSE, 
-        col.names = c("Variable", CNames), caption = TCap,
+        col.names = CNames, caption = TCap,
         linesep = c('', '', '', '\\addlinespace')) %>% 
   column_spec(column = 1, width = "6 cm") %>% 
   footnote(general = FN1, general_title = "Note: ", footnote_as_chunk = TRUE,
@@ -1597,7 +1596,7 @@ ARREW %>%
   bind_cols(data.frame(Variable = "Age at arrest"), .) %>% 
   select(Variable, n, mean, sd, min, max, skew, kurtosis, Q0.25, Q0.5, Q0.75) %>% 
   kable(., format = "latex", booktabs = TRUE, digits = 2, row.names = FALSE, 
-        col.names = c("Variable", CNames), caption = TCap) %>% 
+        col.names = CNames, caption = TCap) %>% 
   footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
