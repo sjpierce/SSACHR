@@ -97,6 +97,7 @@ library(lubridate)        # For date conversion, eg. ymd(), time_length().
 library(sjlabelled)       # For set_label(), get_label()
 library(haven)            # for read_spss()
 library(lattice)          # For xyplot(), bwplot(), etc. 
+library(latticeExtra)     # for layer()
 library(psych)            # For describe()
 library(car)              # For recode()
 library(SSACHR)           # for rvlabel()
@@ -154,25 +155,40 @@ kable(freq(as_factor(IDNEW$Race), user.missing = "Unknown"), format = "latex",
 
 \FloatBarrier
 
-## Age (as of 04/15/2016)
+## Age
+
 ```{r examine_Age, fig.height = 2}
-CNums  <- c(2:4,8,9,11:12, 14:16)
-CNames <- c("N", "Mean", "SD", "Min", "Max", "Skew", "Kurtosis", "Q25", "Q50", 
-            "Q75")
-Age <- describe(IDNEW$Age, quant=c(.25, .50, .75))
-kable(Age[, CNums], format = "latex", booktabs = TRUE, digits = 2, 
-      col.names = CNames,
-      caption = "Offender Age (as of 04/15/2016)")
+CNames <- c("Variable", "N", "Mean", "SD", "Min", "Max", "Skew", "Kurtosis", 
+            "Q25", "Q50", "Q75")
+IDNEW %>% 
+  select(AgeWDate, Age) %>% 
+  describe(., quant=c(.25, .50, .75)) %>% 
+  mutate(Variable  = c("Age at earliest SAK", "Age at CHR collection")) %>% 
+  select(Variable, n, mean, sd, min, max, skew, kurtosis, Q0.25, Q0.5, 
+         Q0.75) %>% 
+  kable(., format = "latex", booktabs = TRUE, digits = 2, 
+      col.names = CNames, row.names = FALSE,
+      caption = "Offender Age")
 ```
 
-```{r boxplot_Age, fig.height = 1.75, fig.cap=FCap}
+```{r boxplot_Age, fig.height = 2.5, fig.width = 7, fig.cap=FCap}
 # Figure caption.
 FCap <- paste("Box Plot for Offender Age. Only offenders with valid testing", 
-              "window start dates are included.")
+              "window start dates are included. The red line marks age 16",
+              "years, which is the start of observed adult CHR, which was ",
+              "collected on 04/15/2016.",
+              "CHR, criminal history record.")
 
-bwplot(~ Age, data = IDNEW, factor = 9, xlim = c(18, 82),
+IDNEW %>% 
+  select(OID, AgeWDate, Age) %>% 
+  # Rearrange data so we can easily plot multiple variables. 
+  pivot_longer(cols = -OID, names_to = "VName", values_to = "Age") %>% 
+  mutate(VName = ordered(VName, levels = c("AgeWDate", "Age"), 
+                         labels = c("At earliest SAK", "At CHR collection"))) %>%
+  bwplot(VName ~ Age, data = ., factor = 1, xlim = c(-2, 82),
        panel = panel.mybox, par.settings = my.boxes,
-       xlab = "Offender Age (as of 04/15/2016)")
+       xlab = "Offender Age")  + 
+  layer(panel.abline(v = 16, col.line = "red"))
 ```
 
 \FloatBarrier
