@@ -206,13 +206,13 @@ realative to their 16th birthday controls how much of the before and during
 periods were observed unobserved. 
 
 
-```{r boxplot_Age16Date, fig.height = 1.75, fig.cap=FCap}
+```{r boxplot_Age16Date, fig.height = 1.75, fig.width = 7, fig.cap=FCap}
 # Figure caption.
-FCap <- paste("Box Plot for Date of Offender's 16th Birtday. Only offenders", 
+FCap <- paste("Box Plot for Date of Offender's 16th Birthday. Only offenders", 
               "with valid testing window start dates are included.")
 
 bwplot(~ Age16Date, data = IDNEW, factor = 9, 
-       xlim = c(ymd("1950-01-01"), ymd("2020-12-31")),
+       xlim = c(ymd("1948-01-01"), ymd("2012-12-31")),
        panel = panel.mybox, par.settings = my.boxes,
        xlab = "Offender's 16th Birthday")
 ```
