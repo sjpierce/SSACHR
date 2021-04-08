@@ -251,9 +251,26 @@ IDNEW %>%
          threeparttable = TRUE)
 ```
 
+```{r boxplot_windows, fig.height = 2.5, fig.width = 7, fig.cap=FCap}
+# Figure caption.
+FCap <- paste("Box Plots for Duration of Observed Portions of Periods.",
+              "Only offenders with valid testing", 
+              "window start dates are included. The red line marks age 16",
+              "years, which is the start of observed adult CHR, which was ",
+              "collected on 04/15/2016.",
+              "TW, testing window.")
 
-
-
+IDNEW %>% 
+  select(OID, DurationBP, DurationDP, DurationAP) %>% 
+  # Rearrange data so we can easily plot multiple variables. 
+  pivot_longer(cols = -OID, names_to = "VName", values_to = "Duration") %>% 
+  mutate(VName = ordered(VName, 
+                         levels = c("DurationBP", "DurationDP", "DurationAP"), 
+                         labels = rlabs)) %>%
+  bwplot(VName ~ Duration, data = ., factor = 1, xlim = c(-2, 42),
+       panel = panel.mybox, par.settings = my.boxes, 
+       xlab = "Observed Period Duration (Years)")
+```
 
 ## CHR Record Counts
 We aggregated data to count how many CHR records of each type are associated
