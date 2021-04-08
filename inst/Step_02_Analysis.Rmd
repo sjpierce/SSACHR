@@ -179,8 +179,8 @@ IDNEW %>%
 # Figure caption.
 FCap <- paste("Box Plots for Offender Age. Only offenders with valid testing", 
               "window start dates are included. The red line marks age 16",
-              "years, which is the start of observed adult CHR, which was ",
-              "collected on 04/15/2016.",
+              "years (the start of observed adult CHR data). CHR collection",
+              "occurred on 04/15/2016 for all offfenders.",
               "CHR, criminal history record; SAK, sexual assault kit.")
 
 IDNEW %>% 
@@ -215,7 +215,9 @@ date the earliest SAK was collected).
 ```{r boxplot_Age16Date, fig.height = 1.75, fig.width = 7, fig.cap=FCap}
 # Figure caption.
 FCap <- paste("Box Plot for Date of Offender's 16th Birthday. Only offenders", 
-              "with valid testing window start dates are included.")
+              "with valid testing window start dates are included.",
+              "These dates mark the start of the observed adult criminal",
+              "history record for each offender.")
 
 bwplot(~ Age16Date, data = IDNEW, factor = 9, 
        xlim = c(ymd("1948-01-01"), ymd("2012-12-31")),
