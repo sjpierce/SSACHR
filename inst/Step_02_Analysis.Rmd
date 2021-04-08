@@ -173,11 +173,11 @@ IDNEW %>%
 
 ```{r boxplot_Age, fig.height = 2.5, fig.width = 7, fig.cap=FCap}
 # Figure caption.
-FCap <- paste("Box Plot for Offender Age. Only offenders with valid testing", 
+FCap <- paste("Box Plots for Offender Age. Only offenders with valid testing", 
               "window start dates are included. The red line marks age 16",
               "years, which is the start of observed adult CHR, which was ",
               "collected on 04/15/2016.",
-              "CHR, criminal history record.")
+              "CHR, criminal history record; SAK, sexual assault kit.")
 
 IDNEW %>% 
   select(OID, AgeWDate, Age) %>% 
