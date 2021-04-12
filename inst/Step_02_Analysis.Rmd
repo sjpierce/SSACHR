@@ -713,21 +713,28 @@ IDNEW %>%
 ```
 
 
-```{r cccvar_emmeans}
+```{r cccvar_gee}
 IDNEW %>% 
   select(OID, HXCat12_Count_Before, HXCat12_Count_During, HXCat12_Count_After) %>% 
   rename(Before = HXCat12_Count_Before, During = HXCat12_Count_During, 
          After = HXCat12_Count_After) %>% 
-  pivot_longer(cols = c(Before, During, After), names_to = "When", values_to = "Count") %>% 
+  pivot_longer(cols = c(Before, During, After), names_to = "When", 
+               values_to = "Count") %>% 
   mutate(When = factor(x = When, levels = c("After", "Before", "During"))) %>% 
   geeglm(Count ~ When, family = poisson(link = "log"), data = ., id = OID, 
          corstr = "exchangeable", std.err = "san.se") ->
   cccvar_gee
 
 summary(cccvar_gee)
-cccvar_emmeans <- emmeans(cccvar_gee, specs = pairwise ~ When, type = "response", ref = "During")
+```
+
+```{r cccvar_emmeans}
+cccvar_emmeans <- emmeans(cccvar_gee, specs = pairwise ~ When, 
+                          type = "response", ref = "During")
+
 cccvar_emmeans$emmeans %>% 
   kable(format = "latex")
+
 cccvar_emmeans$contrasts %>% 
   confint() %>%
   kable(format = "latex")
