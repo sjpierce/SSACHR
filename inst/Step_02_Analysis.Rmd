@@ -177,7 +177,8 @@ IDNEW %>%
 
 ```{r boxplot_Age, fig.height = 2.5, fig.width = 7, fig.cap=FCap}
 # Figure caption.
-FCap <- paste("Box Plots for Offender Age. Only offenders with valid testing", 
+FCap <- paste("\\label{fig:boxplot_Age}",
+              "Box Plots for Offender Age. Only offenders with valid testing", 
               "window start dates are included. The red line marks age 16",
               "years (the start of observed adult CHR data). CHR collection",
               "occurred on 04/15/2016 for all offfenders.",
@@ -214,7 +215,8 @@ date the earliest SAK was collected).
 
 ```{r boxplot_Age16Date, fig.height = 1.75, fig.width = 7, fig.cap=FCap}
 # Figure caption.
-FCap <- paste("Box Plot for Date of Offender's 16th Birthday. Only offenders", 
+FCap <- paste("\\label{fig:boxplot_Age16Date}",
+              "Box Plot for Date of Offender's 16th Birthday. Only offenders", 
               "with valid testing window start dates are included.",
               "These dates mark the start of the observed adult criminal",
               "history record for each offender.")
@@ -227,7 +229,8 @@ bwplot(~ Age16Date, data = IDNEW, factor = 9,
 
 ```{r boxplot_WDate, fig.height = 1.75, fig.width = 7, fig.cap=FCap}
 # Figure caption.
-FCap <- paste("Box Plot for Start Date of Earliest Testing Window. Only", 
+FCap <- paste("\\label{fig:boxplot_WDate}",
+              "Box Plot for Start Date of Earliest Testing Window. Only", 
               "offenders with valid testing window start dates are included.")
 
 bwplot(~ WDate, data = IDNEW, factor = 9, 
@@ -267,7 +270,8 @@ IDNEW %>%
 
 ```{r boxplot_windows, fig.height = 2.5, fig.width = 7, fig.cap=FCap}
 # Figure caption.
-FCap <- paste("Box Plots for Duration of Observed Portions of Periods.",
+FCap <- paste("\\label{fig:boxplot_windows}",
+              "Box Plots for Duration of Observed Portions of Periods.",
               "Only offenders with valid testing", 
               "window start dates are included. The red line marks age 16",
               "years, which is the start of observed adult CHR, which was ",
@@ -359,7 +363,8 @@ IDNEW %>%
 
 ```{r boxplot_RCCOUNTS, fig.height = 3, fig.width = 7, fig.cap=FCap}
 # Figure caption.
-FCap <- paste("Box Plots for Overall Record Counts by Criminal History Record", 
+FCap <- paste("\\label{fig:boxplot_RCCOUNTS}",
+              "Box Plots for Overall Record Counts by Criminal History Record", 
               "Type. Only offenders with valid testing window start dates are", 
               "included.",
               "Only records associated with incidents where the offender was",
@@ -373,7 +378,8 @@ bwplot(VName ~ Count, data = RCCOUNTS, factor = 1, xlim = c(-4, 64),
 
 ``` {r densityplot_RCCOUNTS, fig.height = 3, fig.width = 8.5, fig.cap=FCap}
 # Figure caption.
-FCap <- paste("Density Plots for Overall Record Counts by Criminal History", 
+FCap <- paste("\\label{fig:densityplot_RCCOUNTS}",
+              "Density Plots for Overall Record Counts by Criminal History", 
               "Record Type. Only offenders with valid testing window start", 
               "dates are included.",
               "Only records associated with incidents where the offender was",
