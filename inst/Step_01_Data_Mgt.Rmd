@@ -605,6 +605,8 @@ start date for the before period. However, because *WDate* is derived from when
 the earliest SAK for the offender was collected rather than the criminal history
 data, *WDate* can in principle either precede or occur on *Age16Date*. 
 
+Figure \ref{fig:plot_periods} shows a set of hypothetical scenarios that could
+occur and how much of the before, during, and after testing window periods are actually observed. 
 
 ```{r plot_periods, fig.height=9, fig.width=7.5, fig.cap=FCap, out.extra = ""}
 # Figure caption.
