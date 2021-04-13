@@ -1399,7 +1399,7 @@ kable(CrimeCats, format = "latex", booktabs = TRUE, caption = TCap) %>%
 ```
 
 ### Incidents With Arrests
-For any given incident (identifed by a unique value of *IID*), there can be
+For any given incident (identified by a unique value of *IID*), there can be
 multiple arrest offense records in *ARREW*. The dummy variables *ACat12_1* to
 *ACat12_12* and *ACat12_999* each mark whether or not a particular arrest
 offense record was associated with a specific type of crime, while *ACat12_Any*
@@ -1437,7 +1437,7 @@ ARREW %>%
 ```
 
 ### Incidents With Charges
-For any given incident (identifed by a unique value of *IID*), there can be
+For any given incident (identified by a unique value of *IID*), there can be
 multiple prosecutor charges records in *CHGEW*. The dummy variables *CCat12_1*
 to *CCat12_12* and *CCat12_999* each mark whether or not a particular prosecutor
 charge record was associated with a specific type of crime, while *CCat12_Any*
@@ -1475,7 +1475,7 @@ CHGEW %>%
 ```
 
 ### Incidents With Convictions
-For any given incident (identifed by a unique value of *IID*), there can be
+For any given incident (identified by a unique value of *IID*), there can be
 multiple conviction records in *CONEW*. The dummy variables *JCat12_1* to
 *JCat12_12* and *JCat12_999* each mark whether or not a particular adjudicated
 conviction charge record was associated with a specific type of crime, while
