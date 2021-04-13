@@ -618,33 +618,6 @@ For all offenders, the after period starts on the 119th day after *WDate*
 (because the testing window is 118 days long) and ends on the CHR data
 collection date (*DCDate*). 
 
-```{r scenarios_table}
-# Table caption.
-TCap <- paste("Scenarios for Alignment of Before, During, and After Testing", 
-              "Window Periods with Observed Criminal History Records Period.")
-# Footnote text.
-FN <- paste0("Offsets from specific dates (e.g., - 1) are in units of days.")
-
-Scenarios %>% 
-  filter(type == "comment") %>% 
-  select(scenario, event, criteria) %>% 
-  kable(format = "latex", booktabs = TRUE, 
-        col.names = c("Scenario", "Description", "Criteria"),
-        caption = TCap) %>% 
-  kable_styling() %>% 
-  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
-         threeparttable = TRUE)
-```
-Now we save a vector of scenario labels for use later. 
-
-```{r scenario_labels}
-Scenarios %>%
-  filter(type == "comment") %>% 
-  select(scenario, event) %>% 
-  mutate(Scenario = paste(scenario, event, sep = ". ")) %>% 
-  pull(Scenario) -> 
-  ScenarioLabels
-```
 
 The chunk below was used interactively to select a color palette for Figure 
 \ref{fig:plot_periods} that is good for visual discrimination of qualitative 
@@ -802,22 +775,38 @@ We end up with an *IDNEW* tibble that has `r nrow(IDNEW)` of the original
 `r nrow(IDN)` perpetrators with CHR data. Only `r sum(IDNEW$Turn16_After_WDate)`
 of the `r nrow(IDNEW)` offenders turned 16 on or after their earliest SAK was 
 collected and the testing window had started; they therefore have *Years_Before* 
-= 0 years. Table \ref{tab:freq_scenario}
+= 0 years. Table \ref{tab:freq_scenario} shows the frequency distribution for 
+scenarios actually observed among the offenders. 
 
 ```{r freq_scenario}
 # Table caption.
 TCap <- paste("Frequency Distribution for Scenario of Alignment of Before,", 
               "During, and After Testing Window Periods with Observed",
               "Criminal History Records Period")
-  
+# Footnote text.
+FN <- paste("Offsets from specific dates (e.g., - 1) mentioned in criteria",
+            "are in units of days.")
+
+# Gather scenario descriptions to merge int data from offenders. 
+Scenarios %>% 
+  filter(type == "comment") %>% 
+  select(scenario, event, criteria) %>% 
+  rename(Scenario = scenario, Description = event, Criteria = criteria) ->
+  ScenarioTable
+
 IDNEW %>% 
   select(OID, Scenario) %>% 
   group_by(Scenario, .drop = FALSE) %>% 
   count() %>% 
-  mutate(Percent = 100*n/nrow(IDNEW)) %>% 
-   kable(format = "latex", booktabs = TRUE, digits = 2, 
-        col.names = c("Scenario", "Frequency", "Percent"),
-        caption = TCap) 
+  rename(Frequency = n) %>% 
+  mutate(Percent = 100*Frequency/nrow(IDNEW)) %>% 
+  # Merge in scenario descriptions.
+  left_join(x = ScenarioTable, y = ., by = "Scenario") %>% 
+  kable(format = "latex", booktabs = TRUE, digits = 2,
+        caption = TCap) %>% 
+  kable_styling() %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
 ```
 
 \FloatBarrier
