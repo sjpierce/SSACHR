@@ -1669,7 +1669,14 @@ We also want to get separate counts for each crime category broken down by when
 the incident occurred relative to the earliest testing window (*IWhen*). This
 next chunk does that. The variable naming convention just adds suffixes to the
 previously defined variable names to indicate the period to which each count
-variable pertains.
+variable pertains. Because some offenders' adult CHRs did not overlap with the 
+before and during periods, we have to selectively recode counts of zero to
+missing data when the observed duration of the period in question was zero
+years. Otherwise we risk mistaking what amounts to a structural zero (no
+opportunity to observe incidents because because we had zero years of that
+period represented in the adult CHR) with a sampling zero (we had the
+opportunity to observe incidents because we observed more than 0 years of the
+period in the adult CHR, but just did not see any in that period).
 
 ```{r merge_Agg_ACat12_BDA_IDNEW}
 # Aggregate ACat12 dummy codes to offender level incident counts by IWhen .
@@ -1682,6 +1689,11 @@ INCEW %>%
   summarize(across(.cols = all_of(avarsbda), .fns = sum, na.rm = TRUE))  %>% 
   # Merge count variables onto IDNEW.
   left_join(x = IDNEW, y = ., by = "OID") %>% 
+  # Set count variables with values of 0 to NA when that period was unobserved.  
+  mutate(across(.cols = all_of(avarsb), 
+                .fns = ~ifelse(Years_Before == 0, yes = NA, no = .))) %>%
+  mutate(across(.cols = all_of(avarsd), 
+                .fns = ~ifelse(Years_During == 0, yes = NA, no = .))) %>% 
   var_labels(ACat12_1_Before = "No. incidents arrested for arson before testing window before testing window",
              ACat12_2_Before = "No. incidents arrested for assault - DV, stalking before testing window",
              ACat12_3_Before = "No. incidents arrested for assault - non-sexual, non-DV before testing window",
@@ -1767,7 +1779,14 @@ We also want to get separate counts for each crime category broken down by when
 the incident occurred relative to the earliest testing window (*IWhen*). This
 next chunk does that. The variable naming convention just adds suffixes to the
 previously defined variable names to indicate the period to which each count
-variable pertains.
+variable pertains. Because some offenders' adult CHRs did not overlap with the 
+before and during periods, we have to selectively recode counts of zero to
+missing data when the observed duration of the period in question was zero
+years. Otherwise we risk mistaking what amounts to a structural zero (no
+opportunity to observe incidents because because we had zero years of that
+period represented in the adult CHR) with a sampling zero (we had the
+opportunity to observe incidents because we observed more than 0 years of the
+period in the adult CHR, but just did not see any in that period).
 
 ```{r merge_Agg_CCat12_BDA_IDNEW}
 # Aggregate CCat12 dummy codes to offender level incident counts by IWhen .
@@ -1780,6 +1799,11 @@ INCEW %>%
   summarize(across(.cols = all_of(cvarsbda), .fns = sum, na.rm = TRUE))  %>% 
   # Merge count variables onto IDNEW.
   left_join(x = IDNEW, y = ., by = "OID") %>% 
+  # Set count variables with values of 0 to NA when that period was unobserved.  
+  mutate(across(.cols = all_of(cvarsb), 
+                .fns = ~ifelse(Years_Before == 0, yes = NA, no = .))) %>%
+  mutate(across(.cols = all_of(cvarsd), 
+                .fns = ~ifelse(Years_During == 0, yes = NA, no = .))) %>% 
   var_labels(CCat12_1_Before = "No. incidents charged for arson before testing window before testing window",
              CCat12_2_Before = "No. incidents charged for assault - DV, stalking before testing window",
              CCat12_3_Before = "No. incidents charged for assault - non-sexual, non-DV before testing window",
@@ -1865,7 +1889,14 @@ We also want to get separate counts for each crime category broken down by when
 the incident occurred relative to the earliest testing window (*IWhen*). This
 next chunk does that. The variable naming convention just adds suffixes to the
 previously defined variable names to indicate the period to which each count
-variable pertains.
+variable pertains. Because some offenders' adult CHRs did not overlap with the 
+before and during periods, we have to selectively recode counts of zero to
+missing data when the observed duration of the period in question was zero
+years. Otherwise we risk mistaking what amounts to a structural zero (no
+opportunity to observe incidents because because we had zero years of that
+period represented in the adult CHR) with a sampling zero (we had the
+opportunity to observe incidents because we observed more than 0 years of the
+period in the adult CHR, but just did not see any in that period).
 
 ```{r merge_Agg_JCat12_BDA_IDNEW}
 # Aggregate JCat12 dummy codes to offender level incident counts by IWhen.
@@ -1878,6 +1909,11 @@ INCEW %>%
   summarize(across(.cols = all_of(jvarsbda), .fns = sum, na.rm = TRUE))  %>% 
   # Merge count variables onto IDNEW.
   left_join(x = IDNEW, y = ., by = "OID") %>% 
+  # Set count variables with values of 0 to NA when that period was unobserved.  
+  mutate(across(.cols = all_of(jvarsb), 
+                .fns = ~ifelse(Years_Before == 0, yes = NA, no = .))) %>%
+  mutate(across(.cols = all_of(jvarsd), 
+                .fns = ~ifelse(Years_During == 0, yes = NA, no = .))) %>% 
   var_labels(JCat12_1_Before = "No. incidents convicted for arson before testing window before testing window",
              JCat12_2_Before = "No. incidents convicted for assault - DV, stalking before testing window",
              JCat12_3_Before = "No. incidents convicted for assault - non-sexual, non-DV before testing window",
@@ -1972,6 +2008,15 @@ This means that *HXCat12_Any_Before*, *HXCat12_Any_During*, and
 incidents where the offender was *arrested for, charged with, or convicted of*
 one or more of the 12 main crime categories.
 
+Because some offenders' adult CHRs did not overlap with the before and during
+periods, we have to selectively recode counts of zero to missing data when the
+observed duration of the period in question was zero years. Otherwise we risk
+mistaking what amounts to a structural zero (no opportunity to observe incidents
+because because we had zero years of that period represented in the adult CHR)
+with a sampling zero (we had the opportunity to observe incidents because we
+observed more than 0 years of the period in the adult CHR, but just did not see
+any in that period).
+
 ```{r merge_Agg_HXCat12_BDA_IDNEW} 
 # Aggregate HXCat12 dummy codes to offender level incident counts by IWhen.
 INCEW %>% 
@@ -1983,6 +2028,11 @@ INCEW %>%
   summarize(across(.cols = all_of(hxvarsbda), .fns = sum, na.rm = TRUE))  %>% 
   # Merge count variables onto IDNEW.
   left_join(x = IDNEW, y = ., by = "OID") %>% 
+  # Set count variables with values of 0 to NA when that period was unobserved.  
+  mutate(across(.cols = all_of(hxvarsb), 
+                .fns = ~ifelse(Years_Before == 0, yes = NA, no = .))) %>%
+  mutate(across(.cols = all_of(hxvarsd), 
+                .fns = ~ifelse(Years_During == 0, yes = NA, no = .))) %>% 
   var_labels(HXCat12_1_Before = "No. incidents arrested, charged, or convicted for arson before testing window",
              HXCat12_2_Before = "No. incidents arrested, charged, or convicted for assault - DV, stalking before testing window",
              HXCat12_3_Before = "No. incidents arrested, charged, or convicted for assault - non-sexual, non-DV before testing window ",
