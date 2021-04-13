@@ -803,7 +803,23 @@ We end up with an *IDNEW* tibble that has `r nrow(IDNEW)` of the original
 `r nrow(IDN)` perpetrators with CHR data. Only `r sum(IDNEW$Turn16_After_WDate)`
 of the `r nrow(IDNEW)` offenders turned 16 on or after their earliest SAK was 
 collected and the testing window had started; they therefore have *Years_Before* 
-= 0 years. 
+= 0 years. Table \ref{tab:freq_scenario}
+
+```{r freq_scenario}
+# Table caption.
+TCap <- paste("Frequency Distribution for Scenario of Alignment of Before,", 
+              "During, and After Testing Window Periods with Observed",
+              "Criminal History Records Period")
+  
+IDNEW %>% 
+  select(OID, Scenario) %>% 
+  group_by(Scenario, .drop = FALSE) %>% 
+  count() %>% 
+  mutate(Percent = 100*n/nrow(IDNEW)) %>% 
+   kable(format = "latex", booktabs = TRUE, digits = 2, 
+        col.names = c("Scenario", "Frequency", "Percent"),
+        caption = TCap) 
+```
 
 \FloatBarrier
 
