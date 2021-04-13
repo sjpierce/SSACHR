@@ -1613,9 +1613,9 @@ xtabs(~HXCat12_5 + CSC_ANY, data = INCEW) %>%
 
 ## Filter Incident Records 
 Now we need to subset the *INCEW* data to contain only records for which
-*HXCat12_Any* = 1 so that we only retain incidents associated where the offender
-was offender was *arrested for, charged with, or convicted of* one or more of 
-the 12 main crime categories.
+*HXCat12_Any* = 1 so that we only retain incidents where the offender was
+*arrested for, charged with, or convicted of* one or more of the 12 main crime
+categories.
 
 ```{r filter_INCEW}
 INCEW %>% 
