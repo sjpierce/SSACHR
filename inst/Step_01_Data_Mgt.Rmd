@@ -598,7 +598,7 @@ interval variable called *OWindow* that starts on the the offender's 16th
 birthday (*Age16Date*, which can be computed from from date of birth *DOB*) and
 ends on the data collection date when the criminal history data were extracted
 from the state data warehouse: April 15, 2016 (*DCDate*). The duration (in 
-years) of that observed adult CHR period is 
+years) of that overall observed adult CHR period is stored in *Years_Overall*.
 
 One might assume that the offender's 16th birth day (*Age16Date*) should be the
 start date for the before period. However, because *WDate* is derived from when
