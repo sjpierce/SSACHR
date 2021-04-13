@@ -729,16 +729,15 @@ SPDCHREW %>%
     AgeWDate = interval(DOB, WDate)/dyears(1),
     # Scenario for alignment of periods. 
     Scenario = case_when(
-      Age16Date < WDate - 1 ~ "A. Before (all), During (all), After (all)",
-      Age16Date == WDate - 1 ~ "B. Before (1 day), During (all), After (all)",
-      Age16Date == WDate ~ "C. Before (none), During (all), After (all)",
-      WDate < Age16Date & Age16Date < WDate + 118 ~ "D. Before (none), During (part), After (all)",
-      Age16Date == WDate + 118 ~ "E. Before (none), During (1 day), After (all)",
-      Age16Date == WDate + 119 ~ "F. Before (none), During (none), After (all)",
-      Age16Date > WDate + 118 ~ "G. Before (none), During (none), After (part)"), 
-    # Convert to a factor for later convenience. 
-    Scenario = factor(Scenario, levels = ScenarioLabels, 
-                      labels = ScenarioLabels), 
+      Age16Date < WDate - 1 ~ "A",
+      Age16Date == WDate - 1 ~ "B",
+      Age16Date == WDate ~ "C",
+      WDate < Age16Date & Age16Date < WDate + 118 ~ "D",
+      Age16Date == WDate + 118 ~ "E",
+      Age16Date == WDate + 119 ~ "F",
+      Age16Date > WDate + 118 ~ "G"), 
+    # Convert to a factor for later convenience.
+    Scenario = factor(Scenario, levels = c("A", "B", "C", "D", "E", "F", "G")),
     # Did offender turn 16 before WDate (start of testing window, TWindow)?
     Turn16_Before_WDate = (Age16Date < WDate),
     # Did offender turn 16 on or after WDate (start of testing window, TWindow)?
