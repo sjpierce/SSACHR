@@ -603,42 +603,7 @@ years) of that overall observed adult CHR period is stored in *Years_Overall*.
 One might assume that the offender's 16th birth day (*Age16Date*) should be the
 start date for the before period. However, because *WDate* is derived from when
 the earliest SAK for the offender was collected rather than the criminal history
-data, *WDate* can in principle either precede or occur on *Age16Date* . We
-create variables below that help us determine how often that occurred and adjust
-the before period date interval in a sensible way when it does.
-
-We defined the before period as starting on the offender's 16th birthday 
-(*Age16Date*) and ending one day before the earliest SAK was collected (*WDate*)
-when *Age16Date* < *WDate*, and otherwise as both starting and ending the day 
-before *WDate*. That yields a before period with a positive duration for most 
-offenders but zero years for those whose earliest SAK was collected before they 
-reached age 16 years. 
-
-For all offenders, the after period starts on the 119th day after *WDate*
-(because the testing window is 118 days long) and ends on the CHR data
-collection date (*DCDate*). 
-
-
-The chunk below was used interactively to select a color palette for Figure 
-\ref{fig:plot_periods} that is good for visual discrimination of qualitative 
-categories that are not ordered. We wanted colors light enough to have adequate
-contrast with black text. Using the Paired color palette to encode whether a 
-period was unobserved versus observed by intensity of the hue ended up looking
-too cluttered and contrast was poor, so we used selected colors from Set2. 
-The chunk is disabled now to reduce clutter in the output. The colors assigned
-for events and fonts are stored as columns in the Scenarios data frame. 
-
-```{r color_palette, eval = FALSE}
-# Show a range of color palettes that might work. 
-RColorBrewer::display.brewer.all(type = "qual")
-
-# Show hexadecimal codes for colors from specific palettes. 
-RColorBrewer::brewer.pal(8, "Set2")
-#[1] "#66C2A5" "#FC8D62" "#8DA0CB" "#E78AC3" "#A6D854" "#FFD92F" "#E5C494" "#B3B3B3"
-RColorBrewer::brewer.pal(12, "Paired")
-#[1] "#A6CEE3" "#1F78B4" "#B2DF8A" "#33A02C" "#FB9A99" "#E31A1C" "#FDBF6F" "#FF7F00"
-#[9] "#CAB2D6" "#6A3D9A" "#FFFF99" "#B15928"
-```
+data, *WDate* can in principle either precede or occur on *Age16Date*. 
 
 
 ```{r plot_periods, fig.height=9, fig.width=7.5, fig.cap=FCap, out.extra = ""}
@@ -685,6 +650,43 @@ F1 + theme(text = element_text(size = 15, color = "black")) +
   annotate(geom = "text", x = as_datetime("2014-02-14"), y = 1, size = 3, 
               label = "Most but not all days observed", hjust = 0) 
 ```
+
+We create variables below that help us determine how often each scenario
+occurred and adjust the before period date interval in a sensible way when it
+does. We defined the before period as starting on the offender's 16th birthday 
+(*Age16Date*) and ending one day before the earliest SAK was collected (*WDate*)
+when *Age16Date* < *WDate*, and otherwise as both starting and ending the day 
+before *WDate*. That yields a before period with a positive duration for most 
+offenders but zero years for those whose earliest SAK was collected before they 
+reached age 16 years. 
+
+For all offenders, the after period starts on the 119th day after *WDate*
+(because the testing window is 118 days long) and ends on the CHR data
+collection date (*DCDate*). 
+
+The chunk below was used interactively to select a color palette for Figure 
+\ref{fig:plot_periods} that is good for visual discrimination of qualitative 
+categories that are not ordered. We wanted colors light enough to have adequate
+contrast with black text. Using the Paired color palette to encode whether a 
+period was unobserved versus observed by intensity of the hue ended up looking
+too cluttered and contrast was poor, so we used selected colors from Set2. 
+The chunk is disabled now to reduce clutter in the output. The colors assigned
+for events and fonts are stored as columns in the Scenarios data frame. 
+
+```{r color_palette, eval = FALSE}
+# Show a range of color palettes that might work. 
+RColorBrewer::display.brewer.all(type = "qual")
+
+# Show hexadecimal codes for colors from specific palettes. 
+RColorBrewer::brewer.pal(8, "Set2")
+#[1] "#66C2A5" "#FC8D62" "#8DA0CB" "#E78AC3" "#A6D854" "#FFD92F" "#E5C494" "#B3B3B3"
+RColorBrewer::brewer.pal(12, "Paired")
+#[1] "#A6CEE3" "#1F78B4" "#B2DF8A" "#33A02C" "#FB9A99" "#E31A1C" "#FDBF6F" "#FF7F00"
+#[9] "#CAB2D6" "#6A3D9A" "#FFFF99" "#B15928"
+```
+
+The chunk below merges variables from SPDCHREW into IDN, then creates a number 
+of variables as described above in this section. 
 
 ```{r create_IDNEW}
 SPDCHREW %>% 
