@@ -587,8 +587,8 @@ After merging in *TWindow*, it is now possible to compute date intervals for
 the periods of the recorded adult criminal history observed before and after the 
 testing window. We call those new variables *BWindow* and *AWindow* and 
 supplement all three date intervals with duration variables measuring the 
-duration of the before, during, and after periods in years (*DurationBP*, 
-*DurationDP*, and *DurationAP*, respectively). We will eventually use these 
+duration of the before, during, and after periods in years (*Years_Before*, 
+*Years_During*, and *Years_After*, respectively). We will eventually use these 
 duration variables as offsets when modeling count outcome variables that need to
 adjust for period duration to produce crime incidence rate variables.
 
@@ -736,20 +736,20 @@ SPDCHREW %>%
     # After testing window date interval. 
     AWindow = interval(WDate + 119, DCDate),
     # Duration of observed period (from age 16 to data collection date)
-    DurationOP = (as.duration(OWindow) + ddays(1))/dyears(1),
+    Years_Overall = (as.duration(OWindow) + ddays(1))/dyears(1),
     # Duration of before testing window period (years).
-    DurationBP = case_when(
+    Years_Before = case_when(
       Age16Date <  WDate - 1 ~ (as.duration(BWindow) + ddays(1))/dyears(1),
       Age16Date == WDate - 1 ~ ddays(1)/dyears(1),
       Age16Date >  WDate - 1 ~ 0),
     # Duration of during testing window period (years)
-    DurationDP = case_when(
+    Years_During = case_when(
       Age16Date < WDate ~ ddays(119)/dyears(1),
       Age16Date %within% TWindow ~ 
         (as.duration(intersect(OWindow, TWindow)) + ddays(1))/dyears(1),
       Age16Date > WDate + 118 ~ 0),
     # Duration of after testing window period (years)
-    DurationAP = case_when(
+    Years_After = case_when(
       Age16Date <= WDate + 119 ~ (as.duration(AWindow) + ddays(1))/dyears(1),
       Age16Date >  WDate + 119 ~ 
         (as.duration(intersect(OWindow, AWindow)) + ddays(1))/dyears(1))) %>% 
@@ -760,10 +760,10 @@ SPDCHREW %>%
     Turn16_After_WDate = "Offender Turned 16 On or After Start of Testing Window",
     DCDate = "Data Collection Date for Criminal history Records",
     End_TWindow_Before_DC = "Testing Window Ended Before Data Collection Date",
-    DurationOP = "Duration of observed period (years)",
-    DurationBP = "Duration of before testing window period (years)",
-    DurationDP = "Duration of during testing window period (years)",
-    DurationAP = "Duration of after testing window period (years)",
+    Years_Overall = "Duration of observed period (years)",
+    Years_Before = "Duration of before testing window period (years)",
+    Years_During = "Duration of during testing window period (years)",
+    Years_After = "Duration of after testing window period (years)",
     BWindow = "Before Testing Window Date Interval",
     TWindow = "Testing Window Date Interval",
     AWindow = "After Testing Window Date Interval") %>% 
@@ -771,15 +771,15 @@ SPDCHREW %>%
   select(all_of(c(names(IDN), "Age16Date", "AgeWDate", "ESAKID", "ESAK_IID", "WDate", 
                   "TWindow", "Turn16_Before_WDate", "Turn16_After_WDate", 
                   "DCDate", "End_TWindow_Before_DC", "OWindow", "BWindow", 
-                  "AWindow", "DurationOP", "DurationBP", "DurationDP", 
-                  "DurationAP"))) ->
+                  "AWindow", "Years_Overall", "Years_Before", "Years_During", 
+                  "Years_After"))) ->
   IDNEW
 ```
 
 We end up with an *IDNEW* tibble that has `r nrow(IDNEW)` of the original 
 `r nrow(IDN)` perpetrators with CHR data. Only `r sum(IDNEW$Turn16_After_WDate)`
 of the `r nrow(IDNEW)` offenders turned 16 on or after their earliest SAK was 
-collected and the testing window had started; they therefore have *DurationBP* 
+collected and the testing window had started; they therefore have *Years_Before* 
 = 0 years. 
 
 \FloatBarrier
