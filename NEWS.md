@@ -1,3 +1,39 @@
+# SSACHR 0.10.0, 2021-04-13
+* Updated `inst/Step_01_Data_Mgt.Rmd` to
+    * Rename some variables.
+    * Added a scenario variable to IDNEW and a table and a table summarizing 
+      its frequency distribution.
+    * Selectively recode variables containing incident counts by period with 
+      values of zero to missing data when the observed duration of the period 
+      in question was zero years.
+* Updated `inst/Step_02_Analysis.Rmd`.
+    * Committed some changes actually made on 2021-04-12.
+    * Worked on putting geeglm() model fit results, marginal means, and 
+      contrasts into nice tables. 
+    * Update variable names to match changes in `inst/Step_01_Data_Mgt.Rmd`.
+    
+# SSACHR 0.10.0, 2021-04-12
+* Updated `inst/Step_02_Analysis.Rmd`.
+    * Split first draft code chunk for GEE modeling into multiple chunks for
+      better organization. 
+    * Pushed some commits made on 2021-04-08. 
+    * Fixed figure captions to enable figure referencing in the explanatory 
+      text. 
+    * Experimented with code for converting geeglm() model fit results into
+      nice tables. 
+
+# SSACHR 0.09.11, 2021-04-08
+* Updated `inst/Step_02_Analysis.Rmd`.
+    * Update box plot for age to show both age at earliest SAK and age at 
+      CHR collection.
+    * Improved figure for plotting Age16Date. 
+    * Added a new figure for plotting WDate. 
+    * Fixed some table output from html to latex format for improved appearance. 
+    * Improved table of period durations. 
+    * Simplified constructing lists of variable names in selected tables. 
+    * Improved figure and table captions and footnotes. 
+    * Improved explanatory text. 
+
 # SSACHR 0.9.11, 2021-03-31
 * Updated `inst/Step_01_Data_Mgt.Rmd` to improve Figure 1. 
 
