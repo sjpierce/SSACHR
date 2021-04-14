@@ -787,9 +787,9 @@ FN <- paste ("\\item Note.",
              "Model 2 used log(Years) as an offset term.")
 
 texreg(list(cccvar_gee1, cccvar_gee2), booktabs = TRUE, dcolumn = TRUE,
-       threeparttable = TRUE, fontsize = "normalsize",
-       table = FALSE, use.packages = FALSE, single.row = TRUE, 
-       stars = 0, ci.force = FALSE, caption = TCap, custom.note = FN)
+       threeparttable = TRUE, fontsize = "normalsize", table = TRUE, 
+       use.packages = FALSE, single.row = TRUE, stars = 0, ci.force = FALSE, 
+       caption = TCap, custom.note = FN)
 ```
 
 ```{r cccvar_emmeans}
