@@ -743,7 +743,7 @@ IDNEW %>%
          After_p = 100*After/nrow(IDNEW)) %>% 
   select(Value, All, All_p, Before, Before_p, During, During_p, After, 
          After_p) %>% 
-  kable(format = "latex", booktabs = TRUE, digits = 2, 
+  kable(format = "html", booktabs = TRUE, digits = 2, 
         col.names = c("Value", rep(c("Frequency", "Percent"), 4)),
         caption = TCap) %>% 
   kable_styling() %>% 
