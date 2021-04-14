@@ -258,7 +258,7 @@ FN <- paste0("Only offenders with valid testing window start dates are ",
 rlabs <- c("Before TW", "During TW", "After TW")
 
 IDNEW %>% 
-  select(DurationBP, DurationDP, DurationAP) %>% 
+  select(Years_Before, Years_During, Years_After) %>% 
   describe(., quant=c(.25, .50, .75)) %>% 
   bind_cols(data.frame(Variable = rlabs), .) %>% 
   select(Variable, n, mean, sd, min, max, skew, kurtosis, Q0.25, Q0.5, Q0.75) %>% 
@@ -279,12 +279,13 @@ FCap <- paste("\\label{fig:boxplot_windows}",
               "TW, earliest testing window.")
 
 IDNEW %>% 
-  select(OID, DurationBP, DurationDP, DurationAP) %>% 
+  select(OID, Years_Before, Years_During, Years_After) %>% 
   # Rearrange data so we can easily plot multiple variables. 
   pivot_longer(cols = -OID, names_to = "VName", values_to = "Duration") %>% 
   mutate(VName = ordered(VName, 
-                         levels = c("DurationBP", "DurationDP", "DurationAP"), 
-                         labels = rlabs)) %>%
+                         levels = rev(c("Years_Before", "Years_During",
+                                        "Years_After")), 
+                         labels = rev(rlabs))) %>%
   bwplot(VName ~ Duration, data = ., factor = 1, xlim = c(-2, 42),
        panel = panel.mybox, par.settings = my.boxes, 
        xlab = "Observed Period Duration (Years)")
