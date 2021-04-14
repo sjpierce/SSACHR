@@ -811,7 +811,7 @@ as_tibble(cccvar_emmeans1$emmeans) %>%
          When = factor(When, levels = c("Before", "During", "After"))) %>% 
   arrange(Model, When) %>% 
   select(When, rate, SE, df, asymp.LCL, asymp.UCL) %>% 
-  kable(format = "latex", caption = TCap, 
+  kable(format = "latex", booktabs = TRUE, caption = TCap, 
         col.names = c("When", "Rate", "SE", "df", "LCL", "UCL")) %>% 
   kable_styling() %>% 
   add_header_above(c(" " = 4, "95% CI" = 2)) %>% 
