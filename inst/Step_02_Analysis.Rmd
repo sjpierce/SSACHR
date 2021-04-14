@@ -103,6 +103,7 @@ library(car)              # For recode()
 library(SSACHR)           # for rvlabel()
 library(geepack)          # for geeglm()
 library(emmeans)          # for emmeans()
+library(texreg)           # for texreg()
 ```
 
 Create objects to hold settings we plan to reuse often. 
@@ -755,30 +756,77 @@ IDNEW %>%
 
 
 ```{r cccvar_gee}
-IDNEW %>% 
-  select(OID, HXCat12_Count_Before, HXCat12_Count_During, HXCat12_Count_After) %>% 
-  rename(Before = HXCat12_Count_Before, During = HXCat12_Count_During, 
-         After = HXCat12_Count_After) %>% 
-  pivot_longer(cols = c(Before, During, After), names_to = "When", 
-               values_to = "Count") %>% 
-  mutate(When = factor(x = When, levels = c("After", "Before", "During"))) %>% 
-  geeglm(Count ~ When, family = poisson(link = "log"), data = ., id = OID, 
-         corstr = "exchangeable", std.err = "san.se") ->
-  cccvar_gee
+cccvar_gee1 <- IDNEWL %>% 
+  filter(Years > 0) %>%
+  geeglm(HXCat12_Count ~ When, 
+         family = poisson(link = "log"), data = ., 
+         id = OID, corstr = "exchangeable", std.err = "san.se")
 
-summary(cccvar_gee)
+cccvar_gee2 <- IDNEWL %>% 
+  filter(Years > 0) %>% 
+  geeglm(HXCat12_Count ~ When + offset(log(Years)), 
+         family = poisson(link = "log"), data = ., 
+         id = OID, corstr = "exchangeable", std.err = "san.se")
+summary(cccvar_gee1)
+summary(cccvar_gee2)
+```
+
+```{r cccvar_texreg, results = "asis"}
+TCap <- paste("Generalized Estimating Equation Models for Crime Category Count",
+              "Predicted by When Period Was Observed Relative to the Testing",
+              "Window")
+FN <- paste ("\\item Note.",
+             "The data contain up to 3 longitudinal observations (one per", 
+             "period) for each offender (i.e., cluster).",
+             "The reference level for When was the period after the testing",
+             "window.",
+             "Both models used a log link function, exchangeable correlation", 
+             "structure, a Poisson distribution, and robust standard errors",
+             "(sandwich estimator).",
+             "Model 1 did not use an offset.",
+             "Model 2 used log(Years) as an offset term.")
+
+texreg(list(cccvar_gee1, cccvar_gee2), booktabs = TRUE, dcolumn = TRUE, threeparttable = TRUE,
+       table = FALSE, use.packages = FALSE, single.row = TRUE, 
+       stars = 0, ci.force = FALSE, caption = TCap, custom.note = FN)
 ```
 
 ```{r cccvar_emmeans}
-cccvar_emmeans <- emmeans(cccvar_gee, specs = pairwise ~ When, 
-                          type = "response", ref = "During")
+# Table caption.
+TCap <- paste("Estimated Marginal Means for Crime Category Counts By When",
+              "Incidents Occurred")
 
-cccvar_emmeans$emmeans %>% 
-  kable(format = "latex")
+# Table footnote.
+FN <- paste("Model 1 did not use an offset.",
+            "Model 2 used log(Years) as an offset term.")
 
-cccvar_emmeans$contrasts %>% 
+cccvar_emmeans1 <- emmeans(cccvar_gee1, specs = pairwise ~ When, 
+                           type = "response", ref = "During")
+cccvar_emmeans2 <- emmeans(cccvar_gee2, specs = pairwise ~ When, 
+                           type = "response", ref = "During")
+
+as_tibble(cccvar_emmeans1$emmeans) %>% 
+  full_join(x = ., y = as_tibble(cccvar_emmeans2$emmeans)) %>% 
+  mutate(Model = c(1, 1, 1, 2, 2, 2), 
+         When = factor(When, levels = c("Before", "During", "After"))) %>% 
+  arrange(Model, When) %>% 
+  select(When, rate, SE, df, asymp.LCL, asymp.UCL) %>% 
+  kable(format = "html", caption = TCap, 
+        col.names = c("When", "Rate", "SE", "df", "LCL", "UCL")) %>% 
+  kable_styling() %>% 
+  add_header_above(c(" " = 4, "95% CI" = 2)) %>% 
+  group_rows(group_label = "Model 1: Mean per offender (counts)", start_row = 1,
+             end_row = 3, italic = TRUE) %>% 
+  group_rows(group_label = "Model 2: Mean per offender-year (annual incidence rates)", 
+             start_row = 4, end_row = 6, italic = TRUE) %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
+```
+
+```{r cccvar_ratios, eval=FALSE}
+cccvar_emmeans1$contrasts %>% 
   confint() %>%
-  kable(format = "latex")
+  kable(format = "html")
 ```
 
 \FloatBarrier
