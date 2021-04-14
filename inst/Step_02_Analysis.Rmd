@@ -798,8 +798,9 @@ TCap <- paste("Estimated Marginal Means for Crime Category Counts By When",
               "Incidents Occurred")
 
 # Table footnote.
-FN <- paste("Model 1 did not use an offset.",
-            "Model 2 used log(Years) as an offset term.")
+FN <- paste("Model 1 did not use an offset, so means are counts.",
+            "Model 2 used log(Years) as an offset term, so means are annual",
+            "incidence rates.")
 
 cccvar_emmeans1 <- emmeans(cccvar_gee1, specs = pairwise ~ When, 
                            type = "response", ref = "During")
@@ -816,9 +817,9 @@ as_tibble(cccvar_emmeans1$emmeans) %>%
         col.names = c("When", "Rate", "SE", "df", "LCL", "UCL")) %>% 
   kable_styling() %>% 
   add_header_above(c(" " = 4, "95% CI" = 2)) %>% 
-  group_rows(group_label = "Model 1: Mean per offender (counts)", start_row = 1,
+  group_rows(group_label = "Model 1: Mean per offender", start_row = 1,
              end_row = 3, italic = TRUE) %>% 
-  group_rows(group_label = "Model 2: Mean per offender-year (annual incidence rates)", 
+  group_rows(group_label = "Model 2: Mean per offender-year", 
              start_row = 4, end_row = 6, italic = TRUE) %>% 
   footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
