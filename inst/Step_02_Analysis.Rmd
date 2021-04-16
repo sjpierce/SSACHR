@@ -1726,7 +1726,6 @@ IDNEW %>%
 
 \FloatBarrier
 
-********************************************************************************
 \FloatBarrier
 
 # Arrest Offense Record Summaries
@@ -1775,7 +1774,6 @@ ARREW %>%
          threeparttable = TRUE)
 ```
 
-********************************************************************************
 \FloatBarrier
 
 # Prosecutor Charge Record Summaries
@@ -1797,7 +1795,6 @@ kable(freq(as_factor(CHGEW$CCat12), user.missing = "Excluded user-missing"),
          threeparttable = TRUE)
 ```
 
-********************************************************************************
 \FloatBarrier
 
 # Judicial Charge Record Summaries
