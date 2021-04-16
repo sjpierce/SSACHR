@@ -1044,6 +1044,136 @@ IDNEW %>%
          threeparttable = TRUE)
 ```
 
+\FloatBarrier 
+
+#### GEE Models
+To more closely examine the arson incident counts, we fitted two generalized
+estimating equation (GEE) models to the long-format *IDNEWL* data, after
+dropping rows for unobserved periods (*Years* = 0) because the counts are
+missing for those observations. 
+
+Model 1 used *When* as a predictor of the period-specific counts, but did not
+adjust for the period durations. Model 2 supplemented *When* as a predictor with
+an offset term for log(*Years*) to adjust for the period durations. Both models
+used Poisson distributions, an exchangeable correlation structure, a log link
+function, and robust standard errors based on the sandwich estimator. 
+
+```{r HXCat12_1_gee}
+HXCat12_1_gee1 <- IDNEWL %>% 
+  filter(Years > 0) %>%
+  geeglm(HXCat12_1 ~ When, 
+         family = poisson(link = "log"), data = ., 
+         id = OID, corstr = "exchangeable", std.err = "san.se")
+
+HXCat12_1_gee2 <- IDNEWL %>% 
+  filter(Years > 0) %>% 
+  geeglm(HXCat12_1 ~ When + offset(log(Years)), 
+         family = poisson(link = "log"), data = ., 
+         id = OID, corstr = "exchangeable", std.err = "san.se")
+```
+
+Table \ref{tab:HXCat12_1_texreg} below shows the parameter estimates for both 
+GEE models. 
+
+```{r HXCat12_1_texreg, results = "asis", cfsize = "normalsize"}
+TCap <- paste("Generalized Estimating Equation Models for Arson Incident Counts",
+              "Predicted by When Incidents Occurred")
+FN <- paste ("\\item * Estimate falls outside 95\\% confidence interval",
+             "based on z-score.",
+             "\\\\\n\\item Note.",
+             "The data contain up to 3 longitudinal observations (one per", 
+             "period) for each offender (i.e., cluster).",
+             "The reference priod for When was after the testing window.",
+             "Both models used a log link function, exchangeable correlation", 
+             "structure, a Poisson distribution, and robust standard errors",
+             "(sandwich estimator).",
+             "Model 1 did not use an offset.",
+             "Model 2 used log(Years) as an offset term.")
+
+texreg(list(HXCat12_1_gee1, HXCat12_1_gee2), booktabs = TRUE, dcolumn = TRUE,
+       threeparttable = TRUE, fontsize = "normalsize", table = TRUE, 
+       use.packages = FALSE, ci.force = TRUE, label = "tab:HXCat12_1_texreg",
+       stars = 0.05, caption = TCap, custom.note = FN)
+```
+
+\FloatBarrier
+
+#### Estimated Marginal Means
+Table \ref{tab:HXCat12_1_emmeans} provides the estimated marginal means obtained
+from Models 1 and 2, along with corresponding confidence intervals. The units of
+measurement for those means are counts per offender for Model 1 (which ignore
+period duration) and counts per offender-year for Model 2 (which adjust for
+duration and are thus considered annual incidence rates).
+
+```{r HXCat12_1_emmeans}
+# Table caption.
+TCap <- paste("Marginal Means of Arson Incident Counts and Incidence Rates",
+              "By When Incidents Occurred")
+
+# Table footnote.
+FN <- paste("Model 1 did not use an offset, so means are counts.",
+            "Model 2 used log(Years) as an offset term, so means are annual",
+            "incidence rates.",
+            "Confidence intervals are based on z-scores.")
+
+HXCat12_1_emmeans1 <- emmeans(HXCat12_1_gee1, specs = pairwise ~ When, 
+                           type = "response", ref = "During")
+HXCat12_1_emmeans2 <- emmeans(HXCat12_1_gee2, specs = pairwise ~ When, 
+                           type = "response", ref = "During")
+
+as_tibble(HXCat12_1_emmeans1$emmeans) %>% 
+  full_join(x = ., y = as_tibble(HXCat12_1_emmeans2$emmeans)) %>% 
+  mutate(Model = c(1, 1, 1, 2, 2, 2), 
+         When = factor(When, levels = c("Before", "During", "After"))) %>% 
+  arrange(Model, When) %>% 
+  select(When, rate, SE, df, asymp.LCL, asymp.UCL) %>% 
+  kable(format = "latex", booktabs = TRUE, caption = TCap, digits = 3, 
+        col.names = c("When", "Rate", "SE", "df", "LCL", "UCL")) %>% 
+  kable_styling() %>% 
+  add_header_above(c(" " = 4, "95% CI" = 2)) %>% 
+  group_rows(group_label = "Model 1: Mean per offender", start_row = 1,
+             end_row = 3, italic = TRUE) %>% 
+  group_rows(group_label = "Model 2: Mean per offender-year", 
+             start_row = 4, end_row = 6, italic = TRUE) %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
+```
+
+\FloatBarrier
+
+#### Contrasts for Ratios of Estimated Marginal Means
+Finally, we also estimated a set of contrasts to compare the marginal means from
+Models 1 and 2 (Table \ref{tab:HXCat12_1_ratios}). Each of these contrasts
+estimates the ratios of a pair of means rather than a raw difference between
+means. This is because of the nature of the underlying Poisson GEE model.
+
+```{r HXCat12_1_ratios}
+TCap <- paste("Contrasts Estimating Ratios of Marginal Means for Arson",
+              "Incident Counts and Incidence Rates By When Incidents",
+              "Occurred")
+
+# Table footnote.
+FN <- paste("Model 1 did not use an offset, so means are counts.",
+            "Model 2 used log(Years) as an offset term, so means are annual",
+            "incidence rates.",
+            "These contrasts estimate ratios of those quantities and used",
+            "Tukey's method to adjust for multiple comparisons.",
+            "Confidence intervals are based on z-scores.")
+
+as_tibble(confint(HXCat12_1_emmeans1$contrasts)) %>% 
+  full_join(x = ., y = as_tibble(confint(HXCat12_1_emmeans2$contrasts))) %>% 
+  kable(format = "latex", booktabs = TRUE, caption = TCap, digits = 3, 
+        col.names = c("Contrast", "Ratio", "SE", "df", "LCL", "UCL")) %>% 
+  kable_styling() %>% 
+  add_header_above(c(" " = 4, "95% CI" = 2)) %>% 
+  group_rows(group_label = "Model 1: Ratios of means per offender", 
+             start_row = 1, end_row = 3, italic = TRUE) %>% 
+  group_rows(group_label = "Model 2: Ratios of means per offender-year", 
+             start_row = 4, end_row = 6, italic = TRUE) %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
+```
+
 \FloatBarrier
 
 ### Assault - DV, Stalking 
@@ -1104,6 +1234,139 @@ IDNEW %>%
   add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
                    "After TW" = 2)) %>% 
   footnote(general = FN5, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
+```
+
+\FloatBarrier
+
+#### GEE Models
+To more closely examine the assault involving domestic violence and/or stalking
+incident counts, we fitted two generalized estimating equation (GEE) models to
+the long-format *IDNEWL* data, after dropping rows for unobserved periods
+(*Years* = 0) because the counts are missing for those observations.
+
+Model 1 used *When* as a predictor of the period-specific counts, but did not
+adjust for the period durations. Model 2 supplemented *When* as a predictor with
+an offset term for log(*Years*) to adjust for the period durations. Both models
+used Poisson distributions, an exchangeable correlation structure, a log link
+function, and robust standard errors based on the sandwich estimator. 
+
+```{r HXCat12_2_gee}
+HXCat12_2_gee1 <- IDNEWL %>% 
+  filter(Years > 0) %>%
+  geeglm(HXCat12_2 ~ When, 
+         family = poisson(link = "log"), data = ., 
+         id = OID, corstr = "exchangeable", std.err = "san.se")
+
+HXCat12_2_gee2 <- IDNEWL %>% 
+  filter(Years > 0) %>% 
+  geeglm(HXCat12_2 ~ When + offset(log(Years)), 
+         family = poisson(link = "log"), data = ., 
+         id = OID, corstr = "exchangeable", std.err = "san.se")
+```
+
+Table \ref{tab:HXCat12_2_texreg} below shows the parameter estimates for both 
+GEE models. 
+
+```{r HXCat12_2_texreg, results = "asis", cfsize = "normalsize"}
+TCap <- paste("Generalized Estimating Equation Models for Assault Involving",
+              "Domestic Violence and/or Stalking Incident Counts",
+              "Predicted by When Incidents Occurred")
+FN <- paste ("\\item * Estimate falls outside 95\\% confidence interval",
+             "based on z-score.",
+             "\\\\\n\\item Note.",
+             "The data contain up to 3 longitudinal observations (one per", 
+             "period) for each offender (i.e., cluster).",
+             "The reference priod for When was after the testing window.",
+             "Both models used a log link function, exchangeable correlation", 
+             "structure, a Poisson distribution, and robust standard errors",
+             "(sandwich estimator).",
+             "Model 1 did not use an offset.",
+             "Model 2 used log(Years) as an offset term.")
+
+texreg(list(HXCat12_2_gee1, HXCat12_2_gee2), booktabs = TRUE, dcolumn = TRUE,
+       threeparttable = TRUE, fontsize = "normalsize", table = TRUE, 
+       use.packages = FALSE, ci.force = TRUE, label = "tab:HXCat12_2_texreg",
+       stars = 0.05, caption = TCap, custom.note = FN)
+```
+
+\FloatBarrier
+
+#### Estimated Marginal Means
+Table \ref{tab:HXCat12_2_emmeans} provides the estimated marginal means obtained
+from Models 1 and 2, along with corresponding confidence intervals. The units of
+measurement for those means are counts per offender for Model 1 (which ignore
+period duration) and counts per offender-year for Model 2 (which adjust for
+duration and are thus considered annual incidence rates).
+
+```{r HXCat12_2_emmeans}
+# Table caption.
+TCap <- paste("Marginal Means of Assault Involving Domestic Violenace and/or",
+              "Stalking Incident Counts and Incidence Rates",
+              "By When Incidents Occurred")
+
+# Table footnote.
+FN <- paste("Model 1 did not use an offset, so means are counts.",
+            "Model 2 used log(Years) as an offset term, so means are annual",
+            "incidence rates.",
+            "Confidence intervals are based on z-scores.")
+
+HXCat12_2_emmeans1 <- emmeans(HXCat12_2_gee1, specs = pairwise ~ When, 
+                           type = "response", ref = "During")
+HXCat12_2_emmeans2 <- emmeans(HXCat12_2_gee2, specs = pairwise ~ When, 
+                           type = "response", ref = "During")
+
+as_tibble(HXCat12_2_emmeans1$emmeans) %>% 
+  full_join(x = ., y = as_tibble(HXCat12_2_emmeans2$emmeans)) %>% 
+  mutate(Model = c(1, 1, 1, 2, 2, 2), 
+         When = factor(When, levels = c("Before", "During", "After"))) %>% 
+  arrange(Model, When) %>% 
+  select(When, rate, SE, df, asymp.LCL, asymp.UCL) %>% 
+  kable(format = "latex", booktabs = TRUE, caption = TCap, digits = 3, 
+        col.names = c("When", "Rate", "SE", "df", "LCL", "UCL")) %>% 
+  kable_styling() %>% 
+  add_header_above(c(" " = 4, "95% CI" = 2)) %>% 
+  group_rows(group_label = "Model 1: Mean per offender", start_row = 1,
+             end_row = 3, italic = TRUE) %>% 
+  group_rows(group_label = "Model 2: Mean per offender-year", 
+             start_row = 4, end_row = 6, italic = TRUE) %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
+```
+
+\FloatBarrier
+
+#### Contrasts for Ratios of Estimated Marginal Means
+Finally, we also estimated a set of contrasts to compare the marginal means from
+Models 1 and 2 (Table \ref{tab:HXCat12_2_ratios}). Each of these contrasts
+estimates the ratios of a pair of means rather than a raw difference between
+means. This is because of the nature of the underlying Poisson GEE model.
+
+```{r HXCat12_2_ratios}
+TCap <- paste("Contrasts Estimating Ratios of Marginal Means for Assault",
+              "Involving Domestic Violence and/or Stalking",
+              "Incident Counts and Incidence Rates By When Incidents",
+              "Occurred")
+
+# Table footnote.
+FN <- paste("Model 1 did not use an offset, so means are counts.",
+            "Model 2 used log(Years) as an offset term, so means are annual",
+            "incidence rates.",
+            "These contrasts estimate ratios of those quantities and used",
+            "Tukey's method to adjust for multiple comparisons.",
+            "Confidence intervals are based on z-scores.")
+
+as_tibble(confint(HXCat12_2_emmeans1$contrasts)) %>% 
+  full_join(x = ., y = as_tibble(confint(HXCat12_2_emmeans2$contrasts))) %>% 
+  kable(format = "latex", booktabs = TRUE, caption = TCap, digits = 3, 
+        col.names = c("Contrast", "Ratio", "SE", "df", "LCL", "UCL")) %>% 
+  kable_styling() %>% 
+  add_header_above(c(" " = 4, "95% CI" = 2)) %>% 
+  group_rows(group_label = "Model 1: Ratios of means per offender", 
+             start_row = 1, end_row = 3, italic = TRUE) %>% 
+  group_rows(group_label = "Model 2: Ratios of means per offender-year", 
+             start_row = 4, end_row = 6, italic = TRUE) %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
 
@@ -1170,6 +1433,138 @@ IDNEW %>%
          threeparttable = TRUE)
 ```
 
+\FloatBarrier 
+
+#### GEE Models
+To more closely examine the assault (non-sexual, non-domestic violence) incident
+counts, we fitted two generalized estimating equation (GEE) models to the
+long-format *IDNEWL* data, after dropping rows for unobserved periods (*Years* =
+0) because the counts are missing for those observations.
+
+Model 1 used *When* as a predictor of the period-specific counts, but did not
+adjust for the period durations. Model 2 supplemented *When* as a predictor with
+an offset term for log(*Years*) to adjust for the period durations. Both models
+used Poisson distributions, an exchangeable correlation structure, a log link
+function, and robust standard errors based on the sandwich estimator. 
+
+```{r HXCat12_3_gee}
+HXCat12_3_gee1 <- IDNEWL %>% 
+  filter(Years > 0) %>%
+  geeglm(HXCat12_3 ~ When, 
+         family = poisson(link = "log"), data = ., 
+         id = OID, corstr = "exchangeable", std.err = "san.se")
+
+HXCat12_3_gee2 <- IDNEWL %>% 
+  filter(Years > 0) %>% 
+  geeglm(HXCat12_3 ~ When + offset(log(Years)), 
+         family = poisson(link = "log"), data = ., 
+         id = OID, corstr = "exchangeable", std.err = "san.se")
+```
+
+Table \ref{tab:HXCat12_3_texreg} below shows the parameter estimates for both 
+GEE models. 
+
+```{r HXCat12_3_texreg, results = "asis", cfsize = "normalsize"}
+TCap <- paste("Generalized Estimating Equation Models for Assault (Non-Sexual,",
+              "Non-Domestic Violance) Incident Counts",
+              "Predicted by When Incidents Occurred")
+FN <- paste ("\\item * Estimate falls outside 95\\% confidence interval",
+             "based on z-score.",
+             "\\\\\n\\item Note.",
+             "The data contain up to 3 longitudinal observations (one per", 
+             "period) for each offender (i.e., cluster).",
+             "The reference priod for When was after the testing window.",
+             "Both models used a log link function, exchangeable correlation", 
+             "structure, a Poisson distribution, and robust standard errors",
+             "(sandwich estimator).",
+             "Model 1 did not use an offset.",
+             "Model 2 used log(Years) as an offset term.")
+
+texreg(list(HXCat12_3_gee1, HXCat12_3_gee2), booktabs = TRUE, dcolumn = TRUE,
+       threeparttable = TRUE, fontsize = "normalsize", table = TRUE, 
+       use.packages = FALSE, ci.force = TRUE, label = "tab:HXCat12_3_texreg",
+       stars = 0.05, caption = TCap, custom.note = FN)
+```
+
+\FloatBarrier
+
+#### Estimated Marginal Means
+Table \ref{tab:HXCat12_3_emmeans} provides the estimated marginal means obtained
+from Models 1 and 2, along with corresponding confidence intervals. The units of
+measurement for those means are counts per offender for Model 1 (which ignore
+period duration) and counts per offender-year for Model 2 (which adjust for
+duration and are thus considered annual incidence rates).
+
+```{r HXCat12_3_emmeans}
+# Table caption.
+TCap <- paste("Marginal Means of Assault (Non-Sexual, Non-Domestic Violence)",
+              "Incident Counts and Incidence Rates By When Incidents Occurred")
+
+# Table footnote.
+FN <- paste("Model 1 did not use an offset, so means are counts.",
+            "Model 2 used log(Years) as an offset term, so means are annual",
+            "incidence rates.",
+            "Confidence intervals are based on z-scores.")
+
+HXCat12_3_emmeans1 <- emmeans(HXCat12_3_gee1, specs = pairwise ~ When, 
+                           type = "response", ref = "During")
+HXCat12_3_emmeans2 <- emmeans(HXCat12_3_gee2, specs = pairwise ~ When, 
+                           type = "response", ref = "During")
+
+as_tibble(HXCat12_3_emmeans1$emmeans) %>% 
+  full_join(x = ., y = as_tibble(HXCat12_3_emmeans2$emmeans)) %>% 
+  mutate(Model = c(1, 1, 1, 2, 2, 2), 
+         When = factor(When, levels = c("Before", "During", "After"))) %>% 
+  arrange(Model, When) %>% 
+  select(When, rate, SE, df, asymp.LCL, asymp.UCL) %>% 
+  kable(format = "latex", booktabs = TRUE, caption = TCap, digits = 3, 
+        col.names = c("When", "Rate", "SE", "df", "LCL", "UCL")) %>% 
+  kable_styling() %>% 
+  add_header_above(c(" " = 4, "95% CI" = 2)) %>% 
+  group_rows(group_label = "Model 1: Mean per offender", start_row = 1,
+             end_row = 3, italic = TRUE) %>% 
+  group_rows(group_label = "Model 2: Mean per offender-year", 
+             start_row = 4, end_row = 6, italic = TRUE) %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
+```
+
+\FloatBarrier
+
+#### Contrasts for Ratios of Estimated Marginal Means
+Finally, we also estimated a set of contrasts to compare the marginal means from
+Models 1 and 2 (Table \ref{tab:HXCat12_3_ratios}). Each of these contrasts
+estimates the ratios of a pair of means rather than a raw difference between
+means. This is because of the nature of the underlying Poisson GEE model.
+
+```{r HXCat12_3_ratios}
+TCap <- paste("Contrasts Estimating Ratios of Marginal Means for Assault", 
+              "(Non-Sexual, Non-Domestic Violence)",
+              "Incident Counts and Incidence Rates By When Incidents",
+              "Occurred")
+
+# Table footnote.
+FN <- paste("Model 1 did not use an offset, so means are counts.",
+            "Model 2 used log(Years) as an offset term, so means are annual",
+            "incidence rates.",
+            "These contrasts estimate ratios of those quantities and used",
+            "Tukey's method to adjust for multiple comparisons.",
+            "Confidence intervals are based on z-scores.")
+
+as_tibble(confint(HXCat12_3_emmeans1$contrasts)) %>% 
+  full_join(x = ., y = as_tibble(confint(HXCat12_3_emmeans2$contrasts))) %>% 
+  kable(format = "latex", booktabs = TRUE, caption = TCap, digits = 3, 
+        col.names = c("Contrast", "Ratio", "SE", "df", "LCL", "UCL")) %>% 
+  kable_styling() %>% 
+  add_header_above(c(" " = 4, "95% CI" = 2)) %>% 
+  group_rows(group_label = "Model 1: Ratios of means per offender", 
+             start_row = 1, end_row = 3, italic = TRUE) %>% 
+  group_rows(group_label = "Model 2: Ratios of means per offender-year", 
+             start_row = 4, end_row = 6, italic = TRUE) %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
+```
+
 \FloatBarrier
 
 ### Burglary 
@@ -1228,6 +1623,136 @@ IDNEW %>%
   add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
                    "After TW" = 2)) %>% 
   footnote(general = FN5, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
+```
+
+\FloatBarrier 
+
+#### GEE Models
+To more closely examine the burglary incident counts, we fitted two generalized
+estimating equation (GEE) models to the long-format *IDNEWL* data, after
+dropping rows for unobserved periods (*Years* = 0) because the counts are
+missing for those observations. 
+
+Model 1 used *When* as a predictor of the period-specific counts, but did not
+adjust for the period durations. Model 2 supplemented *When* as a predictor with
+an offset term for log(*Years*) to adjust for the period durations. Both models
+used Poisson distributions, an exchangeable correlation structure, a log link
+function, and robust standard errors based on the sandwich estimator. 
+
+```{r HXCat12_4_gee}
+HXCat12_4_gee1 <- IDNEWL %>% 
+  filter(Years > 0) %>%
+  geeglm(HXCat12_4 ~ When, 
+         family = poisson(link = "log"), data = ., 
+         id = OID, corstr = "exchangeable", std.err = "san.se")
+
+HXCat12_4_gee2 <- IDNEWL %>% 
+  filter(Years > 0) %>% 
+  geeglm(HXCat12_4 ~ When + offset(log(Years)), 
+         family = poisson(link = "log"), data = ., 
+         id = OID, corstr = "exchangeable", std.err = "san.se")
+```
+
+Table \ref{tab:HXCat12_4_texreg} below shows the parameter estimates for both 
+GEE models. 
+
+```{r HXCat12_4_texreg, results = "asis", cfsize = "normalsize"}
+TCap <- paste("Generalized Estimating Equation Models for Burglary Incident Counts",
+              "Predicted by When Incidents Occurred")
+FN <- paste ("\\item * Estimate falls outside 95\\% confidence interval",
+             "based on z-score.",
+             "\\\\\n\\item Note.",
+             "The data contain up to 3 longitudinal observations (one per", 
+             "period) for each offender (i.e., cluster).",
+             "The reference priod for When was after the testing window.",
+             "Both models used a log link function, exchangeable correlation", 
+             "structure, a Poisson distribution, and robust standard errors",
+             "(sandwich estimator).",
+             "Model 1 did not use an offset.",
+             "Model 2 used log(Years) as an offset term.")
+
+texreg(list(HXCat12_4_gee1, HXCat12_4_gee2), booktabs = TRUE, dcolumn = TRUE,
+       threeparttable = TRUE, fontsize = "normalsize", table = TRUE, 
+       use.packages = FALSE, ci.force = TRUE, label = "tab:HXCat12_4_texreg",
+       stars = 0.05, caption = TCap, custom.note = FN)
+```
+
+\FloatBarrier
+
+#### Estimated Marginal Means
+Table \ref{tab:HXCat12_4_emmeans} provides the estimated marginal means obtained
+from Models 1 and 2, along with corresponding confidence intervals. The units of
+measurement for those means are counts per offender for Model 1 (which ignore
+period duration) and counts per offender-year for Model 2 (which adjust for
+duration and are thus considered annual incidence rates).
+
+```{r HXCat12_4_emmeans}
+# Table caption.
+TCap <- paste("Marginal Means of Burglary Incident Counts and Incidence Rates",
+              "By When Incidents Occurred")
+
+# Table footnote.
+FN <- paste("Model 1 did not use an offset, so means are counts.",
+            "Model 2 used log(Years) as an offset term, so means are annual",
+            "incidence rates.",
+            "Confidence intervals are based on z-scores.")
+
+HXCat12_4_emmeans1 <- emmeans(HXCat12_4_gee1, specs = pairwise ~ When, 
+                           type = "response", ref = "During")
+HXCat12_4_emmeans2 <- emmeans(HXCat12_4_gee2, specs = pairwise ~ When, 
+                           type = "response", ref = "During")
+
+as_tibble(HXCat12_4_emmeans1$emmeans) %>% 
+  full_join(x = ., y = as_tibble(HXCat12_4_emmeans2$emmeans)) %>% 
+  mutate(Model = c(1, 1, 1, 2, 2, 2), 
+         When = factor(When, levels = c("Before", "During", "After"))) %>% 
+  arrange(Model, When) %>% 
+  select(When, rate, SE, df, asymp.LCL, asymp.UCL) %>% 
+  kable(format = "latex", booktabs = TRUE, caption = TCap, digits = 3, 
+        col.names = c("When", "Rate", "SE", "df", "LCL", "UCL")) %>% 
+  kable_styling() %>% 
+  add_header_above(c(" " = 4, "95% CI" = 2)) %>% 
+  group_rows(group_label = "Model 1: Mean per offender", start_row = 1,
+             end_row = 3, italic = TRUE) %>% 
+  group_rows(group_label = "Model 2: Mean per offender-year", 
+             start_row = 4, end_row = 6, italic = TRUE) %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
+```
+
+\FloatBarrier
+
+#### Contrasts for Ratios of Estimated Marginal Means
+Finally, we also estimated a set of contrasts to compare the marginal means from
+Models 1 and 2 (Table \ref{tab:HXCat12_4_ratios}). Each of these contrasts
+estimates the ratios of a pair of means rather than a raw difference between
+means. This is because of the nature of the underlying Poisson GEE model.
+
+```{r HXCat12_4_ratios}
+TCap <- paste("Contrasts Estimating Ratios of Marginal Means for Burglary",
+              "Incident Counts and Incidence Rates By When Incidents",
+              "Occurred")
+
+# Table footnote.
+FN <- paste("Model 1 did not use an offset, so means are counts.",
+            "Model 2 used log(Years) as an offset term, so means are annual",
+            "incidence rates.",
+            "These contrasts estimate ratios of those quantities and used",
+            "Tukey's method to adjust for multiple comparisons.",
+            "Confidence intervals are based on z-scores.")
+
+as_tibble(confint(HXCat12_4_emmeans1$contrasts)) %>% 
+  full_join(x = ., y = as_tibble(confint(HXCat12_4_emmeans2$contrasts))) %>% 
+  kable(format = "latex", booktabs = TRUE, caption = TCap, digits = 3, 
+        col.names = c("Contrast", "Ratio", "SE", "df", "LCL", "UCL")) %>% 
+  kable_styling() %>% 
+  add_header_above(c(" " = 4, "95% CI" = 2)) %>% 
+  group_rows(group_label = "Model 1: Ratios of means per offender", 
+             start_row = 1, end_row = 3, italic = TRUE) %>% 
+  group_rows(group_label = "Model 2: Ratios of means per offender-year", 
+             start_row = 4, end_row = 6, italic = TRUE) %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
 
@@ -1293,6 +1818,137 @@ IDNEW %>%
          threeparttable = TRUE)
 ```
 
+\FloatBarrier 
+
+#### GEE Models
+To more closely examine the criminal sexual conduct incident counts, we fitted
+two generalized estimating equation (GEE) models to the long-format *IDNEWL*
+data, after dropping rows for unobserved periods (*Years* = 0) because the
+counts are missing for those observations.
+
+Model 1 used *When* as a predictor of the period-specific counts, but did not
+adjust for the period durations. Model 2 supplemented *When* as a predictor with
+an offset term for log(*Years*) to adjust for the period durations. Both models
+used Poisson distributions, an exchangeable correlation structure, a log link
+function, and robust standard errors based on the sandwich estimator. 
+
+```{r HXCat12_5_gee}
+HXCat12_5_gee1 <- IDNEWL %>% 
+  filter(Years > 0) %>%
+  geeglm(HXCat12_5 ~ When, 
+         family = poisson(link = "log"), data = ., 
+         id = OID, corstr = "exchangeable", std.err = "san.se")
+
+HXCat12_5_gee2 <- IDNEWL %>% 
+  filter(Years > 0) %>% 
+  geeglm(HXCat12_5 ~ When + offset(log(Years)), 
+         family = poisson(link = "log"), data = ., 
+         id = OID, corstr = "exchangeable", std.err = "san.se")
+```
+
+Table \ref{tab:HXCat12_5_texreg} below shows the parameter estimates for both 
+GEE models. 
+
+```{r HXCat12_5_texreg, results = "asis", cfsize = "normalsize"}
+TCap <- paste("Generalized Estimating Equation Models for Criminal Sexual",
+              "Conduct Incident Counts",
+              "Predicted by When Incidents Occurred")
+FN <- paste ("\\item * Estimate falls outside 95\\% confidence interval",
+             "based on z-score.",
+             "\\\\\n\\item Note.",
+             "The data contain up to 3 longitudinal observations (one per", 
+             "period) for each offender (i.e., cluster).",
+             "The reference priod for When was after the testing window.",
+             "Both models used a log link function, exchangeable correlation", 
+             "structure, a Poisson distribution, and robust standard errors",
+             "(sandwich estimator).",
+             "Model 1 did not use an offset.",
+             "Model 2 used log(Years) as an offset term.")
+
+texreg(list(HXCat12_5_gee1, HXCat12_5_gee2), booktabs = TRUE, dcolumn = TRUE,
+       threeparttable = TRUE, fontsize = "normalsize", table = TRUE, 
+       use.packages = FALSE, ci.force = TRUE, label = "tab:HXCat12_5_texreg",
+       stars = 0.05, caption = TCap, custom.note = FN)
+```
+
+\FloatBarrier
+
+#### Estimated Marginal Means
+Table \ref{tab:HXCat12_5_emmeans} provides the estimated marginal means obtained
+from Models 1 and 2, along with corresponding confidence intervals. The units of
+measurement for those means are counts per offender for Model 1 (which ignore
+period duration) and counts per offender-year for Model 2 (which adjust for
+duration and are thus considered annual incidence rates).
+
+```{r HXCat12_5_emmeans}
+# Table caption.
+TCap <- paste("Marginal Means of Criminal Sexual Conduct Incident Counts and",
+              "Incidence Rates By When Incidents Occurred")
+
+# Table footnote.
+FN <- paste("Model 1 did not use an offset, so means are counts.",
+            "Model 2 used log(Years) as an offset term, so means are annual",
+            "incidence rates.",
+            "Confidence intervals are based on z-scores.")
+
+HXCat12_5_emmeans1 <- emmeans(HXCat12_5_gee1, specs = pairwise ~ When, 
+                           type = "response", ref = "During")
+HXCat12_5_emmeans2 <- emmeans(HXCat12_5_gee2, specs = pairwise ~ When, 
+                           type = "response", ref = "During")
+
+as_tibble(HXCat12_5_emmeans1$emmeans) %>% 
+  full_join(x = ., y = as_tibble(HXCat12_5_emmeans2$emmeans)) %>% 
+  mutate(Model = c(1, 1, 1, 2, 2, 2), 
+         When = factor(When, levels = c("Before", "During", "After"))) %>% 
+  arrange(Model, When) %>% 
+  select(When, rate, SE, df, asymp.LCL, asymp.UCL) %>% 
+  kable(format = "latex", booktabs = TRUE, caption = TCap, digits = 3, 
+        col.names = c("When", "Rate", "SE", "df", "LCL", "UCL")) %>% 
+  kable_styling() %>% 
+  add_header_above(c(" " = 4, "95% CI" = 2)) %>% 
+  group_rows(group_label = "Model 1: Mean per offender", start_row = 1,
+             end_row = 3, italic = TRUE) %>% 
+  group_rows(group_label = "Model 2: Mean per offender-year", 
+             start_row = 4, end_row = 6, italic = TRUE) %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
+```
+
+\FloatBarrier
+
+#### Contrasts for Ratios of Estimated Marginal Means
+Finally, we also estimated a set of contrasts to compare the marginal means from
+Models 1 and 2 (Table \ref{tab:HXCat12_5_ratios}). Each of these contrasts
+estimates the ratios of a pair of means rather than a raw difference between
+means. This is because of the nature of the underlying Poisson GEE model.
+
+```{r HXCat12_5_ratios}
+TCap <- paste("Contrasts Estimating Ratios of Marginal Means for Criminal",
+              "Sexual Conduct Incident Counts and Incidence Rates By When",
+              "Incidents Occurred")
+
+# Table footnote.
+FN <- paste("Model 1 did not use an offset, so means are counts.",
+            "Model 2 used log(Years) as an offset term, so means are annual",
+            "incidence rates.",
+            "These contrasts estimate ratios of those quantities and used",
+            "Tukey's method to adjust for multiple comparisons.",
+            "Confidence intervals are based on z-scores.")
+
+as_tibble(confint(HXCat12_5_emmeans1$contrasts)) %>% 
+  full_join(x = ., y = as_tibble(confint(HXCat12_5_emmeans2$contrasts))) %>% 
+  kable(format = "latex", booktabs = TRUE, caption = TCap, digits = 3, 
+        col.names = c("Contrast", "Ratio", "SE", "df", "LCL", "UCL")) %>% 
+  kable_styling() %>% 
+  add_header_above(c(" " = 4, "95% CI" = 2)) %>% 
+  group_rows(group_label = "Model 1: Ratios of means per offender", 
+             start_row = 1, end_row = 3, italic = TRUE) %>% 
+  group_rows(group_label = "Model 2: Ratios of means per offender-year", 
+             start_row = 4, end_row = 6, italic = TRUE) %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
+```
+
 \FloatBarrier
 
 ### Drug Crime 
@@ -1355,6 +2011,136 @@ IDNEW %>%
          threeparttable = TRUE)
 ```
 
+\FloatBarrier 
+
+#### GEE Models
+To more closely examine the drug crime incident counts, we fitted two generalized
+estimating equation (GEE) models to the long-format *IDNEWL* data, after
+dropping rows for unobserved periods (*Years* = 0) because the counts are
+missing for those observations. 
+
+Model 1 used *When* as a predictor of the period-specific counts, but did not
+adjust for the period durations. Model 2 supplemented *When* as a predictor with
+an offset term for log(*Years*) to adjust for the period durations. Both models
+used Poisson distributions, an exchangeable correlation structure, a log link
+function, and robust standard errors based on the sandwich estimator. 
+
+```{r HXCat12_6_gee}
+HXCat12_6_gee1 <- IDNEWL %>% 
+  filter(Years > 0) %>%
+  geeglm(HXCat12_6 ~ When, 
+         family = poisson(link = "log"), data = ., 
+         id = OID, corstr = "exchangeable", std.err = "san.se")
+
+HXCat12_6_gee2 <- IDNEWL %>% 
+  filter(Years > 0) %>% 
+  geeglm(HXCat12_6 ~ When + offset(log(Years)), 
+         family = poisson(link = "log"), data = ., 
+         id = OID, corstr = "exchangeable", std.err = "san.se")
+```
+
+Table \ref{tab:HXCat12_6_texreg} below shows the parameter estimates for both 
+GEE models. 
+
+```{r HXCat12_6_texreg, results = "asis", cfsize = "normalsize"}
+TCap <- paste("Generalized Estimating Equation Models for Drug Crime Incident",
+              "Counts Predicted by When Incidents Occurred")
+FN <- paste ("\\item * Estimate falls outside 95\\% confidence interval",
+             "based on z-score.",
+             "\\\\\n\\item Note.",
+             "The data contain up to 3 longitudinal observations (one per", 
+             "period) for each offender (i.e., cluster).",
+             "The reference priod for When was after the testing window.",
+             "Both models used a log link function, exchangeable correlation", 
+             "structure, a Poisson distribution, and robust standard errors",
+             "(sandwich estimator).",
+             "Model 1 did not use an offset.",
+             "Model 2 used log(Years) as an offset term.")
+
+texreg(list(HXCat12_6_gee1, HXCat12_6_gee2), booktabs = TRUE, dcolumn = TRUE,
+       threeparttable = TRUE, fontsize = "normalsize", table = TRUE, 
+       use.packages = FALSE, ci.force = TRUE, label = "tab:HXCat12_6_texreg",
+       stars = 0.05, caption = TCap, custom.note = FN)
+```
+
+\FloatBarrier
+
+#### Estimated Marginal Means
+Table \ref{tab:HXCat12_6_emmeans} provides the estimated marginal means obtained
+from Models 1 and 2, along with corresponding confidence intervals. The units of
+measurement for those means are counts per offender for Model 1 (which ignore
+period duration) and counts per offender-year for Model 2 (which adjust for
+duration and are thus considered annual incidence rates).
+
+```{r HXCat12_6_emmeans}
+# Table caption.
+TCap <- paste("Marginal Means of Drug Crime Incident Counts and Incidence Rates",
+              "By When Incidents Occurred")
+
+# Table footnote.
+FN <- paste("Model 1 did not use an offset, so means are counts.",
+            "Model 2 used log(Years) as an offset term, so means are annual",
+            "incidence rates.",
+            "Confidence intervals are based on z-scores.")
+
+HXCat12_6_emmeans1 <- emmeans(HXCat12_6_gee1, specs = pairwise ~ When, 
+                           type = "response", ref = "During")
+HXCat12_6_emmeans2 <- emmeans(HXCat12_6_gee2, specs = pairwise ~ When, 
+                           type = "response", ref = "During")
+
+as_tibble(HXCat12_6_emmeans1$emmeans) %>% 
+  full_join(x = ., y = as_tibble(HXCat12_6_emmeans2$emmeans)) %>% 
+  mutate(Model = c(1, 1, 1, 2, 2, 2), 
+         When = factor(When, levels = c("Before", "During", "After"))) %>% 
+  arrange(Model, When) %>% 
+  select(When, rate, SE, df, asymp.LCL, asymp.UCL) %>% 
+  kable(format = "latex", booktabs = TRUE, caption = TCap, digits = 3, 
+        col.names = c("When", "Rate", "SE", "df", "LCL", "UCL")) %>% 
+  kable_styling() %>% 
+  add_header_above(c(" " = 4, "95% CI" = 2)) %>% 
+  group_rows(group_label = "Model 1: Mean per offender", start_row = 1,
+             end_row = 3, italic = TRUE) %>% 
+  group_rows(group_label = "Model 2: Mean per offender-year", 
+             start_row = 4, end_row = 6, italic = TRUE) %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
+```
+
+\FloatBarrier
+
+#### Contrasts for Ratios of Estimated Marginal Means
+Finally, we also estimated a set of contrasts to compare the marginal means from
+Models 1 and 2 (Table \ref{tab:HXCat12_6_ratios}). Each of these contrasts
+estimates the ratios of a pair of means rather than a raw difference between
+means. This is because of the nature of the underlying Poisson GEE model.
+
+```{r HXCat12_6_ratios}
+TCap <- paste("Contrasts Estimating Ratios of Marginal Means for Drug Crime",
+              "Incident Counts and Incidence Rates By When Incidents",
+              "Occurred")
+
+# Table footnote.
+FN <- paste("Model 1 did not use an offset, so means are counts.",
+            "Model 2 used log(Years) as an offset term, so means are annual",
+            "incidence rates.",
+            "These contrasts estimate ratios of those quantities and used",
+            "Tukey's method to adjust for multiple comparisons.",
+            "Confidence intervals are based on z-scores.")
+
+as_tibble(confint(HXCat12_6_emmeans1$contrasts)) %>% 
+  full_join(x = ., y = as_tibble(confint(HXCat12_6_emmeans2$contrasts))) %>% 
+  kable(format = "latex", booktabs = TRUE, caption = TCap, digits = 3, 
+        col.names = c("Contrast", "Ratio", "SE", "df", "LCL", "UCL")) %>% 
+  kable_styling() %>% 
+  add_header_above(c(" " = 4, "95% CI" = 2)) %>% 
+  group_rows(group_label = "Model 1: Ratios of means per offender", 
+             start_row = 1, end_row = 3, italic = TRUE) %>% 
+  group_rows(group_label = "Model 2: Ratios of means per offender-year", 
+             start_row = 4, end_row = 6, italic = TRUE) %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
+```
+
 \FloatBarrier
 
 ### Homicide 
@@ -1413,6 +2199,136 @@ IDNEW %>%
   add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
                    "After TW" = 2)) %>% 
   footnote(general = FN5, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
+```
+
+\FloatBarrier 
+
+#### GEE Models
+To more closely examine the homicide incident counts, we fitted two generalized
+estimating equation (GEE) models to the long-format *IDNEWL* data, after
+dropping rows for unobserved periods (*Years* = 0) because the counts are
+missing for those observations. 
+
+Model 1 used *When* as a predictor of the period-specific counts, but did not
+adjust for the period durations. Model 2 supplemented *When* as a predictor with
+an offset term for log(*Years*) to adjust for the period durations. Both models
+used Poisson distributions, an exchangeable correlation structure, a log link
+function, and robust standard errors based on the sandwich estimator. 
+
+```{r HXCat12_7_gee}
+HXCat12_7_gee1 <- IDNEWL %>% 
+  filter(Years > 0) %>%
+  geeglm(HXCat12_7 ~ When, 
+         family = poisson(link = "log"), data = ., 
+         id = OID, corstr = "exchangeable", std.err = "san.se")
+
+HXCat12_7_gee2 <- IDNEWL %>% 
+  filter(Years > 0) %>% 
+  geeglm(HXCat12_7 ~ When + offset(log(Years)), 
+         family = poisson(link = "log"), data = ., 
+         id = OID, corstr = "exchangeable", std.err = "san.se")
+```
+
+Table \ref{tab:HXCat12_7_texreg} below shows the parameter estimates for both 
+GEE models. 
+
+```{r HXCat12_7_texreg, results = "asis", cfsize = "normalsize"}
+TCap <- paste("Generalized Estimating Equation Models for Homicide Incident Counts",
+              "Predicted by When Incidents Occurred")
+FN <- paste ("\\item * Estimate falls outside 95\\% confidence interval",
+             "based on z-score.",
+             "\\\\\n\\item Note.",
+             "The data contain up to 3 longitudinal observations (one per", 
+             "period) for each offender (i.e., cluster).",
+             "The reference priod for When was after the testing window.",
+             "Both models used a log link function, exchangeable correlation", 
+             "structure, a Poisson distribution, and robust standard errors",
+             "(sandwich estimator).",
+             "Model 1 did not use an offset.",
+             "Model 2 used log(Years) as an offset term.")
+
+texreg(list(HXCat12_7_gee1, HXCat12_7_gee2), booktabs = TRUE, dcolumn = TRUE,
+       threeparttable = TRUE, fontsize = "normalsize", table = TRUE, 
+       use.packages = FALSE, ci.force = TRUE, label = "tab:HXCat12_7_texreg",
+       stars = 0.05, caption = TCap, custom.note = FN)
+```
+
+\FloatBarrier
+
+#### Estimated Marginal Means
+Table \ref{tab:HXCat12_7_emmeans} provides the estimated marginal means obtained
+from Models 1 and 2, along with corresponding confidence intervals. The units of
+measurement for those means are counts per offender for Model 1 (which ignore
+period duration) and counts per offender-year for Model 2 (which adjust for
+duration and are thus considered annual incidence rates).
+
+```{r HXCat12_7_emmeans}
+# Table caption.
+TCap <- paste("Marginal Means of Homicide Incident Counts and Incidence Rates",
+              "By When Incidents Occurred")
+
+# Table footnote.
+FN <- paste("Model 1 did not use an offset, so means are counts.",
+            "Model 2 used log(Years) as an offset term, so means are annual",
+            "incidence rates.",
+            "Confidence intervals are based on z-scores.")
+
+HXCat12_7_emmeans1 <- emmeans(HXCat12_7_gee1, specs = pairwise ~ When, 
+                           type = "response", ref = "During")
+HXCat12_7_emmeans2 <- emmeans(HXCat12_7_gee2, specs = pairwise ~ When, 
+                           type = "response", ref = "During")
+
+as_tibble(HXCat12_7_emmeans1$emmeans) %>% 
+  full_join(x = ., y = as_tibble(HXCat12_7_emmeans2$emmeans)) %>% 
+  mutate(Model = c(1, 1, 1, 2, 2, 2), 
+         When = factor(When, levels = c("Before", "During", "After"))) %>% 
+  arrange(Model, When) %>% 
+  select(When, rate, SE, df, asymp.LCL, asymp.UCL) %>% 
+  kable(format = "latex", booktabs = TRUE, caption = TCap, digits = 3, 
+        col.names = c("When", "Rate", "SE", "df", "LCL", "UCL")) %>% 
+  kable_styling() %>% 
+  add_header_above(c(" " = 4, "95% CI" = 2)) %>% 
+  group_rows(group_label = "Model 1: Mean per offender", start_row = 1,
+             end_row = 3, italic = TRUE) %>% 
+  group_rows(group_label = "Model 2: Mean per offender-year", 
+             start_row = 4, end_row = 6, italic = TRUE) %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
+```
+
+\FloatBarrier
+
+#### Contrasts for Ratios of Estimated Marginal Means
+Finally, we also estimated a set of contrasts to compare the marginal means from
+Models 1 and 2 (Table \ref{tab:HXCat12_7_ratios}). Each of these contrasts
+estimates the ratios of a pair of means rather than a raw difference between
+means. This is because of the nature of the underlying Poisson GEE model.
+
+```{r HXCat12_7_ratios}
+TCap <- paste("Contrasts Estimating Ratios of Marginal Means for Homicide",
+              "Incident Counts and Incidence Rates By When Incidents",
+              "Occurred")
+
+# Table footnote.
+FN <- paste("Model 1 did not use an offset, so means are counts.",
+            "Model 2 used log(Years) as an offset term, so means are annual",
+            "incidence rates.",
+            "These contrasts estimate ratios of those quantities and used",
+            "Tukey's method to adjust for multiple comparisons.",
+            "Confidence intervals are based on z-scores.")
+
+as_tibble(confint(HXCat12_7_emmeans1$contrasts)) %>% 
+  full_join(x = ., y = as_tibble(confint(HXCat12_7_emmeans2$contrasts))) %>% 
+  kable(format = "latex", booktabs = TRUE, caption = TCap, digits = 3, 
+        col.names = c("Contrast", "Ratio", "SE", "df", "LCL", "UCL")) %>% 
+  kable_styling() %>% 
+  add_header_above(c(" " = 4, "95% CI" = 2)) %>% 
+  group_rows(group_label = "Model 1: Ratios of means per offender", 
+             start_row = 1, end_row = 3, italic = TRUE) %>% 
+  group_rows(group_label = "Model 2: Ratios of means per offender-year", 
+             start_row = 4, end_row = 6, italic = TRUE) %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
 
@@ -1478,6 +2394,137 @@ IDNEW %>%
          threeparttable = TRUE)
 ```
 
+\FloatBarrier 
+
+#### GEE Models
+To more closely examine the larceny, theft or fraud incident counts, we fitted
+two generalized estimating equation (GEE) models to the long-format *IDNEWL*
+data, after dropping rows for unobserved periods (*Years* = 0) because the
+counts are missing for those observations.
+
+Model 1 used *When* as a predictor of the period-specific counts, but did not
+adjust for the period durations. Model 2 supplemented *When* as a predictor with
+an offset term for log(*Years*) to adjust for the period durations. Both models
+used Poisson distributions, an exchangeable correlation structure, a log link
+function, and robust standard errors based on the sandwich estimator. 
+
+```{r HXCat12_8_gee}
+HXCat12_8_gee1 <- IDNEWL %>% 
+  filter(Years > 0) %>%
+  geeglm(HXCat12_8 ~ When, 
+         family = poisson(link = "log"), data = ., 
+         id = OID, corstr = "exchangeable", std.err = "san.se")
+
+HXCat12_8_gee2 <- IDNEWL %>% 
+  filter(Years > 0) %>% 
+  geeglm(HXCat12_8 ~ When + offset(log(Years)), 
+         family = poisson(link = "log"), data = ., 
+         id = OID, corstr = "exchangeable", std.err = "san.se")
+```
+
+Table \ref{tab:HXCat12_8_texreg} below shows the parameter estimates for both 
+GEE models. 
+
+```{r HXCat12_8_texreg, results = "asis", cfsize = "normalsize"}
+TCap <- paste("Generalized Estimating Equation Models for Larceny, Theft, or",
+              "Fraud Incident Counts",
+              "Predicted by When Incidents Occurred")
+FN <- paste ("\\item * Estimate falls outside 95\\% confidence interval",
+             "based on z-score.",
+             "\\\\\n\\item Note.",
+             "The data contain up to 3 longitudinal observations (one per", 
+             "period) for each offender (i.e., cluster).",
+             "The reference priod for When was after the testing window.",
+             "Both models used a log link function, exchangeable correlation", 
+             "structure, a Poisson distribution, and robust standard errors",
+             "(sandwich estimator).",
+             "Model 1 did not use an offset.",
+             "Model 2 used log(Years) as an offset term.")
+
+texreg(list(HXCat12_8_gee1, HXCat12_8_gee2), booktabs = TRUE, dcolumn = TRUE,
+       threeparttable = TRUE, fontsize = "normalsize", table = TRUE, 
+       use.packages = FALSE, ci.force = TRUE, label = "tab:HXCat12_8_texreg",
+       stars = 0.05, caption = TCap, custom.note = FN)
+```
+
+\FloatBarrier
+
+#### Estimated Marginal Means
+Table \ref{tab:HXCat12_8_emmeans} provides the estimated marginal means obtained
+from Models 1 and 2, along with corresponding confidence intervals. The units of
+measurement for those means are counts per offender for Model 1 (which ignore
+period duration) and counts per offender-year for Model 2 (which adjust for
+duration and are thus considered annual incidence rates).
+
+```{r HXCat12_8_emmeans}
+# Table caption.
+TCap <- paste("Marginal Means of Larceny, Theft, or Fraud Incident Counts and",
+              "Incidence Rates By When Incidents Occurred")
+
+# Table footnote.
+FN <- paste("Model 1 did not use an offset, so means are counts.",
+            "Model 2 used log(Years) as an offset term, so means are annual",
+            "incidence rates.",
+            "Confidence intervals are based on z-scores.")
+
+HXCat12_8_emmeans1 <- emmeans(HXCat12_8_gee1, specs = pairwise ~ When, 
+                           type = "response", ref = "During")
+HXCat12_8_emmeans2 <- emmeans(HXCat12_8_gee2, specs = pairwise ~ When, 
+                           type = "response", ref = "During")
+
+as_tibble(HXCat12_8_emmeans1$emmeans) %>% 
+  full_join(x = ., y = as_tibble(HXCat12_8_emmeans2$emmeans)) %>% 
+  mutate(Model = c(1, 1, 1, 2, 2, 2), 
+         When = factor(When, levels = c("Before", "During", "After"))) %>% 
+  arrange(Model, When) %>% 
+  select(When, rate, SE, df, asymp.LCL, asymp.UCL) %>% 
+  kable(format = "latex", booktabs = TRUE, caption = TCap, digits = 3, 
+        col.names = c("When", "Rate", "SE", "df", "LCL", "UCL")) %>% 
+  kable_styling() %>% 
+  add_header_above(c(" " = 4, "95% CI" = 2)) %>% 
+  group_rows(group_label = "Model 1: Mean per offender", start_row = 1,
+             end_row = 3, italic = TRUE) %>% 
+  group_rows(group_label = "Model 2: Mean per offender-year", 
+             start_row = 4, end_row = 6, italic = TRUE) %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
+```
+
+\FloatBarrier
+
+#### Contrasts for Ratios of Estimated Marginal Means
+Finally, we also estimated a set of contrasts to compare the marginal means from
+Models 1 and 2 (Table \ref{tab:HXCat12_8_ratios}). Each of these contrasts
+estimates the ratios of a pair of means rather than a raw difference between
+means. This is because of the nature of the underlying Poisson GEE model.
+
+```{r HXCat12_8_ratios}
+TCap <- paste("Contrasts Estimating Ratios of Marginal Means for Larceny,",
+              "Theft, or Fraud Incident Counts and Incidence Rates By When",
+              "Incidents Occurred")
+
+# Table footnote.
+FN <- paste("Model 1 did not use an offset, so means are counts.",
+            "Model 2 used log(Years) as an offset term, so means are annual",
+            "incidence rates.",
+            "These contrasts estimate ratios of those quantities and used",
+            "Tukey's method to adjust for multiple comparisons.",
+            "Confidence intervals are based on z-scores.")
+
+as_tibble(confint(HXCat12_8_emmeans1$contrasts)) %>% 
+  full_join(x = ., y = as_tibble(confint(HXCat12_8_emmeans2$contrasts))) %>% 
+  kable(format = "latex", booktabs = TRUE, caption = TCap, digits = 3, 
+        col.names = c("Contrast", "Ratio", "SE", "df", "LCL", "UCL")) %>% 
+  kable_styling() %>% 
+  add_header_above(c(" " = 4, "95% CI" = 2)) %>% 
+  group_rows(group_label = "Model 1: Ratios of means per offender", 
+             start_row = 1, end_row = 3, italic = TRUE) %>% 
+  group_rows(group_label = "Model 2: Ratios of means per offender-year", 
+             start_row = 4, end_row = 6, italic = TRUE) %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
+```
+
 \FloatBarrier
 
 ### Robbery
@@ -1539,6 +2586,136 @@ IDNEW %>%
          threeparttable = TRUE)
 ```
 
+\FloatBarrier 
+
+#### GEE Models
+To more closely examine the robbery incident counts, we fitted two generalized
+estimating equation (GEE) models to the long-format *IDNEWL* data, after
+dropping rows for unobserved periods (*Years* = 0) because the counts are
+missing for those observations. 
+
+Model 1 used *When* as a predictor of the period-specific counts, but did not
+adjust for the period durations. Model 2 supplemented *When* as a predictor with
+an offset term for log(*Years*) to adjust for the period durations. Both models
+used Poisson distributions, an exchangeable correlation structure, a log link
+function, and robust standard errors based on the sandwich estimator. 
+
+```{r HXCat12_9_gee}
+HXCat12_9_gee1 <- IDNEWL %>% 
+  filter(Years > 0) %>%
+  geeglm(HXCat12_9 ~ When, 
+         family = poisson(link = "log"), data = ., 
+         id = OID, corstr = "exchangeable", std.err = "san.se")
+
+HXCat12_9_gee2 <- IDNEWL %>% 
+  filter(Years > 0) %>% 
+  geeglm(HXCat12_9 ~ When + offset(log(Years)), 
+         family = poisson(link = "log"), data = ., 
+         id = OID, corstr = "exchangeable", std.err = "san.se")
+```
+
+Table \ref{tab:HXCat12_9_texreg} below shows the parameter estimates for both 
+GEE models. 
+
+```{r HXCat12_9_texreg, results = "asis", cfsize = "normalsize"}
+TCap <- paste("Generalized Estimating Equation Models for Robbery Incident Counts",
+              "Predicted by When Incidents Occurred")
+FN <- paste ("\\item * Estimate falls outside 95\\% confidence interval",
+             "based on z-score.",
+             "\\\\\n\\item Note.",
+             "The data contain up to 3 longitudinal observations (one per", 
+             "period) for each offender (i.e., cluster).",
+             "The reference priod for When was after the testing window.",
+             "Both models used a log link function, exchangeable correlation", 
+             "structure, a Poisson distribution, and robust standard errors",
+             "(sandwich estimator).",
+             "Model 1 did not use an offset.",
+             "Model 2 used log(Years) as an offset term.")
+
+texreg(list(HXCat12_9_gee1, HXCat12_9_gee2), booktabs = TRUE, dcolumn = TRUE,
+       threeparttable = TRUE, fontsize = "normalsize", table = TRUE, 
+       use.packages = FALSE, ci.force = TRUE, label = "tab:HXCat12_9_texreg",
+       stars = 0.05, caption = TCap, custom.note = FN)
+```
+
+\FloatBarrier
+
+#### Estimated Marginal Means
+Table \ref{tab:HXCat12_9_emmeans} provides the estimated marginal means obtained
+from Models 1 and 2, along with corresponding confidence intervals. The units of
+measurement for those means are counts per offender for Model 1 (which ignore
+period duration) and counts per offender-year for Model 2 (which adjust for
+duration and are thus considered annual incidence rates).
+
+```{r HXCat12_9_emmeans}
+# Table caption.
+TCap <- paste("Marginal Means of Robbery Incident Counts and Incidence Rates",
+              "By When Incidents Occurred")
+
+# Table footnote.
+FN <- paste("Model 1 did not use an offset, so means are counts.",
+            "Model 2 used log(Years) as an offset term, so means are annual",
+            "incidence rates.",
+            "Confidence intervals are based on z-scores.")
+
+HXCat12_9_emmeans1 <- emmeans(HXCat12_9_gee1, specs = pairwise ~ When, 
+                           type = "response", ref = "During")
+HXCat12_9_emmeans2 <- emmeans(HXCat12_9_gee2, specs = pairwise ~ When, 
+                           type = "response", ref = "During")
+
+as_tibble(HXCat12_9_emmeans1$emmeans) %>% 
+  full_join(x = ., y = as_tibble(HXCat12_9_emmeans2$emmeans)) %>% 
+  mutate(Model = c(1, 1, 1, 2, 2, 2), 
+         When = factor(When, levels = c("Before", "During", "After"))) %>% 
+  arrange(Model, When) %>% 
+  select(When, rate, SE, df, asymp.LCL, asymp.UCL) %>% 
+  kable(format = "latex", booktabs = TRUE, caption = TCap, digits = 3, 
+        col.names = c("When", "Rate", "SE", "df", "LCL", "UCL")) %>% 
+  kable_styling() %>% 
+  add_header_above(c(" " = 4, "95% CI" = 2)) %>% 
+  group_rows(group_label = "Model 1: Mean per offender", start_row = 1,
+             end_row = 3, italic = TRUE) %>% 
+  group_rows(group_label = "Model 2: Mean per offender-year", 
+             start_row = 4, end_row = 6, italic = TRUE) %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
+```
+
+\FloatBarrier
+
+#### Contrasts for Ratios of Estimated Marginal Means
+Finally, we also estimated a set of contrasts to compare the marginal means from
+Models 1 and 2 (Table \ref{tab:HXCat12_9_ratios}). Each of these contrasts
+estimates the ratios of a pair of means rather than a raw difference between
+means. This is because of the nature of the underlying Poisson GEE model.
+
+```{r HXCat12_9_ratios}
+TCap <- paste("Contrasts Estimating Ratios of Marginal Means for Robbery",
+              "Incident Counts and Incidence Rates By When Incidents",
+              "Occurred")
+
+# Table footnote.
+FN <- paste("Model 1 did not use an offset, so means are counts.",
+            "Model 2 used log(Years) as an offset term, so means are annual",
+            "incidence rates.",
+            "These contrasts estimate ratios of those quantities and used",
+            "Tukey's method to adjust for multiple comparisons.",
+            "Confidence intervals are based on z-scores.")
+
+as_tibble(confint(HXCat12_9_emmeans1$contrasts)) %>% 
+  full_join(x = ., y = as_tibble(confint(HXCat12_9_emmeans2$contrasts))) %>% 
+  kable(format = "latex", booktabs = TRUE, caption = TCap, digits = 3, 
+        col.names = c("Contrast", "Ratio", "SE", "df", "LCL", "UCL")) %>% 
+  kable_styling() %>% 
+  add_header_above(c(" " = 4, "95% CI" = 2)) %>% 
+  group_rows(group_label = "Model 1: Ratios of means per offender", 
+             start_row = 1, end_row = 3, italic = TRUE) %>% 
+  group_rows(group_label = "Model 2: Ratios of means per offender-year", 
+             start_row = 4, end_row = 6, italic = TRUE) %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
+```
+
 \FloatBarrier
 
 ### Sex Crimes
@@ -1597,6 +2774,136 @@ IDNEW %>%
   add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
                    "After TW" = 2)) %>% 
   footnote(general = FN5, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
+```
+
+\FloatBarrier 
+
+#### GEE Models
+To more closely examine the sex crime incident counts, we fitted two generalized
+estimating equation (GEE) models to the long-format *IDNEWL* data, after
+dropping rows for unobserved periods (*Years* = 0) because the counts are
+missing for those observations. 
+
+Model 1 used *When* as a predictor of the period-specific counts, but did not
+adjust for the period durations. Model 2 supplemented *When* as a predictor with
+an offset term for log(*Years*) to adjust for the period durations. Both models
+used Poisson distributions, an exchangeable correlation structure, a log link
+function, and robust standard errors based on the sandwich estimator. 
+
+```{r HXCat12_10_gee}
+HXCat12_10_gee1 <- IDNEWL %>% 
+  filter(Years > 0) %>%
+  geeglm(HXCat12_10 ~ When, 
+         family = poisson(link = "log"), data = ., 
+         id = OID, corstr = "exchangeable", std.err = "san.se")
+
+HXCat12_10_gee2 <- IDNEWL %>% 
+  filter(Years > 0) %>% 
+  geeglm(HXCat12_10 ~ When + offset(log(Years)), 
+         family = poisson(link = "log"), data = ., 
+         id = OID, corstr = "exchangeable", std.err = "san.se")
+```
+
+Table \ref{tab:HXCat12_10_texreg} below shows the parameter estimates for both 
+GEE models. 
+
+```{r HXCat12_10_texreg, results = "asis", cfsize = "normalsize"}
+TCap <- paste("Generalized Estimating Equation Models for Sex Crime Incident",
+              "Counts Predicted by When Incidents Occurred")
+FN <- paste ("\\item * Estimate falls outside 95\\% confidence interval",
+             "based on z-score.",
+             "\\\\\n\\item Note.",
+             "The data contain up to 3 longitudinal observations (one per", 
+             "period) for each offender (i.e., cluster).",
+             "The reference priod for When was after the testing window.",
+             "Both models used a log link function, exchangeable correlation", 
+             "structure, a Poisson distribution, and robust standard errors",
+             "(sandwich estimator).",
+             "Model 1 did not use an offset.",
+             "Model 2 used log(Years) as an offset term.")
+
+texreg(list(HXCat12_10_gee1, HXCat12_10_gee2), booktabs = TRUE, dcolumn = TRUE,
+       threeparttable = TRUE, fontsize = "normalsize", table = TRUE, 
+       use.packages = FALSE, ci.force = TRUE, label = "tab:HXCat12_10_texreg",
+       stars = 0.05, caption = TCap, custom.note = FN)
+```
+
+\FloatBarrier
+
+#### Estimated Marginal Means
+Table \ref{tab:HXCat12_10_emmeans} provides the estimated marginal means obtained
+from Models 1 and 2, along with corresponding confidence intervals. The units of
+measurement for those means are counts per offender for Model 1 (which ignore
+period duration) and counts per offender-year for Model 2 (which adjust for
+duration and are thus considered annual incidence rates).
+
+```{r HXCat12_10_emmeans}
+# Table caption.
+TCap <- paste("Marginal Means of Sex Crime Incident Counts and Incidence Rates",
+              "By When Incidents Occurred")
+
+# Table footnote.
+FN <- paste("Model 1 did not use an offset, so means are counts.",
+            "Model 2 used log(Years) as an offset term, so means are annual",
+            "incidence rates.",
+            "Confidence intervals are based on z-scores.")
+
+HXCat12_10_emmeans1 <- emmeans(HXCat12_10_gee1, specs = pairwise ~ When, 
+                           type = "response", ref = "During")
+HXCat12_10_emmeans2 <- emmeans(HXCat12_10_gee2, specs = pairwise ~ When, 
+                           type = "response", ref = "During")
+
+as_tibble(HXCat12_10_emmeans1$emmeans) %>% 
+  full_join(x = ., y = as_tibble(HXCat12_10_emmeans2$emmeans)) %>% 
+  mutate(Model = c(1, 1, 1, 2, 2, 2), 
+         When = factor(When, levels = c("Before", "During", "After"))) %>% 
+  arrange(Model, When) %>% 
+  select(When, rate, SE, df, asymp.LCL, asymp.UCL) %>% 
+  kable(format = "latex", booktabs = TRUE, caption = TCap, digits = 3, 
+        col.names = c("When", "Rate", "SE", "df", "LCL", "UCL")) %>% 
+  kable_styling() %>% 
+  add_header_above(c(" " = 4, "95% CI" = 2)) %>% 
+  group_rows(group_label = "Model 1: Mean per offender", start_row = 1,
+             end_row = 3, italic = TRUE) %>% 
+  group_rows(group_label = "Model 2: Mean per offender-year", 
+             start_row = 4, end_row = 6, italic = TRUE) %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
+```
+
+\FloatBarrier
+
+#### Contrasts for Ratios of Estimated Marginal Means
+Finally, we also estimated a set of contrasts to compare the marginal means from
+Models 1 and 2 (Table \ref{tab:HXCat12_10_ratios}). Each of these contrasts
+estimates the ratios of a pair of means rather than a raw difference between
+means. This is because of the nature of the underlying Poisson GEE model.
+
+```{r HXCat12_10_ratios}
+TCap <- paste("Contrasts Estimating Ratios of Marginal Means for Sex Crime",
+              "Incident Counts and Incidence Rates By When Incidents",
+              "Occurred")
+
+# Table footnote.
+FN <- paste("Model 1 did not use an offset, so means are counts.",
+            "Model 2 used log(Years) as an offset term, so means are annual",
+            "incidence rates.",
+            "These contrasts estimate ratios of those quantities and used",
+            "Tukey's method to adjust for multiple comparisons.",
+            "Confidence intervals are based on z-scores.")
+
+as_tibble(confint(HXCat12_10_emmeans1$contrasts)) %>% 
+  full_join(x = ., y = as_tibble(confint(HXCat12_10_emmeans2$contrasts))) %>% 
+  kable(format = "latex", booktabs = TRUE, caption = TCap, digits = 3, 
+        col.names = c("Contrast", "Ratio", "SE", "df", "LCL", "UCL")) %>% 
+  kable_styling() %>% 
+  add_header_above(c(" " = 4, "95% CI" = 2)) %>% 
+  group_rows(group_label = "Model 1: Ratios of means per offender", 
+             start_row = 1, end_row = 3, italic = TRUE) %>% 
+  group_rows(group_label = "Model 2: Ratios of means per offender-year", 
+             start_row = 4, end_row = 6, italic = TRUE) %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
 
@@ -1662,6 +2969,137 @@ IDNEW %>%
          threeparttable = TRUE)
 ```
 
+\FloatBarrier 
+
+#### GEE Models
+To more closely examine the traffic and ordinance incident counts, we fitted
+two generalized estimating equation (GEE) models to the long-format *IDNEWL*
+data, after dropping rows for unobserved periods (*Years* = 0) because the
+counts are missing for those observations.
+
+Model 1 used *When* as a predictor of the period-specific counts, but did not
+adjust for the period durations. Model 2 supplemented *When* as a predictor with
+an offset term for log(*Years*) to adjust for the period durations. Both models
+used Poisson distributions, an exchangeable correlation structure, a log link
+function, and robust standard errors based on the sandwich estimator. 
+
+```{r HXCat12_11_gee}
+HXCat12_11_gee1 <- IDNEWL %>% 
+  filter(Years > 0) %>%
+  geeglm(HXCat12_11 ~ When, 
+         family = poisson(link = "log"), data = ., 
+         id = OID, corstr = "exchangeable", std.err = "san.se")
+
+HXCat12_11_gee2 <- IDNEWL %>% 
+  filter(Years > 0) %>% 
+  geeglm(HXCat12_11 ~ When + offset(log(Years)), 
+         family = poisson(link = "log"), data = ., 
+         id = OID, corstr = "exchangeable", std.err = "san.se")
+```
+
+Table \ref{tab:HXCat12_11_texreg} below shows the parameter estimates for both 
+GEE models. 
+
+```{r HXCat12_11_texreg, results = "asis", cfsize = "normalsize"}
+TCap <- paste("Generalized Estimating Equation Models for Traffic and",
+              "Ordinance Incident Counts",
+              "Predicted by When Incidents Occurred")
+FN <- paste ("\\item * Estimate falls outside 95\\% confidence interval",
+             "based on z-score.",
+             "\\\\\n\\item Note.",
+             "The data contain up to 3 longitudinal observations (one per", 
+             "period) for each offender (i.e., cluster).",
+             "The reference priod for When was after the testing window.",
+             "Both models used a log link function, exchangeable correlation", 
+             "structure, a Poisson distribution, and robust standard errors",
+             "(sandwich estimator).",
+             "Model 1 did not use an offset.",
+             "Model 2 used log(Years) as an offset term.")
+
+texreg(list(HXCat12_11_gee1, HXCat12_11_gee2), booktabs = TRUE, dcolumn = TRUE,
+       threeparttable = TRUE, fontsize = "normalsize", table = TRUE, 
+       use.packages = FALSE, ci.force = TRUE, label = "tab:HXCat12_11_texreg",
+       stars = 0.05, caption = TCap, custom.note = FN)
+```
+
+\FloatBarrier
+
+#### Estimated Marginal Means
+Table \ref{tab:HXCat12_11_emmeans} provides the estimated marginal means obtained
+from Models 1 and 2, along with corresponding confidence intervals. The units of
+measurement for those means are counts per offender for Model 1 (which ignore
+period duration) and counts per offender-year for Model 2 (which adjust for
+duration and are thus considered annual incidence rates).
+
+```{r HXCat12_11_emmeans}
+# Table caption.
+TCap <- paste("Marginal Means of Traffic and Ordinance Incident Counts and",
+              "Incidence Rates By When Incidents Occurred")
+
+# Table footnote.
+FN <- paste("Model 1 did not use an offset, so means are counts.",
+            "Model 2 used log(Years) as an offset term, so means are annual",
+            "incidence rates.",
+            "Confidence intervals are based on z-scores.")
+
+HXCat12_11_emmeans1 <- emmeans(HXCat12_11_gee1, specs = pairwise ~ When, 
+                           type = "response", ref = "During")
+HXCat12_11_emmeans2 <- emmeans(HXCat12_11_gee2, specs = pairwise ~ When, 
+                           type = "response", ref = "During")
+
+as_tibble(HXCat12_11_emmeans1$emmeans) %>% 
+  full_join(x = ., y = as_tibble(HXCat12_11_emmeans2$emmeans)) %>% 
+  mutate(Model = c(1, 1, 1, 2, 2, 2), 
+         When = factor(When, levels = c("Before", "During", "After"))) %>% 
+  arrange(Model, When) %>% 
+  select(When, rate, SE, df, asymp.LCL, asymp.UCL) %>% 
+  kable(format = "latex", booktabs = TRUE, caption = TCap, digits = 3, 
+        col.names = c("When", "Rate", "SE", "df", "LCL", "UCL")) %>% 
+  kable_styling() %>% 
+  add_header_above(c(" " = 4, "95% CI" = 2)) %>% 
+  group_rows(group_label = "Model 1: Mean per offender", start_row = 1,
+             end_row = 3, italic = TRUE) %>% 
+  group_rows(group_label = "Model 2: Mean per offender-year", 
+             start_row = 4, end_row = 6, italic = TRUE) %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
+```
+
+\FloatBarrier
+
+#### Contrasts for Ratios of Estimated Marginal Means
+Finally, we also estimated a set of contrasts to compare the marginal means from
+Models 1 and 2 (Table \ref{tab:HXCat12_11_ratios}). Each of these contrasts
+estimates the ratios of a pair of means rather than a raw difference between
+means. This is because of the nature of the underlying Poisson GEE model.
+
+```{r HXCat12_11_ratios}
+TCap <- paste("Contrasts Estimating Ratios of Marginal Means for Traffic and",
+              "Ordinance Incident Counts and Incidence Rates By When",
+              "Incidents Occurred")
+
+# Table footnote.
+FN <- paste("Model 1 did not use an offset, so means are counts.",
+            "Model 2 used log(Years) as an offset term, so means are annual",
+            "incidence rates.",
+            "These contrasts estimate ratios of those quantities and used",
+            "Tukey's method to adjust for multiple comparisons.",
+            "Confidence intervals are based on z-scores.")
+
+as_tibble(confint(HXCat12_11_emmeans1$contrasts)) %>% 
+  full_join(x = ., y = as_tibble(confint(HXCat12_11_emmeans2$contrasts))) %>% 
+  kable(format = "latex", booktabs = TRUE, caption = TCap, digits = 3, 
+        col.names = c("Contrast", "Ratio", "SE", "df", "LCL", "UCL")) %>% 
+  kable_styling() %>% 
+  add_header_above(c(" " = 4, "95% CI" = 2)) %>% 
+  group_rows(group_label = "Model 1: Ratios of means per offender", 
+             start_row = 1, end_row = 3, italic = TRUE) %>% 
+  group_rows(group_label = "Model 2: Ratios of means per offender-year", 
+             start_row = 4, end_row = 6, italic = TRUE) %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
+```
+
 \FloatBarrier
 
 ### Weapons
@@ -1724,7 +3162,135 @@ IDNEW %>%
          threeparttable = TRUE)
 ```
 
+\FloatBarrier 
+
+#### GEE Models
+To more closely examine the weapon incident counts, we fitted two generalized
+estimating equation (GEE) models to the long-format *IDNEWL* data, after
+dropping rows for unobserved periods (*Years* = 0) because the counts are
+missing for those observations. 
+
+Model 1 used *When* as a predictor of the period-specific counts, but did not
+adjust for the period durations. Model 2 supplemented *When* as a predictor with
+an offset term for log(*Years*) to adjust for the period durations. Both models
+used Poisson distributions, an exchangeable correlation structure, a log link
+function, and robust standard errors based on the sandwich estimator. 
+
+```{r HXCat12_12_gee}
+HXCat12_12_gee1 <- IDNEWL %>% 
+  filter(Years > 0) %>%
+  geeglm(HXCat12_12 ~ When, 
+         family = poisson(link = "log"), data = ., 
+         id = OID, corstr = "exchangeable", std.err = "san.se")
+
+HXCat12_12_gee2 <- IDNEWL %>% 
+  filter(Years > 0) %>% 
+  geeglm(HXCat12_12 ~ When + offset(log(Years)), 
+         family = poisson(link = "log"), data = ., 
+         id = OID, corstr = "exchangeable", std.err = "san.se")
+```
+
+Table \ref{tab:HXCat12_12_texreg} below shows the parameter estimates for both 
+GEE models. 
+
+```{r HXCat12_12_texreg, results = "asis", cfsize = "normalsize"}
+TCap <- paste("Generalized Estimating Equation Models for Weapon Incident Counts",
+              "Predicted by When Incidents Occurred")
+FN <- paste ("\\item * Estimate falls outside 95\\% confidence interval",
+             "based on z-score.",
+             "\\\\\n\\item Note.",
+             "The data contain up to 3 longitudinal observations (one per", 
+             "period) for each offender (i.e., cluster).",
+             "The reference priod for When was after the testing window.",
+             "Both models used a log link function, exchangeable correlation", 
+             "structure, a Poisson distribution, and robust standard errors",
+             "(sandwich estimator).",
+             "Model 1 did not use an offset.",
+             "Model 2 used log(Years) as an offset term.")
+
+texreg(list(HXCat12_12_gee1, HXCat12_12_gee2), booktabs = TRUE, dcolumn = TRUE,
+       threeparttable = TRUE, fontsize = "normalsize", table = TRUE, 
+       use.packages = FALSE, ci.force = TRUE, label = "tab:HXCat12_12_texreg",
+       stars = 0.05, caption = TCap, custom.note = FN)
+```
+
 \FloatBarrier
+
+#### Estimated Marginal Means
+Table \ref{tab:HXCat12_12_emmeans} provides the estimated marginal means obtained
+from Models 1 and 2, along with corresponding confidence intervals. The units of
+measurement for those means are counts per offender for Model 1 (which ignore
+period duration) and counts per offender-year for Model 2 (which adjust for
+duration and are thus considered annual incidence rates).
+
+```{r HXCat12_12_emmeans}
+# Table caption.
+TCap <- paste("Marginal Means of Weapon Incident Counts and Incidence Rates",
+              "By When Incidents Occurred")
+
+# Table footnote.
+FN <- paste("Model 1 did not use an offset, so means are counts.",
+            "Model 2 used log(Years) as an offset term, so means are annual",
+            "incidence rates.",
+            "Confidence intervals are based on z-scores.")
+
+HXCat12_12_emmeans1 <- emmeans(HXCat12_12_gee1, specs = pairwise ~ When, 
+                           type = "response", ref = "During")
+HXCat12_12_emmeans2 <- emmeans(HXCat12_12_gee2, specs = pairwise ~ When, 
+                           type = "response", ref = "During")
+
+as_tibble(HXCat12_12_emmeans1$emmeans) %>% 
+  full_join(x = ., y = as_tibble(HXCat12_12_emmeans2$emmeans)) %>% 
+  mutate(Model = c(1, 1, 1, 2, 2, 2), 
+         When = factor(When, levels = c("Before", "During", "After"))) %>% 
+  arrange(Model, When) %>% 
+  select(When, rate, SE, df, asymp.LCL, asymp.UCL) %>% 
+  kable(format = "latex", booktabs = TRUE, caption = TCap, digits = 3, 
+        col.names = c("When", "Rate", "SE", "df", "LCL", "UCL")) %>% 
+  kable_styling() %>% 
+  add_header_above(c(" " = 4, "95% CI" = 2)) %>% 
+  group_rows(group_label = "Model 1: Mean per offender", start_row = 1,
+             end_row = 3, italic = TRUE) %>% 
+  group_rows(group_label = "Model 2: Mean per offender-year", 
+             start_row = 4, end_row = 6, italic = TRUE) %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
+```
+
+\FloatBarrier
+
+#### Contrasts for Ratios of Estimated Marginal Means
+Finally, we also estimated a set of contrasts to compare the marginal means from
+Models 1 and 2 (Table \ref{tab:HXCat12_12_ratios}). Each of these contrasts
+estimates the ratios of a pair of means rather than a raw difference between
+means. This is because of the nature of the underlying Poisson GEE model.
+
+```{r HXCat12_12_ratios}
+TCap <- paste("Contrasts Estimating Ratios of Marginal Means for Weapon",
+              "Incident Counts and Incidence Rates By When Incidents",
+              "Occurred")
+
+# Table footnote.
+FN <- paste("Model 1 did not use an offset, so means are counts.",
+            "Model 2 used log(Years) as an offset term, so means are annual",
+            "incidence rates.",
+            "These contrasts estimate ratios of those quantities and used",
+            "Tukey's method to adjust for multiple comparisons.",
+            "Confidence intervals are based on z-scores.")
+
+as_tibble(confint(HXCat12_12_emmeans1$contrasts)) %>% 
+  full_join(x = ., y = as_tibble(confint(HXCat12_12_emmeans2$contrasts))) %>% 
+  kable(format = "latex", booktabs = TRUE, caption = TCap, digits = 3, 
+        col.names = c("Contrast", "Ratio", "SE", "df", "LCL", "UCL")) %>% 
+  kable_styling() %>% 
+  add_header_above(c(" " = 4, "95% CI" = 2)) %>% 
+  group_rows(group_label = "Model 1: Ratios of means per offender", 
+             start_row = 1, end_row = 3, italic = TRUE) %>% 
+  group_rows(group_label = "Model 2: Ratios of means per offender-year", 
+             start_row = 4, end_row = 6, italic = TRUE) %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
+```
 
 \FloatBarrier
 
