@@ -955,10 +955,10 @@ INCEW %>%
   mutate(across(.cols = all_of(c("NINC_Before", "NINC_During", "NINC_After")), 
                 .fns = replace_na, replace = 0)) %>% 
   # Set count variables with values of 0 to NA when that period was unobserved.  
-  mutate(NINC12_Before = ifelse(Years_Before == 0, yes = NA, 
-                                no = NINC12_Before)) %>%
-  mutate(NINC12_During = ifelse(Years_During == 0, yes = NA, 
-                                no = NINC12_During)) ->
+  mutate(across(.cols = c("NINC_Before"), 
+                .fns = ~ifelse(Years_Before == 0, yes = NA, no = .))) %>%
+  mutate(across(.cols = c("NINC_During"), 
+                .fns = ~ifelse(Years_During == 0, yes = NA, no = .))) ->
   IDNEW
 ```
 
@@ -1049,10 +1049,10 @@ ARREW %>%
   # Compute alternate NARR for records from 12 main crime categories. 
   mutate(NARR12 = NARR12_Before + NARR12_During + NARR12_After) %>% 
   # Set count variables with values of 0 to NA when that period was unobserved.  
-  mutate(NARR12_Before = ifelse(Years_Before == 0, yes = NA, 
-                                no = NARR12_Before)) %>%
-  mutate(NARR12_During = ifelse(Years_During == 0, yes = NA, 
-                                no = NARR12_During)) %>%  
+  mutate(across(.cols = c("NARR12_Before"), 
+                .fns = ~ifelse(Years_Before == 0, yes = NA, no = .))) %>%
+  mutate(across(.cols = c("NARR12_During"), 
+                .fns = ~ifelse(Years_During == 0, yes = NA, no = .))) %>%  
   var_labels(NARR12 = "No. of arrest offense records from 12 main crime categories") ->
   IDNEW
 ```
@@ -1125,7 +1125,6 @@ These new aggregated variables respect the criterion of counting only offenses
 in the 12 main crime categories of interest because of the case selection that
 went into building the *CHGEW* data.
 
-
 ```{r merge_Agg_NCHG_IWhen_IDNEW}
 CHGEW %>% 
   mutate(NCHG12 = 1) %>% 
@@ -1145,10 +1144,10 @@ CHGEW %>%
   # Compute alternate NCHG for records from 12 main crime categories.
   mutate(NCHG12 = NCHG12_Before + NCHG12_During + NCHG12_After) %>% 
   # Set count variables with values of 0 to NA when that period was unobserved.  
-  mutate(NCHG12_Before = ifelse(Years_Before == 0, yes = NA, 
-                                no = NCHG12_Before)) %>%
-  mutate(NCHG12_During = ifelse(Years_During == 0, yes = NA, 
-                                no = NCHG12_During)) %>%  
+  mutate(across(.cols = c("NCHG12_Before"), 
+                .fns = ~ifelse(Years_Before == 0, yes = NA, no = .))) %>%
+  mutate(across(.cols = c("NCHG12_During"), 
+                .fns = ~ifelse(Years_During == 0, yes = NA, no = .))) %>%  
   var_labels(NCHG12 = "No of prosecutor charge records from 12 main crime categories") ->
   IDNEW
 ```
@@ -1240,10 +1239,10 @@ JUDEW %>%
   # Compute alternate NJUD for records from 12 main crime categories.
   mutate(NJUD12 = NJUD12_Before + NJUD12_During + NJUD12_After) %>% 
   # Set count variables with values of 0 to NA when that period was unobserved.  
-  mutate(NJUD12_Before = ifelse(Years_Before == 0, yes = NA, 
-                                no = NJUD12_Before)) %>%
-  mutate(NJUD12_During = ifelse(Years_During == 0, yes = NA, 
-                                no = NJUD12_During)) %>%  
+  mutate(across(.cols = c("NJUD12_Before"), 
+                .fns = ~ifelse(Years_Before == 0, yes = NA, no = .))) %>%
+  mutate(across(.cols = c("NJUD12_During"), 
+                .fns = ~ifelse(Years_During == 0, yes = NA, no = .))) %>%  
   var_labels(NJUD12 = "No of judicial charge records from 12 main crime categories")->
   IDNEW
 ```
@@ -1335,10 +1334,10 @@ CONEW %>%
   # Compute alternate NCON for records from 12 main crime categories.
   mutate(NCON12 = NCON12_Before + NCON12_During + NCON12_After) %>% 
   # Set count variables with values of 0 to NA when that period was unobserved.  
-  mutate(NCON12_Before = ifelse(Years_Before == 0, yes = NA, 
-                                no = NCON12_Before)) %>%
-  mutate(NCON12_During = ifelse(Years_During == 0, yes = NA, 
-                                no = NCON12_During)) %>%  
+  mutate(across(.cols = c("NCON12_Before"), 
+                .fns = ~ifelse(Years_Before == 0, yes = NA, no = .))) %>%
+  mutate(across(.cols = c("NCON12_During"), 
+                .fns = ~ifelse(Years_During == 0, yes = NA, no = .))) %>%  
   var_labels(NCON12 = "No of conviction records from 12 main crime categories")->
   IDNEW
 ```
