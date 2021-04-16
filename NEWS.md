@@ -1,5 +1,16 @@
+# SSACHR 0.11.0, 2021-04-15
+* Updated `inst/Step_01_Data_Mgt.Rmd` to:
+    * Selectively recode period-specific record count variables with values of 
+      zero to missing data when the observed duration of the period in question
+      was zero years.
+* Updated `inst/Step_02_Analysis.Rmd` to:
+    * Improved table of contents, explanatory text, and some formatting. 
+    * Improved draft code for running GEE models and preparing tables of model 
+      parameters, marginal means, and contrasts, then added similar code for 
+      crime category specific sections. 
+
 # SSACHR 0.10.0, 2021-04-13
-* Updated `inst/Step_01_Data_Mgt.Rmd` to
+* Updated `inst/Step_01_Data_Mgt.Rmd` to:
     * Rename some variables.
     * Added a scenario variable to IDNEW and a table and a table summarizing 
       its frequency distribution.
