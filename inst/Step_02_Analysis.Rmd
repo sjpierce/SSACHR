@@ -179,6 +179,7 @@ be established).
 \FloatBarrier
 
 ## Sex
+
 ```{r examine_Sex}
 kable(freq(as_factor(IDNEW$Sex)), format = "latex", booktabs = TRUE, digits = 2,
       caption = "Offender Sex")
@@ -187,6 +188,7 @@ kable(freq(as_factor(IDNEW$Sex)), format = "latex", booktabs = TRUE, digits = 2,
 \FloatBarrier
 
 ## Race
+
 ```{r examine_Race}
 kable(freq(as_factor(IDNEW$Race), user.missing = "Unknown"), format = "latex", 
       booktabs = TRUE,  digits = 2, caption = "Offender Race")
