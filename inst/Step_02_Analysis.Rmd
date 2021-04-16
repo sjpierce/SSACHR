@@ -124,10 +124,15 @@ load(file = here::here("./data/CHR_Data.RData"))
 ```
 
 # Manage Data
-The chunk below reorganizes the *IDNEW* data to a long format with three rows 
-per offender (one row for each period before, during, and after the testing 
-window) and stores it as *IDNEWL*. We will use this later for running GEE 
-models. 
+The chunk below reorganizes the *IDNEW* data to a long person-period format with
+three rows per offender (one row for each period before, during, and after the
+testing window) and stores it as *IDNEWL*. The period (before, during, or after
+the earliest testing window) is identified by the *When* variable. The observed
+duration of the period is stored in *Years*, so *Years* > 0 indicates that the
+period overlapped offender's observed adult CHR period for at least one day.
+Meanwhile, *Years* = 0 indicates an unobserved period that did not overlap with
+the offender's observed adult CHR period at all. We will use *IDNEWL* later for
+running GEE models.
 
 ```{r create_IDNEWL}
 IDNEW %>% 
@@ -155,7 +160,6 @@ IDNEW %>%
   mutate(When = factor(x = When, levels = c("After", "Before", "During"))) ->
   IDNEWL
 ```
-
 
 \FloatBarrier
 
