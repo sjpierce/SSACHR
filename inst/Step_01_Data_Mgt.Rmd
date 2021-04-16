@@ -953,7 +953,12 @@ INCEW %>%
   left_join(x = IDNEW, y = ., by = "OID") %>% 
   # Replace all NA values in the new variables with 0. 
   mutate(across(.cols = all_of(c("NINC_Before", "NINC_During", "NINC_After")), 
-                .fns = replace_na, replace = 0)) ->
+                .fns = replace_na, replace = 0)) %>% 
+  # Set count variables with values of 0 to NA when that period was unobserved.  
+  mutate(NINC12_Before = ifelse(Years_Before == 0, yes = NA, 
+                                no = NINC12_Before)) %>%
+  mutate(NINC12_During = ifelse(Years_During == 0, yes = NA, 
+                                no = NINC12_During)) ->
   IDNEW
 ```
 
@@ -1043,6 +1048,11 @@ ARREW %>%
                 .fns = replace_na, replace = 0)) %>% 
   # Compute alternate NARR for records from 12 main crime categories. 
   mutate(NARR12 = NARR12_Before + NARR12_During + NARR12_After) %>% 
+  # Set count variables with values of 0 to NA when that period was unobserved.  
+  mutate(NARR12_Before = ifelse(Years_Before == 0, yes = NA, 
+                                no = NARR12_Before)) %>%
+  mutate(NARR12_During = ifelse(Years_During == 0, yes = NA, 
+                                no = NARR12_During)) %>%  
   var_labels(NARR12 = "No. of arrest offense records from 12 main crime categories") ->
   IDNEW
 ```
@@ -1134,6 +1144,11 @@ CHGEW %>%
                 .fns = replace_na, replace = 0)) %>% 
   # Compute alternate NCHG for records from 12 main crime categories.
   mutate(NCHG12 = NCHG12_Before + NCHG12_During + NCHG12_After) %>% 
+  # Set count variables with values of 0 to NA when that period was unobserved.  
+  mutate(NCHG12_Before = ifelse(Years_Before == 0, yes = NA, 
+                                no = NCHG12_Before)) %>%
+  mutate(NCHG12_During = ifelse(Years_During == 0, yes = NA, 
+                                no = NCHG12_During)) %>%  
   var_labels(NCHG12 = "No of prosecutor charge records from 12 main crime categories") ->
   IDNEW
 ```
@@ -1224,6 +1239,11 @@ JUDEW %>%
                 .fns = replace_na, replace = 0)) %>% 
   # Compute alternate NJUD for records from 12 main crime categories.
   mutate(NJUD12 = NJUD12_Before + NJUD12_During + NJUD12_After) %>% 
+  # Set count variables with values of 0 to NA when that period was unobserved.  
+  mutate(NJUD12_Before = ifelse(Years_Before == 0, yes = NA, 
+                                no = NJUD12_Before)) %>%
+  mutate(NJUD12_During = ifelse(Years_During == 0, yes = NA, 
+                                no = NJUD12_During)) %>%  
   var_labels(NJUD12 = "No of judicial charge records from 12 main crime categories")->
   IDNEW
 ```
@@ -1314,6 +1334,11 @@ CONEW %>%
                 .fns = replace_na, replace = 0)) %>% 
   # Compute alternate NCON for records from 12 main crime categories.
   mutate(NCON12 = NCON12_Before + NCON12_During + NCON12_After) %>% 
+  # Set count variables with values of 0 to NA when that period was unobserved.  
+  mutate(NCON12_Before = ifelse(Years_Before == 0, yes = NA, 
+                                no = NCON12_Before)) %>%
+  mutate(NCON12_During = ifelse(Years_During == 0, yes = NA, 
+                                no = NCON12_During)) %>%  
   var_labels(NCON12 = "No of conviction records from 12 main crime categories")->
   IDNEW
 ```
