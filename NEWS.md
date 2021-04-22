@@ -1,6 +1,7 @@
 # SSACHR 0.11.2, 2021-04-22
 * Updated `inst/Step_02_Analysis.Rmd` to:
     * Round tables of GEE marginal means & contrasts to 2 digits instead of 3.
+* Updated `inst/R_Citations.Rmd` to cite more packages. 
     
 # SSACHR 0.11.1, 2021-04-22
 * Updated `inst/Step_02_Analysis.Rmd` to:
