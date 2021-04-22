@@ -1,3 +1,9 @@
+# SSACHR 0.11.1, 2021-04-22
+* Updated `inst/Step_02_Analysis.Rmd` to:
+    * Improve frequency tables by adding valid percent columns. 
+    * Fixed p-value footnotes on GEE model tables. 
+
+
 # SSACHR 0.11.0, 2021-04-15
 * Updated `inst/Step_01_Data_Mgt.Rmd` to:
     * Selectively recode period-specific record count variables with values of 
