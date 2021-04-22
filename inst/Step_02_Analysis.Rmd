@@ -170,9 +170,17 @@ sex, race, and age, we switch focus to looking at descriptive data about the
 criminal history records for arrests, prosecutor charges, and adjudicated 
 charges. 
 
+```{r sample_sizes}
+# Store objects with sample sizes we will reuse often later. 
+N_All    <- IDNEW %>% nrow()
+N_Before <- IDNEW %>% filter(Years_Before > 0) %>% nrow()
+N_During <- IDNEW %>% filter(Years_During > 0) %>% nrow()
+N_After  <- IDNEW %>% filter(Years_After > 0) %>% nrow()
+```
+
 All the CHR summaries in this section focus on variables that have been 
 aggregated to the offender level. That is why the sample size for all of these
-variables is N = `r nrow(IDNEW)` (the number of offenders for whom Michigan CHR 
+variables is N = `r N_All` (the number of offenders for whom Michigan CHR 
 data were available and the start date for the earliest SAK testing window could
 be established). 
 
@@ -454,7 +462,7 @@ FN <- paste0("Only offenders with valid testing window start dates are ",
              "included. Only incidents where the offender was arrested for, ",
              "charged with, or convicted of at least one offense from one of ",
              "the 12 main crime categories were included. ",
-             "N = ", format(nrow(IDNEW), big.mark = ","), ". TW, earliest ",
+             "N = ", format(N_All, big.mark = ","), ". TW, earliest ",
              "testing window.")
 
 # Get frequency distributions. 
@@ -469,18 +477,30 @@ IDNEW %>%
   count() %>% 
   arrange(Value) %>% 
   pivot_wider(names_from = When, values_from = n, values_fill = 0) %>% 
-  mutate(All_p = 100*All/nrow(IDNEW),
-         Before_p = 100*Before/nrow(IDNEW),
-         During_p = 100*During/nrow(IDNEW),
-         After_p = 100*After/nrow(IDNEW)) %>% 
-  select(Value, All, All_p, Before, Before_p, During, During_p, After, 
-         After_p) %>% 
+  mutate(All_p = 100*All/N_All,
+         All_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*Before/N_All),
+         Before_p = 100*Before/N_All,
+         Before_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*Before/N_Before),
+         During_p = 100*During/N_All,
+         During_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*During/N_During),
+         After_p = 100*After/N_All,
+         After_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*After/N_After)) %>% 
+  select(Value, All, All_p, All_v, Before, Before_p, Before_v, During, 
+         During_p, During_v, After, After_p, After_v) %>% 
   kable(format = "latex", booktabs = TRUE, digits = 2, 
-        col.names = c("Value", rep(c("Frequency", "Percent"), 4)),
+        col.names = c("Value", rep(c("N", "%", "Valid %"), 4)),
         caption = TCap) %>% 
   kable_styling() %>% 
-  add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
-                   "After TW" = 2)) %>% 
+  add_header_above(c(" " = 1, "Overall" = 3, "Before TW" = 3, "During TW" = 3,
+                   "After TW" = 3)) %>% 
   footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
@@ -494,7 +514,7 @@ IDNEW %>%
 TCap <- paste("Frequency Distributions for Number of Arrest Offenses (All",
               "Crime Categories) Overall and By When Incident Occurred")
 # Footnote text.
-FN <- paste0("N = ", format(nrow(IDNEW), big.mark = ","), ". TW, earliest ",
+FN <- paste0("N = ", format(N_All, big.mark = ","), ". TW, earliest ",
             "testing window. ",
             "Only arrest records for offenders with valid testing window start ",
             "dates and with offenses from the 12 main crime categories were ",
@@ -515,18 +535,30 @@ IDNEW %>%
   count() %>% 
   arrange(Value) %>% 
   pivot_wider(names_from = When, values_from = n, values_fill = 0) %>% 
-  mutate(All_p = 100*All/nrow(IDNEW),
-         Before_p = 100*Before/nrow(IDNEW),
-         During_p = 100*During/nrow(IDNEW),
-         After_p = 100*After/nrow(IDNEW)) %>% 
-  select(Value, All, All_p, Before, Before_p, During, During_p, After, 
-         After_p) %>% 
+  mutate(All_p = 100*All/N_All,
+         All_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*Before/N_All),
+         Before_p = 100*Before/N_All,
+         Before_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*Before/N_Before),
+         During_p = 100*During/N_All,
+         During_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*During/N_During),
+         After_p = 100*After/N_All,
+         After_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*After/N_After)) %>% 
+  select(Value, All, All_p, All_v, Before, Before_p, Before_v, During, 
+         During_p, During_v, After, After_p, After_v) %>%
   kable(format = "latex", booktabs = TRUE, digits = 2, 
-        col.names = c("Value", rep(c("Frequency", "Percent"), 4)),
+        col.names = c("Value", rep(c("N", "%", "Valid %"), 4)),
         caption = TCap) %>% 
   kable_styling() %>% 
-  add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
-                   "After TW" = 2)) %>% 
+  add_header_above(c(" " = 1, "Overall" = 3, "Before TW" = 3, "During TW" = 3,
+                   "After TW" = 3)) %>% 
   footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
@@ -540,7 +572,7 @@ IDNEW %>%
 TCap <- paste("Frequency Distributions for Number of Prosecutor Charges (All",
               "Crime Categories) Overall and By When Incident Occurred")
 # Footnote text.
-FN <- paste0("N = ", format(nrow(IDNEW), big.mark = ","), ". TW, earliest ",
+FN <- paste0("N = ", format(N_All, big.mark = ","), ". TW, earliest ",
             "testing window. ",
             "Only charge records for offenders with valid testing window start ",
             "dates and with charges from the 12 main crime categories were ",
@@ -561,18 +593,30 @@ IDNEW %>%
   count() %>% 
   arrange(Value) %>% 
   pivot_wider(names_from = When, values_from = n, values_fill = 0) %>% 
-  mutate(All_p = 100*All/nrow(IDNEW),
-         Before_p = 100*Before/nrow(IDNEW),
-         During_p = 100*During/nrow(IDNEW),
-         After_p = 100*After/nrow(IDNEW)) %>% 
-  select(Value, All, All_p, Before, Before_p, During, During_p, After, 
-         After_p) %>% 
+  mutate(All_p = 100*All/N_All,
+         All_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*Before/N_All),
+         Before_p = 100*Before/N_All,
+         Before_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*Before/N_Before),
+         During_p = 100*During/N_All,
+         During_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*During/N_During),
+         After_p = 100*After/N_All,
+         After_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*After/N_After)) %>% 
+  select(Value, All, All_p, All_v, Before, Before_p, Before_v, During, 
+         During_p, During_v, After, After_p, After_v) %>%
   kable(format = "latex", booktabs = TRUE, digits = 2, 
-        col.names = c("Value", rep(c("Frequency", "Percent"), 4)),
+        col.names = c("Value", rep(c("N", "%", "Valid %"), 4)),
         caption = TCap) %>% 
   kable_styling() %>% 
-  add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
-                   "After TW" = 2)) %>% 
+  add_header_above(c(" " = 1, "Overall" = 3, "Before TW" = 3, "During TW" = 3,
+                   "After TW" = 3)) %>%  
   footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
@@ -586,7 +630,7 @@ IDNEW %>%
 TCap <- paste("Frequency Distributions for Number of Adjudicated Charges (All",
               "Crime Categories) Overall and By When Incident Occurred")
 # Footnote text.
-FN <- paste0("N = ", format(nrow(IDNEW), big.mark = ","), ". TW, earliest ",
+FN <- paste0("N = ", format(N_All, big.mark = ","), ". TW, earliest ",
             "testing window. ",
             "Only records for offenders with valid testing window start dates ",
             "and with charges from one of the 12 main crime categories were ",
@@ -608,18 +652,30 @@ IDNEW %>%
   count() %>% 
   arrange(Value) %>% 
   pivot_wider(names_from = When, values_from = n, values_fill = 0) %>% 
-  mutate(All_p = 100*All/nrow(IDNEW),
-         Before_p = 100*Before/nrow(IDNEW),
-         During_p = 100*During/nrow(IDNEW),
-         After_p = 100*After/nrow(IDNEW)) %>% 
-  select(Value, All, All_p, Before, Before_p, During, During_p, After, 
-         After_p) %>% 
+  mutate(All_p = 100*All/N_All,
+         All_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*Before/N_All),
+         Before_p = 100*Before/N_All,
+         Before_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*Before/N_Before),
+         During_p = 100*During/N_All,
+         During_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*During/N_During),
+         After_p = 100*After/N_All,
+         After_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*After/N_After)) %>% 
+  select(Value, All, All_p, All_v, Before, Before_p, Before_v, During, 
+         During_p, During_v, After, After_p, After_v) %>% 
   kable(format = "latex", booktabs = TRUE, digits = 2, 
-        col.names = c("Value", rep(c("Frequency", "Percent"), 4)),
+        col.names = c("Value", rep(c("N", "%", "Valid %"), 4)),
         caption = TCap) %>% 
   kable_styling() %>% 
-  add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
-                   "After TW" = 2)) %>% 
+  add_header_above(c(" " = 1, "Overall" = 3, "Before TW" = 3, "During TW" = 3,
+                   "After TW" = 3)) %>% 
   footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
@@ -634,7 +690,7 @@ TCap <- paste("Frequency Distributions for Number of Adjudicated Charges (All",
               "Crime Categories, Convictions) Overall and By When Incident",
               "Occurred")
 # Footnote text.
-FN <- paste0("N = ", format(nrow(IDNEW), big.mark = ","), ". TW, earliest ",
+FN <- paste0("N = ", format(N_All, big.mark = ","), ". TW, earliest ",
             "testing window. ",
             "Only conviction records for offenders with valid testing window ",
             "start dates and with charges from one of the 12 main crime ",
@@ -655,18 +711,30 @@ IDNEW %>%
   count() %>% 
   arrange(Value) %>% 
   pivot_wider(names_from = When, values_from = n, values_fill = 0) %>% 
-  mutate(All_p = 100*All/nrow(IDNEW),
-         Before_p = 100*Before/nrow(IDNEW),
-         During_p = 100*During/nrow(IDNEW),
-         After_p = 100*After/nrow(IDNEW)) %>% 
-  select(Value, All, All_p, Before, Before_p, During, During_p, After, 
-         After_p) %>% 
+  mutate(All_p = 100*All/N_All,
+         All_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*Before/N_All),
+         Before_p = 100*Before/N_All,
+         Before_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*Before/N_Before),
+         During_p = 100*During/N_All,
+         During_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*During/N_During),
+         After_p = 100*After/N_All,
+         After_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*After/N_After)) %>% 
+  select(Value, All, All_p, All_v, Before, Before_p, Before_v, During, 
+         During_p, During_v, After, After_p, After_v) %>% 
   kable(format = "latex", booktabs = TRUE, digits = 2, 
-        col.names = c("Value", rep(c("Frequency", "Percent"), 4)),
+        col.names = c("Value", rep(c("N", "%", "Valid %"), 4)),
         caption = TCap) %>% 
   kable_styling() %>% 
-  add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
-                   "After TW" = 2)) %>% 
+  add_header_above(c(" " = 1, "Overall" = 3, "Before TW" = 3, "During TW" = 3,
+                   "After TW" = 3)) %>%
   footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
@@ -722,7 +790,7 @@ TCap <- paste("Frequency Distributions for Number of Crime Categories for",
               "Which Offender Was Arrested, Charged, or Convicted (Overall",
               "and By When Incident Occurred)")
 # Footnote text.
-FN <- paste0("N = ", format(nrow(IDNEW), big.mark = ","), ". TW, earliest ",
+FN <- paste0("N = ", format(N_All, big.mark = ","), ". TW, earliest ",
             "testing window. ",
             "Only records associated with incidents where the offender was ",
             "arrested for, charged with, or convicted of at least one offense ",
@@ -744,18 +812,30 @@ IDNEW %>%
   count() %>% 
   arrange(Value) %>% 
   pivot_wider(names_from = When, values_from = n, values_fill = 0) %>% 
-  mutate(All_p = 100*All/nrow(IDNEW),
-         Before_p = 100*Before/nrow(IDNEW),
-         During_p = 100*During/nrow(IDNEW),
-         After_p = 100*After/nrow(IDNEW)) %>% 
-  select(Value, All, All_p, Before, Before_p, During, During_p, After, 
-         After_p) %>% 
+  mutate(All_p = 100*All/N_All,
+         All_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*Before/N_All),
+         Before_p = 100*Before/N_All,
+         Before_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*Before/N_Before),
+         During_p = 100*During/N_All,
+         During_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*During/N_During),
+         After_p = 100*After/N_All,
+         After_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*After/N_After)) %>% 
+  select(Value, All, All_p, All_v, Before, Before_p, Before_v, During, 
+         During_p, During_v, After, After_p, After_v) %>% 
   kable(format = "latex", booktabs = TRUE, digits = 2, 
-        col.names = c("Value", rep(c("Frequency", "Percent"), 4)),
+        col.names = c("Value", rep(c("N", "%", "Valid %"), 4)),
         caption = TCap) %>% 
   kable_styling() %>% 
-  add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
-                   "After TW" = 2)) %>% 
+  add_header_above(c(" " = 1, "Overall" = 3, "Before TW" = 3, "During TW" = 3,
+                   "After TW" = 3)) %>%
   footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
@@ -914,7 +994,7 @@ in the subsections below.
 
 ```{r create_History_Vars}
 # Save a formatted value for total number of offenders.
-N_IDNEW <- format(nrow(IDNEW), big.mark = ",")
+N_IDNEW <- format(N_All, big.mark = ",")
 
 # Check how many offenders had >= 1 CSC arrest, charge, or conviction in 
 # their CHR data for each crime category.
@@ -932,18 +1012,18 @@ IDNEW %>% filter(HXCat12_11 >= 1) %>% nrow() -> N_HXCat12_11
 IDNEW %>% filter(HXCat12_12 >= 1) %>% nrow() -> N_HXCat12_12
 
 # Convert those new variables to percentages. 
-P_HXCat12_1  <- round(100*N_HXCat12_1/nrow(IDNEW), digits = 0)
-P_HXCat12_2  <- round(100*N_HXCat12_2/nrow(IDNEW), digits = 0)
-P_HXCat12_3  <- round(100*N_HXCat12_3/nrow(IDNEW), digits = 0)
-P_HXCat12_4  <- round(100*N_HXCat12_4/nrow(IDNEW), digits = 0)
-P_HXCat12_5  <- round(100*N_HXCat12_5/nrow(IDNEW), digits = 0)
-P_HXCat12_6  <- round(100*N_HXCat12_6/nrow(IDNEW), digits = 0)
-P_HXCat12_7  <- round(100*N_HXCat12_7/nrow(IDNEW), digits = 0)
-P_HXCat12_8  <- round(100*N_HXCat12_8/nrow(IDNEW), digits = 0)
-P_HXCat12_9  <- round(100*N_HXCat12_9/nrow(IDNEW), digits = 0)
-P_HXCat12_10 <- round(100*N_HXCat12_10/nrow(IDNEW), digits = 0)
-P_HXCat12_11 <- round(100*N_HXCat12_11/nrow(IDNEW), digits = 0)
-P_HXCat12_12 <- round(100*N_HXCat12_12/nrow(IDNEW), digits = 0)
+P_HXCat12_1  <- round(100*N_HXCat12_1/N_All, digits = 0)
+P_HXCat12_2  <- round(100*N_HXCat12_2/N_All, digits = 0)
+P_HXCat12_3  <- round(100*N_HXCat12_3/N_All, digits = 0)
+P_HXCat12_4  <- round(100*N_HXCat12_4/N_All, digits = 0)
+P_HXCat12_5  <- round(100*N_HXCat12_5/N_All, digits = 0)
+P_HXCat12_6  <- round(100*N_HXCat12_6/N_All, digits = 0)
+P_HXCat12_7  <- round(100*N_HXCat12_7/N_All, digits = 0)
+P_HXCat12_8  <- round(100*N_HXCat12_8/N_All, digits = 0)
+P_HXCat12_9  <- round(100*N_HXCat12_9/N_All, digits = 0)
+P_HXCat12_10 <- round(100*N_HXCat12_10/N_All, digits = 0)
+P_HXCat12_11 <- round(100*N_HXCat12_11/N_All, digits = 0)
+P_HXCat12_12 <- round(100*N_HXCat12_12/N_All, digits = 0)
 ```
 
 This next chunk creates some objects to store things like standardized footnotes
@@ -1028,18 +1108,30 @@ IDNEW %>%
   count() %>% 
   arrange(Value) %>% 
   pivot_wider(names_from = When, values_from = n, values_fill = 0) %>% 
-  mutate(All_p = 100*All/nrow(IDNEW),
-         Before_p = 100*Before/nrow(IDNEW),
-         During_p = 100*During/nrow(IDNEW),
-         After_p = 100*After/nrow(IDNEW)) %>% 
-  select(Value, All, All_p, Before, Before_p, During, During_p, After, 
-         After_p) %>% 
+  mutate(All_p = 100*All/N_All,
+         All_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*Before/N_All),
+         Before_p = 100*Before/N_All,
+         Before_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*Before/N_Before),
+         During_p = 100*During/N_All,
+         During_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*During/N_During),
+         After_p = 100*After/N_All,
+         After_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*After/N_After)) %>% 
+  select(Value, All, All_p, All_v, Before, Before_p, Before_v, During, 
+         During_p, During_v, After, After_p, After_v) %>% 
   kable(format = "latex", booktabs = TRUE, digits = 2, 
-        col.names = c("Value", rep(c("Frequency", "Percent"), 4)),
+        col.names = c("Value", rep(c("N", "%", "Valid %"), 4)),
         caption = TCap) %>% 
   kable_styling() %>% 
-  add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
-                   "After TW" = 2)) %>% 
+  add_header_above(c(" " = 1, "Overall" = 3, "Before TW" = 3, "During TW" = 3,
+                   "After TW" = 3)) %>% 
   footnote(general = FN5, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
@@ -1221,18 +1313,30 @@ IDNEW %>%
   count() %>% 
   arrange(Value) %>% 
   pivot_wider(names_from = When, values_from = n, values_fill = 0) %>% 
-  mutate(All_p = 100*All/nrow(IDNEW),
-         Before_p = 100*Before/nrow(IDNEW),
-         During_p = 100*During/nrow(IDNEW),
-         After_p = 100*After/nrow(IDNEW)) %>% 
-  select(Value, All, All_p, Before, Before_p, During, During_p, After, 
-         After_p) %>% 
+  mutate(All_p = 100*All/N_All,
+         All_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*Before/N_All),
+         Before_p = 100*Before/N_All,
+         Before_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*Before/N_Before),
+         During_p = 100*During/N_All,
+         During_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*During/N_During),
+         After_p = 100*After/N_All,
+         After_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*After/N_After)) %>% 
+  select(Value, All, All_p, All_v, Before, Before_p, Before_v, During, 
+         During_p, During_v, After, After_p, After_v) %>% 
   kable(format = "latex", booktabs = TRUE, digits = 2, 
-        col.names = c("Value", rep(c("Frequency", "Percent"), 4)),
+        col.names = c("Value", rep(c("N", "%", "Valid %"), 4)),
         caption = TCap) %>% 
   kable_styling() %>% 
-  add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
-                   "After TW" = 2)) %>% 
+  add_header_above(c(" " = 1, "Overall" = 3, "Before TW" = 3, "During TW" = 3,
+                   "After TW" = 3)) %>%
   footnote(general = FN5, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
@@ -1417,18 +1521,30 @@ IDNEW %>%
   count() %>% 
   arrange(Value) %>% 
   pivot_wider(names_from = When, values_from = n, values_fill = 0) %>% 
-  mutate(All_p = 100*All/nrow(IDNEW),
-         Before_p = 100*Before/nrow(IDNEW),
-         During_p = 100*During/nrow(IDNEW),
-         After_p = 100*After/nrow(IDNEW)) %>% 
-  select(Value, All, All_p, Before, Before_p, During, During_p, After, 
-         After_p) %>% 
+  mutate(All_p = 100*All/N_All,
+         All_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*Before/N_All),
+         Before_p = 100*Before/N_All,
+         Before_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*Before/N_Before),
+         During_p = 100*During/N_All,
+         During_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*During/N_During),
+         After_p = 100*After/N_All,
+         After_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*After/N_After)) %>% 
+  select(Value, All, All_p, All_v, Before, Before_p, Before_v, During, 
+         During_p, During_v, After, After_p, After_v) %>% 
   kable(format = "latex", booktabs = TRUE, digits = 2, 
-        col.names = c("Value", rep(c("Frequency", "Percent"), 4)),
+        col.names = c("Value", rep(c("N", "%", "Valid %"), 4)),
         caption = TCap) %>% 
   kable_styling() %>% 
-  add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
-                   "After TW" = 2)) %>% 
+  add_header_above(c(" " = 1, "Overall" = 3, "Before TW" = 3, "During TW" = 3,
+                   "After TW" = 3)) %>%
   footnote(general = FN5, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
@@ -1610,18 +1726,30 @@ IDNEW %>%
   count() %>% 
   arrange(Value) %>% 
   pivot_wider(names_from = When, values_from = n, values_fill = 0) %>% 
-  mutate(All_p = 100*All/nrow(IDNEW),
-         Before_p = 100*Before/nrow(IDNEW),
-         During_p = 100*During/nrow(IDNEW),
-         After_p = 100*After/nrow(IDNEW)) %>% 
-  select(Value, All, All_p, Before, Before_p, During, During_p, After, 
-         After_p) %>% 
+  mutate(All_p = 100*All/N_All,
+         All_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*Before/N_All),
+         Before_p = 100*Before/N_All,
+         Before_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*Before/N_Before),
+         During_p = 100*During/N_All,
+         During_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*During/N_During),
+         After_p = 100*After/N_All,
+         After_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*After/N_After)) %>% 
+  select(Value, All, All_p, All_v, Before, Before_p, Before_v, During, 
+         During_p, During_v, After, After_p, After_v) %>% 
   kable(format = "latex", booktabs = TRUE, digits = 2, 
-        col.names = c("Value", rep(c("Frequency", "Percent"), 4)),
+        col.names = c("Value", rep(c("N", "%", "Valid %"), 4)),
         caption = TCap) %>% 
   kable_styling() %>% 
-  add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
-                   "After TW" = 2)) %>% 
+  add_header_above(c(" " = 1, "Overall" = 3, "Before TW" = 3, "During TW" = 3,
+                   "After TW" = 3)) %>%
   footnote(general = FN5, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
@@ -1802,18 +1930,30 @@ IDNEW %>%
   count() %>% 
   arrange(Value) %>% 
   pivot_wider(names_from = When, values_from = n, values_fill = 0) %>% 
-  mutate(All_p = 100*All/nrow(IDNEW),
-         Before_p = 100*Before/nrow(IDNEW),
-         During_p = 100*During/nrow(IDNEW),
-         After_p = 100*After/nrow(IDNEW)) %>% 
-  select(Value, All, All_p, Before, Before_p, During, During_p, After, 
-         After_p) %>% 
+  mutate(All_p = 100*All/N_All,
+         All_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*Before/N_All),
+         Before_p = 100*Before/N_All,
+         Before_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*Before/N_Before),
+         During_p = 100*During/N_All,
+         During_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*During/N_During),
+         After_p = 100*After/N_All,
+         After_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*After/N_After)) %>% 
+  select(Value, All, All_p, All_v, Before, Before_p, Before_v, During, 
+         During_p, During_v, After, After_p, After_v) %>% 
   kable(format = "latex", booktabs = TRUE, digits = 2, 
-        col.names = c("Value", rep(c("Frequency", "Percent"), 4)),
+        col.names = c("Value", rep(c("N", "%", "Valid %"), 4)),
         caption = TCap) %>% 
   kable_styling() %>% 
-  add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
-                   "After TW" = 2)) %>% 
+  add_header_above(c(" " = 1, "Overall" = 3, "Before TW" = 3, "During TW" = 3,
+                   "After TW" = 3)) %>%
   footnote(general = FN5, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
@@ -1995,18 +2135,30 @@ IDNEW %>%
   count() %>% 
   arrange(Value) %>% 
   pivot_wider(names_from = When, values_from = n, values_fill = 0) %>% 
-  mutate(All_p = 100*All/nrow(IDNEW),
-         Before_p = 100*Before/nrow(IDNEW),
-         During_p = 100*During/nrow(IDNEW),
-         After_p = 100*After/nrow(IDNEW)) %>% 
-  select(Value, All, All_p, Before, Before_p, During, During_p, After, 
-         After_p) %>% 
+  mutate(All_p = 100*All/N_All,
+         All_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*Before/N_All),
+         Before_p = 100*Before/N_All,
+         Before_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*Before/N_Before),
+         During_p = 100*During/N_All,
+         During_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*During/N_During),
+         After_p = 100*After/N_All,
+         After_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*After/N_After)) %>% 
+  select(Value, All, All_p, All_v, Before, Before_p, Before_v, During, 
+         During_p, During_v, After, After_p, After_v) %>% 
   kable(format = "latex", booktabs = TRUE, digits = 2, 
-        col.names = c("Value", rep(c("Frequency", "Percent"), 4)),
+        col.names = c("Value", rep(c("N", "%", "Valid %"), 4)),
         caption = TCap) %>% 
   kable_styling() %>% 
-  add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
-                   "After TW" = 2)) %>% 
+  add_header_above(c(" " = 1, "Overall" = 3, "Before TW" = 3, "During TW" = 3,
+                   "After TW" = 3)) %>%
   footnote(general = FN5, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
@@ -2186,18 +2338,30 @@ IDNEW %>%
   count() %>% 
   arrange(Value) %>% 
   pivot_wider(names_from = When, values_from = n, values_fill = 0) %>% 
-  mutate(All_p = 100*All/nrow(IDNEW),
-         Before_p = 100*Before/nrow(IDNEW),
-         During_p = 100*During/nrow(IDNEW),
-         After_p = 100*After/nrow(IDNEW)) %>% 
-  select(Value, All, All_p, Before, Before_p, During, During_p, After, 
-         After_p) %>% 
+  mutate(All_p = 100*All/N_All,
+         All_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*Before/N_All),
+         Before_p = 100*Before/N_All,
+         Before_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*Before/N_Before),
+         During_p = 100*During/N_All,
+         During_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*During/N_During),
+         After_p = 100*After/N_All,
+         After_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*After/N_After)) %>% 
+  select(Value, All, All_p, All_v, Before, Before_p, Before_v, During, 
+         During_p, During_v, After, After_p, After_v) %>% 
   kable(format = "latex", booktabs = TRUE, digits = 2, 
-        col.names = c("Value", rep(c("Frequency", "Percent"), 4)),
+        col.names = c("Value", rep(c("N", "%", "Valid %"), 4)),
         caption = TCap) %>% 
   kable_styling() %>% 
-  add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
-                   "After TW" = 2)) %>% 
+  add_header_above(c(" " = 1, "Overall" = 3, "Before TW" = 3, "During TW" = 3,
+                   "After TW" = 3)) %>%
   footnote(general = FN5, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
@@ -2378,18 +2542,30 @@ IDNEW %>%
   count() %>% 
   arrange(Value) %>% 
   pivot_wider(names_from = When, values_from = n, values_fill = 0) %>% 
-  mutate(All_p = 100*All/nrow(IDNEW),
-         Before_p = 100*Before/nrow(IDNEW),
-         During_p = 100*During/nrow(IDNEW),
-         After_p = 100*After/nrow(IDNEW)) %>% 
-  select(Value, All, All_p, Before, Before_p, During, During_p, After, 
-         After_p) %>% 
+  mutate(All_p = 100*All/N_All,
+         All_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*Before/N_All),
+         Before_p = 100*Before/N_All,
+         Before_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*Before/N_Before),
+         During_p = 100*During/N_All,
+         During_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*During/N_During),
+         After_p = 100*After/N_All,
+         After_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*After/N_After)) %>% 
+  select(Value, All, All_p, All_v, Before, Before_p, Before_v, During, 
+         During_p, During_v, After, After_p, After_v) %>% 
   kable(format = "latex", booktabs = TRUE, digits = 2, 
-        col.names = c("Value", rep(c("Frequency", "Percent"), 4)),
+        col.names = c("Value", rep(c("N", "%", "Valid %"), 4)),
         caption = TCap) %>% 
   kable_styling() %>% 
-  add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
-                   "After TW" = 2)) %>% 
+  add_header_above(c(" " = 1, "Overall" = 3, "Before TW" = 3, "During TW" = 3,
+                   "After TW" = 3)) %>%
   footnote(general = FN5, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
@@ -2570,18 +2746,30 @@ IDNEW %>%
   count() %>% 
   arrange(Value) %>% 
   pivot_wider(names_from = When, values_from = n, values_fill = 0) %>% 
-  mutate(All_p = 100*All/nrow(IDNEW),
-         Before_p = 100*Before/nrow(IDNEW),
-         During_p = 100*During/nrow(IDNEW),
-         After_p = 100*After/nrow(IDNEW)) %>% 
-  select(Value, All, All_p, Before, Before_p, During, During_p, After, 
-         After_p) %>% 
+  mutate(All_p = 100*All/N_All,
+         All_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*Before/N_All),
+         Before_p = 100*Before/N_All,
+         Before_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*Before/N_Before),
+         During_p = 100*During/N_All,
+         During_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*During/N_During),
+         After_p = 100*After/N_All,
+         After_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*After/N_After)) %>% 
+  select(Value, All, All_p, All_v, Before, Before_p, Before_v, During, 
+         During_p, During_v, After, After_p, After_v) %>% 
   kable(format = "latex", booktabs = TRUE, digits = 2, 
-        col.names = c("Value", rep(c("Frequency", "Percent"), 4)),
+        col.names = c("Value", rep(c("N", "%", "Valid %"), 4)),
         caption = TCap) %>% 
   kable_styling() %>% 
-  add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
-                   "After TW" = 2)) %>% 
+  add_header_above(c(" " = 1, "Overall" = 3, "Before TW" = 3, "During TW" = 3,
+                   "After TW" = 3)) %>% 
   footnote(general = FN5, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
@@ -2761,18 +2949,30 @@ IDNEW %>%
   count() %>% 
   arrange(Value) %>% 
   pivot_wider(names_from = When, values_from = n, values_fill = 0) %>% 
-  mutate(All_p = 100*All/nrow(IDNEW),
-         Before_p = 100*Before/nrow(IDNEW),
-         During_p = 100*During/nrow(IDNEW),
-         After_p = 100*After/nrow(IDNEW)) %>% 
-  select(Value, All, All_p, Before, Before_p, During, During_p, After, 
-         After_p) %>% 
+  mutate(All_p = 100*All/N_All,
+         All_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*Before/N_All),
+         Before_p = 100*Before/N_All,
+         Before_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*Before/N_Before),
+         During_p = 100*During/N_All,
+         During_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*During/N_During),
+         After_p = 100*After/N_All,
+         After_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*After/N_After)) %>% 
+  select(Value, All, All_p, All_v, Before, Before_p, Before_v, During, 
+         During_p, During_v, After, After_p, After_v) %>% 
   kable(format = "latex", booktabs = TRUE, digits = 2, 
-        col.names = c("Value", rep(c("Frequency", "Percent"), 4)),
+        col.names = c("Value", rep(c("N", "%", "Valid %"), 4)),
         caption = TCap) %>% 
   kable_styling() %>% 
-  add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
-                   "After TW" = 2)) %>% 
+  add_header_above(c(" " = 1, "Overall" = 3, "Before TW" = 3, "During TW" = 3,
+                   "After TW" = 3)) %>%
   footnote(general = FN5, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
@@ -2953,18 +3153,30 @@ IDNEW %>%
   count() %>% 
   arrange(Value) %>% 
   pivot_wider(names_from = When, values_from = n, values_fill = 0) %>% 
-  mutate(All_p = 100*All/nrow(IDNEW),
-         Before_p = 100*Before/nrow(IDNEW),
-         During_p = 100*During/nrow(IDNEW),
-         After_p = 100*After/nrow(IDNEW)) %>% 
-  select(Value, All, All_p, Before, Before_p, During, During_p, After, 
-         After_p) %>% 
+  mutate(All_p = 100*All/N_All,
+         All_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*Before/N_All),
+         Before_p = 100*Before/N_All,
+         Before_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*Before/N_Before),
+         During_p = 100*During/N_All,
+         During_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*During/N_During),
+         After_p = 100*After/N_All,
+         After_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*After/N_After)) %>% 
+  select(Value, All, All_p, All_v, Before, Before_p, Before_v, During, 
+         During_p, During_v, After, After_p, After_v) %>% 
   kable(format = "latex", booktabs = TRUE, digits = 2, 
-        col.names = c("Value", rep(c("Frequency", "Percent"), 4)),
+        col.names = c("Value", rep(c("N", "%", "Valid %"), 4)),
         caption = TCap) %>% 
   kable_styling() %>% 
-  add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
-                   "After TW" = 2)) %>% 
+  add_header_above(c(" " = 1, "Overall" = 3, "Before TW" = 3, "During TW" = 3,
+                   "After TW" = 3)) %>% 
   footnote(general = FN5, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
@@ -3146,18 +3358,30 @@ IDNEW %>%
   count() %>% 
   arrange(Value) %>% 
   pivot_wider(names_from = When, values_from = n, values_fill = 0) %>% 
-  mutate(All_p = 100*All/nrow(IDNEW),
-         Before_p = 100*Before/nrow(IDNEW),
-         During_p = 100*During/nrow(IDNEW),
-         After_p = 100*After/nrow(IDNEW)) %>% 
-  select(Value, All, All_p, Before, Before_p, During, During_p, After, 
-         After_p) %>% 
+  mutate(All_p = 100*All/N_All,
+         All_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*Before/N_All),
+         Before_p = 100*Before/N_All,
+         Before_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*Before/N_Before),
+         During_p = 100*During/N_All,
+         During_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*During/N_During),
+         After_p = 100*After/N_All,
+         After_v = if_else(is.na(Value), 
+                            true = as.numeric(NA), 
+                            false = 100*After/N_After)) %>% 
+  select(Value, All, All_p, All_v, Before, Before_p, Before_v, During, 
+         During_p, During_v, After, After_p, After_v) %>% 
   kable(format = "latex", booktabs = TRUE, digits = 2, 
-        col.names = c("Value", rep(c("Frequency", "Percent"), 4)),
+        col.names = c("Value", rep(c("N", "%", "Valid %"), 4)),
         caption = TCap) %>% 
   kable_styling() %>% 
-  add_header_above(c(" " = 1, "Overall" = 2, "Before TW" = 2, "During TW" = 2,
-                   "After TW" = 2)) %>% 
+  add_header_above(c(" " = 1, "Overall" = 3, "Before TW" = 3, "During TW" = 3,
+                   "After TW" = 3)) %>% 
   footnote(general = FN5, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
