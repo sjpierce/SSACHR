@@ -875,8 +875,8 @@ models.
 ```{r cccvar_texreg, results = "asis", cfsize = "normalsize"}
 TCap <- paste("Generalized Estimating Equation Models for Crime Category Counts",
               "Predicted by When Incidents Occurred")
-FN <- paste ("\\item * Estimate falls outside 95\\% confidence interval",
-             "based on z-score.",
+FN <- paste ("\\item * p < .05, null hypothesis value outside 95\\% confidence",
+             "interval based on z-score.",
              "\\\\\n\\item Note.",
              "The data contain up to 3 longitudinal observations (one per", 
              "period) for each offender (i.e., cluster).",
@@ -1170,8 +1170,8 @@ GEE models.
 ```{r HXCat12_1_texreg, results = "asis", cfsize = "normalsize"}
 TCap <- paste("Generalized Estimating Equation Models for Arson Incident Counts",
               "Predicted by When Incidents Occurred")
-FN <- paste ("\\item * Estimate falls outside 95\\% confidence interval",
-             "based on z-score.",
+FN <- paste ("\\item * p < .05, null hypothesis value outside 95\\% confidence",
+             "interval based on z-score.",
              "\\\\\n\\item Note.",
              "The data contain up to 3 longitudinal observations (one per", 
              "period) for each offender (i.e., cluster).",
@@ -1376,8 +1376,8 @@ GEE models.
 TCap <- paste("Generalized Estimating Equation Models for Assault Involving",
               "Domestic Violence and/or Stalking Incident Counts",
               "Predicted by When Incidents Occurred")
-FN <- paste ("\\item * Estimate falls outside 95\\% confidence interval",
-             "based on z-score.",
+FN <- paste ("\\item * p < .05, null hypothesis value outside 95\\% confidence",
+             "interval based on z-score.",
              "\\\\\n\\item Note.",
              "The data contain up to 3 longitudinal observations (one per", 
              "period) for each offender (i.e., cluster).",
@@ -1584,8 +1584,8 @@ GEE models.
 TCap <- paste("Generalized Estimating Equation Models for Assault (Non-Sexual,",
               "Non-Domestic Violance) Incident Counts",
               "Predicted by When Incidents Occurred")
-FN <- paste ("\\item * Estimate falls outside 95\\% confidence interval",
-             "based on z-score.",
+FN <- paste ("\\item * p < .05, null hypothesis value outside 95\\% confidence",
+             "interval based on z-score.",
              "\\\\\n\\item Note.",
              "The data contain up to 3 longitudinal observations (one per", 
              "period) for each offender (i.e., cluster).",
@@ -1788,8 +1788,8 @@ GEE models.
 ```{r HXCat12_4_texreg, results = "asis", cfsize = "normalsize"}
 TCap <- paste("Generalized Estimating Equation Models for Burglary Incident Counts",
               "Predicted by When Incidents Occurred")
-FN <- paste ("\\item * Estimate falls outside 95\\% confidence interval",
-             "based on z-score.",
+FN <- paste ("\\item * p < .05, null hypothesis value outside 95\\% confidence",
+             "interval based on z-score.",
              "\\\\\n\\item Note.",
              "The data contain up to 3 longitudinal observations (one per", 
              "period) for each offender (i.e., cluster).",
@@ -1993,8 +1993,8 @@ GEE models.
 TCap <- paste("Generalized Estimating Equation Models for Criminal Sexual",
               "Conduct Incident Counts",
               "Predicted by When Incidents Occurred")
-FN <- paste ("\\item * Estimate falls outside 95\\% confidence interval",
-             "based on z-score.",
+FN <- paste ("\\item * p < .05, null hypothesis value outside 95\\% confidence",
+             "interval based on z-score.",
              "\\\\\n\\item Note.",
              "The data contain up to 3 longitudinal observations (one per", 
              "period) for each offender (i.e., cluster).",
@@ -2197,8 +2197,8 @@ GEE models.
 ```{r HXCat12_6_texreg, results = "asis", cfsize = "normalsize"}
 TCap <- paste("Generalized Estimating Equation Models for Drug Crime Incident",
               "Counts Predicted by When Incidents Occurred")
-FN <- paste ("\\item * Estimate falls outside 95\\% confidence interval",
-             "based on z-score.",
+FN <- paste ("\\item * p < .05, null hypothesis value outside 95\\% confidence",
+             "interval based on z-score.",
              "\\\\\n\\item Note.",
              "The data contain up to 3 longitudinal observations (one per", 
              "period) for each offender (i.e., cluster).",
@@ -2400,8 +2400,8 @@ GEE models.
 ```{r HXCat12_7_texreg, results = "asis", cfsize = "normalsize"}
 TCap <- paste("Generalized Estimating Equation Models for Homicide Incident Counts",
               "Predicted by When Incidents Occurred")
-FN <- paste ("\\item * Estimate falls outside 95\\% confidence interval",
-             "based on z-score.",
+FN <- paste ("\\item * p < .05, null hypothesis value outside 95\\% confidence",
+             "interval based on z-score.",
              "\\\\\n\\item Note.",
              "The data contain up to 3 longitudinal observations (one per", 
              "period) for each offender (i.e., cluster).",
@@ -2605,8 +2605,8 @@ GEE models.
 TCap <- paste("Generalized Estimating Equation Models for Larceny, Theft, or",
               "Fraud Incident Counts",
               "Predicted by When Incidents Occurred")
-FN <- paste ("\\item * Estimate falls outside 95\\% confidence interval",
-             "based on z-score.",
+FN <- paste ("\\item * p < .05, null hypothesis value outside 95\\% confidence",
+             "interval based on z-score.",
              "\\\\\n\\item Note.",
              "The data contain up to 3 longitudinal observations (one per", 
              "period) for each offender (i.e., cluster).",
@@ -2808,8 +2808,8 @@ GEE models.
 ```{r HXCat12_9_texreg, results = "asis", cfsize = "normalsize"}
 TCap <- paste("Generalized Estimating Equation Models for Robbery Incident Counts",
               "Predicted by When Incidents Occurred")
-FN <- paste ("\\item * Estimate falls outside 95\\% confidence interval",
-             "based on z-score.",
+FN <- paste ("\\item * p < .05, null hypothesis value outside 95\\% confidence",
+             "interval based on z-score.",
              "\\\\\n\\item Note.",
              "The data contain up to 3 longitudinal observations (one per", 
              "period) for each offender (i.e., cluster).",
@@ -3011,8 +3011,8 @@ GEE models.
 ```{r HXCat12_10_texreg, results = "asis", cfsize = "normalsize"}
 TCap <- paste("Generalized Estimating Equation Models for Sex Crime Incident",
               "Counts Predicted by When Incidents Occurred")
-FN <- paste ("\\item * Estimate falls outside 95\\% confidence interval",
-             "based on z-score.",
+FN <- paste ("\\item * p < .05, null hypothesis value outside 95\\% confidence",
+             "interval based on z-score.",
              "\\\\\n\\item Note.",
              "The data contain up to 3 longitudinal observations (one per", 
              "period) for each offender (i.e., cluster).",
@@ -3216,8 +3216,8 @@ GEE models.
 TCap <- paste("Generalized Estimating Equation Models for Traffic and",
               "Ordinance Incident Counts",
               "Predicted by When Incidents Occurred")
-FN <- paste ("\\item * Estimate falls outside 95\\% confidence interval",
-             "based on z-score.",
+FN <- paste ("\\item * p < .05, null hypothesis value outside 95\\% confidence",
+             "interval based on z-score.",
              "\\\\\n\\item Note.",
              "The data contain up to 3 longitudinal observations (one per", 
              "period) for each offender (i.e., cluster).",
@@ -3420,8 +3420,8 @@ GEE models.
 ```{r HXCat12_12_texreg, results = "asis", cfsize = "normalsize"}
 TCap <- paste("Generalized Estimating Equation Models for Weapon Incident Counts",
               "Predicted by When Incidents Occurred")
-FN <- paste ("\\item * Estimate falls outside 95\\% confidence interval",
-             "based on z-score.",
+FN <- paste ("\\item * p < .05, null hypothesis value outside 95\\% confidence",
+             "interval based on z-score.",
              "\\\\\n\\item Note.",
              "The data contain up to 3 longitudinal observations (one per", 
              "period) for each offender (i.e., cluster).",
