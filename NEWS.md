@@ -1,3 +1,8 @@
+# SSACHR 0.12.0, 2021-05-07
+* Updated `inst/Step_02_Analysis.Rmd` to:
+    * Add GEE model, estimated marginal means, and contrasts for overall 
+      incident counts. 
+
 # SSACHR 0.11.2, 2021-04-22
 * Updated `inst/Step_02_Analysis.Rmd` to:
     * Round tables of GEE marginal means & contrasts to 2 digits instead of 3.
