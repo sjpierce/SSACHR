@@ -455,7 +455,7 @@ charges that were convictions.
 
 ### Incident Records
 
-```{r freq_NINC}
+```{r freq_NINC12}
 # Table caption.
 TCap <- paste("Frequency Distributions for Number of Incidents",
               "Overall and By When Incident Occurred")
