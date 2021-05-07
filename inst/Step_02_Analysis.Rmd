@@ -137,6 +137,7 @@ running GEE models.
 ```{r create_IDNEWL}
 IDNEW %>% 
   select(OID, Years_Before, Years_During, Years_After,
+         HXCat12_Any_Before, HXCat12_Any_During, HXCat12_Any_After,
          HXCat12_Count_Before, HXCat12_Count_During, HXCat12_Count_After,
          HXCat12_1_Before, HXCat12_1_During, HXCat12_1_After,
          HXCat12_2_Before, HXCat12_2_During, HXCat12_2_After,
@@ -152,11 +153,12 @@ IDNEW %>%
          HXCat12_12_Before, HXCat12_12_During, HXCat12_12_After) %>% 
   pivot_longer(cols = -OID, names_to = c(".value", "When"), 
                names_pattern = "(.*)_(.*)",
-               values_to = c("Duration", "HXCat12_Count", 
+               values_to = c("Duration", "HXCat12_Any", "HXCat12_Count", 
                              "HXCat12_1", "HXCat12_2", "HXCat12_3", 
                              "HXCat12_4", "HXCat12_5", "HXCat12_6", 
                              "HXCat12_7", "HXCat12_8", "HXCat12_9",
                              "HXCat12_10", "HXCat12_11", "HXCat12_12")) %>% 
+  rename(NINC12 = HXCat12_Any) %>% 
   mutate(When = factor(x = When, levels = c("After", "Before", "During"))) ->
   IDNEWL
 ```
