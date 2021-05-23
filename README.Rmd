@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 # SSACHR: Serial Sexual Assault Study Criminal History Records Paper Research Compendium
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
-[![CRAN status](https://www.r-pkg.org/badges/version/cstatops)](https://CRAN.R-project.org/package=SSAlvmm)
+[![CRAN status](https://www.r-pkg.org/badges/version/SSACHR)](https://CRAN.R-project.org/package=SSACHR)
 <!-- badges: end -->
 
 This package and corresponding GitHub repository are intended to enhance the
