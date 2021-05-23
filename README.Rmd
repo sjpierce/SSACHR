@@ -138,7 +138,7 @@ That should allow you to reproduce the analyses by re-running our scripts.
 Text goes here. 
 
 ```{r example}
-#library(SSAlvmm)
+#library(SSACHR)
 # Need to add example code
 ```
 
