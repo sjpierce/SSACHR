@@ -144,14 +144,17 @@ Text goes here.
 
 ## Software Information
 We use R Markdown to enhance reproducibility because it provides excellent 
-support for generating dynamic reports (Mair, 2016). Knitting our R Markdown
-scripts generates PDF output files containing explanatory text, R code, plus R
-output (both text and graphics).
+support for generating dynamic reports (Mair, 2016). Knitting the source R 
+Markdown script *`r knitr:::current_input()`* generates this Markdown file.
+Knitting our other R Markdown scripts from this package generates PDF output 
+files containing explanatory text, R code, plus R output (both text and 
+graphics).
 
-- We use [RStudio](www.rstudio.org) to work with R and R Markdown files. The 
-  software chain looks like this:
-  **Rmd file -> RStudio -> R -> knitr -> pandoc -> TinyTex -> PDF file**.
-- A version of [pandoc](https://pandoc.org/) comes bundled with RStudio, but if 
+- We use [RStudio](www.rstudio.org) `r rstudioapi::versionInfo()$version` or 
+  later to work with R and R markdown files. The software chain looks like this:
+  **Rmd file > RStudio > R > rmarkdown > knitr > pandoc > TinyTeX or MiKTeX > PDF file**.
+- We use [pandoc](https://pandoc.org) `r rmarkdown::pandoc_version()` or later for this 
+  document. A version of pandoc comes bundled with RStudio, but if 
   you want the most recent version, download it from https://pandoc.org/. 
 - We recommend using [TinyTeX](https://yihui.org/tinytex/) to compile LaTeX 
   files produced by pandoc into PDF files. However, it may be viable to use 
