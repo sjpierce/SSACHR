@@ -7,8 +7,11 @@
 
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![Project Status: WIP – Initial development is in progress, but there
+has not yet been a stable, usable release suitable for the
+public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
 [![CRAN
-status](https://www.r-pkg.org/badges/version/cstatops)](https://CRAN.R-project.org/package=SSAlvmm)
+status](https://www.r-pkg.org/badges/version/SSACHR)](https://CRAN.R-project.org/package=SSACHR)
 <!-- badges: end -->
 
 This package and corresponding GitHub repository are intended to enhance
@@ -145,7 +148,7 @@ re-running our scripts.
 Text goes here.
 
 ``` r
-#library(SSAlvmm)
+#library(SSACHR)
 # Need to add example code
 ```
 
@@ -153,14 +156,18 @@ Text goes here.
 
 We use R Markdown to enhance reproducibility because it provides
 excellent support for generating dynamic reports (Mair, 2016). Knitting
-our R Markdown scripts generates PDF output files containing explanatory
-text, R code, plus R output (both text and graphics).
+the source R Markdown script *README.Rmd* generates this Markdown file.
+Knitting our other R Markdown scripts from this package generates PDF
+output files containing explanatory text, R code, plus R output (both
+text and graphics).
 
--   We use [RStudio](www.rstudio.org) to work with R and R Markdown
-    files. The software chain looks like this: **Rmd file -&gt; RStudio
-    -&gt; R -&gt; knitr -&gt; pandoc -&gt; TinyTex -&gt; PDF file**.
--   A version of [pandoc](https://pandoc.org/) comes bundled with
-    RStudio, but if you want the most recent version, download it from
+-   We use [RStudio](www.rstudio.org) 1.4.1106 or later to work with R
+    and R markdown files. The software chain looks like this: **Rmd
+    file &gt; RStudio &gt; R &gt; rmarkdown &gt; knitr &gt; pandoc &gt;
+    TinyTeX or MiKTeX &gt; PDF file**.
+-   We use [pandoc](https://pandoc.org) 2.11.4 or later for this
+    document. A version of pandoc comes bundled with RStudio, but if you
+    want the most recent version, download it from
     <https://pandoc.org/>.
 -   We recommend using [TinyTeX](https://yihui.org/tinytex/) to compile
     LaTeX files produced by pandoc into PDF files. However, it may be
