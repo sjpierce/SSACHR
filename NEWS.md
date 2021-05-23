@@ -1,3 +1,9 @@
+# SSACHR 0.12.1, 2021-05-23
+* Updated `README.Rmd` and `README.md` to:
+    * Update badges. 
+    * Fix library() call in example. 
+    * Update software information section. 
+    
 # SSACHR 0.12.0, 2021-05-07
 * Updated `inst/Step_02_Analysis.Rmd` to:
     * Add GEE model, estimated marginal means, and contrasts for overall 
