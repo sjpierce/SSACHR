@@ -2,7 +2,7 @@ Package: SSACHR
 Type: Package
 Title: Serial Sexual Assault Study Criminal History Records Paper Research 
   Compendium
-Version: 0.12.1
+Version: 0.13.0
 Date: 2021-05-23
 Authors@R: 
     person(given = c("Steven", "J."),

@@ -1,3 +1,9 @@
+# SSACHR 0.13.0, 2021-05-23
+* Updated `inst/Step_02_Analysis.Rmd` to:
+    * Fixed the Valid % column for overall incident counts in all frequency 
+      tables. 
+    * Improved code alignment for readability. 
+
 # SSACHR 0.12.1, 2021-05-23
 * Updated `README.Rmd` and `README.md` to:
     * Update badges. 
