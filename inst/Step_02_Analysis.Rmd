@@ -492,9 +492,9 @@ IDNEW %>%
                             true = as.numeric(NA), 
                             false = 100*During/N_During),
          After_p = 100*After/N_All,
-         After_v = if_else(is.na(Value), 
-                            true = as.numeric(NA), 
-                            false = 100*After/N_After)) %>% 
+         After_v = if_else(is.na(Value),
+                           true = as.numeric(NA), 
+                           false = 100*After/N_After)) %>% 
   select(Value, All, All_p, All_v, Before, Before_p, Before_v, During, 
          During_p, During_v, After, After_p, After_v) %>% 
   kable(format = "latex", booktabs = TRUE, digits = 2, 
@@ -679,9 +679,9 @@ IDNEW %>%
                             true = as.numeric(NA), 
                             false = 100*During/N_During),
          After_p = 100*After/N_All,
-         After_v = if_else(is.na(Value), 
-                            true = as.numeric(NA), 
-                            false = 100*After/N_After)) %>% 
+         After_v = if_else(is.na(Value),
+                           true = as.numeric(NA), 
+                           false = 100*After/N_After)) %>% 
   select(Value, All, All_p, All_v, Before, Before_p, Before_v, During, 
          During_p, During_v, After, After_p, After_v) %>%
   kable(format = "latex", booktabs = TRUE, digits = 2, 
@@ -737,9 +737,9 @@ IDNEW %>%
                             true = as.numeric(NA), 
                             false = 100*During/N_During),
          After_p = 100*After/N_All,
-         After_v = if_else(is.na(Value), 
-                            true = as.numeric(NA), 
-                            false = 100*After/N_After)) %>% 
+         After_v = if_else(is.na(Value),
+                           true = as.numeric(NA), 
+                           false = 100*After/N_After)) %>% 
   select(Value, All, All_p, All_v, Before, Before_p, Before_v, During, 
          During_p, During_v, After, After_p, After_v) %>%
   kable(format = "latex", booktabs = TRUE, digits = 2, 
@@ -797,8 +797,8 @@ IDNEW %>%
                             false = 100*During/N_During),
          After_p = 100*After/N_All,
          After_v = if_else(is.na(Value), 
-                            true = as.numeric(NA), 
-                            false = 100*After/N_After)) %>% 
+                           true = as.numeric(NA), 
+                           false = 100*After/N_After)) %>% 
   select(Value, All, All_p, All_v, Before, Before_p, Before_v, During, 
          During_p, During_v, After, After_p, After_v) %>% 
   kable(format = "latex", booktabs = TRUE, digits = 2, 
@@ -856,8 +856,8 @@ IDNEW %>%
                             false = 100*During/N_During),
          After_p = 100*After/N_All,
          After_v = if_else(is.na(Value), 
-                            true = as.numeric(NA), 
-                            false = 100*After/N_After)) %>% 
+                           true = as.numeric(NA), 
+                           false = 100*After/N_After)) %>% 
   select(Value, All, All_p, All_v, Before, Before_p, Before_v, During, 
          During_p, During_v, After, After_p, After_v) %>% 
   kable(format = "latex", booktabs = TRUE, digits = 2, 
@@ -957,8 +957,8 @@ IDNEW %>%
                             false = 100*During/N_During),
          After_p = 100*After/N_All,
          After_v = if_else(is.na(Value), 
-                            true = as.numeric(NA), 
-                            false = 100*After/N_After)) %>% 
+                           true = as.numeric(NA), 
+                           false = 100*After/N_After)) %>% 
   select(Value, All, All_p, All_v, Before, Before_p, Before_v, During, 
          During_p, During_v, After, After_p, After_v) %>% 
   kable(format = "latex", booktabs = TRUE, digits = 2, 
@@ -1252,9 +1252,9 @@ IDNEW %>%
                             true = as.numeric(NA), 
                             false = 100*During/N_During),
          After_p = 100*After/N_All,
-         After_v = if_else(is.na(Value), 
-                            true = as.numeric(NA), 
-                            false = 100*After/N_After)) %>% 
+         After_v = if_else(is.na(Value),
+                           true = as.numeric(NA), 
+                           false = 100*After/N_After)) %>% 
   select(Value, All, All_p, All_v, Before, Before_p, Before_v, During, 
          During_p, During_v, After, After_p, After_v) %>% 
   kable(format = "latex", booktabs = TRUE, digits = 2, 
@@ -1458,8 +1458,8 @@ IDNEW %>%
                             false = 100*During/N_During),
          After_p = 100*After/N_All,
          After_v = if_else(is.na(Value), 
-                            true = as.numeric(NA), 
-                            false = 100*After/N_After)) %>% 
+                           true = as.numeric(NA), 
+                           false = 100*After/N_After)) %>% 
   select(Value, All, All_p, All_v, Before, Before_p, Before_v, During, 
          During_p, During_v, After, After_p, After_v) %>% 
   kable(format = "latex", booktabs = TRUE, digits = 2, 
@@ -1666,8 +1666,8 @@ IDNEW %>%
                             false = 100*During/N_During),
          After_p = 100*After/N_All,
          After_v = if_else(is.na(Value), 
-                            true = as.numeric(NA), 
-                            false = 100*After/N_After)) %>% 
+                           true = as.numeric(NA), 
+                           false = 100*After/N_After)) %>% 
   select(Value, All, All_p, All_v, Before, Before_p, Before_v, During, 
          During_p, During_v, After, After_p, After_v) %>% 
   kable(format = "latex", booktabs = TRUE, digits = 2, 
@@ -1871,8 +1871,8 @@ IDNEW %>%
                             false = 100*During/N_During),
          After_p = 100*After/N_All,
          After_v = if_else(is.na(Value), 
-                            true = as.numeric(NA), 
-                            false = 100*After/N_After)) %>% 
+                           true = as.numeric(NA), 
+                           false = 100*After/N_After)) %>% 
   select(Value, All, All_p, All_v, Before, Before_p, Before_v, During, 
          During_p, During_v, After, After_p, After_v) %>% 
   kable(format = "latex", booktabs = TRUE, digits = 2, 
@@ -2075,8 +2075,8 @@ IDNEW %>%
                             false = 100*During/N_During),
          After_p = 100*After/N_All,
          After_v = if_else(is.na(Value), 
-                            true = as.numeric(NA), 
-                            false = 100*After/N_After)) %>% 
+                           true = as.numeric(NA), 
+                           false = 100*After/N_After)) %>% 
   select(Value, All, All_p, All_v, Before, Before_p, Before_v, During, 
          During_p, During_v, After, After_p, After_v) %>% 
   kable(format = "latex", booktabs = TRUE, digits = 2, 
@@ -2280,8 +2280,8 @@ IDNEW %>%
                             false = 100*During/N_During),
          After_p = 100*After/N_All,
          After_v = if_else(is.na(Value), 
-                            true = as.numeric(NA), 
-                            false = 100*After/N_After)) %>% 
+                           true = as.numeric(NA), 
+                           false = 100*After/N_After)) %>% 
   select(Value, All, All_p, All_v, Before, Before_p, Before_v, During, 
          During_p, During_v, After, After_p, After_v) %>% 
   kable(format = "latex", booktabs = TRUE, digits = 2, 
@@ -2483,8 +2483,8 @@ IDNEW %>%
                             false = 100*During/N_During),
          After_p = 100*After/N_All,
          After_v = if_else(is.na(Value), 
-                            true = as.numeric(NA), 
-                            false = 100*After/N_After)) %>% 
+                           true = as.numeric(NA), 
+                           false = 100*After/N_After)) %>% 
   select(Value, All, All_p, All_v, Before, Before_p, Before_v, During, 
          During_p, During_v, After, After_p, After_v) %>% 
   kable(format = "latex", booktabs = TRUE, digits = 2, 
@@ -2687,8 +2687,8 @@ IDNEW %>%
                             false = 100*During/N_During),
          After_p = 100*After/N_All,
          After_v = if_else(is.na(Value), 
-                            true = as.numeric(NA), 
-                            false = 100*After/N_After)) %>% 
+                           true = as.numeric(NA), 
+                           false = 100*After/N_After)) %>% 
   select(Value, All, All_p, All_v, Before, Before_p, Before_v, During, 
          During_p, During_v, After, After_p, After_v) %>% 
   kable(format = "latex", booktabs = TRUE, digits = 2, 
@@ -2891,8 +2891,8 @@ IDNEW %>%
                             false = 100*During/N_During),
          After_p = 100*After/N_All,
          After_v = if_else(is.na(Value), 
-                            true = as.numeric(NA), 
-                            false = 100*After/N_After)) %>% 
+                           true = as.numeric(NA), 
+                           false = 100*After/N_After)) %>% 
   select(Value, All, All_p, All_v, Before, Before_p, Before_v, During, 
          During_p, During_v, After, After_p, After_v) %>% 
   kable(format = "latex", booktabs = TRUE, digits = 2, 
@@ -3094,8 +3094,8 @@ IDNEW %>%
                             false = 100*During/N_During),
          After_p = 100*After/N_All,
          After_v = if_else(is.na(Value), 
-                            true = as.numeric(NA), 
-                            false = 100*After/N_After)) %>% 
+                           true = as.numeric(NA), 
+                           false = 100*After/N_After)) %>% 
   select(Value, All, All_p, All_v, Before, Before_p, Before_v, During, 
          During_p, During_v, After, After_p, After_v) %>% 
   kable(format = "latex", booktabs = TRUE, digits = 2, 
@@ -3298,8 +3298,8 @@ IDNEW %>%
                             false = 100*During/N_During),
          After_p = 100*After/N_All,
          After_v = if_else(is.na(Value), 
-                            true = as.numeric(NA), 
-                            false = 100*After/N_After)) %>% 
+                           true = as.numeric(NA), 
+                           false = 100*After/N_After)) %>% 
   select(Value, All, All_p, All_v, Before, Before_p, Before_v, During, 
          During_p, During_v, After, After_p, After_v) %>% 
   kable(format = "latex", booktabs = TRUE, digits = 2, 
@@ -3503,8 +3503,8 @@ IDNEW %>%
                             false = 100*During/N_During),
          After_p = 100*After/N_All,
          After_v = if_else(is.na(Value), 
-                            true = as.numeric(NA), 
-                            false = 100*After/N_After)) %>% 
+                           true = as.numeric(NA), 
+                           false = 100*After/N_After)) %>% 
   select(Value, All, All_p, All_v, Before, Before_p, Before_v, During, 
          During_p, During_v, After, After_p, After_v) %>% 
   kable(format = "latex", booktabs = TRUE, digits = 2, 
