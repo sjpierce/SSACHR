@@ -2091,6 +2091,111 @@ IDNEW %>%
 
 \FloatBarrier 
 
+#### Overlap Between During Period Incidents and Earliest Known SAKs
+The earliest known SAKs come from a different data source than the criminal
+history records. Those SAKs were tested long after most of the offenders’
+criminal history records had accumulated. It is possible that some or even all 
+of the criminal sexual conduct incidents found in the offenders' criminal 
+histories during the testing window represent the same event as the earliest
+known SAK that starts the testing window. It is also possible that some or all
+of the criminal sexual conduct incidents in the criminal histories are entirely 
+different events that show repeat offending behavior within a short period of
+time. Therefore, below we assess how much overlap there is between the earliest
+SAKs that define when the testing windows start and the CSC incidents from the
+criminal histories that occur during that period.
+
+We start by examining criminal sexual conduct incident records. On these
+records, the *IID* variable is a primary key used for uniquely identifying each
+incident, the *ESAK_IID* variable on an incident record contains the IID
+associated with the offender's earliest known SAK, and *IWhen* classifies each
+incident as occurring before, during, or after the testing window associated
+with the offender's earliest known SAK. When *IID* = *ESAK_IID*, the incident
+record overlaps with the earliest known SAK. So, Table 
+\ref{tab:crosstab_overlap} shows how many CSC incident records there are in each
+*IWhen* period that overlap with the earliest SAK.
+
+```{r crosstab_overlap}
+# Create tibble with only CSC incident records. 
+INCEW %>% 
+  filter(HXCat12_5 == 1) %>% 
+  mutate(Overlap = (ESAK_IID == IID)) -> 
+  INCEW_CSC
+
+# Create tibble with only CSC incident records during the testing window. 
+INCEW_CSC %>% filter(IWhen == "During") ->
+  INCEW_CSCD
+
+TCap <- paste("Number of Criminal Sexual Conduct Incidents By When Incident",
+              "Occurred and Whether The Incident Overlaps The Offender's", 
+              "Earliest SAK")
+
+# Crosstab 
+xtabs(~IWhen + Overlap, data = INCEW_CSC, addNA = TRUE) %>% 
+  addmargins() %>% 
+  as.data.frame() %>% 
+  pivot_wider(names_from = Overlap, values_from = Freq) %>% 
+  kable(., format = "latex", booktabs = TRUE, caption = TCap, 
+        col.names = c("IWhen", "False", "True", "Sum"),
+        format.args = list(big.mark = ",")) %>%
+  add_header_above(c("", "Overlap Earliest SAK" = 2, "")) %>%
+  column_spec(2:4, width = "1.6cm") 
+```
+
+All of the overlap incidents should occur during the testing window and that is
+consistent with what we see in Table \ref{tab:crosstab_overlap}. Therefore, we 
+move on to extract a few key numbers and do some additional computations to 
+quantify the degree of overlap. 
+
+```{r n_overlap1}
+# No. of CSC incidents observed (all periods). 
+INCEW_CSC %>% nrow() -> N_ICSC
+N_ICSC
+
+# No. of CSC incidents observed during testing window. 
+INCEW_CSCD %>% nrow() -> N_ICSCD
+N_ICSCD
+
+# No. of unique offenders with >=1 CSC incident in CHR
+INCEW_CSC %>% pull(OID) %>% unique() %>% length() -> N_OCSC
+N_OCSC
+
+# No. of unique offenders with >=1 CSC incident in CHR during testing window
+INCEW_CSCD %>% pull(OID) %>% unique() %>% length() -> N_OCSCD 
+N_OCSCD
+
+# No. of unique offenders whose earliest SAK overlaps a CSC incident in CHR
+# There is a maximum of one overlap incident per offender, so this is also the
+# number of unique overlap CSC incidents.
+INCEW_CSC %>% filter(ESAK_IID == IID) %>% pull(OID) %>% unique() %>% length() ->
+  N_Overlap
+N_Overlap
+```
+From an incident perspective, there were a total of `r N_ICSC` CSC incidents 
+in the criminal history data, but only `r N_ICSCD` 
+(`r round(100*N_ICSCD/N_ICSC, digits = 2)`%) of them occurred during an 
+offender's testing window. The `r N_Overlap` incidents that overlap with the 
+offender's earliest known SAK comprise 
+`r round(100*N_Overlap/N_ICSC, digits = 2)`% of all the CSC incidents and 
+`r round(100*N_Overlap/N_ICSCD, digits = 2)`% of the CSC incidents that occurred
+during testing windows. So, most of the CSC incidents that occurred during an
+offender’s testing window are linked to the very SAK that started the testing
+window itself.
+
+Meanwhile, from an offender perspective, there are `r N_OCSC` offenders 
+(`r round(100*N_OCSC/N_All, digits = 2)`% of the sample) with at least one CSC
+incident in their criminal history records. However, only `r N_OCSCD` 
+(`r round(100*N_OCSCD/N_All, digits = 2)`%) offenders have one or more CSC 
+incidents in their criminal history that specifically fall during their testing
+window. Further subsetting shows that there are `r N_Overlap` offenders for whom
+we believe the earliest known SAK can be linked to a specific CSC incident from
+their criminal history data. They comprise 
+`r round(100*N_Overlap/N_All, digits = 2)`% of the full sample and 
+`r round(100*N_Overlap/N_OCSCD, digits = 2)`% of the subset of offenders who had
+at least one CSC incident during the testing window according to the criminal
+history records.
+
+\FloatBarrier 
+
 #### GEE Models
 To more closely examine the criminal sexual conduct incident counts, we fitted
 two generalized estimating equation (GEE) models to the long-format *IDNEWL*
