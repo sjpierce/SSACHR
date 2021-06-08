@@ -37,3 +37,4 @@ Imports:
     here,
     lattice,
     tinytex,
+    utils
