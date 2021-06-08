@@ -2250,8 +2250,8 @@ This document was generated using the following computational environment and
 dependencies: 
 
 ``` {r show_citations}
-# If is_tineytex = TRUE, then we used TinyTeX, otherwise we used MikTeX. 
-tinytex:::is_tinytex()
+# Check and report whether we used TinyTex or other LaTeX software. 
+which_latex()
 
 # Get R and R package version numbers in use.
 devtools::session_info()
@@ -2259,15 +2259,6 @@ devtools::session_info()
 
 The current Git commit details and status are:
 
-```{r git_details, eval=TRUE}
-# Store whether git2r is installed and we are in a git repository.
-GitCheck <- "git2r" %in% installed.packages() & git2r::in_repository(path = ".")
-if(!GitCheck) cat(paste0("GitCheck = ", GitCheck, 
-                         ". Version control details not available. \n"))
-
-# What commit is this file at? 
-if (GitCheck) git2r::repository(here::here())
-
-# What is the repository status? 
-if (GitCheck) git2r::status()
+```{r git_details, echo = TRUE, eval=TRUE}
+git_report()
 ```
