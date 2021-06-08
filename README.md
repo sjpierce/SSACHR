@@ -161,7 +161,7 @@ Knitting our other R Markdown scripts from this package generates PDF
 output files containing explanatory text, R code, plus R output (both
 text and graphics).
 
--   We use [RStudio](www.rstudio.org) 1.4.1106 or later to work with R
+-   We use [RStudio](www.rstudio.org) 1.4.1717 or later to work with R
     and R markdown files. The software chain looks like this: **Rmd
     file &gt; RStudio &gt; R &gt; rmarkdown &gt; knitr &gt; pandoc &gt;
     TinyTeX or MiKTeX &gt; PDF file**.
