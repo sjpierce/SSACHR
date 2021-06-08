@@ -32,5 +32,8 @@ VignetteBuilder: knitr
 Imports: 
     assertthat,
     dplyr,
+    git2r,
     haven,
-    lattice
+    here,
+    lattice,
+    tinytex,
