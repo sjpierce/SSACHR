@@ -1,3 +1,22 @@
+# SSACHR 0.14.0, 2021-06-08
+* Updated `inst/R_Citations.Rmd` to load and cite more packages. 
+* Updated `inst/Step_01_Data_Mgt.Rmd` to:
+    * Use new git_report() and which_latex() functions to report software 
+      information. 
+* Updated `inst/Step_02_Analysis.Rmd` to:
+    * Add a section on CSC incident overlap with earliest known SAKs.
+    * Use new git_report() and which_latex() functions to report software 
+      information. 
+    * Rename some chunks and fix table references. 
+* Add `R/Utility_Functions.R` to:
+    * Add new git_report() function. 
+    * Add new which_latex() function. 
+* Add new help documentation:
+    * `man/git_report.Rd`
+    * `man/which_latex.Rd`
+* Updated `DESCRIPTION` and `NAMESPACE` to import additional functions from 
+  other packages and export git_report() and which_latex(). 
+
 # SSACHR 0.13.0, 2021-05-23
 * Updated `inst/Step_02_Analysis.Rmd` to:
     * Fixed the Valid % column for overall incident counts in all frequency 
