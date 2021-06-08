@@ -107,7 +107,7 @@ script *`r knitr:::current_input()`* generates this PDF file.
   **Rmd file > RStudio > R > rmarkdown > knitr > pandoc > TinyTeX or MiKTeX > PDF file**.
 - We recommend using [TinyTeX](https://yihui.org/tinytex/) to compile LaTeX files 
   into PDF files. However, it should be viable to use 
-  [MiKTeX version 2.9](https://miktex.org) instead. 
+  [MiKTeX](https://miktex.org) instead. 
 - We used [pandoc](https://pandoc.org) `r pandoc_version()` for this 
   document. 
 
@@ -125,11 +125,13 @@ rstudioapi::versionInfo()
 citation() 
 
 # Get package citations.
+citation("assertthat")
 citation("car")
 citation("descr")
 citation("dplyr")
 citation("emmeans")
 citation("geepack")
+citation("git2r")
 citation("ggplot2")
 citation("haven")
 citation("here")
@@ -144,7 +146,9 @@ citation("rmarkdown")
 citation("sjlabelled")
 citation("SSACHR")
 citation("texreg")
+citation("tinytex")
 citation("tidyr")
+citation("utils")
 citation("vistime")
 ```
 
