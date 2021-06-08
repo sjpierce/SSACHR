@@ -445,11 +445,11 @@ densityplot(~ Count | VName, data = RCCOUNTS, layout = c(5,1),
             xlab = "Overall Number of Records for Offender")
 ```
 
-In the subsections below, Tables \ref{tab:freq_NINC}, \ref{tab:freq_NARR}, 
-\ref{tab:freq_NCHG}, \ref{tab:freq_NJUD}, and \ref{tab:freq_NCON} respectively 
-show the frequency distributions underlying those statistics for incidents,
-arrest offenses, prosecutor charges, all adjudicated charges, and adjudicated
-charges that were convictions.
+In the subsections below, Tables \ref{tab:freq_NINC12}, \ref{tab:freq_NARR12}, 
+\ref{tab:freq_NCHG12}, \ref{tab:freq_NJUD12}, and \ref{tab:freq_NCON12} 
+respectively show the frequency distributions underlying those statistics for
+incidents, arrest offenses, prosecutor charges, all adjudicated charges, and
+adjudicated charges that were convictions.
 
 \FloatBarrier 
 
@@ -640,7 +640,7 @@ as_tibble(confint(NINC12_emmeans1$contrasts)) %>%
 
 ### Arrest Offense Records
 
-```{r freq_NARR}
+```{r freq_NARR12}
 # Table caption.
 TCap <- paste("Frequency Distributions for Number of Arrest Offenses (All",
               "Crime Categories) Overall and By When Incident Occurred")
@@ -698,7 +698,7 @@ IDNEW %>%
 
 ### Prosecutor Charge Records
 
-```{r freq_NCHG}
+```{r freq_NCHG12}
 # Table caption.
 TCap <- paste("Frequency Distributions for Number of Prosecutor Charges (All",
               "Crime Categories) Overall and By When Incident Occurred")
@@ -756,7 +756,7 @@ IDNEW %>%
 
 ### Adjudicated Charge Records (All)
 
-```{r freq_NJUD}
+```{r freq_NJUD12}
 # Table caption.
 TCap <- paste("Frequency Distributions for Number of Adjudicated Charges (All",
               "Crime Categories) Overall and By When Incident Occurred")
@@ -815,7 +815,7 @@ IDNEW %>%
 
 ### Adjudicated Charge Records (Convictions)
 
-```{r freq_NCON}
+```{r freq_NCON12}
 # Table caption.
 TCap <- paste("Frequency Distributions for Number of Adjudicated Charges (All",
               "Crime Categories, Convictions) Overall and By When Incident",
