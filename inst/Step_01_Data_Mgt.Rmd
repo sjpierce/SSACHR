@@ -156,7 +156,7 @@ library(haven)            # for read_spss()
 library(lattice)          # For xyplot(), bwplot(), etc. 
 library(psych)            # For describe()
 library(car)              # For recode()
-library(SSACHR)           # for rvlabel()
+library(SSACHR)           # for git_report(), rvlabel(), which_latex()
 library(vistime)          # for gg_vistime()
 library(ggplot2)          # for theme()
 ```

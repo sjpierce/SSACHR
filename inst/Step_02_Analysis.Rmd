@@ -100,7 +100,7 @@ library(lattice)          # For xyplot(), bwplot(), etc.
 library(latticeExtra)     # for layer()
 library(psych)            # For describe()
 library(car)              # For recode()
-library(SSACHR)           # for rvlabel()
+library(SSACHR)           # for git_report(), rvlabel(), which_latex()
 library(geepack)          # for geeglm()
 library(emmeans)          # for emmeans()
 library(texreg)           # for texreg()
