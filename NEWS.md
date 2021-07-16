@@ -1,3 +1,7 @@
+# SSACHR 0.14.1, 2021-07-16
+* Added `inst/Temp_Code.R` to test out draft code we may use to revise analysis
+  based on peer review feedback. 
+
 # SSACHR 0.14.0, 2021-06-08
 * Updated `inst/R_Citations.Rmd` to load and cite more packages. 
 * Updated `inst/Step_01_Data_Mgt.Rmd` to:
