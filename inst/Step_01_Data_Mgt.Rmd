@@ -2201,6 +2201,48 @@ kable(CHR.RC, format = "latex", booktabs = TRUE, caption = TCap,
 
 \FloatBarrier
 
+# Create A Long Person-Period Version of IDNEW 
+The chunk below reorganizes the *IDNEW* data to a long person-period format with
+three rows per offender (one row for each period before, during, and after the
+testing window) and stores it as *IDNEWL*. The period (before, during, or after
+the earliest testing window) is identified by the *When* variable. The observed
+duration of the period is stored in *Years*, so *Years* > 0 indicates that the
+period overlapped offender's observed adult CHR period for at least one day.
+Meanwhile, *Years* = 0 indicates an unobserved period that did not overlap with
+the offender's observed adult CHR period at all. We will use *IDNEWL* later for
+running GEE models.
+
+```{r create_IDNEWL}
+IDNEW %>% 
+  select(OID, Years_Before, Years_During, Years_After,
+         HXCat12_Any_Before, HXCat12_Any_During, HXCat12_Any_After,
+         HXCat12_Count_Before, HXCat12_Count_During, HXCat12_Count_After,
+         HXCat12_1_Before, HXCat12_1_During, HXCat12_1_After,
+         HXCat12_2_Before, HXCat12_2_During, HXCat12_2_After,
+         HXCat12_3_Before, HXCat12_3_During, HXCat12_3_After,
+         HXCat12_4_Before, HXCat12_4_During, HXCat12_4_After,
+         HXCat12_5_Before, HXCat12_5_During, HXCat12_5_After,
+         HXCat12_6_Before, HXCat12_6_During, HXCat12_6_After,
+         HXCat12_7_Before, HXCat12_7_During, HXCat12_7_After,
+         HXCat12_8_Before, HXCat12_8_During, HXCat12_8_After,
+         HXCat12_9_Before, HXCat12_9_During, HXCat12_9_After,
+         HXCat12_10_Before, HXCat12_10_During, HXCat12_10_After,
+         HXCat12_11_Before, HXCat12_11_During, HXCat12_11_After,
+         HXCat12_12_Before, HXCat12_12_During, HXCat12_12_After) %>% 
+  pivot_longer(cols = -OID, names_to = c(".value", "When"), 
+               names_pattern = "(.*)_(.*)",
+               values_to = c("Duration", "HXCat12_Any", "HXCat12_Count", 
+                             "HXCat12_1", "HXCat12_2", "HXCat12_3", 
+                             "HXCat12_4", "HXCat12_5", "HXCat12_6", 
+                             "HXCat12_7", "HXCat12_8", "HXCat12_9",
+                             "HXCat12_10", "HXCat12_11", "HXCat12_12")) %>% 
+  rename(NINC12 = HXCat12_Any) %>% 
+  mutate(When = factor(x = When, levels = c("After", "Before", "During"))) ->
+  IDNEWL
+```
+
+\FloatBarrier
+
 # Save Data to a File
 
 ```{r save_data}
