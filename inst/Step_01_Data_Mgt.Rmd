@@ -2262,7 +2262,7 @@ IDNEW %>%
 # Extract the After Period Records from IDNEWL to IDNEWA
 The chunk below filters the *IDNEWL* tibble down to just the records for the 
 after period (*When* = "After"), then reorganizes it to a long format with one
-row per offender per crime category to facilitate analyses we added to respond 
+row per offender per variable to facilitate analyses we added to respond 
 to peer review feedback on the manuscript. We store the resulting data in
 *IDNEWA*.
 
