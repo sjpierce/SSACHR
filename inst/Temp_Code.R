@@ -7,46 +7,6 @@ TIDNEW <-
 
 names(TIDNEW) <- c(paste0("HCA_", 1:12), "HCA_Count")
 
-
-
-
-# For the after period, get total number and percent of offenders with 1 or more
-# incidents, plus the total number of incidents arrested, charged, or convicted
-
-TCap <- paste("Summary of Offenders Arrested, Charged, or Convicted for at",
-              "Least One Incident Occuring After the Testing Window By",
-              "Crime Category")
-FN <- paste("Separately for each crime category, we counted offenders arrested,",
-            "charged, or convicted for at least one incident occurring after",
-            "the testing window. The numerator for each percentage is the",
-            "listed value for n; the denominator is the full sample size (N = ",
-            "1,082). Total incidents are summed across the offenders.")
-
-IDNEWA %>%
-  filter(Variable != "HXCat12_Count") %>%
-  filter(Count > 0) %>%
-  group_by(Variable, VLabel, VOrder) %>%
-  summarise(N = n(),
-            Pct = 100*N/nrow(IDNEW),
-            Incidents = sum(Count)) %>%
-  ungroup() %>%
-  arrange(VOrder) %>%
-  select(VLabel, N, Pct, Incidents) %>%
-  kable(., format = "html", booktabs = TRUE, digits = 1, row.names = FALSE,
-        col.names = c("Crime Category", "n", "%", "Total Incidents After TW"),
-        format.args = list(big.mark = ','), caption = TCap) %>%
-  kable_styling() %>%
-  add_header_above(c(" " = 1, "Offenders" = 2, " " = 1)) %>%
-  group_rows("Sexual Crimes", 1, 2) %>%
-  group_rows("Violent Non-Sexual Crimes", 3, 7) %>%
-  group_rows("Property Crimes", 8, 10) %>%
-  group_rows("Other Crimes", 11, 12) %>%
-  column_spec(., column = 2, width = "1.15cm") %>%
-  column_spec(., column = 3, width = "1.15cm") %>%
-  column_spec(., column = 4, width = "2cm") %>%
-  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
-           threeparttable = TRUE)
-
 # Graph after period frequency distrbutions
 CCLabels <- c("Criminal Sexual Conduct (CSC)",
               "Sex Crimes (non-CSC crimes)",
