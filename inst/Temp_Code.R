@@ -21,32 +21,18 @@ CCLabels <- c("Criminal Sexual Conduct (CSC)",
               "Drug Crimes",
               "Traffic & Ordinances")
 
-TIDNEW %>%
-  select(HCA_1, HCA_2, HCA_3, HCA_4, HCA_5, HCA_6, HCA_7, HCA_8, HCA_9,
-         HCA_10, HCA_11, HCA_12) %>%
-  pivot_longer(data = ., cols = starts_with("HCA_"), names_to = "Category",
-               values_to = "ICount") %>%
-  mutate(Crime = case_when(Category == "HCA_1" ~ "Arson",
-                           Category == "HCA_2" ~ "Assault, Domestic Violence",
-                           Category == "HCA_3" ~ "Assault, non-Domestic Violence",
-                           Category == "HCA_4" ~ "Burglary",
-                           Category == "HCA_5" ~ "Criminal Sexual Conduct (CSC)",
-                           Category == "HCA_6" ~ "Drug Crimes",
-                           Category == "HCA_7" ~ "Homicide",
-                           Category == "HCA_8" ~ "Larceny, Theft, Fraud",
-                           Category == "HCA_9" ~ "Robbery",
-                           Category == "HCA_10" ~ "Sex Crimes (non-CSC crimes)",
-                           Category == "HCA_11" ~ "Traffic & Ordinances",
-                           Category == "HCA_12" ~ "Weapons")) %>%
-  mutate(Crime = factor(Crime, levels = CCLabels, labels = CCLabels),
+IDNEWA %>%
+  # Drops rows for crime category counts and individuals with no incidents
+  filter(Variable != "HXCat12_Count") %>%
+  mutate(Crime = factor(VLabel, levels = CCLabels, labels = CCLabels),
          # Also create CrimeRev where the order of levels is reversed to make it
          # easy to get a boxplot with the criem categories shown in same order
          # as we get them for histograms and tables.
-         CrimeRev = factor(Crime, levels = rev(CCLabels),
+         CrimeRev = factor(VLabel, levels = rev(CCLabels),
                            labels = rev(CCLabels))) ->
-  tmpdf
+  tmpdf2
 
-tmpdf
+
 
 # Full view (larceny is category w/ largest observed value (ICount = 37)
 histogram(~ ICount | Crime, data = tmpdf, type = "count", as.table = TRUE,
