@@ -69,10 +69,16 @@ FN <- paste("Separately for each crime category, we counted offenders arrested,"
             "listed value for n; the denominator is the full sample size (N = ",
             "1,082). Total incidents are summed across the offenders.")
 
-rbind(HCA_1, HCA_2, HCA_3, HCA_4, HCA_5, HCA_6, HCA_7, HCA_8, HCA_9,
-      HCA_10, HCA_11, HCA_12) %>%
-  arrange(SortOrder) %>%
-  select(Category, N, Pct, Incidents) %>%
+IDNEWA %>%
+  filter(Variable != "HXCat12_Count") %>%
+  filter(Count > 0) %>%
+  group_by(Variable, VLabel, VOrder) %>%
+  summarise(N = n(),
+            Pct = 100*N/nrow(IDNEW),
+            Incidents = sum(Count)) %>%
+  ungroup() %>%
+  arrange(VOrder) %>%
+  select(VLabel, N, Pct, Incidents) %>%
   kable(., format = "html", booktabs = TRUE, digits = 1, row.names = FALSE,
         col.names = c("Crime Category", "n", "%", "Total Incidents After TW"),
         format.args = list(big.mark = ','), caption = TCap) %>%
