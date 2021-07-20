@@ -1,3 +1,17 @@
+# SSACHR 0.15.1, 2021-07-20
+* Updated `inst/Step_01_Data_Mgt.Rmd` to:
+    * Improve IDNEWL and IDNEWA tibbles.
+    * Improve explanatory text. 
+* Update `inst/Step_02_Analysis.Rmd` to:
+    * Change a section heading.
+    * Add After Period Summary section with a new table. 
+* Updated `inst/Temp_Code.R` by removing obsolete code. 
+* Updated `inst/R_Citations.Rmd` to declare script location and put citation()
+  calls in alphabetical order. 
+* Updated `inst/README.Rmd` to 
+    * Split install code for *devtools* and *SSACHR* into separate chunks.
+    * Improve repository structure documentation. 
+
 # SSACHR 0.15.0, 2021-07-19
 * Moved data management code from `inst/Step_02_Analysis.Rmd` to 
  `inst/Step_01_Data_Mgt.Rmd`.
