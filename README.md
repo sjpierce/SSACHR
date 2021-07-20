@@ -74,6 +74,23 @@ Marwick et al. (2018).
             Obtaining Data Files section below. It performs initial data
             management steps to prepare the data for use in other
             scripts.
+        -   *Step\_02\_Analysis.Rmd*: This file should be knitted after
+            you knit *Step\_01\_Data\_Mgt.Rmd* because it depends on
+            files created by that script.
+        -   *R\_Citations.Rmd*: This file provides more details about
+            the R packages used by *Step\_01\_Data\_Mgt.Rmd* and
+            *Step\_02\_Analysis.Rmd*. We recommend knitting it after you
+            knit those two files. When you knit it, you will get an
+            output file called *R\_Citations.pdf* showing the citations
+            and versions for what is installed and in use on your
+            computer.
+        -   *R\_Citations\_Published.pdf*: This is output from knitting
+            *R\_Citations.Rmd* on our computer and represents the
+            software environment we used to generate the files upon
+            which our published manuscript was based. You can compare it
+            to the environment on you computer. Maximum reproducibility
+            should occur when you are using the same environment we
+            used.
     -   **man**: This folder contains R help files (*.Rd*) for the
         package and  
         its custom functions. It is required by R package building
