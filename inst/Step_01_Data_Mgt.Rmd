@@ -2258,7 +2258,7 @@ IDNEWL %>%
 
 ```{r save_data}
 save(IDNEW, INCEW, ARREW, CHGEW, JUDEW, CONEW, IDNEWL, IDNEWA,
-     file = here::here("./data/CHR_Data.RData"))
+     file = here::here("data/CHR_Data.RData"))
 ```
 
 # Wrap Up
