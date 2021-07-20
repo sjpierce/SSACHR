@@ -2237,7 +2237,23 @@ IDNEW %>%
                              "HXCat12_7", "HXCat12_8", "HXCat12_9",
                              "HXCat12_10", "HXCat12_11", "HXCat12_12")) %>% 
   rename(NINC12 = HXCat12_Any) %>% 
-  mutate(When = factor(x = When, levels = c("After", "Before", "During"))) ->
+  mutate(When = factor(x = When, levels = c("After", "Before", "During"))) %>% 
+  var_labels(When = "When period occurred (relative to testing window)",
+             Years = "Years of period duration",
+             NINC12 = "No. incidents arrested, charged, or convicted for any of 12 main crime categories during period",
+             HXCat12_Count = "Arrested, charged, or convicted crime category count (incidents during period)",
+             HXCat12_1 = "No. incidents arrested, charged, or convicted for arson during period",
+             HXCat12_2 = "No. incidents arrested, charged, or convicted for assault - DV, stalking during period",
+             HXCat12_3 = "No. incidents arrested, charged, or convicted for assault - non-sexual, non-DV during period",
+             HXCat12_4 = "No. incidents arrested, charged, or convicted for burglary during period",
+             HXCat12_5 = "No. incidents arrested, charged, or convicted for criminal sexual conduct during period",
+             HXCat12_6 = "No. incidents arrested, charged, or convicted for drug crime during period",
+             HXCat12_7 = "No. incidents arrested, charged, or convicted for homicide during period",
+             HXCat12_8 = "No. incidents arrested, charged, or convicted for larceny/theft/fraud during period",
+             HXCat12_9 = "No. incidents arrested, charged, or convicted for robbery during period",
+             HXCat12_10 = "No. incidents arrested, charged, or convicted for sex crime - other, excluding CSC during period",
+             HXCat12_11 = "No. incidents arrested, charged, or convicted for traffic/ordinances during period",
+             HXCat12_12 = "No. incidents arrested, charged, or convicted for weapons during period") ->
   IDNEWL
 ```
 
