@@ -8,53 +8,6 @@ TIDNEW <-
 names(TIDNEW) <- c(paste0("HCA_", 1:12), "HCA_Count")
 
 
-# Aggregate to unique patterns of incident counts across HXCat12_1_After to
-# HXCat12_12_After, plus HXCat12_Count_After and compute frequency of each
-# pattern.
-head(TIDNEW)
-DTIDNEW <-
-  TIDNEW %>%
-  group_by(HCA_1, HCA_2, HCA_3, HCA_4, HCA_5, HCA_6, HCA_7, HCA_8, HCA_9,
-           HCA_10, HCA_11, HCA_12, HCA_Count) %>%
-  summarise(N = n()) %>%
-  # Sort in descending order by pattern frequency and crime category count for
-  # the pattern
-  arrange(desc(N), desc(HCA_Count))
-
-nrow(DTIDNEW)  # No. unique patterns
-head(DTIDNEW)
-
-# Aggregate to unique patterns of binary transforms of HXCat12_1_After to
-# HXCat12_12_After, plus HXCat12_Count_After and compute frequency of each
-# pattern.
-head(TIDNEW)
-DTIDNEW <-
-  TIDNEW %>%
-  mutate(HCA_1 = if_else(HCA_1 > 0, true = 1, false = 0),
-         HCA_2 = if_else(HCA_2 > 0, true = 1, false = 0),
-         HCA_3 = if_else(HCA_3 > 0, true = 1, false = 0),
-         HCA_4 = if_else(HCA_4 > 0, true = 1, false = 0),
-         HCA_5 = if_else(HCA_5 > 0, true = 1, false = 0),
-         HCA_6 = if_else(HCA_6 > 0, true = 1, false = 0),
-         HCA_7 = if_else(HCA_7 > 0, true = 1, false = 0),
-         HCA_8 = if_else(HCA_8 > 0, true = 1, false = 0),
-         HCA_9 = if_else(HCA_9 > 0, true = 1, false = 0),
-         HCA_10 = if_else(HCA_10 > 0, true = 1, false = 0),
-         HCA_11 = if_else(HCA_11 > 0, true = 1, false = 0),
-         HCA_12 = if_else(HCA_12 > 0, true = 1, false = 0)) %>%
-  group_by(HCA_1, HCA_2, HCA_3, HCA_4, HCA_5, HCA_6, HCA_7, HCA_8, HCA_9,
-           HCA_10, HCA_11, HCA_12, HCA_Count) %>%
-  summarise(N = n()) %>%
-  # Sort in descending order by pattern frequency and crime category count for
-  # the pattern
-  arrange(HCA_Count, desc(N)) %>%
-  ungroup() %>%
-  mutate(Cum_N = cumsum(N),
-         Pct = 100*N/sum(N),
-         Cum_Pct = 100*Cum_N/sum(N))
-
-nrow(DTIDNEW)  # No. unique patterns
-head(DTIDNEW)
 
 
 # For the after period, get total number and percent of offenders with 1 or more
