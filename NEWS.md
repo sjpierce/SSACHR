@@ -1,3 +1,9 @@
+# SSACHR 0.15.0, 2021-07-19
+* Moved data management code from `inst/Step_02_Analysis.Rmd` to 
+ `inst/Step_01_Data_Mgt.Rmd`.
+* Updated `inst/Step_01_Data_Mgt.Rmd` to create and save additional tibbles 
+  based on person-period data sets. 
+
 # SSACHR 0.14.1, 2021-07-16
 * Added `inst/Temp_Code.R` to test out draft code we may use to revise analysis
   based on peer review feedback. 
