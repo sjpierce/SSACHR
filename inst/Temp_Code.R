@@ -35,28 +35,64 @@ IDNEWA %>%
 
 
 # Full view (larceny is category w/ largest observed value (ICount = 37)
-histogram(~ ICount | Crime, data = tmpdf, type = "count", as.table = TRUE,
+histogram(~ Count | Crime, data = tmpdf2, type = "count", as.table = TRUE,
           # Breaks is set so we get a bin for every integer value of ICount.
-          breaks = -1:38, xlim = c(-1, 38),
+          breaks = -0.5:37.5, xlim = c(-1, 38), rug = TRUE,
           xlab = "No. incidents after testing window",
           ylab = "No. of offenders (frequency)")
+
 
 # Zoom in on ICount values of 0-10
-histogram(~ ICount | Crime, data = tmpdf, type = "count", as.table = TRUE,
+histogram(~ Count | Crime, data = tmpdf2, type = "count", as.table = TRUE,
           # Breaks is set so we get a bin for every integer value of ICount.
-          breaks = -1:38, xlim = c(-1, 10),
+          breaks = -0.5:37.5, xlim = c(-1, 10),
           xlab = "No. incidents after testing window",
           ylab = "No. of offenders (frequency)")
+
+
+
 
 # Zoom in on frequency of 0-300.
-histogram(~ ICount | Crime, data = tmpdf, type = "count", as.table = TRUE,
+histogram(~ Count | Crime, data = tmpdf2, type = "count", as.table = TRUE,
           # Breaks is set so we get a bin for every integer value of ICount.
-          breaks = -1:38, ylim = c(0, 300),
+          breaks = -0.5:37.5, ylim = c(0, 300),
           xlab = "No. incidents after testing window",
           ylab = "No. of offenders (frequency)")
 
+# Zoom in on frequency of 0-300 and Count values 0-10.
+histogram(~ Count | Crime, data = tmpdf2, type = "count", as.table = TRUE,
+          # Breaks is set so we get a bin for every integer value of ICount.
+          breaks = -0.5:37.5, xlim = c(-1, 10), ylim = c(0, 300),
+          xlab = "No. incidents after testing window",
+          ylab = "No. of offenders (frequency)")
+
+
 # U
-bwplot(CrimeRev ~ ICount, data = tmpdf, factor = 1.5, xlim = c(-2, 40),
+bwplot(CrimeRev ~ Count, data = tmpdf2, factor = 1.25, xlim = c(-2, 42),
        as.table = TRUE,
        panel = panel.mybox, par.settings = my.boxes,
        xlab = "No. incidents after testing window")
+
+bwplot(~ Count | Crime, data = tmpdf2, factor = 24,
+       as.table = TRUE, xlim = c(-2, 42),
+       panel = panel.mybox, par.settings = my.boxes,
+       xlab = "No. incidents after testing window")
+
+bwplot(~ Count | Crime, data = tmpdf2, factor = 24,
+       as.table = TRUE, xlim = c(-2, 12),
+       panel = panel.mybox, par.settings = my.boxes,
+       xlab = "No. incidents after testing window")
+
+bwplot(~ Count | Crime, data = tmpdf2, factor = 24, layout = c(1,12),
+       as.table = TRUE, xlim = c(-2, 42),
+       panel = panel.mybox, par.settings = my.boxes,
+       xlab = "No. incidents after testing window")
+
+
+# Note sure beeswarm is going to do any better than bwplot with these data.
+library(beeswarm)
+beeswarm(Count ~ Crime, data = tmpdf2, corral = "wrap", side = 0,
+         vertical = FALSE)
+
+
+
