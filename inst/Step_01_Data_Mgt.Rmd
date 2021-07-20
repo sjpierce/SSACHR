@@ -2261,12 +2261,55 @@ IDNEW %>%
 
 # Extract the After Period Records from IDNEWL to IDNEWA
 The chunk below filters the *IDNEWL* tibble down to just the records for the 
-after period (*When* = "After") to facilitate analyses we added to respond to 
-peer review feedback on the manuscript. We store the resulting data in *IDNEWA*.
+after period (*When* = "After"), then reorganizes it to a long format with one
+row per offender per crime category to facilitate analyses we added to respond 
+to peer review feedback on the manuscript. We store the resulting data in
+*IDNEWA*.
 
 ```{r create_IDNEWA}
+# Create objects to hold vectors of variable names that should be grouped 
+# together in output later. 
+Sexual_Crimes   <- c("HXCat12_5", "HXCat12_3")
+Violent_Crimes  <- c("HXCat12_2", "HXCat12_3", "HXCat12_7", "HXCat12_9", "HXCat12_12")
+Property_Crimes <- c("HXCat12_1", "HXCat12_4", "HXCat12_8")
+Other_Crimes    <- c("HXCat12_6", "HXCat12_11")
+
+# Create the new tibble. 
 IDNEWL %>% 
-  filter(When == "After") ->
+  filter(When == "After") %>% 
+  pivot_longer(data = ., cols = starts_with("HXCat12_"), names_to = "Variable",
+               values_to = "Count") %>%
+  mutate(VLabel = case_when(Variable == "HXCat12_Count" ~ "Crime Category",
+                            Variable == "HXCat12_1" ~ "Arson",
+                            Variable == "HXCat12_2" ~ "Assault, Domestic Violence",
+                            Variable == "HXCat12_3" ~ "Assault, non-Domestic Violence",
+                            Variable == "HXCat12_4" ~ "Burglary",
+                            Variable == "HXCat12_5" ~ "Criminal Sexual Conduct (CSC)",
+                            Variable == "HXCat12_6" ~ "Drug Crimes",
+                            Variable == "HXCat12_7" ~ "Homicide",
+                            Variable == "HXCat12_8" ~ "Larceny, Theft, Fraud",
+                            Variable == "HXCat12_9" ~ "Robbery",
+                            Variable == "HXCat12_10" ~ "Sex Crimes (non-CSC crimes)",
+                            Variable == "HXCat12_11" ~ "Traffic & Ordinances",
+                            Variable == "HXCat12_12" ~ "Weapons"),
+         VGroup = case_when(Variable == "HXCat12_Count" ~ "Crime Category Count",
+                            Variable %in% Sexual_Crimes ~ "Sexual Crimes",
+                            Variable %in% Violent_Crimes ~ "Violent Non-Sexual Crimes",
+                            Variable %in% Property_Crimes ~ "Property Crimes",
+                            Variable %in% Other_Crimes ~ "Other Crimes"),
+         VOrder = case_when(Variable == "HXCat12_Count" ~ 0,
+                            Variable == "HXCat12_5" ~ 1,
+                            Variable == "HXCat12_10" ~ 2,
+                            Variable == "HXCat12_2" ~ 3,
+                            Variable == "HXCat12_3" ~ 4,
+                            Variable == "HXCat12_7" ~ 5,
+                            Variable == "HXCat12_9" ~ 6,
+                            Variable == "HXCat12_12" ~ 7,
+                            Variable == "HXCat12_1" ~ 8,
+                            Variable == "HXCat12_4" ~ 9,
+                            Variable == "HXCat12_8" ~ 10,
+                            Variable == "HXCat12_6" ~ 11,
+                            Variable == "HXCat12_11" ~ 12)) ->
   IDNEWA
 ```
 
