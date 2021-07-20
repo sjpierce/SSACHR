@@ -75,6 +75,9 @@ knitr::knit_hooks$set(chunk = function(x, options) {
 # Global chunk options (over-ridden by local chunk options)
 knitr::opts_chunk$set(include  = TRUE, echo = TRUE, error = TRUE, 
                       message = TRUE, warning = TRUE, cfsize = "footnotesize")
+
+# Declare location of this script relative to the project root directory.
+here::i_am(path = "inst/R_Citations.Rmd")
 ```
 
 Load R packages that we need to get additional functions. 
