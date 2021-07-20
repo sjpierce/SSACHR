@@ -2257,7 +2257,7 @@ IDNEWL %>%
 # Save Data to a File
 
 ```{r save_data}
-save(IDNEW, INCEW, ARREW, CHGEW, JUDEW, CONEW, 
+save(IDNEW, INCEW, ARREW, CHGEW, JUDEW, CONEW, IDNEWL, IDNEWA,
      file = here::here("./data/CHR_Data.RData"))
 ```
 
