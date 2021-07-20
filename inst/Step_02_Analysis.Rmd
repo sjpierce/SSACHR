@@ -1065,7 +1065,7 @@ as_tibble(confint(cccvar_emmeans1$contrasts)) %>%
 
 \FloatBarrier
 
-## Incident Counts by Crime Category (12 levels)
+## Incident Counts by Crime Category (12 levels) and Period
 In this section, we analyze variables that contain the number of unique 
 incidents in the offender's criminal history for a given type of crime. For each
 category of crime, we report include counts of incidents based on a combined 
