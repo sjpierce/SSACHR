@@ -3714,6 +3714,53 @@ as_tibble(confint(HXCat12_12_emmeans1$contrasts)) %>%
 
 \FloatBarrier
 
+## After Period Summary 
+Next we summarize the amount of crime that occurred after the testing window.
+Separately for each crime category, Table \ref{tab:after_summary} shows the
+number of offenders with one or more incidents from the given category. It also
+translates those offender counts into percentages relative to the total sample
+size and reports the total number of incidents associated with those offenders
+that occurred after the testing window ended.
+
+```{r after_summary}
+TCap <- paste("Amount of Crime That Occurred After the Testing Window")
+FN <- paste("Separately for each crime category, we counted offenders arrested,",
+            "charged, or convicted for at least one incident occurring after",
+            "the testing window. The numerator for each percentage is the",
+            "listed value for n; the denominator is the full sample size (N = ",
+            "1,082). Total incidents are summed across those offenders.", 
+            "Incidents associated with more than one kind of crime are counted",
+            "in all applicable categories. TW, testing window.")
+
+IDNEWA %>%
+  # Drops rows for crime category counts and individuals with no incidents
+  filter(Variable != "HXCat12_Count") %>%
+  # Drops rows for offenders with no incidents of a given type occuring after 
+  # the testing window. 
+  filter(Count > 0) %>%
+  group_by(Variable, VLabel, VOrder) %>%
+  summarise(N = n(),
+            Pct = 100*N/nrow(IDNEW),
+            Incidents = sum(Count)) %>%
+  ungroup() %>%
+  arrange(VOrder) %>%
+  select(VLabel, N, Pct, Incidents) %>%
+  kable(., format = "latex", booktabs = TRUE, digits = 1, row.names = FALSE,
+        col.names = c("Crime Category", "n", "%", "Total Incidents"),
+        format.args = list(big.mark = ','), caption = TCap) %>%
+  kable_styling() %>%
+  add_header_above(c(" " = 1, "Offenders" = 2, " " = 1)) %>%
+  group_rows("Sexual Crimes", 1, 2) %>%
+  group_rows("Violent Non-Sexual Crimes", 3, 7) %>%
+  group_rows("Property Crimes", 8, 10) %>%
+  group_rows("Other Crimes", 11, 12) %>%
+  column_spec(., column = 2, width = "1.15cm") %>%
+  column_spec(., column = 3, width = "1.15cm") %>%
+  column_spec(., column = 4, width = "2cm") %>%
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+           threeparttable = TRUE)
+```
+
 # Arrest Offense Record Summaries
 All summaries in this section directly summarize the ARR data without first 
 aggregating to the incident or offender level. 
