@@ -2243,6 +2243,17 @@ IDNEW %>%
 
 \FloatBarrier
 
+# Extract the After Period Records from IDNEWL to IDNEWA
+The chunk below filters the *IDNEWL* tibble down to just the records for the 
+after period (*When* = "After") to facilitate analyses we added to respond to 
+peer review feedback on the manuscript. We store the resulting data in *IDNEWA*.
+
+```{r create_IDNEWA}
+IDNEWL %>% 
+  filter(When == "After") ->
+  IDNEWA
+```
+
 # Save Data to a File
 
 ```{r save_data}
