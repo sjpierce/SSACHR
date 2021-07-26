@@ -1455,7 +1455,11 @@ FN <- paste("ARREW, variables pertaining to arrests;",
 
 # Create data for table.
 CrimeCats <- data.frame(Label = c(get_labels(ARREW$ACat12), 
-                                  "Any of 12 main categories (arson to weapons)"),
+                                  "Any of 12 main categories (arson to weapons)",
+                                  "Any sexual crimes (2 categories)",
+                                  "Any violent crimes (5 categories)",
+                                  "Any property crimes (3 categories)",
+                                  "Any other crimes (2 categories)"),
                         ARREW = avars,
                         CHGEW = cvars,
                         CONEW = jvars)
