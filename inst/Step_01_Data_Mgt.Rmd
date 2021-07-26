@@ -221,6 +221,14 @@ read_sav(here::here("inst/extdata/SSA_ARR_Arrests_Imputed_2018-09-03.sav"),
   dcode(x = ., y = factor(.$ACat12), stem = "ACat12") %>% 
   # Dummy code any of the 12 main crime categories, set user-missing values to 0. 
   mutate(ACat12_Any = if_else(ACat12 %in% 1:12, true = 1, false = 0)) %>% 
+  # Dummy code the combined sexual crimes categories, set user-missing values to 0. 
+  mutate(ACat12_Sexual = if_else(ACat12 %in% c(5, 10), true = 1, false = 0)) %>% 
+  # Dummy code the combined violent crimes categories, set user-missing values to 0. 
+  mutate(ACat12_Violent = if_else(ACat12 %in% c(2, 3, 7, 9, 12), true = 1, false = 0)) %>% 
+  # Dummy code the combined property crimes categories, set user-missing values to 0. 
+  mutate(ACat12_Property = if_else(ACat12 %in% c(1, 4, 8), true = 1, false = 0)) %>% 
+  # Dummy code the combined other crimes categories, set user-missing values to 0. 
+  mutate(ACat12_Other = if_else(ACat12 %in% c(6, 11), true = 1, false = 0)) %>% 
   var_labels(ACat12_1   = "Arrested for arson",
              ACat12_2   = "Arrested for assault - DV, stalking",
              ACat12_3   = "Arrested for assault - non-sexual, non-DV",
@@ -234,7 +242,11 @@ read_sav(here::here("inst/extdata/SSA_ARR_Arrests_Imputed_2018-09-03.sav"),
              ACat12_11  = "Arrested for traffic/ordinances",
              ACat12_12  = "Arrested for weapons",
              ACat12_999 = "Arrested for excluded user-missing",
-             ACat12_Any = "Arrested for any of 12 main crime categories") ->
+             ACat12_Any = "Arrested for any of 12 main crime categories",
+             ACat12_Sexual = "Arrested for any sexual crimes (2 categories)",
+             ACat12_Violent = "Arrested for any violent crimes (5 categories)",
+             ACat12_Property = "Arrested for any property crimes (3 categories)",
+             ACat12_Other = "Arrested for any other crimes (2 categories)") ->
   ARR
 ```
 
@@ -249,6 +261,14 @@ read_sav(here::here("inst/extdata/SSA_CHG_PA_Charges_Imputed_2018-09-03.sav"),
   dcode(x = ., y = factor(.$CCat12), stem = "CCat12") %>% 
   # Dummy code any of the 12 main crime categories, set user-missing values to 0. 
   mutate(CCat12_Any = if_else(CCat12 %in% 1:12, true = 1, false = 0)) %>% 
+  # Dummy code the combined sexual crimes categories, set user-missing values to 0. 
+  mutate(CCat12_Sexual = if_else(CCat12 %in% c(5, 10), true = 1, false = 0)) %>% 
+  # Dummy code the combined violent crimes categories, set user-missing values to 0. 
+  mutate(CCat12_Violent = if_else(CCat12 %in% c(2, 3, 7, 9, 12), true = 1, false = 0)) %>% 
+  # Dummy code the combined property crimes categories, set user-missing values to 0. 
+  mutate(CCat12_Property = if_else(CCat12 %in% c(1, 4, 8), true = 1, false = 0)) %>% 
+  # Dummy code the combined other crimes categories, set user-missing values to 0. 
+  mutate(CCat12_Other = if_else(CCat12 %in% c(6, 11), true = 1, false = 0)) %>%
   var_labels(CCat12_1   = "Charged for arson",
              CCat12_2   = "Charged for assault - DV, stalking",
              CCat12_3   = "Charged for assault - non-sexual, non-DV",
@@ -262,7 +282,11 @@ read_sav(here::here("inst/extdata/SSA_CHG_PA_Charges_Imputed_2018-09-03.sav"),
              CCat12_11  = "Charged for traffic/ordinances",
              CCat12_12  = "Charged for weapons",
              CCat12_999 = "Charged for excluded user-missing",
-             CCat12_Any = "Charged for any of 12 main crime categories") ->
+             CCat12_Any = "Charged for any of 12 main crime categories",
+             CCat12_Sexual = "Charged for any sexual crimes (2 categories)",
+             CCat12_Violent = "Charged for any violent crimes (5 categories)",
+             CCat12_Property = "Charged for any property crimes (3 categories)",
+             CCat12_Other = "Charged for any other crimes (2 categories)") ->
   CHG
 ```
 
@@ -277,6 +301,14 @@ read_sav(here::here("inst/extdata/SSA_JUD_Judicial_Charges_Imputed_2018-09-03.sa
   dcode(x = ., y = factor(.$JCat12), stem = "JCat12") %>% 
   # Dummy code any of the 12 main crime categories, set user-missing values to 0. 
   mutate(JCat12_Any = if_else(JCat12 %in% 1:12, true = 1, false = 0)) %>% 
+  # Dummy code the combined sexual crimes categories, set user-missing values to 0. 
+  mutate(JCat12_Sexual = if_else(JCat12 %in% c(5, 10), true = 1, false = 0)) %>% 
+  # Dummy code the combined violent crimes categories, set user-missing values to 0. 
+  mutate(JCat12_Violent = if_else(JCat12 %in% c(2, 3, 7, 9, 12), true = 1, false = 0)) %>% 
+  # Dummy code the combined property crimes categories, set user-missing values to 0. 
+  mutate(JCat12_Property = if_else(JCat12 %in% c(1, 4, 8), true = 1, false = 0)) %>% 
+  # Dummy code the combined other crimes categories, set user-missing values to 0. 
+  mutate(JCat12_Other = if_else(JCat12 %in% c(6, 11), true = 1, false = 0)) %>%
   var_labels(JCat12_1   = "Adjudicated for arson",
              JCat12_2   = "Adjudicated for assault - DV, stalking",
              JCat12_3   = "Adjudicated for assault - non-sexual, non-DV",
@@ -290,7 +322,11 @@ read_sav(here::here("inst/extdata/SSA_JUD_Judicial_Charges_Imputed_2018-09-03.sa
              JCat12_11  = "Adjudicated for traffic/ordinances",
              JCat12_12  = "Adjudicated for weapons",
              JCat12_999 = "Adjudicated for excluded user-missing",
-             JCat12_Any = "Adjudicated for any of 12 main crime categories") ->
+             JCat12_Any = "Adjudicated for any of 12 main crime categories",
+             JCat12_Sexual = "Adjudicated for any sexual crimes (2 categories)",
+             JCat12_Violent = "Adjudicated for any violent crimes (5 categories)",
+             JCat12_Property = "Adjudicated for any property crimes (3 categories)",
+             JCat12_Other = "Adjudicated for any other crimes (2 categories)") ->
   JUD
 ```
 
@@ -349,7 +385,7 @@ JUD %>%
   filter(JDispCat == 1) %>% 
   # Add a variable to CON to simplify aggregation later. 
   mutate(NCON = 1) %>% 
-  # Add variable label. 
+  # Add variable labels. 
   var_labels(JCat12_1   = "Convicted for arson",
              JCat12_2   = "Convicted for assault - DV, stalking",
              JCat12_3   = "Convicted for assault - non-sexual, non-DV",
@@ -364,7 +400,11 @@ JUD %>%
              JCat12_12  = "Convicted for weapons",
              JCat12_999 = "Convicted for excluded user-missing",
              JCat12_Any = "Convicted for any of 12 main crime categories",
-             NCON       = "Adjudicated charge record w/ conviction") ->
+             JCat12_Sexual = "Convicted for any sexual crimes (2 categories)",
+             JCat12_Violent = "Convicted for any violent crimes (5 categories)",
+             JCat12_Property = "Convicted for any property crimes (3 categories)",
+             JCat12_Other = "Convicted for any other crimes (2 categories)",
+             NCON       = "Convicted charge record w/ conviction") ->
   CON
 ```
 
@@ -1375,22 +1415,26 @@ can be used to simplify subsequent code.
 
 ```{r create_acjvars}
 # Create objects with vectors of variable names we need later. 
-avars      <- paste("ACat12", c(1:12, 999, "Any"), sep = "_")
+avars      <- paste("ACat12", c(1:12, 999, "Any", "Sexual", "Violent", 
+                                "Property", "Other"), sep = "_")
 avarsb     <- paste0(avars, "_Before")
 avarsd     <- paste0(avars, "_During")
 avarsa     <- paste0(avars, "_After")
 avarsbda   <- c(avarsb, avarsd, avarsa)
-cvars      <- paste("CCat12", c(1:12, 999, "Any"), sep = "_")
+cvars      <- paste("CCat12", c(1:12, 999, "Any", "Sexual", "Violent", 
+                                "Property", "Other"), sep = "_")
 cvarsb     <- paste0(cvars, "_Before")
 cvarsd     <- paste0(cvars, "_During")
 cvarsa     <- paste0(cvars, "_After")
 cvarsbda   <- c(cvarsb, cvarsd, cvarsa)
-jvars      <- paste("JCat12", c(1:12, 999, "Any"), sep = "_")
+jvars      <- paste("JCat12", c(1:12, 999, "Any", "Sexual", "Violent", 
+                                "Property", "Other"), sep = "_")
 jvarsb     <- paste0(jvars, "_Before")
 jvarsd     <- paste0(jvars, "_During")
 jvarsa     <- paste0(jvars, "_After")
 jvarsbda   <- c(jvarsb, jvarsd, jvarsa)
-hxvars     <- paste("HXCat12", c(1:12, 999, "Any"), sep = "_")
+hxvars     <- paste("HXCat12", c(1:12, 999, "Any", "Sexual", "Violent", 
+                                "Property", "Other"), sep = "_")
 hxvarsb    <- paste0(hxvars, "_Before")
 hxvarsd    <- paste0(hxvars, "_During")
 hxvarsa    <- paste0(hxvars, "_After")
@@ -1456,7 +1500,11 @@ ARREW %>%
              ACat12_11  = "Arrested for traffic/ordinances",
              ACat12_12  = "Arrested for weapons",
              ACat12_999 = "Arrested for excluded user-missing",
-             ACat12_Any = "Arrested for any of 12 main crime categories") ->
+             ACat12_Any = "Arrested for any of 12 main crime categories",
+             ACat12_Sexual = "Arrested for any sexual crimes (2 categories)",
+             ACat12_Violent = "Arrested for any violent crimes (5 categories)",
+             ACat12_Property = "Arrested for any property crimes (3 categories)",
+             ACat12_Other = "Arrested for any other crimes (2 categories)") ->
   INCEW
 ```
 
@@ -1494,7 +1542,11 @@ CHGEW %>%
              CCat12_11  = "Charged for traffic/ordinances",
              CCat12_12  = "Charged for weapons",
              CCat12_999 = "Charged for excluded user-missing",
-             CCat12_Any = "Charged for any of 12 main crime categories") ->
+             CCat12_Any = "Charged for any of 12 main crime categories",
+             CCat12_Sexual = "Charged for any sexual crimes (2 categories)",
+             CCat12_Violent = "Charged for any violent crimes (5 categories)",
+             CCat12_Property = "Charged for any property crimes (3 categories)",
+             CCat12_Other = "Charged for any other crimes (2 categories)") ->
   INCEW
 ```
 
@@ -1532,7 +1584,11 @@ CONEW %>%
              JCat12_11  = "Convicted for traffic/ordinances",
              JCat12_12  = "Convicted for weapons",
              JCat12_999 = "Convicted for excluded user-missing",
-             JCat12_Any = "Convicted for any of 12 main crime categories") ->
+             JCat12_Any = "Convicted for any of 12 main crime categories",
+             JCat12_Sexual = "Convicted for any sexual crimes (2 categories)",
+             JCat12_Violent = "Convicted for any violent crimes (5 categories)",
+             JCat12_Property = "Convicted for any property crimes (3 categories)",
+             JCat12_Other = "Convicted for any other crimes (2 categories)") ->
   INCEW
 ```
 
@@ -1586,7 +1642,15 @@ INCEW %>%
          HXCat12_999 = if_else(ACat12_999 + CCat12_999 + JCat12_999 >= 1, 
                               true = 1, false = 0),
          HXCat12_Any = if_else(ACat12_Any + CCat12_Any + JCat12_Any >= 1, 
-                              true = 1, false = 0)) %>% 
+                              true = 1, false = 0),
+         HXCat12_Sexual = if_else(ACat12_Sexual + CCat12_Sexual + JCat12_Sexual >= 1, 
+                                  true = 1, false = 0),
+         HXCat12_Violent = if_else(ACat12_Violent + CCat12_Violent + JCat12_Violent >= 1, 
+                                   true = 1, false = 0),
+         HXCat12_Property = if_else(ACat12_Property + CCat12_Property + JCat12_Property >= 1, 
+                                    true = 1, false = 0),
+         HXCat12_Other = if_else(ACat12_Other + CCat12_Other + JCat12_Other >= 1, 
+                                 true = 1, false = 0)) %>% 
   var_labels(HXCat12_1 = "History shows arrested, charged, or convicted for arson",
              HXCat12_2 = "History shows arrested, charged, or convicted for assault - DV, stalking arrest",
              HXCat12_3 = "History shows arrested, charged, or convicted for assault - non-sexual, non-DV",
@@ -1600,7 +1664,11 @@ INCEW %>%
              HXCat12_11 = "History shows arrested, charged, or convicted for traffic/ordinances",
              HXCat12_12 = "History shows arrested, charged, or convicted for weapons",
              HXCat12_999 = "History shows arrested, charged, or convicted for excluded user-missing",
-             HXCat12_Any = "History shows arrested, charged, or convicted for any of 12 main crime categories") ->
+             HXCat12_Any = "History shows arrested, charged, or convicted for any of 12 main crime categories",
+             HXCat12_Sexual = "History shows arrested, charged, or convicted for any sexual crimes (2 categories)",
+             HXCat12_Violent = "History shows arrested, charged, or convicted for any violent crimes (5 categories)",
+             HXCat12_Property = "History shows arrested, charged, or convicted for any property crimes (3 categories)",
+             HXCat12_Other = "History shows arrested, charged, or convicted for any other crimes (2 categories)") ->
   INCEW
 ```
 
@@ -1685,7 +1753,11 @@ INCEW %>%
              ACat12_11 = "No. incidents arrested for traffic/ordinances",
              ACat12_12 = "No. incidents arrested for weapons",
              ACat12_999 = "No. incidents arrested for excluded user-missing", 
-             ACat12_Any = "No. incidents arrested for any of 12 main crime categories") ->
+             ACat12_Any = "No. incidents arrested for any of 12 main crime categories",
+             ACat12_Sexual = "No. incidents arrested for any sexual crimes (2 categories)",
+             ACat12_Violent = "No. incidents arrested for any violent crimes (5 categories)",
+             ACat12_Property = "No. incidents arrested for any property crimes (3 categories)",
+             ACat12_Other = "No. incidents arrested for any other crimes (2 categories)") ->
   IDNEW
 ```
 
@@ -1732,6 +1804,10 @@ INCEW %>%
              ACat12_12_Before = "No. incidents arrested for weapons before testing window",
              ACat12_999_Before = "No. incidents arrested for excluded user-missing before testing window", 
              ACat12_Any_Before = "No. incidents arrested for any of 12 main crime categories before testing window",
+             ACat12_Sexual_Before = "No. incidents arrested for any sexual crimes (2 categories) before testing window",
+             ACat12_Violent_Before = "No. incidents arrested for any violent crimes (5 categories) before testing window",
+             ACat12_Property_Before = "No. incidents arrested for any property crimes (3 categories) before testing window",
+             ACat12_Other_Before = "No. incidents arrested for any other crimes (2 categories) before testing window",
              ACat12_1_During = "No. incidents arrested for arson during testing window",
              ACat12_2_During = "No. incidents arrested for assault - DV, stalking during testing window",
              ACat12_3_During = "No. incidents arrested for assault - non-sexual, non-DV during testing window",
@@ -1746,6 +1822,10 @@ INCEW %>%
              ACat12_12_During = "No. incidents arrested for weapons during testing window",
              ACat12_999_During = "No. incidents arrested for excluded user-missing during testing window", 
              ACat12_Any_During = "No. incidents arrested for any of 12 main crime categories during testing window",
+             ACat12_Sexual_During = "No. incidents arrested for any sexual crimes (2 categories) during testing window",
+             ACat12_Violent_During = "No. incidents arrested for any violent crimes (5 categories) during testing window",
+             ACat12_Property_During = "No. incidents arrested for any property crimes (3 categories) during testing window",
+             ACat12_Other_During = "No. incidents arrested for any other crimes (2 categories) during testing window",
              ACat12_1_After = "No. incidents arrested for arson after testing window",
              ACat12_2_After = "No. incidents arrested for assault - DV, stalking after testing window",
              ACat12_3_After = "No. incidents arrested for assault - non-sexual, non-DV after testing window",
@@ -1759,7 +1839,11 @@ INCEW %>%
              ACat12_11_After = "No. incidents arrested for traffic/ordinances after testing window",
              ACat12_12_After = "No. incidents arrested for weapons after testing window",
              ACat12_999_After = "No. incidents arrested for excluded user-missing", 
-             ACat12_Any_After = "No. incidents arrested for any of 12 main crime categories after testing window") -> 
+             ACat12_Any_After = "No. incidents arrested for any of 12 main crime categories after testing window",
+             ACat12_Sexual_After = "No. incidents arrested for any sexual crimes (2 categories) after testing window",
+             ACat12_Violent_After = "No. incidents arrested for any violent crimes (5 categories) after testing window",
+             ACat12_Property_After = "No. incidents arrested for any property crimes (3 categories) after testing window",
+             ACat12_Other_After = "No. incidents arrested for any other crimes (2 categories) after testing window") -> 
   IDNEW
 ```
 
@@ -1795,7 +1879,11 @@ INCEW %>%
              CCat12_11 = "No. incidents charged for traffic/ordinances",
              CCat12_12 = "No. incidents charged for weapons",
              CCat12_999 = "No. incidents charged for excluded user-missing", 
-             CCat12_Any = "No. incidents charged for any of 12 main crime categories") ->
+             CCat12_Any = "No. incidents charged for any of 12 main crime categories",
+             CCat12_Sexual = "No. incidents charged for any sexual crimes (2 categories)",
+             CCat12_Violent = "No. incidents charged for any violent crimes (5 categories)",
+             CCat12_Property = "No. incidents charged for any property crimes (3 categories)",
+             CCat12_Other = "No. incidents charged for any other crimes (2 categories)") ->
   IDNEW
 ```
 
@@ -1842,6 +1930,10 @@ INCEW %>%
              CCat12_12_Before = "No. incidents charged for weapons before testing window",
              CCat12_999_Before = "No. incidents charged for excluded user-missing before testing window", 
              CCat12_Any_Before = "No. incidents charged for any of 12 main crime categories before testing window",
+             CCat12_Sexual_Before = "No. incidents charged for any sexual crimes (2 categories) before testing window",
+             CCat12_Violent_Before = "No. incidents charged for any violent crimes (5 categories) before testing window",
+             CCat12_Property_Before = "No. incidents charged for any property crimes (3 categories) before testing window",
+             CCat12_Other_Before = "No. incidents charged for any other crimes (2 categories) before testing window",
              CCat12_1_During = "No. incidents charged for arson during testing window",
              CCat12_2_During = "No. incidents charged for assault - DV, stalking during testing window",
              CCat12_3_During = "No. incidents charged for assault - non-sexual, non-DV during testing window",
@@ -1856,6 +1948,10 @@ INCEW %>%
              CCat12_12_During = "No. incidents charged for weapons during testing window",
              CCat12_999_During = "No. incidents charged for excluded user-missing during testing window", 
              CCat12_Any_During = "No. incidents charged for any of 12 main crime categories during testing window",
+             CCat12_Sexual_During = "No. incidents charged for any sexual crimes (2 categories) during testing window",
+             CCat12_Violent_During = "No. incidents charged for any violent crimes (5 categories) during testing window",
+             CCat12_Property_During = "No. incidents charged for any property crimes (3 categories) during testing window",
+             CCat12_Other_During = "No. incidents charged for any other crimes (2 categories) during testing window",
              CCat12_1_After = "No. incidents charged for arson after testing window",
              CCat12_2_After = "No. incidents charged for assault - DV, stalking after testing window",
              CCat12_3_After = "No. incidents charged for assault - non-sexual, non-DV after testing window",
@@ -1869,7 +1965,11 @@ INCEW %>%
              CCat12_11_After = "No. incidents charged for traffic/ordinances after testing window",
              CCat12_12_After = "No. incidents charged for weapons after testing window",
              CCat12_999_After = "No. incidents charged for excluded user-missing", 
-             CCat12_Any_After = "No. incidents charged for any of 12 main crime categories after testing window") -> 
+             CCat12_Any_After = "No. incidents charged for any of 12 main crime categories after testing window",
+             CCat12_Sexual_After = "No. incidents charged for any sexual crimes (2 categories) after testing window",
+             CCat12_Violent_After = "No. incidents charged for any violent crimes (5 categories) after testing window",
+             CCat12_Property_After = "No. incidents charged for any property crimes (3 categories) after testing window",
+             CCat12_Other_After = "No. incidents charged for any other crimes (2 categories) after testing window") -> 
   IDNEW
 ```
 
@@ -1905,7 +2005,11 @@ INCEW %>%
              JCat12_11 = "No. incidents convicted for traffic/ordinances",
              JCat12_12 = "No. incidents convicted for weapons",
              JCat12_999 = "No. incidents convicted for excluded user-missing", 
-             JCat12_Any = "No. incidents convicted for any of 12 main crime categories") ->
+             JCat12_Any = "No. incidents convicted for any of 12 main crime categories",
+             JCat12_Sexual = "No. incidents convicted for any sexual crimes (2 categories)",
+             JCat12_Violent = "No. incidents convicted for any violent crimes (5 categories)",
+             JCat12_Property = "No. incidents convicted for any property crimes (3 categories)",
+             JCat12_Other = "No. incidents convicted for any other crimes (2 categories)") ->
   IDNEW
 ```
 
@@ -1952,6 +2056,10 @@ INCEW %>%
              JCat12_12_Before = "No. incidents convicted for weapons before testing window",
              JCat12_999_Before = "No. incidents convicted for excluded user-missing before testing window", 
              JCat12_Any_Before = "No. incidents convicted for any of 12 main crime categories before testing window",
+             JCat12_Sexual_Before = "No. incidents convicted for any sexual crimes (2 categories) before testing window",
+             JCat12_Violent_Before = "No. incidents convicted for any violent crimes (5 categories) before testing window",
+             JCat12_Property_Before = "No. incidents convicted for any property crimes (3 categories) before testing window",
+             JCat12_Other_Before = "No. incidents convicted for any other crimes (2 categories) before testing window",
              JCat12_1_During = "No. incidents convicted for arson during testing window",
              JCat12_2_During = "No. incidents convicted for assault - DV, stalking during testing window",
              JCat12_3_During = "No. incidents convicted for assault - non-sexual, non-DV during testing window",
@@ -1966,6 +2074,10 @@ INCEW %>%
              JCat12_12_During = "No. incidents convicted for weapons during testing window",
              JCat12_999_During = "No. incidents convicted for excluded user-missing during testing window", 
              JCat12_Any_During = "No. incidents convicted for any of 12 main crime categories during testing window",
+             JCat12_Sexual_During = "No. incidents convicted for any sexual crimes (2 categories) during testing window",
+             JCat12_Violent_During = "No. incidents convicted for any violent crimes (5 categories) during testing window",
+             JCat12_Property_During = "No. incidents convicted for any property crimes (3 categories) during testing window",
+             JCat12_Other_During = "No. incidents convicted for any other crimes (2 categories) during testing window",
              JCat12_1_After = "No. incidents convicted for arson after testing window",
              JCat12_2_After = "No. incidents convicted for assault - DV, stalking after testing window",
              JCat12_3_After = "No. incidents convicted for assault - non-sexual, non-DV after testing window",
@@ -1979,7 +2091,11 @@ INCEW %>%
              JCat12_11_After = "No. incidents convicted for traffic/ordinances after testing window",
              JCat12_12_After = "No. incidents convicted for weapons after testing window",
              JCat12_999_After = "No. incidents convicted for excluded user-missing", 
-             JCat12_Any_After = "No. incidents convicted for any of 12 main crime categories after testing window") -> 
+             JCat12_Any_After = "No. incidents convicted for any of 12 main crime categories after testing window",
+             JCat12_Sexual_After = "No. incidents convicted for any sexual crimes (2 categories) after testing window",
+             JCat12_Violent_After = "No. incidents convicted for any violent crimes (5 categories) after testing window",
+             JCat12_Property_After = "No. incidents convicted for any property crimes (3 categories) after testing window",
+             JCat12_Other_After = "No. incidents convicted for any other crimes (2 categories) after testing window") -> 
   IDNEW
 ```
 
@@ -2018,7 +2134,11 @@ INCEW %>%
              HXCat12_11 = "No. incidents arrested, charged, or convicted for traffic/ordinances",
              HXCat12_12 = "No. incidents arrested, charged, or convicted for weapons",
              HXCat12_999 = "No. incidents arrested, charged, or convicted for excluded user-missing", 
-             HXCat12_Any = "No. incidents arrested, charged, or convicted for any of 12 main crime categories") ->
+             HXCat12_Any = "No. incidents arrested, charged, or convicted for any of 12 main crime categories",
+             HXCat12_Sexual = "No. incidents arrested, charged, or convicted for any sexual crimes (2 categories)",
+             HXCat12_Violent = "No. incidents arrested, charged, or convicted for any violent crimes (5 categories)",
+             HXCat12_Property = "No. incidents arrested, charged, or convicted for any property crimes (3 categories)",
+             HXCat12_Other = "No. incidents arrested, charged, or convicted for any other crimes (2 categories)") ->
   IDNEW
 ```
 
@@ -2071,6 +2191,10 @@ INCEW %>%
              HXCat12_12_Before = "No. incidents arrested, charged, or convicted for weapons before testing window",
              HXCat12_999_Before = "No. incidents arrested, charged, or convicted for excluded user-missing before testing window",
              HXCat12_Any_Before = "No. incidents arrested, charged, or convicted for any of 12 main crime categories before testing window",
+             HXCat12_Sexual_Before = "No. incidents arrested, charged, or convicted for any sexual crimes (2 categories) before testing window",
+             HXCat12_Violent_Before = "No. incidents arrested, charged, or convicted for any violent crimes (5 categories) before testing window",
+             HXCat12_Property_Before = "No. incidents arrested, charged, or convicted for any property crimes (3 categories) before testing window",
+             HXCat12_Other_Before = "No. incidents arrested, charged, or convicted for any other crimes (2 categories) before testing window",
              HXCat12_1_During = "No. incidents arrested, charged, or convicted for arson during testing window",
              HXCat12_2_During = "No. incidents arrested, charged, or convicted for assault - DV, stalking during testing window",
              HXCat12_3_During = "No. incidents arrested, charged, or convicted for assault - non-sexual, non-DV during testing window",
@@ -2085,6 +2209,10 @@ INCEW %>%
              HXCat12_12_During = "No. incidents arrested, charged, or convicted for weapons during testing window",
              HXCat12_999_During = "No. incidents arrested, charged, or convicted for excluded user-missing during testing window",
              HXCat12_Any_During = "No. incidents arrested, charged, or convicted for any of 12 main crime categories during testing window",
+             HXCat12_Sexual_During = "No. incidents arrested, charged, or convicted for any sexual crimes (2 categories) during testing window",
+             HXCat12_Violent_During = "No. incidents arrested, charged, or convicted for any violent crimes (5 categories) during testing window",
+             HXCat12_Property_During = "No. incidents arrested, charged, or convicted for any property crimes (3 categories) during testing window",
+             HXCat12_Other_During = "No. incidents arrested, charged, or convicted for any other crimes (2 categories) during testing window",
              HXCat12_1_After = "No. incidents arrested, charged, or convicted for arson after testing window",
              HXCat12_2_After = "No. incidents arrested, charged, or convicted for assault - DV, stalking after testing window",
              HXCat12_3_After = "No. incidents arrested, charged, or convicted for assault - non-sexual, non-DV after testing window",
@@ -2098,7 +2226,11 @@ INCEW %>%
              HXCat12_11_After = "No. incidents arrested, charged, or convicted for traffic/ordinances after testing window",
              HXCat12_12_After = "No. incidents arrested, charged, or convicted for weapons after testing window",
              HXCat12_999_After = "No. incidents arrested, charged, or convicted for excluded user-missing after testing window",
-             HXCat12_Any_After = "No. incidents arrested, charged, or convicted for any of 12 main crime categories after testing window") ->
+             HXCat12_Any_After = "No. incidents arrested, charged, or convicted for any of 12 main crime categories after testing window",
+             HXCat12_Sexual_After = "No. incidents arrested, charged, or convicted for any sexual crimes (2 categories) after testing window",
+             HXCat12_Violent_After = "No. incidents arrested, charged, or convicted for any violent crimes (5 categories) after testing window",
+             HXCat12_Property_After = "No. incidents arrested, charged, or convicted for any property crimes (3 categories) after testing window",
+             HXCat12_Other_After = "No. incidents arrested, charged, or convicted for any other crimes (2 categories) after testing window",) ->
   IDNEW
 ```
 
@@ -2216,6 +2348,10 @@ running GEE models.
 IDNEW %>% 
   select(OID, Years_Before, Years_During, Years_After,
          HXCat12_Any_Before, HXCat12_Any_During, HXCat12_Any_After,
+         HXCat12_Sexual_Before, HXCat12_Sexual_During, HXCat12_Sexual_After,
+         HXCat12_Violent_Before, HXCat12_Violent_During, HXCat12_Violent_After,
+         HXCat12_Property_Before, HXCat12_Property_During, HXCat12_Property_After,
+         HXCat12_Other_Before, HXCat12_Other_During, HXCat12_Other_After,
          HXCat12_Count_Before, HXCat12_Count_During, HXCat12_Count_After,
          HXCat12_1_Before, HXCat12_1_During, HXCat12_1_After,
          HXCat12_2_Before, HXCat12_2_During, HXCat12_2_After,
@@ -2231,7 +2367,9 @@ IDNEW %>%
          HXCat12_12_Before, HXCat12_12_During, HXCat12_12_After) %>% 
   pivot_longer(cols = -OID, names_to = c(".value", "When"), 
                names_pattern = "(.*)_(.*)",
-               values_to = c("Duration", "HXCat12_Any", "HXCat12_Count", 
+               values_to = c("Duration", "HXCat12_Any", "HXCat12_Sexual", 
+                             "HXCat12_Violent", "HXCat12_Property", 
+                             "HXCat12_Other", "HXCat12_Count", 
                              "HXCat12_1", "HXCat12_2", "HXCat12_3", 
                              "HXCat12_4", "HXCat12_5", "HXCat12_6", 
                              "HXCat12_7", "HXCat12_8", "HXCat12_9",
@@ -2241,6 +2379,10 @@ IDNEW %>%
   var_labels(When = "When period occurred (relative to testing window)",
              Years = "Years of period duration",
              NINC12 = "No. incidents arrested, charged, or convicted for any of 12 main crime categories during period",
+             HXCat12_Sexual = "No. incidents arrested, charged, or convicted for any sexual crimes (2 categories) during period",
+             HXCat12_Violent = "No. incidents arrested, charged, or convicted for any violent crimes (5 categories) during period",
+             HXCat12_Property = "No. incidents arrested, charged, or convicted for any property crimes (3 categories) during period",
+             HXCat12_Other = "No. incidents arrested, charged, or convicted for any other crimes (2 categories) during period",
              HXCat12_Count = "Arrested, charged, or convicted crime category count (incidents during period)",
              HXCat12_1 = "No. incidents arrested, charged, or convicted for arson during period",
              HXCat12_2 = "No. incidents arrested, charged, or convicted for assault - DV, stalking during period",
@@ -2269,17 +2411,22 @@ to peer review feedback on the manuscript. We store the resulting data in
 ```{r create_IDNEWA}
 # Create objects to hold vectors of variable names that should be grouped 
 # together in output later. 
-Sexual_Crimes   <- c("HXCat12_5", "HXCat12_3")
-Violent_Crimes  <- c("HXCat12_2", "HXCat12_3", "HXCat12_7", "HXCat12_9", "HXCat12_12")
-Property_Crimes <- c("HXCat12_1", "HXCat12_4", "HXCat12_8")
-Other_Crimes    <- c("HXCat12_6", "HXCat12_11")
+Sexual_Crimes   <- c("HXCat12_5", "HXCat12_10", "HXCat12_Sexual")
+Violent_Crimes  <- c("HXCat12_2", "HXCat12_3", "HXCat12_7", "HXCat12_9", 
+                     "HXCat12_12", "HXCat12_Violent")
+Property_Crimes <- c("HXCat12_1", "HXCat12_4", "HXCat12_8", "HXCat12_Property")
+Other_Crimes    <- c("HXCat12_6", "HXCat12_11", "HXCat12_Other")
 
 # Create the new tibble. 
 IDNEWL %>% 
   filter(When == "After") %>% 
   pivot_longer(data = ., cols = starts_with("HXCat12_"), names_to = "Variable",
                values_to = "Count") %>%
-  mutate(VLabel = case_when(Variable == "HXCat12_Count" ~ "Crime Category",
+  mutate(VLabel = case_when(Variable == "HXCat12_Sexual" ~ "Sexual Crimes (2 categories)",
+                            Variable == "HXCat12_Violent" ~ "Violent Crimes (5 categories)",
+                            Variable == "HXCat12_Property" ~ "Property Crimes (3 categories)",
+                            Variable == "HXCat12_Other" ~ "Other Crimes (2 categories)",
+                            Variable == "HXCat12_Count" ~ "Crime Category",
                             Variable == "HXCat12_1" ~ "Arson",
                             Variable == "HXCat12_2" ~ "Assault, Domestic Violence",
                             Variable == "HXCat12_3" ~ "Assault, non-Domestic Violence",
@@ -2298,18 +2445,22 @@ IDNEWL %>%
                             Variable %in% Property_Crimes ~ "Property Crimes",
                             Variable %in% Other_Crimes ~ "Other Crimes"),
          VOrder = case_when(Variable == "HXCat12_Count" ~ 0,
-                            Variable == "HXCat12_5" ~ 1,
-                            Variable == "HXCat12_10" ~ 2,
-                            Variable == "HXCat12_2" ~ 3,
-                            Variable == "HXCat12_3" ~ 4,
-                            Variable == "HXCat12_7" ~ 5,
-                            Variable == "HXCat12_9" ~ 6,
-                            Variable == "HXCat12_12" ~ 7,
-                            Variable == "HXCat12_1" ~ 8,
-                            Variable == "HXCat12_4" ~ 9,
-                            Variable == "HXCat12_8" ~ 10,
-                            Variable == "HXCat12_6" ~ 11,
-                            Variable == "HXCat12_11" ~ 12)) ->
+                            Variable == "HXCat12_Sexual" ~ 1,
+                            Variable == "HXCat12_5" ~ 2,
+                            Variable == "HXCat12_10" ~ 3,
+                            Variable == "HXCat12_Violent" ~ 4,
+                            Variable == "HXCat12_2" ~ 5,
+                            Variable == "HXCat12_3" ~ 6,
+                            Variable == "HXCat12_7" ~ 7,
+                            Variable == "HXCat12_9" ~ 8,
+                            Variable == "HXCat12_12" ~ 9,
+                            Variable == "HXCat12_Property" ~ 10,
+                            Variable == "HXCat12_1" ~ 11,
+                            Variable == "HXCat12_4" ~ 12,
+                            Variable == "HXCat12_8" ~ 13,
+                            Variable == "HXCat12_Other" ~ 14,
+                            Variable == "HXCat12_6" ~ 15,
+                            Variable == "HXCat12_11" ~ 16)) ->
   IDNEWA
 ```
 
