@@ -187,11 +187,35 @@ labels at import.
 
 For the *ARR*, *CHG*, and *JUD* data, we use *dcode()* to convert the
 categorical variables *ACat12*, *CCat12*, and *JCat12* into a set of dummy-code
-variables with suffixes of the form *_x* where *x* includes the values 1-12 and
-999. We also compute an new dummy code variable with the suffix *_Any* to code
+variables with suffixes of the form \_*x* where *x* includes the values 1-12 and
+999. We also compute an new dummy code variable with the suffix \_*Any* to code
 records where the relevant crime category was any of the 12 main codes treated
 as valid values instead of the user-missing code 999. These additional variables
 facilitate later record selection and aggregation operations.
+
+We also add some additional dummy code variables that group crime categories 
+1-12 into four broader categories as shown below. These variables have the 
+suffixes \_*Sexual*, \_*Violent*, \_*Property*, and \_*Other*. A particular 
+arrest, charge, or adjudicated charge from categories 1-12 always belongs to 
+both its own specific crime category and to one of those broader categories. 
+This is a hierarchical categorization scheme. 
+
+* Sexual crimes, which include:
+    * Criminal sexual conduct (CSC)
+    * Sex crimes, non-CSC. 
+* Violent non-sexual crimes, which include:
+    * Homicide
+    * Assault - Domestic violence and/or stalking
+    * Assault - Non-sexual, non-domestic violence
+    * Robbery
+    * Weapons
+* Property crimes, which include:
+    * Arson
+    * Burglary
+    * Larceny/Theft/Fraud
+* Other crimes, which include:
+    * Drug crimes
+    * Traffic and ordinances
 
 ```{r import_IDN}
 read_sav(here::here("inst/extdata/SSA_IDN_Offenders_2018-09-03.sav"), 
