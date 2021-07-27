@@ -1,3 +1,10 @@
+# SSACHR 0.16.0, 2021-07-26
+* Updated `inst/Step_01_Data_Mgt.Rmd` to:
+    * Add variables related to four broader crime categories (sexual, violent, 
+      property, and other), along with explantory text about them.
+    * Fix a table that listed variable names (it needed to include those new 
+      variables).
+
 # SSACHR 0.15.1, 2021-07-20
 * Updated `inst/Step_01_Data_Mgt.Rmd` to:
     * Improve IDNEWL and IDNEWA tibbles.
