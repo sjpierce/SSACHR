@@ -1,3 +1,6 @@
+# SSACHR 0.16.1, 2021-07-30
+* Update `inst/Step_02_Analysis.Rmd` to improve after period summary table. 
+
 # SSACHR 0.16.0, 2021-07-26
 * Updated `inst/Step_01_Data_Mgt.Rmd` to:
     * Add variables related to four broader crime categories (sexual, violent, 
