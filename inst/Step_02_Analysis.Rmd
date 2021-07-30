@@ -3724,13 +3724,20 @@ that occurred after the testing window ended.
 
 ```{r after_summary}
 TCap <- paste("Amount of Crime That Occurred After the Testing Window")
-FN <- paste("Separately for each crime category, we counted offenders arrested,",
-            "charged, or convicted for at least one incident occurring after",
-            "the testing window. The numerator for each percentage is the",
-            "listed value for n; the denominator is the full sample size (N = ",
-            "1,082). Total incidents are summed across those offenders.", 
+FN <- paste("Separately for each crime category, we counted offenders",
+            "arrested, charged, or convicted for at least one incident",
+            "occurring after the testing window. Total incidents are summed",
+            "across those offenders. The four italicized broader categories",
+            "include offenders who were arrested, charged or convicted for", 
+            "any of the more specific crime categories nested below them.",
+            "The numerator for each percentage is the listed value for n; the",
+            "denominator is the full sample size (N = 1,082).",
             "Incidents associated with more than one kind of crime are counted",
-            "in all applicable categories. TW, testing window.")
+            "in all applicable specific categories, but only once per",
+            "applicable broader category. For example, an incident with both a",
+            "homicide and a robbery only counts once toward the total incident",
+            "count for the broader violent crimes category. TW, testing",
+            "window.")
 
 IDNEWA %>%
   # Drops rows for crime category counts and individuals with no incidents
@@ -3750,10 +3757,11 @@ IDNEWA %>%
         format.args = list(big.mark = ','), caption = TCap) %>%
   kable_styling() %>%
   add_header_above(c(" " = 1, "Offenders" = 2, " " = 1)) %>%
-  group_rows("Sexual Crimes", 1, 2) %>%
-  group_rows("Violent Non-Sexual Crimes", 3, 7) %>%
-  group_rows("Property Crimes", 8, 10) %>%
-  group_rows("Other Crimes", 11, 12) %>%
+  row_spec(., row = c(1, 4, 10, 14), italic = TRUE) %>% 
+  add_indent(., positions = c(2:3), level_of_indent = 1) %>%
+  add_indent(., positions = c(5:9), level_of_indent = 1) %>%
+  add_indent(., positions = c(11:13), level_of_indent = 1) %>%
+  add_indent(., positions = c(15:16), level_of_indent = 1) %>%
   column_spec(., column = 2, width = "1.15cm") %>%
   column_spec(., column = 3, width = "1.15cm") %>%
   column_spec(., column = 4, width = "2cm") %>%
