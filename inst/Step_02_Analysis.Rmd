@@ -4631,6 +4631,135 @@ IDNEWA %>%
            threeparttable = TRUE)
 ```
 
+Figure \ref{fig:plot_Crime_full_width} plots the distributions of the incident
+count variables for each of the 12 main crime categories during the period after
+the testing window. Because a few large outlier values make the details harder
+to see for the majority of the data (nearly values are for 12 or fewer
+incidents), we also produced Figure \ref{fig:plot_Crime_partial_width}, which 
+zooms in on the 0-12 range of incident counts.
+
+```{r plot_Crime_full_width, fig.height = 8.5, fig.width = 7.5, fig.cap = FCap}
+FCap <- paste("\\label{fig:plot_Crime_full_width}",
+              "Distributions for Number of Incidents for Which Offender Was",
+              "Arrested, Charged, or Convicted After the Testing Window",
+              "By Crime Category.",
+              "Each panel shows a histogram above a strip plot with an",
+              "overlaid boxplot. Histogram bar heights show the percentage of",
+              "offenders who had a given number of incidents.",
+              "The strip plots show a dot for each offender, with positions",
+              "jittered to reduce overlap.")
+
+# Graph after period frequency distributions.
+IDNEWA %>%
+  # Keep only the main 12 crime categories (drops the broader crime categories).
+  filter(!is.na(Crime)) %>%
+  # use y = -... to position boxplot and jitterplot below the histogram
+  ggplot(data = ., aes(x = Count, y = -.4)) +
+  # Add histogram with bar heights scaled to percentages via after_stat.
+  geom_histogram(aes(y = after_stat(count/N_After)), binwidth = .5, 
+                 fill = "black") +
+  # Add a jittered strip plot. 
+  geom_point(aes(), position = position_jitter(width = .25, height = .25),
+             size = 1, alpha = 0.5, color = "gray50") +
+  # Overlay a boxplot on the strip plot from ggstance
+  geom_boxplot(lwd = 1, width = .5, outlier.shape = NA, alpha = .1) +
+  # Merged those calls to one display
+  guides(scale = "none") +
+  # Split each crime category into a separate panel (facet)
+  facet_wrap(~Crime, nrow = 6, strip.position = "top") +
+  xlab("Incident Count After Testing Window") +
+  # Remove y axis title label from the y axis
+  theme(axis.title.y = element_blank()) +
+  # Format the y axis ticks. 
+  scale_y_continuous(limits = c(-.65, 1.00), 
+                     breaks = c(0, .5, 1.0), labels = c("0%", "50%", "100%")) ->
+  HXCat12_After_Crime_Distributions
+
+HXCat12_After_Crime_Distributions
+```
+
+```{r plot_Crime_partial_width, fig.height = 8.5, fig.width = 7.5, fig.cap = FCap}
+FCap <- paste("\\label{fig:plot_Crime_partial_width}",
+              "Distributions for Number of Incidents for Which Offender Was",
+              "Arrested, Charged, or Convicted After the Testing Window",
+              "By Crime Category.",
+              "Each panel shows a histogram above a strip plot with an",
+              "overlaid boxplot. Histogram bar heights show the percentage of",
+              "offenders who had a given number of incidents.",
+              "The strip plots show a dot for each offender, with positions",
+              "jittered to reduce overlap. This plot has been zoomed",
+              "in to show incident counts in the range 0-12, omitting a few",
+              "outliers for (a) larceny, theft, fraud,",
+              "(b) drug crimes, and (c) traffic and ordinances.")
+
+HXCat12_After_Crime_Distributions + 
+  scale_x_continuous(limits = c(-.6, 12.5))
+```
+
+Figure \ref{fig:plot_BCrime_full_width} plots the distributions of the incident
+count variables for each of the four broader crime categories during the period
+after the testing window. Because a few large outlier values make the details
+harder to see for the majority of the data (nearly values are for 15 or fewer
+incidents), we also produced Figure \ref{fig:plot_BCrime_partial_width}, which
+zooms in on the 0-15 range of incident counts.
+
+```{r plot_after_BCrime_full_width, fig.height = 5.75, fig.width = 7.5, fig.cap = FCap}
+FCap <- paste("\\label{fig:plot_BCrime_full_width}",
+              "Distributions for Number of Incidents for Which Offender Was",
+              "Arrested, Charged, or Convicted After the Testing Window",
+              "By Broader Crime Category.",
+              "Each panel shows a histogram above a strip plot with an",
+              "overlaid boxplot. Histogram bar heights show the percentage of",
+              "offenders who had a given number of incidents.",
+              "The strip plots show a dot for each offender, with positions",
+              "jittered to reduce overlap.")
+
+# Graph after period frequency distributions.
+IDNEWA %>%
+  # Keep only the main 12 crime categories (drops the broader crime categories).
+  filter(!is.na(BCrime)) %>%
+  # use y = -... to position boxplot and jitterplot below the histogram
+  ggplot(data = ., aes(x = Count, y = -.4)) +
+  # Add histogram with bar heights scaled to percentages via after_stat.
+  geom_histogram(aes(y = after_stat(count/N_After)), binwidth = .5, 
+                 fill = "black") +
+  # Add a jittered strip plot. 
+  geom_point(aes(), position = position_jitter(width = .25, height = .25),
+             size = 1, alpha = 0.5, color = "gray50") +
+  # Overlay a boxplot on the strip plot from ggstance
+  geom_boxplot(lwd = 1, width = .5, outlier.shape = NA, alpha = .1) +
+  # Merged those calls to one display
+  guides(scale = "none") +
+  # Split each crime category into a separate panel (facet)
+  facet_wrap(~BCrime, nrow = 4, strip.position = "top") +
+  xlab("Incident Count After Testing Window") +
+  # Remove y axis title label from the y axis
+  theme(axis.title.y = element_blank()) +
+  # Format the y axis ticks. 
+  scale_y_continuous(limits = c(-.65, 1.00), 
+                     breaks = c(0, .5, 1.0), labels = c("0%", "50%", "100%")) ->
+  HXCat12_After_BCrime_Distributions
+
+HXCat12_After_BCrime_Distributions
+```
+
+```{r plot_BCrime_partial_width, fig.height = 5.75, fig.width = 7.5, fig.cap = FCap}
+FCap <- paste("\\label{fig:plot_BCrime_partial_width}",
+              "Distributions for Number of Incidents for Which Offender Was",
+              "Arrested, Charged, or Convicted After the Testing Window",
+              "By Broader Crime Category.",
+              "Each panel shows a histogram above a strip plot with an",
+              "overlaid boxplot. Histogram bar heights show the percentage of",
+              "offenders who had a given number of incidents.",
+              "The strip plots show a dot for each offender, with positions",
+              "jittered to reduce overlap. This plot has been zoomed",
+              "in to show incident counts in the range 0-15, omitting a few",
+              "outliers for (a) property crimes, and (b) other crimes.")
+
+HXCat12_After_BCrime_Distributions + 
+  scale_x_continuous(limits = c(-.6, 15.5))
+```
+
 \FloatBarrier
 
 # Arrest Offense Record Summaries
