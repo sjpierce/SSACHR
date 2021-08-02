@@ -89,10 +89,28 @@ bwplot(~ Count | Crime, data = tmpdf2, factor = 24, layout = c(1,12),
        xlab = "No. incidents after testing window")
 
 
-# Note sure beeswarm is going to do any better than bwplot with these data.
-library(beeswarm)
-beeswarm(Count ~ Crime, data = tmpdf2, corral = "wrap", side = 0,
-         vertical = FALSE)
 
 
+# https://stackoverflow.com/questions/6♠7112799/raincloud-plot-histogram
+
+library(ggplot2)
+
+# use y = -... to position boxplot and jitterplot below the histogram
+tmpdf2 %>%
+  filter(!is.na(Crime)) %>%
+ggplot(data = ., aes(x = Count, y = -.4)) +
+  # after_stat for scaling to percentages
+  geom_histogram(aes(y = after_stat(count/1082)), binwidth = .5, fill = "black") +
+  geom_point(aes(), position = position_jitter(width = .25, height = .25),
+             size = 1, alpha = 0.5, color = "gray50") +
+  # from ggstance
+  ggstance::geom_boxploth(lwd = 1, width = .5, outlier.shape = NA, alpha = .1) +
+  # merged those calls to one
+  guides(scale = "none") +
+  # facetting, because each histogram needs its own y
+  facet_wrap(~Crime, nrow = 6, strip.position = "top") +
+  # remove y axis title label from the y axis
+  theme(axis.title.y = element_blank()) +
+  scale_y_continuous(breaks = c(0, .5, 1.0), labels = c("0%", "50%", "100%")) +
+  scale_x_continuous(limits = c(-.6, 12))
 
