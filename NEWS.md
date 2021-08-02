@@ -1,3 +1,15 @@
+# SSACHR 0.17.0, 2021-07-31 to 2021-08-02
+* Updated `inst/Step_01_Data_Mgt.Rmd` to:
+    * Add new variables to IDNEWA tibble.
+    * Add variable labels to the IDNEWA tibble.
+    * Sort the IDNEWA tibble. 
+* Update `inst/Step_02_Analysis.Rmd` to:
+    * Add incident count summaries for broader crime categories.
+    * Add plots of incident count variable distributions during the after 
+      period. 
+* Deleted `inst/Temp_Code.R` because the draft code has been edited and inserted
+  in other files now. 
+
 # SSACHR 0.16.1, 2021-07-30
 * Update `inst/Step_02_Analysis.Rmd` to improve after period summary table. 
 
