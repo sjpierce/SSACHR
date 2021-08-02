@@ -104,6 +104,7 @@ library(SSACHR)           # for git_report(), rvlabel(), which_latex()
 library(geepack)          # for geeglm()
 library(emmeans)          # for emmeans()
 library(texreg)           # for texreg()
+library(ggplot2)          # for ggplot()
 ```
 
 Create objects to hold settings we plan to reuse often. 
