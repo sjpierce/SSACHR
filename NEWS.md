@@ -1,3 +1,7 @@
+# SSACHR 0.17.1, 2021-08-02
+* Update `inst/Step_02_Analysis.Rmd` to:
+    * Improve table formatting in After Period Summary section. 
+
 # SSACHR 0.17.0, 2021-07-31 to 2021-08-02
 * Updated `inst/Step_01_Data_Mgt.Rmd` to:
     * Add new variables to IDNEWA tibble.
