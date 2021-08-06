@@ -922,12 +922,17 @@ IDNEW %>%
            IDate > int_end(TWindow) ~ "After")) %>% 
   # Convert IWhen to a factor with levels in sensible order for display.
   mutate(IWhen = factor(IWhen, levels = IWhenLevels, ordered = TRUE)) %>% 
+  # Create IYearsAfterTW to store number of years between IDate and end of 
+  # testing window.
+  mutate(IYearsAfterTW = (as.duration(interval(int_end(TWindow), IDate)) + 
+                          ddays(1))/dyears(1)) %>% 
   # Add variable labels.
   var_labels(IWhen = "When was incident relative to testing window?") %>% 
   # Retain only variables we need, in sensible order. 
-  select(all_of(c(names(INC), twvars))) %>% 
+  select(all_of(c(names(INC), twvars, "IYearsAfterTW"))) %>% 
   # Add another variable label that was otherwise being dropped. 
-  var_labels(TWindow = "Testing Window Date Interval") ->
+  var_labels(TWindow = "Testing Window Date Interval",
+             IYearsAfterTW = "No. Years Incident Occurred After End of Testing Window") ->
   INCEW
 ```
 
