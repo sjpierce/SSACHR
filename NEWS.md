@@ -1,3 +1,8 @@
+# SSACHR 0.17.2, 2021-08-06
+* Updated `inst/Step_01_Data_Mgt.Rmd` to add IYearsAfterTW variable to INCEW. 
+* Update `inst/Step_02_Analysis.Rmd` to add a figure for IYearsAfterTW by 
+  broader crime category. 
+
 # SSACHR 0.17.1, 2021-08-02
 * Update `inst/Step_02_Analysis.Rmd` to:
     * Improve table formatting in After Period Summary section. 
