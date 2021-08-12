@@ -1,3 +1,17 @@
+# SSACHR 0.18.0, 2021-08-12
+* Update `.gitignore` to ignore EPS and TIFF files in `inst`. 
+* Update `.Rbuildignore` to ignore EPS, PDF, and TIFF files in `inst`. 
+* Updated `inst/Step_01_Data_Mgt.Rmd` to create and save out the INCEWA tibble. 
+* Update `inst/Step_02_Analysis.Rmd` to:
+    * Add a figure for IYearsAfterTW by crime category.
+    * Change figure sizes to match journal requirements. 
+    * Export selected figures to EPS and TIFF files. 
+    * Improve some figure captions. 
+    * Fix inaccurate code comments.
+    * Add new table summarizing years to incident date by crime category.
+    * Add figure for IYearsAfterTW by crime category and improve similar one 
+      by broader crime category.
+
 # SSACHR 0.17.2, 2021-08-06
 * Updated `inst/Step_01_Data_Mgt.Rmd` to add IYearsAfterTW variable to INCEW. 
 * Update `inst/Step_02_Analysis.Rmd` to add a figure for IYearsAfterTW by 
