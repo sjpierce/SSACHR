@@ -17,8 +17,15 @@
 # script to create the data file locally.
 ^data/CHR_Data.RData$
 
+# Omit PDF output files from knitting .Rmd files in selected folders.
+^inst/*\.pdf$
+
 # Omit text file that should not be treated as actual data.
 ^data/Read_This_Note\.txt$
+
+# Omit EPS and TIFF files from knitting .Rmd files in selected folders.
+^inst/*\.eps$
+^inst/*\.tiff$
 
 # Omit SPSS data files that should be downloaded from NACJD archive
 # instead of distributed via GitHub.
