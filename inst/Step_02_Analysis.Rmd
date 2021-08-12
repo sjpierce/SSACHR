@@ -4871,29 +4871,68 @@ INCEWA %>%
          threeparttable = TRUE)
 ```
 
+Figure \ref{fig:plot_IYearsAfterTW_Crime} shows the distributions for the number
+of years elapsed between the end of the testing window and each incident that
+occurred after the window ended broken down by crime category.
+
+```{r plot_IYearsAfterTW_Crime, fig.height = 6, fig.width = 7.2, fig.cap = FCap}
+FCap <- paste("\\label{fig:plot_IYearsAfterTW_Crime}",
+              "Distributions for Years to Incident Date",
+              "for Incidents After the Testing Window Where Offender Was",
+              "Arrested, Charged, or Convicted, By Crime Category.",
               "Each panel shows a densityplot above a strip plot with an",
               "overlaid boxplot.",
               "The strip plots show a dot for each incident, with positions",
               "jittered to reduce overlap.")
 
-# Create vector of labels for the 4 broader crime categories.
-BCLevels <- c("HXCat12_Sexual", "HXCat12_Violent", "HXCat12_Property", 
-              "HXCat12_Other")
-BCLabels <- c("Sexual Crimes (2 categories)",
-              "Violent Non-Sexual Crimes (5 categories)",
-              "Property Crimes (3 categories)",
-              "Other Crimes (2 categories)")
+# Graph after period frequency distributions.
+INCEWA %>%
+  # Keep only the main 12 crime categories (drops the broader crime categories).
+  filter(!is.na(Crime)) %>%
+  select(OID, IID, Crime, IYearsAfterTW) %>% 
+  # use y = -... to position boxplot and jitterplot below the histogram
+  ggplot(data = ., aes(x = IYearsAfterTW, y = -.4)) +
+  # Add density plot with bar heights scaled to percentages via after_stat.
+  ggdist::stat_halfeye(slab_fill = "black", width = .6, justification = -.42, 
+                       .width = 0, point_colour = "NA") +
+  # Add a jittered strip plot. 
+  geom_point(aes(), position = position_jitter(width = 0, height = .25),
+             size = 1, alpha = 0.5, color = "gray50") +
+  # Overlay a boxplot on the strip plot from ggstance
+  geom_boxplot(lwd = 1, width = .50, outlier.shape = NA, alpha = .1) +
+  # Merged those calls to one display
+  guides(scale = "none") +
+  # Split each crime category into a separate panel (facet)
+  facet_wrap(~Crime, nrow = 6, strip.position = "top") +
+  xlab("Years to Incident Date") +
+  ylab("Density") +
+  # Remove y axis title label from the y axis
+  theme(axis.title.y = element_blank(), axis.text.y = element_blank(), 
+        axis.ticks.y = element_blank()) +
+  # Format the y axis ticks. 
+  scale_x_continuous(limits = c(-.5, 30.00), 
+                     breaks = c(0, 5, 10, 15, 20, 25, 30), 
+                     labels = c(0, 5, 10, 15, 20, 25, 30)) 
+```
+
+Figure \ref{fig:plot_IYearsAfterTW_BCrime} shows the distributions for the
+number of years elapsed between the end of the testing window and each incident
+that occurred after the window ended broken down by broader crime category.
+
+```{r plot_IYearsAfterTW_BCrime, fig.height = 5.75, fig.width = 7.2, fig.cap = FCap}
+FCap <- paste("\\label{fig:plot_IYearsAfterTW_BCrime}",
+              "Distributions for Years to Incident Date",
+              "for Incidents After the Testing Window Where Offender Was",
+              "Arrested, Charged, or Convicted, By Broader Crime Category.",
+              "Each panel shows a densityplot above a strip plot with an",
+              "overlaid boxplot.",
+              "The strip plots show a dot for each incident, with positions",
+              "jittered to reduce overlap.")
 
 # Graph after period frequency distributions.
-INCEW %>%
-  # Keep only the violent crimes.
-  filter(IWhen == "After") %>%
-  pivot_longer(cols = c(HXCat12_Sexual, HXCat12_Violent, HXCat12_Property, 
-                        HXCat12_Other), 
-               names_to = "BCrime",
-               values_to = "Include") %>% 
-  mutate(BCrime = factor(BCrime, levels = BCLevels, labels = BCLabels)) %>% 
-  filter(Include == 1) %>% 
+INCEWA %>%
+  # Keep only the 4 broader crime categories (drops 12 main crime categories).
+  filter(!is.na(BCrime)) %>%
   select(OID, IID, BCrime, IYearsAfterTW) %>% 
   # use y = -... to position boxplot and jitterplot below the histogram
   ggplot(data = ., aes(x = IYearsAfterTW, y = -.4)) +
@@ -4909,7 +4948,7 @@ INCEW %>%
   guides(scale = "none") +
   # Split each crime category into a separate panel (facet)
   facet_wrap(~BCrime, nrow = 4, strip.position = "top") +
-  xlab("Years Elapsed Between End of Testing Window and Incident Date") +
+  xlab("Years to Incident Date") +
   ylab("Density") +
   # Remove y axis title label from the y axis
   theme(axis.title.y = element_blank(), axis.text.y = element_blank(), 
@@ -4918,7 +4957,6 @@ INCEW %>%
   scale_x_continuous(limits = c(-.5, 30.00), 
                      breaks = c(0, 5, 10, 15, 20, 25, 30), 
                      labels = c(0, 5, 10, 15, 20, 25, 30)) 
-  #HXCat12_After_BCrime_Distributions
 ```
 
 \FloatBarrier
