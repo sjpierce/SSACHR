@@ -4720,7 +4720,7 @@ FCap <- paste("\\label{fig:plot_BCrime_full_width}",
 
 # Graph after period frequency distributions.
 IDNEWA %>%
-  # Keep only the main 12 crime categories (drops the broader crime categories).
+  # Keep only the 4 broader crime categories (drops 12 main crime categories).
   filter(!is.na(BCrime)) %>%
   # use y = -... to position boxplot and jitterplot below the histogram
   ggplot(data = ., aes(x = Count, y = -.4)) +
