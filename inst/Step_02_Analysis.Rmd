@@ -4644,8 +4644,8 @@ zooms in on the 0-12 range of incident counts.
 
 ```{r plot_Crime_full_width, fig.height = 6, fig.width = 7.2, fig.cap = FCap}
 FCap <- paste("\\label{fig:plot_Crime_full_width}",
-              "Distributions for Number of Incidents for Which Offender Was",
-              "Arrested, Charged, or Convicted After the Testing Window",
+              "Distributions for Number of Incidents After the Testing Window",
+              "for Which Offender Was Arrested, Charged, or Convicted,",
               "By Crime Category.",
               "Each panel shows a histogram above a strip plot with an",
               "overlaid boxplot. Histogram bar heights show the percentage of",
@@ -4684,8 +4684,8 @@ HXCat12_After_Crime_Distributions
 
 ```{r plot_Crime_partial_width, fig.height = 6, fig.width = 7.2, fig.cap = FCap}
 FCap <- paste("\\label{fig:plot_Crime_partial_width}",
-              "Distributions for Number of Incidents for Which Offender Was",
-              "Arrested, Charged, or Convicted After the Testing Window",
+              "Distributions for Number of Incidents After the Testing Window",
+              "for Which Offender Was Arrested, Charged, or Convicted,",
               "By Crime Category.",
               "Each panel shows a histogram above a strip plot with an",
               "overlaid boxplot. Histogram bar heights show the percentage of",
@@ -4709,8 +4709,8 @@ zooms in on the 0-15 range of incident counts.
 
 ```{r plot_after_BCrime_full_width, fig.height = 5.75, fig.width = 7.2, fig.cap = FCap}
 FCap <- paste("\\label{fig:plot_BCrime_full_width}",
-              "Distributions for Number of Incidents for Which Offender Was",
-              "Arrested, Charged, or Convicted After the Testing Window",
+              "Distributions for Number of Incidents After the Testing Window",
+              "for Which Offender Was Arrested, Charged, or Convicted,",
               "By Broader Crime Category.",
               "Each panel shows a histogram above a strip plot with an",
               "overlaid boxplot. Histogram bar heights show the percentage of",
@@ -4749,8 +4749,8 @@ HXCat12_After_BCrime_Distributions
 
 ```{r plot_BCrime_partial_width, fig.height = 5.75, fig.width = 7.2, fig.cap = FCap}
 FCap <- paste("\\label{fig:plot_BCrime_partial_width}",
-              "Distributions for Number of Incidents for Which Offender Was",
-              "Arrested, Charged, or Convicted After the Testing Window",
+              "Distributions for Number of Incidents After the Testing Window",
+              "for Which Offender Was Arrested, Charged, or Convicted,",
               "By Broader Crime Category.",
               "Each panel shows a histogram above a strip plot with an",
               "overlaid boxplot. Histogram bar heights show the percentage of",
