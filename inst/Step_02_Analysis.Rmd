@@ -4642,7 +4642,7 @@ to see for the majority of the data (nearly values are for 12 or fewer
 incidents), we also produced Figure \ref{fig:plot_Crime_partial_width}, which 
 zooms in on the 0-12 range of incident counts.
 
-```{r plot_Crime_full_width, fig.height = 8.5, fig.width = 7.5, fig.cap = FCap}
+```{r plot_Crime_full_width, fig.height = 6, fig.width = 7.2, fig.cap = FCap}
 FCap <- paste("\\label{fig:plot_Crime_full_width}",
               "Distributions for Number of Incidents for Which Offender Was",
               "Arrested, Charged, or Convicted After the Testing Window",
@@ -4682,7 +4682,7 @@ IDNEWA %>%
 HXCat12_After_Crime_Distributions
 ```
 
-```{r plot_Crime_partial_width, fig.height = 8.5, fig.width = 7.5, fig.cap = FCap}
+```{r plot_Crime_partial_width, fig.height = 6, fig.width = 7.2, fig.cap = FCap}
 FCap <- paste("\\label{fig:plot_Crime_partial_width}",
               "Distributions for Number of Incidents for Which Offender Was",
               "Arrested, Charged, or Convicted After the Testing Window",
@@ -4707,7 +4707,7 @@ harder to see for the majority of the data (nearly values are for 15 or fewer
 incidents), we also produced Figure \ref{fig:plot_BCrime_partial_width}, which
 zooms in on the 0-15 range of incident counts.
 
-```{r plot_after_BCrime_full_width, fig.height = 5.75, fig.width = 7.5, fig.cap = FCap}
+```{r plot_after_BCrime_full_width, fig.height = 5.75, fig.width = 7.2, fig.cap = FCap}
 FCap <- paste("\\label{fig:plot_BCrime_full_width}",
               "Distributions for Number of Incidents for Which Offender Was",
               "Arrested, Charged, or Convicted After the Testing Window",
@@ -4747,7 +4747,7 @@ IDNEWA %>%
 HXCat12_After_BCrime_Distributions
 ```
 
-```{r plot_BCrime_partial_width, fig.height = 5.75, fig.width = 7.5, fig.cap = FCap}
+```{r plot_BCrime_partial_width, fig.height = 5.75, fig.width = 7.2, fig.cap = FCap}
 FCap <- paste("\\label{fig:plot_BCrime_partial_width}",
               "Distributions for Number of Incidents for Which Offender Was",
               "Arrested, Charged, or Convicted After the Testing Window",
