@@ -4697,7 +4697,10 @@ FCap <- paste("\\label{fig:plot_Crime_partial_width}",
               "(b) drug crimes, and (c) traffic and ordinances.")
 
 HXCat12_After_Crime_Distributions + 
-  scale_x_continuous(limits = c(-.6, 12.5))
+  scale_x_continuous(limits = c(-.6, 12.5)) ->
+  Figure_Crime_Counts
+
+Figure_Crime_Counts
 ```
 
 Figure \ref{fig:plot_BCrime_full_width} plots the distributions of the incident
@@ -4761,19 +4764,45 @@ FCap <- paste("\\label{fig:plot_BCrime_partial_width}",
               "outliers for (a) property crimes, and (b) other crimes.")
 
 HXCat12_After_BCrime_Distributions + 
-  scale_x_continuous(limits = c(-.6, 15.5))
+  scale_x_continuous(limits = c(-.6, 15.5)) ->
+  Figure_BCrime_Counts
+
+Figure_BCrime_Counts
 ```
 
-Figure \ref{fig:plot_IYearsAfterTW} shows the distributions for the number of 
-years elapsed between the end of the testing window and each incident that 
-occurred after the window ended broken down by broader crime category. 
+### Export Figures for Manuscript
+The American Psychological Association's 
+[general instructions regarding manuscript preparation](https://www.apa.org/pubs/journals/resources/general-manuscript-preparation-guidelines) 
+refer authors to 
+[KnowledgeWorks Global Digital Art Support General Guidelines](https://www.kwglobal.com/digital-art-support) for guidance on 
+preparing figures. We are complying with those guidelines for preparing the 
+following Figure files that we export. 
 
-```{r plot_IYearsAfterTW, fig.height = 5.75, fig.width = 7.5, fig.cap = FCap}
-FCap <- paste("\\label{fig:plot_IYearsAfterTW}",
-              "Distributions for Years Elapsed Between End of Testing Window",
-              "and Incdent Date for Incidents Where Offender Was",
-              "Arrested, Charged, or Convicted After the Testing Window",
-              "By Broader Crime Category.",
+We still need to fine-tune the plotting and export to get nice figures. That may
+require eliminating transparency (alpha) and deciding between TIFF versus EPS 
+files. The EPS files are smaller. I may also need to put the boxplots in before
+the points.
+
+```{r explort_Figure_Crime_Counts}
+ggsave(filename = "Figure_Crime_Counts.tiff", plot = Figure_Crime_Counts, 
+       device = "tiff", dpi = 600, height = 6, width = 7.2, units = "in")
+ggsave(filename = "Figure_Crime_Counts_Flattened.eps", plot = Figure_Crime_Counts, 
+       device = cairo_ps, dpi = 600, height = 6, width = 7.2, units = "in",
+       fallback_resolution = 600)
+ggsave(filename = "Figure_Crime_Counts.eps", plot = Figure_Crime_Counts, 
+       device = "eps", dpi = 600, height = 6, width = 7.2, units = "in")
+```
+
+```{r explort_Figure_BCrime_Counts}
+ggsave(filename = "Figure_BCrime_Counts.tiff", plot = Figure_BCrime_Counts, 
+       device = "tiff", dpi = 600, height = 6, width = 7.2, units = "in")
+ggsave(filename = "Figure_BCrime_Counts_Flattened.eps", plot = Figure_BCrime_Counts, 
+       device = cairo_ps, dpi = 600, height = 6, width = 7.2, units = "in",
+       fallback_resolution = 600)
+ggsave(filename = "Figure_BCrime_Counts.eps", plot = Figure_BCrime_Counts, 
+       device = "eps", dpi = 600, height = 6, width = 7.2, units = "in")
+```
+
               "Each panel shows a densityplot above a strip plot with an",
               "overlaid boxplot.",
               "The strip plots show a dot for each incident, with positions",
