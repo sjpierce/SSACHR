@@ -4803,6 +4803,74 @@ ggsave(filename = "Figure_BCrime_Counts.eps", plot = Figure_BCrime_Counts,
        device = "eps", dpi = 600, height = 6, width = 7.2, units = "in")
 ```
 
+### Years to Incident Date
+
+```{r describe_IYearsAfterTW}
+# Table caption. 
+TCap <- paste("Years to Incident Date By Crime Category",
+              "for Incidents After the Testing Window Where Offender Was",
+              "Arrested, Charged, or Convicted.")
+FN2 <- paste("Only offenders with valid testing window start dates are",
+             "included.",
+             "Only incidents that occurred after the testing window ended and",
+             "where the offender was arrested for, charged with, or convicted",
+             "of at least one offense from the relevant crime category were",
+             "included.",
+             "The four italicized broader categories include incidents",
+             "associated with any of the more specific crime categories nested", 
+             "below them.",
+             "Incidents associated with more than one kind of crime are ",
+             "included in all applicable specific categories, but only once per",
+             "applicable broader category. For example, an incident with both a",
+             "homicide and a robbery only contributes one observation to the",
+             "years summary for the broader violent crimes category.")
+
+VLLevels <- c("Sexual Crimes (2 categories)",
+              "Criminal Sexual Conduct (CSC)",
+              "Sex Crimes (non-CSC crimes)",
+              "Violent Non-Sexual Crimes (5 categories)",
+              "Assault, Domestic Violence",
+              "Assault, non-Domestic Violence",
+              "Homicide",
+              "Robbery",
+              "Weapons",
+              "Property Crimes (3 categories)",
+              "Arson",
+              "Burglary",
+              "Larceny, Theft, Fraud",
+              "Other Crimes (2 categories)",
+              "Drug Crimes",
+              "Traffic & Ordinances")
+
+CNames2 <- c("Crime Category", "N", "Mean", "SD", "Min", "Max", "Skew", 
+             "Kurtosis", "Q25", "Q50", "Q75")
+
+# Summarize crime category counts (both overall and broken down by IWhen).
+INCEWA %>% 
+  filter(!is.na(VLabel)) %>%
+  select(VLabel, IYearsAfterTW) %>% 
+  describeBy(., group = "VLabel", quant=c(.25, .50, .75), mat = TRUE) %>% 
+  filter(vars == 2) %>% 
+  rename(Category = group1) %>% 
+  mutate(Category = factor(Category, levels = VLLevels, labels = VLLevels)) %>% 
+  arrange(Category) %>% 
+  select(Category, n, mean, sd, min, max, skew, kurtosis, Q0.25, Q0.5, Q0.75) %>% 
+  kable(., format = "latex", booktabs = TRUE, digits = 2, row.names = FALSE, 
+        col.names = CNames2, caption = TCap, linesep = "") %>% 
+  row_spec(., row = c(1, 4, 10, 14), italic = TRUE) %>% 
+  pack_rows(" ", start_row = 1, end_row = 3) %>% 
+  pack_rows(" ", start_row = 4, end_row = 9) %>% 
+  pack_rows(" ", start_row = 10, end_row = 13) %>% 
+  pack_rows(" ", start_row = 14, end_row = 16) %>% 
+  add_indent(., positions = c(2:3), level_of_indent = 1) %>%
+  add_indent(., positions = c(5:9), level_of_indent = 1) %>%
+  add_indent(., positions = c(11:13), level_of_indent = 1) %>%
+  add_indent(., positions = c(15:16), level_of_indent = 1) %>%
+  column_spec(column = 1, width = "6 cm") %>% 
+  footnote(general = FN2, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
+```
+
               "Each panel shows a densityplot above a strip plot with an",
               "overlaid boxplot.",
               "The strip plots show a dot for each incident, with positions",
