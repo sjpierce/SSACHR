@@ -4982,6 +4982,7 @@ aggregating to the incident or offender level.
 \FloatBarrier
 
 ## Crime Category (12 levels)
+
 ```{r}
 FN <- paste("Only arrest records for offenders with valid testing window start",
             "dates and with offenses from the 12 main crime categories were",
@@ -4998,6 +4999,7 @@ kable(freq(as_factor(ARREW$ACat12), user.missing = "Excluded user-missing"),
 \FloatBarrier
 
 ## Age at Arrest for Criminal Sexual Conduct
+
 ```{r describe_OAgeA}
 # Table caption. 
 TCap <- paste("Offender Age at Arrest for Criminal Sexual Conduct (Overall)")
@@ -5052,6 +5054,7 @@ convictions, others will have other dispositions.
 \FloatBarrier
 
 ## Crime Category (12 levels, all dispositions)
+
 ```{r, fig.height = 2}
 FN <- paste("Only records for offenders with valid testing window start dates",
             "and with charges from one of the 12 main crime categories were",
@@ -5066,6 +5069,7 @@ kable(freq(as_factor(JUDEW$JCat12), user.missing = "Excluded user-missing"),
 \FloatBarrier
 
 ## Crime Category (12 levels, convictions)
+
 ```{r, fig.height = 2}
 FN <- paste("Only conviction records for offenders with valid testing window",
             "start dates and with charges from one of the 12 main crime",
