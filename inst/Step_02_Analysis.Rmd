@@ -4881,7 +4881,10 @@ INCEWA %>%
   # Format the y axis ticks. 
   scale_x_continuous(limits = c(-.5, 30.00), 
                      breaks = c(0, 5, 10, 15, 20, 25, 30), 
-                     labels = c(0, 5, 10, 15, 20, 25, 30)) 
+                     labels = c(0, 5, 10, 15, 20, 25, 30)) ->
+  Figure_Crime_Years
+
+Figure_Crime_Years
 ```
 
 Figure \ref{fig:plot_IYearsAfterTW_BCrime} shows the distributions for the
@@ -4925,7 +4928,10 @@ INCEWA %>%
   # Format the y axis ticks. 
   scale_x_continuous(limits = c(-.5, 30.00), 
                      breaks = c(0, 5, 10, 15, 20, 25, 30), 
-                     labels = c(0, 5, 10, 15, 20, 25, 30)) 
+                     labels = c(0, 5, 10, 15, 20, 25, 30)) ->
+  Figure_BCrime_Years
+
+Figure_BCrime_Years
 ```
 
 \FloatBarrier
@@ -4955,6 +4961,16 @@ ggsave(filename = here::here("inst/Figure_BCrime_Counts.eps"),
        height = 6.0, width = 7.2, units = "in")
 ```
 
+```{r explort_Figure_Crime_Years}
+ggsave(filename = here::here("inst/Figure_Crime_Years.eps"), 
+       plot = Figure_Crime_Years, device = "eps", dpi = 600, 
+       height = 6.0, width = 7.2, units = "in")
+```
+
+```{r explort_Figure_BCrime_Years}
+ggsave(filename = here::here("inst/Figure_BCrime_Years.eps"), 
+       plot = Figure_BCrime_Years, device = "eps",dpi = 600, 
+       height = 6.0, width = 7.2, units = "in")
 ```
 
 \FloatBarrier
