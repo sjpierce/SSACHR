@@ -105,6 +105,7 @@ library(geepack)          # for geeglm()
 library(emmeans)          # for emmeans()
 library(texreg)           # for texreg()
 library(ggplot2)          # for ggplot()
+library(ggdist)           # for stat_halfeye()
 ```
 
 Create objects to hold settings we plan to reuse often. 
@@ -4862,8 +4863,8 @@ INCEWA %>%
   # use y = -... to position boxplot and jitterplot below the histogram
   ggplot(data = ., aes(x = IYearsAfterTW, y = -.4)) +
   # Add density plot.
-  ggdist::stat_halfeye(slab_fill = "black", width = .6, justification = -.42, 
-                       .width = 0, point_colour = "NA") +
+  stat_halfeye(slab_fill = "black", width = .6, justification = -.42, 
+               .width = 0, point_colour = "NA") +
   # Add a jittered strip plot. 
   geom_point(aes(), position = position_jitter(width = 0, height = .25),
              size = 1, color = "gray50") +
@@ -4909,8 +4910,8 @@ INCEWA %>%
   # use y = -... to position boxplot and jitterplot below the histogram
   ggplot(data = ., aes(x = IYearsAfterTW, y = -.4)) +
   # Add density plot.
-  ggdist::stat_halfeye(slab_fill = "black", width = .6, justification = -.42, 
-                       .width = 0, point_colour = "NA") +
+  stat_halfeye(slab_fill = "black", width = .6, justification = -.42, 
+               .width = 0, point_colour = "NA") +
   # Add a jittered strip plot. 
   geom_point(aes(), position = position_jitter(width = 0, height = .25),
              size = 1, color = "gray50") +
