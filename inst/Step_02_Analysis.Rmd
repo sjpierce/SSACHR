@@ -4664,9 +4664,9 @@ IDNEWA %>%
                  fill = "black") +
   # Add a jittered strip plot. 
   geom_point(aes(), position = position_jitter(width = .25, height = .25),
-             size = 1, alpha = 0.5, color = "gray50") +
+             size = 1, color = "gray50") +
   # Overlay a boxplot on the strip plot from ggstance
-  geom_boxplot(lwd = 1, width = .5, outlier.shape = NA, alpha = .1) +
+  geom_boxplot(lwd = 1, width = .2, outlier.shape = NA) +
   # Merged those calls to one display
   guides(scale = "none") +
   # Split each crime category into a separate panel (facet)
@@ -4732,9 +4732,9 @@ IDNEWA %>%
                  fill = "black") +
   # Add a jittered strip plot. 
   geom_point(aes(), position = position_jitter(width = .25, height = .25),
-             size = 1, alpha = 0.5, color = "gray50") +
+             size = 1, color = "gray50") +
   # Overlay a boxplot on the strip plot from ggstance
-  geom_boxplot(lwd = 1, width = .5, outlier.shape = NA, alpha = .1) +
+  geom_boxplot(lwd = 1, width = .2, outlier.shape = NA) +
   # Merged those calls to one display
   guides(scale = "none") +
   # Split each crime category into a separate panel (facet)
@@ -4897,9 +4897,9 @@ INCEWA %>%
                        .width = 0, point_colour = "NA") +
   # Add a jittered strip plot. 
   geom_point(aes(), position = position_jitter(width = 0, height = .25),
-             size = 1, alpha = 0.5, color = "gray50") +
+             size = 1, color = "gray50") +
   # Overlay a boxplot on the strip plot from ggstance
-  geom_boxplot(lwd = 1, width = .50, outlier.shape = NA, alpha = .1) +
+  geom_boxplot(lwd = 1, width = .20, outlier.shape = NA) +
   # Merged those calls to one display
   guides(scale = "none") +
   # Split each crime category into a separate panel (facet)
@@ -4941,9 +4941,9 @@ INCEWA %>%
                        .width = 0, point_colour = "NA") +
   # Add a jittered strip plot. 
   geom_point(aes(), position = position_jitter(width = 0, height = .25),
-             size = 1, alpha = 0.5, color = "gray50") +
+             size = 1, color = "gray50") +
   # Overlay a boxplot on the strip plot from ggstance
-  geom_boxplot(lwd = 1, width = .50, outlier.shape = NA, alpha = .1) +
+  geom_boxplot(lwd = 1, width = .20, outlier.shape = NA) +
   # Merged those calls to one display
   guides(scale = "none") +
   # Split each crime category into a separate panel (facet)
