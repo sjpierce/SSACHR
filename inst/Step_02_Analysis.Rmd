@@ -4677,9 +4677,9 @@ IDNEWA %>%
   # Format the y axis ticks. 
   scale_y_continuous(limits = c(-.65, 1.00), 
                      breaks = c(0, .5, 1.0), labels = c("0%", "50%", "100%")) ->
-  HXCat12_After_Crime_Distributions
+  Figure_Crime_full_width
 
-HXCat12_After_Crime_Distributions
+Figure_Crime_full_width
 ```
 
 ```{r plot_Crime_partial_width, fig.height = 6, fig.width = 7.2, fig.cap = FCap}
@@ -4696,11 +4696,11 @@ FCap <- paste("\\label{fig:plot_Crime_partial_width}",
               "outliers for (a) larceny, theft, fraud,",
               "(b) drug crimes, and (c) traffic and ordinances.")
 
-HXCat12_After_Crime_Distributions + 
+Figure_Crime_full_width + 
   scale_x_continuous(limits = c(-.6, 12.5)) ->
-  Figure_Crime_Counts
+  Figure_Crime_partial_width
 
-Figure_Crime_Counts
+Figure_Crime_partial_width
 ```
 
 Figure \ref{fig:plot_BCrime_full_width} plots the distributions of the incident
@@ -4745,9 +4745,9 @@ IDNEWA %>%
   # Format the y axis ticks. 
   scale_y_continuous(limits = c(-.65, 1.00), 
                      breaks = c(0, .5, 1.0), labels = c("0%", "50%", "100%")) ->
-  HXCat12_After_BCrime_Distributions
+  Figure_BCrime_full_width
 
-HXCat12_After_BCrime_Distributions
+Figure_BCrime_full_width
 ```
 
 ```{r plot_BCrime_partial_width, fig.height = 5.75, fig.width = 7.2, fig.cap = FCap}
@@ -4763,11 +4763,11 @@ FCap <- paste("\\label{fig:plot_BCrime_partial_width}",
               "in to show incident counts in the range 0-15, omitting a few",
               "outliers for (a) property crimes, and (b) other crimes.")
 
-HXCat12_After_BCrime_Distributions + 
+Figure_BCrime_full_width + 
   scale_x_continuous(limits = c(-.6, 15.5)) ->
-  Figure_BCrime_Counts
+  Figure_BCrime_partial_width
 
-Figure_BCrime_Counts
+Figure_BCrime_partial_width
 ```
 
 \FloatBarrier
