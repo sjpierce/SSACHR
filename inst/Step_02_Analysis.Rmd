@@ -4770,28 +4770,7 @@ HXCat12_After_BCrime_Distributions +
 Figure_BCrime_Counts
 ```
 
-### Export Figures for Manuscript
-The American Psychological Association's 
-[general instructions regarding manuscript preparation](https://www.apa.org/pubs/journals/resources/general-manuscript-preparation-guidelines) 
-refer authors to 
-[KnowledgeWorks Global Digital Art Support General Guidelines](https://www.kwglobal.com/digital-art-support) for guidance on 
-preparing figures. We are complying with those guidelines for preparing the 
-following Figure files that we export. 
-
-We still need to fine-tune the plotting and export to get nice figures. That may
-require eliminating transparency (alpha) and deciding between TIFF versus EPS 
-files. The EPS files are smaller. I may also need to put the boxplots in before
-the points.
-
-```{r explort_Figure_Crime_Counts}
-ggsave(filename = "Figure_Crime_Counts.eps", plot = Figure_Crime_Counts, 
-       device = "eps", dpi = 600, height = 6, width = 7.2, units = "in")
-```
-
-```{r explort_Figure_BCrime_Counts}
-ggsave(filename = "Figure_BCrime_Counts.eps", plot = Figure_BCrime_Counts, 
-       device = "eps", dpi = 600, height = 6, width = 7.2, units = "in")
-```
+\FloatBarrier
 
 ### Years to Incident Date
 
@@ -4947,6 +4926,31 @@ INCEWA %>%
   scale_x_continuous(limits = c(-.5, 30.00), 
                      breaks = c(0, 5, 10, 15, 20, 25, 30), 
                      labels = c(0, 5, 10, 15, 20, 25, 30)) 
+```
+
+\FloatBarrier
+
+### Export Figures for Manuscript
+The American Psychological Association's 
+[general instructions regarding manuscript preparation](https://www.apa.org/pubs/journals/resources/general-manuscript-preparation-guidelines) 
+refer authors to 
+[KnowledgeWorks Global Digital Art Support General Guidelines](https://www.kwglobal.com/digital-art-support) for guidance on 
+preparing figures. We are complying with those guidelines for preparing the 
+following Figure files that we export. 
+
+We still need to fine-tune the plotting and export to get nice figures. That may
+require eliminating transparency (alpha) and deciding between TIFF versus EPS 
+files. The EPS files are smaller. I may also need to put the boxplots in before
+the points.
+
+```{r explort_Figure_Crime_Counts}
+ggsave(filename = "Figure_Crime_Counts.eps", plot = Figure_Crime_Counts, 
+       device = "eps", dpi = 600, height = 6, width = 7.2, units = "in")
+```
+
+```{r explort_Figure_BCrime_Counts}
+ggsave(filename = "Figure_BCrime_Counts.eps", plot = Figure_BCrime_Counts, 
+       device = "eps", dpi = 600, height = 6, width = 7.2, units = "in")
 ```
 
 \FloatBarrier
