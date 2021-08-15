@@ -4784,21 +4784,11 @@ files. The EPS files are smaller. I may also need to put the boxplots in before
 the points.
 
 ```{r explort_Figure_Crime_Counts}
-ggsave(filename = "Figure_Crime_Counts.tiff", plot = Figure_Crime_Counts, 
-       device = "tiff", dpi = 600, height = 6, width = 7.2, units = "in")
-ggsave(filename = "Figure_Crime_Counts_Flattened.eps", plot = Figure_Crime_Counts, 
-       device = cairo_ps, dpi = 600, height = 6, width = 7.2, units = "in",
-       fallback_resolution = 600)
 ggsave(filename = "Figure_Crime_Counts.eps", plot = Figure_Crime_Counts, 
        device = "eps", dpi = 600, height = 6, width = 7.2, units = "in")
 ```
 
 ```{r explort_Figure_BCrime_Counts}
-ggsave(filename = "Figure_BCrime_Counts.tiff", plot = Figure_BCrime_Counts, 
-       device = "tiff", dpi = 600, height = 6, width = 7.2, units = "in")
-ggsave(filename = "Figure_BCrime_Counts_Flattened.eps", plot = Figure_BCrime_Counts, 
-       device = cairo_ps, dpi = 600, height = 6, width = 7.2, units = "in",
-       fallback_resolution = 600)
 ggsave(filename = "Figure_BCrime_Counts.eps", plot = Figure_BCrime_Counts, 
        device = "eps", dpi = 600, height = 6, width = 7.2, units = "in")
 ```
