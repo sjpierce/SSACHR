@@ -1,3 +1,19 @@
+# SSACHR 0.18.1, 2021-08-15
+* Updated `inst/Step_01_Data_Mgt.Rmd` to load another package. 
+* Update `inst/Step_02_Analysis.Rmd` to:
+    * Remove transparency from figures to be exported (per journal requirements)
+      by eliminating alpha parameters.
+    * Adjust size of boxplots in raincloud plots. 
+    * Export only EPS files for figures. 
+    * Fix a couple inaccurate code comments. 
+    * Moved figure export code and added \FloatBarrier commands. 
+    * Export additional figures. 
+    * Renamed some objects for clarity. 
+    * Simplify path name for loading data. 
+    * Added some blank lines to improve readability. 
+    * Load an additional package. 
+* Updated `inst/R_Citations.Rmd` to cite more packages. 
+
 # SSACHR 0.18.0, 2021-08-12
 * Update `.gitignore` to ignore EPS and TIFF files in `inst`. 
 * Update `.Rbuildignore` to ignore EPS, PDF, and TIFF files in `inst`. 
