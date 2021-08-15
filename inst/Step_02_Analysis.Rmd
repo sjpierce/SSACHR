@@ -121,7 +121,7 @@ my.boxes <- list(box.rectangle = list(col = "black", lwd = 2),
 The chunk below loads the data saved by the prior script *Step_01_Data_Mgt.Rmd*.
 
 ```{r load_data}
-load(file = here::here("./data/CHR_Data.RData"))
+load(file = here::here("data/CHR_Data.RData"))
 ```
 
 \FloatBarrier
