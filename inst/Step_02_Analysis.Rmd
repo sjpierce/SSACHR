@@ -4892,7 +4892,7 @@ INCEWA %>%
   select(OID, IID, Crime, IYearsAfterTW) %>% 
   # use y = -... to position boxplot and jitterplot below the histogram
   ggplot(data = ., aes(x = IYearsAfterTW, y = -.4)) +
-  # Add density plot with bar heights scaled to percentages via after_stat.
+  # Add density plot.
   ggdist::stat_halfeye(slab_fill = "black", width = .6, justification = -.42, 
                        .width = 0, point_colour = "NA") +
   # Add a jittered strip plot. 
@@ -4936,7 +4936,7 @@ INCEWA %>%
   select(OID, IID, BCrime, IYearsAfterTW) %>% 
   # use y = -... to position boxplot and jitterplot below the histogram
   ggplot(data = ., aes(x = IYearsAfterTW, y = -.4)) +
-  # Add density plot with bar heights scaled to percentages via after_stat.
+  # Add density plot.
   ggdist::stat_halfeye(slab_fill = "black", width = .6, justification = -.42, 
                        .width = 0, point_colour = "NA") +
   # Add a jittered strip plot. 
