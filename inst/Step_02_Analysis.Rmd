@@ -4944,13 +4944,17 @@ files. The EPS files are smaller. I may also need to put the boxplots in before
 the points.
 
 ```{r explort_Figure_Crime_Counts}
-ggsave(filename = "Figure_Crime_Counts.eps", plot = Figure_Crime_Counts, 
-       device = "eps", dpi = 600, height = 6, width = 7.2, units = "in")
+ggsave(filename = here::here("inst/Figure_Crime_Counts.eps"), 
+       plot = Figure_Crime_partial_width, device = "eps", dpi = 600, 
+       height = 6.0, width = 7.2, units = "in")
 ```
 
 ```{r explort_Figure_BCrime_Counts}
-ggsave(filename = "Figure_BCrime_Counts.eps", plot = Figure_BCrime_Counts, 
-       device = "eps", dpi = 600, height = 6, width = 7.2, units = "in")
+ggsave(filename = here::here("inst/Figure_BCrime_Counts.eps"), 
+       plot = Figure_BCrime_partial_width, device = "eps", dpi = 600, 
+       height = 6.0, width = 7.2, units = "in")
+```
+
 ```
 
 \FloatBarrier
