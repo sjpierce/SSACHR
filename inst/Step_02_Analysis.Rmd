@@ -140,6 +140,8 @@ N_All    <- IDNEW %>% nrow()
 N_Before <- IDNEW %>% filter(Years_Before > 0) %>% nrow()
 N_During <- IDNEW %>% filter(Years_During > 0) %>% nrow()
 N_After  <- IDNEW %>% filter(Years_After > 0) %>% nrow()
+
+data.frame(N_All, N_Before, N_During, N_After)
 ```
 
 All the CHR summaries in this section focus on variables that have been 
