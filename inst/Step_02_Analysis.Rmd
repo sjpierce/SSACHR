@@ -4579,7 +4579,63 @@ as_tibble(confint(HXCat12_Other_emmeans1$contrasts)) %>%
 
 \FloatBarrier
 
-## After Period Summary 
+## Before Period Summary 
+
+```{r before_summary}
+TCap <- paste("Amount of Crime That Occurred Before the Testing Window")
+FN <- paste0("Separately for each crime category, we counted offenders ",
+             "arrested, charged, or convicted for at least one incident ",
+             "occurring before the testing window. Total incidents are summed ",
+             "across those offenders. The four italicized broader categories ",
+             "include offenders who were arrested, charged or convicted for ", 
+             "any of the more specific crime categories nested below them. ",
+             "The numerator for each percentage is the listed value for n; ",
+             "the denominator is the sample size for the before period (N = ",
+             format(N_Before, big.mark = ","), 
+             "). ",
+             "Incidents associated with more than one kind of crime are ",
+             "counted in all applicable specific categories, but only once ",
+             "per applicable broader category. For example, an incident with ",
+             "both a homicide and a robbery only counts once toward the total ",
+             "incident count for the broader violent crimes category. TW, ",
+             "testing window.")
+
+IDNEWB %>%
+  # Drops rows for crime category counts and individuals with no incidents
+  filter(Variable != "HXCat12_Count") %>%
+  # Drops rows for offenders with no incidents of a given type occuring after 
+  # the testing window. 
+  filter(Count > 0) %>%
+  group_by(Variable, VLabel, VOrder) %>%
+  summarise(N = n(),
+            Pct = 100*N/N_Before,
+            Incidents = sum(Count)) %>%
+  ungroup() %>%
+  arrange(VOrder) %>%
+  select(VLabel, N, Pct, Incidents) %>%
+  kable(., format = "latex", booktabs = TRUE, digits = 1, row.names = FALSE,
+        col.names = c("Crime Category", "n", "%", "Total Incidents"),
+        format.args = list(big.mark = ','), caption = TCap, linesep = "") %>%
+  kable_styling() %>%
+  add_header_above(c(" " = 1, "Offenders" = 2, " " = 1)) %>%
+  row_spec(., row = c(1, 4, 10, 14), italic = TRUE) %>% 
+  pack_rows(" ", start_row = 1, end_row = 3) %>% 
+  pack_rows(" ", start_row = 4, end_row = 9) %>% 
+  pack_rows(" ", start_row = 10, end_row = 13) %>% 
+  pack_rows(" ", start_row = 14, end_row = 16) %>% 
+  add_indent(., positions = c(2:3), level_of_indent = 1) %>%
+  add_indent(., positions = c(5:9), level_of_indent = 1) %>%
+  add_indent(., positions = c(11:13), level_of_indent = 1) %>%
+  add_indent(., positions = c(15:16), level_of_indent = 1) %>%
+  column_spec(., column = 2, width = "1.15cm") %>%
+  column_spec(., column = 3, width = "1.15cm") %>%
+  column_spec(., column = 4, width = "2cm") %>%
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+           threeparttable = TRUE)
+```
+
+\FloatBarrier
+
 Next we summarize the amount of crime that occurred after the testing window.
 Separately for each crime category, Table \ref{tab:after_summary} shows the
 number of offenders with one or more incidents from the given category. It also
