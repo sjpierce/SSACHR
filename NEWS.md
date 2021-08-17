@@ -1,3 +1,20 @@
+# SSACHR 0.19.0, 2021-08-17
+* Updated `README.Rmd` and `README.md` to:
+    * Update the task list.
+    * Add citation for the manuscript to the reference list.
+    * Format grant citation to meet APA 7th edition style requirements. 
+* Updated `inst/Step_01_Data_Mgt.Rmd` to create and save IDNEWB and IDNEWD 
+  tibbles. 
+* Update `inst/Step_02_Analysis.Rmd` to:
+    * Display sample sizes by period at start of Offender-Level Summaries 
+      section.
+    * Format some sample sizes reported in the text. 
+    * Added a new graph and explanatory text to the After Period Summary. 
+    * Improved a table footnote.
+    * Added the Before Period Summary section.
+    * Added the During Period Summary section.
+    * Stop exporting figures related to broader crime categories. 
+
 # SSACHR 0.18.1, 2021-08-15
 * Updated `inst/Step_01_Data_Mgt.Rmd` to load another package. 
 * Update `inst/Step_02_Analysis.Rmd` to:
