@@ -146,9 +146,9 @@ data.frame(N_All, N_Before, N_During, N_After)
 
 All the CHR summaries in this section focus on variables that have been 
 aggregated to the offender level. That is why the sample size for all of these
-variables is N = `r N_All` (the number of offenders for whom Michigan CHR 
-data were available and the start date for the earliest SAK testing window could
-be established). 
+variables is N = `r format(N_All, big.mark = ",")` (the number of offenders for 
+whom Michigan CHR data were available and the start date for the earliest SAK
+testing window could be established).
 
 \FloatBarrier
 
