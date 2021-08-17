@@ -5012,7 +5012,7 @@ incidents is basically dependent on when after the end of the testing window the
 offender reference sample gets uploaded to CODIS. 
 
 ```{r plot_IYearsAfterTW_Crime2, fig.height = 6, fig.width = 7.2, fig.cap = FCap}
-FCap <- paste("\\label{fig:plot_IYearsAfterTW_Crime}",
+FCap <- paste("\\label{fig:plot_IYearsAfterTW_Crime2}",
               "Cumulative Distribution Function for Years to Incident Date",
               "for Incidents After the Testing Window Where Offender Was",
               "Arrested, Charged, or Convicted, By Crime Category.",
