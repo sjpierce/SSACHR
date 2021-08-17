@@ -2533,6 +2533,146 @@ IDNEWL %>%
   IDNEWA
 ```
 
+# Extract the Before Period Records from IDNEWL to IDNEWB
+The chunk below filters the *IDNEWL* tibble down to just the records for the 
+after period (*When* = "Before"), then reorganizes it to a long format with one
+row per offender per variable to facilitate analyses we added to respond 
+to peer review feedback on the manuscript. We store the resulting data in
+*IDNEWB*.
+
+```{r create_IDNEWB}
+# Create the new tibble. 
+IDNEWL %>% 
+  filter(When == "Before") %>% 
+  pivot_longer(data = ., cols = starts_with("HXCat12_"), names_to = "Variable",
+               values_to = "Count") %>%
+  mutate(# Create a variable to store variable labels we will need for tables & plots. 
+         VLabel = case_when(Variable == "HXCat12_Sexual" ~ "Sexual Crimes (2 categories)",
+                            Variable == "HXCat12_Violent" ~ "Violent Non-Sexual Crimes (5 categories)",
+                            Variable == "HXCat12_Property" ~ "Property Crimes (3 categories)",
+                            Variable == "HXCat12_Other" ~ "Other Crimes (2 categories)",
+                            Variable == "HXCat12_Count" ~ "Crime Category",
+                            Variable == "HXCat12_1" ~ "Arson",
+                            Variable == "HXCat12_2" ~ "Assault, Domestic Violence",
+                            Variable == "HXCat12_3" ~ "Assault, non-Domestic Violence",
+                            Variable == "HXCat12_4" ~ "Burglary",
+                            Variable == "HXCat12_5" ~ "Criminal Sexual Conduct (CSC)",
+                            Variable == "HXCat12_6" ~ "Drug Crimes",
+                            Variable == "HXCat12_7" ~ "Homicide",
+                            Variable == "HXCat12_8" ~ "Larceny, Theft, Fraud",
+                            Variable == "HXCat12_9" ~ "Robbery",
+                            Variable == "HXCat12_10" ~ "Sex Crimes (non-CSC crimes)",
+                            Variable == "HXCat12_11" ~ "Traffic & Ordinances",
+                            Variable == "HXCat12_12" ~ "Weapons"),
+         # Add a variable to group rows into subsets we may need later. 
+         VGroup = case_when(Variable == "HXCat12_Count" ~ "Crime Category Count",
+                            Variable %in% Sexual_Crimes ~ "Sexual Crimes",
+                            Variable %in% Violent_Crimes ~ "Violent Non-Sexual Crimes",
+                            Variable %in% Property_Crimes ~ "Property Crimes",
+                            Variable %in% Other_Crimes ~ "Other Crimes"),
+         # Create a variable for the sort order of rows. 
+         VOrder = case_when(Variable == "HXCat12_Count" ~ 0,
+                            Variable == "HXCat12_Sexual" ~ 1,
+                            Variable == "HXCat12_5" ~ 2,
+                            Variable == "HXCat12_10" ~ 3,
+                            Variable == "HXCat12_Violent" ~ 4,
+                            Variable == "HXCat12_2" ~ 5,
+                            Variable == "HXCat12_3" ~ 6,
+                            Variable == "HXCat12_7" ~ 7,
+                            Variable == "HXCat12_9" ~ 8,
+                            Variable == "HXCat12_12" ~ 9,
+                            Variable == "HXCat12_Property" ~ 10,
+                            Variable == "HXCat12_1" ~ 11,
+                            Variable == "HXCat12_4" ~ 12,
+                            Variable == "HXCat12_8" ~ 13,
+                            Variable == "HXCat12_Other" ~ 14,
+                            Variable == "HXCat12_6" ~ 15,
+                            Variable == "HXCat12_11" ~ 16),
+         # Create a factor variable for the 12 main crime categories.
+         Crime = factor(VLabel, levels = CCLabels, labels = CCLabels),
+         # Create a factor variable for the 4 broader crime categories.
+         BCrime = factor(VLabel, levels = BCLabels, labels = BCLabels)) %>% 
+  arrange(OID, VOrder) %>% 
+  var_labels(Count = "No. incidents arrested, charged, or convicted before the testing window",
+             Variable = "Variable name",
+             VLabel = "Variable label",
+             VGroup = "Variable group",
+             VOrder = "Variable sorting order",
+             Crime = "Crime category (12 levels)",
+             BCrime = "Broader crime category (4 levels)") ->
+  IDNEWB
+```
+
+# Extract the During Period Records from IDNEWL to IDNEWD
+The chunk below filters the *IDNEWL* tibble down to just the records for the 
+after period (*When* = "During"), then reorganizes it to a long format with one
+row per offender per variable to facilitate analyses we added to respond 
+to peer review feedback on the manuscript. We store the resulting data in
+*IDNEWD*.
+
+```{r create_IDNEWD}
+# Create the new tibble. 
+IDNEWL %>% 
+  filter(When == "During") %>% 
+  pivot_longer(data = ., cols = starts_with("HXCat12_"), names_to = "Variable",
+               values_to = "Count") %>%
+  mutate(# Create a variable to store variable labels we will need for tables & plots. 
+         VLabel = case_when(Variable == "HXCat12_Sexual" ~ "Sexual Crimes (2 categories)",
+                            Variable == "HXCat12_Violent" ~ "Violent Non-Sexual Crimes (5 categories)",
+                            Variable == "HXCat12_Property" ~ "Property Crimes (3 categories)",
+                            Variable == "HXCat12_Other" ~ "Other Crimes (2 categories)",
+                            Variable == "HXCat12_Count" ~ "Crime Category",
+                            Variable == "HXCat12_1" ~ "Arson",
+                            Variable == "HXCat12_2" ~ "Assault, Domestic Violence",
+                            Variable == "HXCat12_3" ~ "Assault, non-Domestic Violence",
+                            Variable == "HXCat12_4" ~ "Burglary",
+                            Variable == "HXCat12_5" ~ "Criminal Sexual Conduct (CSC)",
+                            Variable == "HXCat12_6" ~ "Drug Crimes",
+                            Variable == "HXCat12_7" ~ "Homicide",
+                            Variable == "HXCat12_8" ~ "Larceny, Theft, Fraud",
+                            Variable == "HXCat12_9" ~ "Robbery",
+                            Variable == "HXCat12_10" ~ "Sex Crimes (non-CSC crimes)",
+                            Variable == "HXCat12_11" ~ "Traffic & Ordinances",
+                            Variable == "HXCat12_12" ~ "Weapons"),
+         # Add a variable to group rows into subsets we may need later. 
+         VGroup = case_when(Variable == "HXCat12_Count" ~ "Crime Category Count",
+                            Variable %in% Sexual_Crimes ~ "Sexual Crimes",
+                            Variable %in% Violent_Crimes ~ "Violent Non-Sexual Crimes",
+                            Variable %in% Property_Crimes ~ "Property Crimes",
+                            Variable %in% Other_Crimes ~ "Other Crimes"),
+         # Create a variable for the sort order of rows. 
+         VOrder = case_when(Variable == "HXCat12_Count" ~ 0,
+                            Variable == "HXCat12_Sexual" ~ 1,
+                            Variable == "HXCat12_5" ~ 2,
+                            Variable == "HXCat12_10" ~ 3,
+                            Variable == "HXCat12_Violent" ~ 4,
+                            Variable == "HXCat12_2" ~ 5,
+                            Variable == "HXCat12_3" ~ 6,
+                            Variable == "HXCat12_7" ~ 7,
+                            Variable == "HXCat12_9" ~ 8,
+                            Variable == "HXCat12_12" ~ 9,
+                            Variable == "HXCat12_Property" ~ 10,
+                            Variable == "HXCat12_1" ~ 11,
+                            Variable == "HXCat12_4" ~ 12,
+                            Variable == "HXCat12_8" ~ 13,
+                            Variable == "HXCat12_Other" ~ 14,
+                            Variable == "HXCat12_6" ~ 15,
+                            Variable == "HXCat12_11" ~ 16),
+         # Create a factor variable for the 12 main crime categories.
+         Crime = factor(VLabel, levels = CCLabels, labels = CCLabels),
+         # Create a factor variable for the 4 broader crime categories.
+         BCrime = factor(VLabel, levels = BCLabels, labels = BCLabels)) %>% 
+  arrange(OID, VOrder) %>% 
+  var_labels(Count = "No. incidents arrested, charged, or convicted during the testing window",
+             Variable = "Variable name",
+             VLabel = "Variable label",
+             VGroup = "Variable group",
+             VOrder = "Variable sorting order",
+             Crime = "Crime category (12 levels)",
+             BCrime = "Broader crime category (4 levels)") ->
+  IDNEWD
+```
+
 # Extract the After Period Records from INCEW to INCEWA
 The chunk below filters the *INCEW* tibble down to just the records for the 
 after period (*When* = "After"), then reorganizes it to a long format with one
@@ -2607,8 +2747,8 @@ INCEW %>%
 # Save Data to a File
 
 ```{r save_data}
-save(IDNEW, INCEW, ARREW, CHGEW, JUDEW, CONEW, IDNEWL, IDNEWA, INCEWA,
-     file = here::here("data/CHR_Data.RData"))
+save(IDNEW, INCEW, ARREW, CHGEW, JUDEW, CONEW, IDNEWL, IDNEWA, IDNEWB, IDNEWD, 
+     INCEWA, file = here::here("data/CHR_Data.RData"))
 ```
 
 # Wrap Up
