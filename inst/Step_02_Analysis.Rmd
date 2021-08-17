@@ -5120,21 +5120,9 @@ ggsave(filename = here::here("inst/Figure_Crime_Counts.eps"),
        height = 6.0, width = 7.2, units = "in")
 ```
 
-```{r explort_Figure_BCrime_Counts}
-ggsave(filename = here::here("inst/Figure_BCrime_Counts.eps"), 
-       plot = Figure_BCrime_partial_width, device = "eps", dpi = 600, 
-       height = 6.0, width = 7.2, units = "in")
-```
-
 ```{r explort_Figure_Crime_Years}
 ggsave(filename = here::here("inst/Figure_Crime_Years.eps"), 
        plot = Figure_Crime_Years, device = "eps", dpi = 600, 
-       height = 6.0, width = 7.2, units = "in")
-```
-
-```{r explort_Figure_BCrime_Years}
-ggsave(filename = here::here("inst/Figure_BCrime_Years.eps"), 
-       plot = Figure_BCrime_Years, device = "eps",dpi = 600, 
        height = 6.0, width = 7.2, units = "in")
 ```
 
