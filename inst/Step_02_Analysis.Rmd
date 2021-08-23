@@ -4952,7 +4952,7 @@ INCEWA %>%
   add_indent(., positions = c(5:9), level_of_indent = 1) %>%
   add_indent(., positions = c(11:13), level_of_indent = 1) %>%
   add_indent(., positions = c(15:16), level_of_indent = 1) %>%
-  column_spec(column = 1, width = "6 cm") %>% 
+  column_spec(column = 1, width = "6.8 cm") %>% 
   footnote(general = FN2, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
 ```
