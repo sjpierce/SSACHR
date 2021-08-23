@@ -5052,6 +5052,107 @@ INCEWA %>%
 Figure_Crime_Years
 ```
 
+Now we extract the empirical cumulative distribution functions data underlying 
+Figure \ref{fig:plot_IYearsAfterTW_Crime} and use them to prepare an 
+additional table. A reviewer noted that uploading an offender DNA profile from a
+SAK to CODIS can only produce immediate identification of the offender if the 
+corresponding offender reference sample was already present in CODIS beforehand. 
+However, that may not always happen. The offender reference sample that allows 
+identifying the offender associated with SAK may not arrive in CODIS until 
+later. That means there could be a delay between uploading the SAK forensic 
+testing results to CODIS as a forensic sample and getting a match to an 
+offender. Incidents occurring between the end of the testing window and the 
+arrival of a matching offender reference sample cannot be prevented through
+timely response to CODIS search results that are not yet available. Only crimes
+occurring after a match is available could be prevented that way. 
+
+It would be ideal if we had the CODIS upload date for the reference sample that 
+matched to each SAK. That would allow us to examine and describe the 
+distribution of the delay between uploading the SAK sample and receiving an
+offender match. There would be no delay (0 years) when the offender reference 
+sample was already present in CODIS, but it could be anywhere from 1 day to many
+years before one is available. Knowing more about that distribution would allow
+us to find the subset of potentially preventable incidents that occurred both 
+after the testing window ended and after the matching reference sample was 
+uploaded to CODIS. 
+
+Unfortunately, we do not have access to those offender reference sample upload
+dates. Therefore, we examine the implications of assuming a fixed delay in 
+when offender reference samples arrive in CODIS relative to the end of the 
+testing window. We do that by using the cumulative distribution functions 
+graphed in Figure \ref{fig:plot_IYearsAfterTW_Crime2} to compute how many 
+incidents occurred 1, 2, 5, and 10 years after the end of the testing window. 
+This makes the crude assumption that all SAKs experience the same delay. 
+
+```{r IYearsAfterTW_ecdf}
+# Table caption. 
+TCap <- paste("Number and Percentage of Incidents Remaining Given Hypothetical",
+              "Delays Between End of Testing Window and Matching to an ",
+              "Offender Reference Sample")
+FN2 <- paste("Only offenders with valid testing window start dates are",
+             "included.",
+             "Only incidents that occurred after the testing window ended and",
+             "where the offender was arrested for, charged with, or convicted",
+             "of at least one offense from the relevant crime category were",
+             "included.",
+             "The four italicized broader categories include incidents",
+             "associated with any of the more specific crime categories nested", 
+             "below them.",
+             "Incidents associated with more than one kind of crime are ",
+             "included in all applicable specific categories, but only once per",
+             "applicable broader category. For example, an incident with both a",
+             "homicide and a robbery only contributes one observation to the",
+             "years summary for the broader violent crimes category.",
+             "N, total number of incidents after the end of testing window;", 
+             "n, number of incidents remaining after specified delay." )
+
+INCEWA %>% 
+  filter(!is.na(VLabel)) %>%
+  mutate(Category = factor(VLabel, levels = VLLevels, labels = VLLevels)) %>%
+  select(Category, IYearsAfterTW) %>%
+  arrange(Category, IYearsAfterTW) %>% 
+  group_by(Category) %>% 
+  summarize(N = n(),
+            # If CODIS reference sample uploaded 1 year after SAK
+            PRemain_1 = 1 - ecdf(IYearsAfterTW)(1),
+            NRemain_1 = round(N*PRemain_1, digits = 0),
+            # If CODIS reference sample uploaded 2 years after SAK
+            PRemain_2 = 1 - ecdf(IYearsAfterTW)(2),
+            NRemain_2 = round(N*PRemain_2, digits = 0),
+            # If CODIS reference sample uploaded 5 years after SAK
+            PRemain_5 = 1 - ecdf(IYearsAfterTW)(5),
+            NRemain_5 = round(N*PRemain_5, digits = 0),
+            # If CODIS reference sample uploaded 10 years after SAK
+            PRemain_10 = 1 - ecdf(IYearsAfterTW)(10),
+            NRemain_10 = round(N*PRemain_10, digits = 0)) %>% 
+  # Rescale proportions to percentages
+  mutate(PRemain_1 = PRemain_1*100,
+         PRemain_2 = PRemain_2*100,
+         PRemain_5 = PRemain_5*100,
+         PRemain_10 = PRemain_10*100) %>% 
+  select(Category, N, NRemain_1, PRemain_1, NRemain_2, PRemain_2,
+         NRemain_5, PRemain_5, NRemain_10, PRemain_10) %>% 
+  kable(format = "latex", digits = 1, booktabs = TRUE, caption = TCap, 
+        format.args = list(big.mark = ','), linesep = "", 
+        col.names = c("Category", "N", rep(c("n", "%"), times = 4))) %>% 
+  kable_styling() %>% 
+  add_header_above(., c(" ", " ", "1 Year" = 2, "2 Years" = 2, 
+                        "5 Years" = 2, "10 Years" = 2)) %>% 
+  add_header_above(., c(" ", " ", "Delay in Matching to Offender Reference Sample" = 8)) %>% 
+  row_spec(., row = c(1, 4, 10, 14), italic = TRUE) %>% 
+  pack_rows(" ", start_row = 1, end_row = 3) %>% 
+  pack_rows(" ", start_row = 4, end_row = 9) %>% 
+  pack_rows(" ", start_row = 10, end_row = 13) %>% 
+  pack_rows(" ", start_row = 14, end_row = 16) %>% 
+  add_indent(., positions = c(2:3), level_of_indent = 1) %>%
+  add_indent(., positions = c(5:9), level_of_indent = 1) %>%
+  add_indent(., positions = c(11:13), level_of_indent = 1) %>%
+  add_indent(., positions = c(15:16), level_of_indent = 1) %>%
+  column_spec(column = 1, width = "6.8 cm") %>% 
+  footnote(general = FN2, general_title = "Note: ", footnote_as_chunk = TRUE,
+         threeparttable = TRUE)
+```
+
 Figure \ref{fig:plot_IYearsAfterTW_BCrime} shows the distributions for the
 number of years elapsed between the end of the testing window and each incident
 that occurred after the window ended broken down by broader crime category.
