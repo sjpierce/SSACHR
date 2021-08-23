@@ -5028,7 +5028,7 @@ INCEWA %>%
   select(OID, IID, Crime, IYearsAfterTW) %>% 
   # use y = -... to position boxplot and jitterplot below the histogram
   ggplot(data = ., aes(x = IYearsAfterTW, y = -.4)) +
-  # Add density plot.
+  # Add empirical cumulative distribution function plot.
   stat_ecdf(geom = "step", pad = FALSE) +
   # Add a jittered strip plot. 
   geom_point(aes(), position = position_jitter(width = 0, height = .25),
