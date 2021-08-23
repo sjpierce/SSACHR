@@ -1,3 +1,10 @@
+# SSACHR 0.19.1, 2021-08-20 to 2021-08-23
+* Update `inst/Step_02_Analysis.Rmd` to:
+    * Add a new table and explanatory text in the Years to Incident Date 
+      section. 
+    * Improve table formatting in the Years to Incident Date section. 
+    * Improve code comments in the Years to Incident Date section. 
+
 # SSACHR 0.19.0, 2021-08-17
 * Updated `README.Rmd` and `README.md` to:
     * Update the task list.
