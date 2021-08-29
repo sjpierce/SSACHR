@@ -1,3 +1,7 @@
+# SSACHR 0.19.1, 2021-08-29
+* Update `inst/Step_02_Analysis.Rmd` to:
+    * Change number of decimals shown for percentages in selected tables. 
+
 # SSACHR 0.19.1, 2021-08-20 to 2021-08-23
 * Update `inst/Step_02_Analysis.Rmd` to:
     * Add a new table and explanatory text in the Years to Incident Date 
