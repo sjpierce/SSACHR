@@ -4731,7 +4731,7 @@ IDNEWA %>%
   ungroup() %>%
   arrange(VOrder) %>%
   select(VLabel, N, Pct, Incidents) %>%
-  kable(., format = "latex", booktabs = TRUE, digits = 1, row.names = FALSE,
+  kable(., format = "latex", booktabs = TRUE, digits = 2, row.names = FALSE,
         col.names = c("Crime Category", "n", "%", "Total Incidents"),
         format.args = list(big.mark = ','), caption = TCap, linesep = "") %>%
   kable_styling() %>%
@@ -5132,7 +5132,7 @@ INCEWA %>%
          PRemain_10 = PRemain_10*100) %>% 
   select(Category, N, NRemain_1, PRemain_1, NRemain_2, PRemain_2,
          NRemain_5, PRemain_5, NRemain_10, PRemain_10) %>% 
-  kable(format = "latex", digits = 1, booktabs = TRUE, caption = TCap, 
+  kable(format = "latex", digits = 2, booktabs = TRUE, caption = TCap, 
         format.args = list(big.mark = ','), linesep = "", 
         col.names = c("Category", "N", rep(c("n", "%"), times = 4))) %>% 
   kable_styling() %>% 
