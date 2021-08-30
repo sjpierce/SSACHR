@@ -23,8 +23,9 @@
 # Omit text file that should not be treated as actual data.
 ^data/Read_This_Note\.txt$
 
-# Omit EPS and TIFF files from knitting .Rmd files in selected folders.
+# Omit EPS, PNG, and TIFF files from knitting .Rmd files in selected folders.
 ^inst/*\.eps$
+^inst/*\.png$
 ^inst/*\.tiff$
 
 # Omit SPSS data files that should be downloaded from NACJD archive
