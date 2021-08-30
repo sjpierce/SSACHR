@@ -4788,10 +4788,13 @@ IDNEWA %>%
            threeparttable = TRUE)
 ```
 
+\FloatBarrier
+
+### Incident Count Distributions By Crime Categeory
 Figure \ref{fig:plot_Crime_full_width} plots the distributions of the incident
 count variables for each of the 12 main crime categories during the period after
 the testing window. Because a few large outlier values make the details harder
-to see for the majority of the data (nearly values are for 12 or fewer
+to see for the majority of the data (nearly all values are for 12 or fewer
 incidents), we also produced Figure \ref{fig:plot_Crime_partial_width}, which 
 zooms in on the 0-12 range of incident counts.
 
@@ -4859,9 +4862,9 @@ Figure_Crime_partial_width
 Figure \ref{fig:plot_BCrime_full_width} plots the distributions of the incident
 count variables for each of the four broader crime categories during the period
 after the testing window. Because a few large outlier values make the details
-harder to see for the majority of the data (nearly values are for 15 or fewer
-incidents), we also produced Figure \ref{fig:plot_BCrime_partial_width}, which
-zooms in on the 0-15 range of incident counts.
+harder to see for the majority of the data (nearly all values are for 15 or
+fewer incidents), we also produced Figure \ref{fig:plot_BCrime_partial_width},
+which zooms in on the 0-15 range of incident counts.
 
 ```{r plot_after_BCrime_full_width, fig.height = 5.75, fig.width = 7.2, fig.cap = FCap}
 FCap <- paste("\\label{fig:plot_BCrime_full_width}",
@@ -4925,7 +4928,12 @@ Figure_BCrime_partial_width
 
 \FloatBarrier
 
-### Years to Incident Date
+### Years to Incident Date Distributions by Crime Category
+Table \ref{tab:describe_IYearsAfterTW} shows descriptive statistics about the 
+distribution for *IYearsAfterTW*, which records how many years after the end of 
+the testing window an incident actually occurred, broken down by crime category. 
+This is particularly useful for identifying the median (Q50) and quartiles (Q25 
+and Q75), which clearly vary across types of crime. 
 
 ```{r describe_IYearsAfterTW}
 # Table caption. 
@@ -4993,9 +5001,10 @@ INCEWA %>%
          threeparttable = TRUE)
 ```
 
-Figure \ref{fig:plot_IYearsAfterTW_Crime} shows the distributions for the number
-of years elapsed between the end of the testing window and each incident that
-occurred after the window ended broken down by crime category.
+Figure \ref{fig:plot_IYearsAfterTW_Crime} shows the density plots (i.e.,
+smoothed histograms) for the distribution of *IYearsAfterTW* for each crime
+category. The shapes of these plots help us better understand Table
+\ref{tab:describe_IYearsAfterTW}.
 
 ```{r plot_IYearsAfterTW_Crime, fig.height = 6, fig.width = 7.2, fig.cap = FCap}
 FCap <- paste("\\label{fig:plot_IYearsAfterTW_Crime}",
@@ -5040,15 +5049,22 @@ INCEWA %>%
 Figure_Crime_Years
 ```
 
-Figure \ref{fig:plot_IYearsAfterTW_Crime2} shows the cumulative distribution 
+Figure \ref{fig:plot_IYearsAfterTW_Crime_ecdf} shows the cumulative distribution
 functions for the number of years elapsed between the end of the testing window
-and and each incident that occurred after the window ended broken down by 
-broader crime category. This is useful because the number of preventable 
-incidents is basically dependent on when after the end of the testing window the
-offender reference sample gets uploaded to CODIS. 
+and each incident that occurred after the window ended, broken down by crime
+category. This is useful because the number of preventable incidents depends on
+when after the end of the testing window the offender reference sample gets
+uploaded to CODIS. This figure is an alternative way to visualize the same data
+shown in Figure \ref{fig:plot_IYearsAfterTW_Crime} as a cumulative density up to
+a given number of years rather than the point density at each time point. The
+medians (Q50) shown in Table \ref{tab:describe_IYearsAfterTW} are number of
+years on the horizontal axis of \ref{fig:plot_IYearsAfterTW_Crime_ecdf} where
+the line rises to the 50% mark on the vertical axis. Similarly, the 25th and
+75th quantiles (Q25 and Q75) are where the line rises to the 25% and 75% marks
+on the vertical axis.
 
-```{r plot_IYearsAfterTW_Crime2, fig.height = 6, fig.width = 7.2, fig.cap = FCap}
-FCap <- paste("\\label{fig:plot_IYearsAfterTW_Crime2}",
+```{r plot_IYearsAfterTW_Crime_ecdf, fig.height = 6, fig.width = 7.2, fig.cap = FCap}
+FCap <- paste("\\label{fig:plot_IYearsAfterTW_Crime_ecdf}",
               "Cumulative Distribution Function for Years to Incident Date",
               "for Incidents After the Testing Window Where Offender Was",
               "Arrested, Charged, or Convicted, By Crime Category.",
@@ -5088,39 +5104,89 @@ INCEWA %>%
 Figure_Crime_Years
 ```
 
-Now we extract the empirical cumulative distribution functions data underlying 
-Figure \ref{fig:plot_IYearsAfterTW_Crime} and use them to prepare an 
-additional table. A reviewer noted that uploading an offender DNA profile from a
-SAK to CODIS can only produce immediate identification of the offender if the 
-corresponding offender reference sample was already present in CODIS beforehand. 
-However, that may not always happen. The offender reference sample that allows 
-identifying the offender associated with SAK may not arrive in CODIS until 
-later. That means there could be a delay between uploading the SAK forensic 
-testing results to CODIS as a forensic sample and getting a match to an 
-offender. Incidents occurring between the end of the testing window and the 
-arrival of a matching offender reference sample cannot be prevented through
-timely response to CODIS search results that are not yet available. Only crimes
-occurring after a match is available could be prevented that way. 
+Figure \ref{fig:plot_IYearsAfterTW_BCrime} shows the distributions for the
+number of years elapsed between the end of the testing window and each incident
+that occurred after the window ended broken down by broader crime category.
 
-It would be ideal if we had the CODIS upload date for the reference sample that 
-matched to each SAK. That would allow us to examine and describe the 
+```{r plot_IYearsAfterTW_BCrime, fig.height = 5.75, fig.width = 7.2, fig.cap = FCap}
+FCap <- paste("\\label{fig:plot_IYearsAfterTW_BCrime}",
+              "Distributions for Years to Incident Date",
+              "for Incidents After the Testing Window Where Offender Was",
+              "Arrested, Charged, or Convicted, By Broader Crime Category.",
+              "Each panel shows a densityplot above a strip plot with an",
+              "overlaid boxplot.",
+              "The strip plots show a dot for each incident, with positions",
+              "jittered to reduce overlap.")
+
+# Graph after period frequency distributions.
+INCEWA %>%
+  # Keep only the 4 broader crime categories (drops 12 main crime categories).
+  filter(!is.na(BCrime)) %>%
+  select(OID, IID, BCrime, IYearsAfterTW) %>% 
+  # use y = -... to position boxplot and jitterplot below the histogram
+  ggplot(data = ., aes(x = IYearsAfterTW, y = -.4)) +
+  # Add density plot.
+  stat_halfeye(slab_fill = "black", width = .6, justification = -.42, 
+               .width = 0, point_colour = "NA") +
+  # Add a jittered strip plot. 
+  geom_point(aes(), position = position_jitter(width = 0, height = .25),
+             size = 1, color = "gray50") +
+  # Overlay a boxplot on the strip plot from ggstance
+  geom_boxplot(lwd = 1, width = .20, outlier.shape = NA) +
+  # Merged those calls to one display
+  guides(scale = "none") +
+  # Split each crime category into a separate panel (facet)
+  facet_wrap(~BCrime, nrow = 4, strip.position = "top") +
+  xlab("Years to Incident Date") +
+  ylab("Density") +
+  # Remove y axis title label from the y axis
+  theme(axis.title.y = element_blank(), axis.text.y = element_blank(), 
+        axis.ticks.y = element_blank()) +
+  # Format the y axis ticks. 
+  scale_x_continuous(limits = c(-.5, 30.00), 
+                     breaks = c(0, 5, 10, 15, 20, 25, 30), 
+                     labels = c(0, 5, 10, 15, 20, 25, 30)) ->
+  Figure_BCrime_Years
+
+Figure_BCrime_Years
+```
+
+\FloatBarrier
+
+### Number of Potentially Preventable Incidents by Crime Category
+Now we extract the empirical cumulative distribution functions data underlying
+Figure \ref{fig:plot_IYearsAfterTW_Crime_ecdf} and use them to prepare Table
+\ref{tab:table_IYearsAfterTW_ecdf}. A reviewer noted that uploading an offender
+DNA profile from a SAK to CODIS can only produce immediate identification of the
+offender if the corresponding offender reference sample was already present in
+CODIS beforehand. However, that may not always happen. The offender reference
+sample that allows identifying the offender associated with SAK may not arrive
+in CODIS until later. That means there could be a delay between uploading the
+SAK forensic testing results to CODIS as a forensic sample and getting a match
+to an offender. Incidents occurring between the end of the testing window and
+the arrival of a matching offender reference sample cannot be prevented through
+timely response to CODIS search results that are not yet available. Only crimes
+occurring after a match is available could be prevented that way.
+
+It would be ideal if we had the CODIS upload date for the reference sample that
+matched to each SAK. That would allow us to examine and describe the
 distribution of the delay between uploading the SAK sample and receiving an
-offender match. There would be no delay (0 years) when the offender reference 
-sample was already present in CODIS, but it could be anywhere from 1 day to many
-years before one is available. Knowing more about that distribution would allow
-us to find the subset of potentially preventable incidents that occurred both 
-after the testing window ended and after the matching reference sample was 
-uploaded to CODIS. 
+offender match. There would be no delay ($\le 0$ years) when the offender
+reference sample was already present in CODIS, but it could be anywhere from 1
+day to many years before one is available. Knowing more about that distribution
+would allow us to find the subset of potentially preventable incidents that
+occurred both after the testing window ended and after the matching reference
+sample was uploaded to CODIS.
 
 Unfortunately, we do not have access to those offender reference sample upload
 dates. Therefore, we examine the implications of assuming a fixed delay in 
 when offender reference samples arrive in CODIS relative to the end of the 
 testing window. We do that by using the cumulative distribution functions 
-graphed in Figure \ref{fig:plot_IYearsAfterTW_Crime2} to compute how many 
+graphed in Figure \ref{fig:plot_IYearsAfterTW_Crime_ecdf} to compute how many 
 incidents occurred 1, 2, 5, and 10 years after the end of the testing window. 
 This makes the crude assumption that all SAKs experience the same delay. 
 
-```{r IYearsAfterTW_ecdf}
+```{r table_IYearsAfterTW_ecdf}
 # Table caption. 
 TCap <- paste("Number and Percentage of Incidents Remaining Given Hypothetical",
               "Delays Between End of Testing Window and Matching to an ",
@@ -5187,53 +5253,6 @@ INCEWA %>%
   column_spec(column = 1, width = "6.8 cm") %>% 
   footnote(general = FN2, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
-```
-
-Figure \ref{fig:plot_IYearsAfterTW_BCrime} shows the distributions for the
-number of years elapsed between the end of the testing window and each incident
-that occurred after the window ended broken down by broader crime category.
-
-```{r plot_IYearsAfterTW_BCrime, fig.height = 5.75, fig.width = 7.2, fig.cap = FCap}
-FCap <- paste("\\label{fig:plot_IYearsAfterTW_BCrime}",
-              "Distributions for Years to Incident Date",
-              "for Incidents After the Testing Window Where Offender Was",
-              "Arrested, Charged, or Convicted, By Broader Crime Category.",
-              "Each panel shows a densityplot above a strip plot with an",
-              "overlaid boxplot.",
-              "The strip plots show a dot for each incident, with positions",
-              "jittered to reduce overlap.")
-
-# Graph after period frequency distributions.
-INCEWA %>%
-  # Keep only the 4 broader crime categories (drops 12 main crime categories).
-  filter(!is.na(BCrime)) %>%
-  select(OID, IID, BCrime, IYearsAfterTW) %>% 
-  # use y = -... to position boxplot and jitterplot below the histogram
-  ggplot(data = ., aes(x = IYearsAfterTW, y = -.4)) +
-  # Add density plot.
-  stat_halfeye(slab_fill = "black", width = .6, justification = -.42, 
-               .width = 0, point_colour = "NA") +
-  # Add a jittered strip plot. 
-  geom_point(aes(), position = position_jitter(width = 0, height = .25),
-             size = 1, color = "gray50") +
-  # Overlay a boxplot on the strip plot from ggstance
-  geom_boxplot(lwd = 1, width = .20, outlier.shape = NA) +
-  # Merged those calls to one display
-  guides(scale = "none") +
-  # Split each crime category into a separate panel (facet)
-  facet_wrap(~BCrime, nrow = 4, strip.position = "top") +
-  xlab("Years to Incident Date") +
-  ylab("Density") +
-  # Remove y axis title label from the y axis
-  theme(axis.title.y = element_blank(), axis.text.y = element_blank(), 
-        axis.ticks.y = element_blank()) +
-  # Format the y axis ticks. 
-  scale_x_continuous(limits = c(-.5, 30.00), 
-                     breaks = c(0, 5, 10, 15, 20, 25, 30), 
-                     labels = c(0, 5, 10, 15, 20, 25, 30)) ->
-  Figure_BCrime_Years
-
-Figure_BCrime_Years
 ```
 
 \FloatBarrier
