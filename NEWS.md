@@ -1,4 +1,19 @@
-# SSACHR 0.19.1, 2021-08-29
+# SSACHR 0.19.3, 2021-08-30
+* Update `inst/Step_02_Analysis.Rmd` to:
+    * Rename some chunks and improve in-text cross-referencing. 
+    * Export figures to an additional file format. 
+    * Add or improve explanatory text in several places. 
+    * Reorganize the After Period Summary section.
+    * Update the reference format for the funding support/project information. 
+* Updated `inst/Step_01_Data_Mgt.Rmd` to: 
+    * Update the reference format for the funding support/project information. 
+* Updated `inst/R_Citations.Rmd` to: 
+    * Update the reference format for the funding support/project information. 
+* Updated `README.Rmd` and `README.md` to:
+    * Update the reference format for the funding support/project information. 
+* Updated `.gitignore` and `.Rbuildignore` to ignore PNG files. 
+
+# SSACHR 0.19.2, 2021-08-29
 * Update `inst/Step_02_Analysis.Rmd` to:
     * Change number of decimals shown for percentages in selected tables. 
 
