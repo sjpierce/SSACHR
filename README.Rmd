@@ -197,7 +197,6 @@ Campbell, R., Pierce, S. J., Goodman-Williams, R., & Feeney, H. (2021).
 *A window of opportunity: Examining the potential impact of mandatory sexual assault kit (SAK) testing legislation on crime prevention*
 [Manuscript under revision]. Department of Psychology, Michigan State University. 
 
-
 Mair, P. (2016). Thou shalt be reproducible! A technology perspective.
 *Frontiers in Psychology, 7*(1079), 1-17. 
 [doi:10.3389/fpsyg.2016.01079](http://dx.doi.org/10.3389/fpsyg.2016.01079)
@@ -215,7 +214,8 @@ This R package and repository are based on research supported by the following
 grant. 
 
 Campbell, R., Pierce, S. J., & Sharma, D. (2015–2018). 
-*Serial sexual assaults: A longitudinal examination of offending patterns using DNA evidence*. (NIJ Award # 2014-NE-BX-0006) [Grant]. National Institute of Justice. 
+*Serial sexual assaults: A longitudinal examination of offending patterns using DNA evidence*. 
+(NIJ Award # 2014-NE-BX-0006) [Grant]. National Institute of Justice. 
 
 ## Disclaimer
 This research was supported by a grant from the National Institute of Justice, 

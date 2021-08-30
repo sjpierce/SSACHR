@@ -2759,10 +2759,9 @@ save(IDNEW, INCEW, ARREW, CHGEW, JUDEW, CONEW, IDNEWL, IDNEWA, IDNEWB, IDNEWD,
 These materials are scholarly products based on research funded by the following 
 grant. 
 
-Campbell, R., Pierce, S. J., & Sharma, D. (01/01/2015–12/31/2018). Serial sexual
-assaults: A longitudinal examination of offending patterns using DNA evidence.
-[NIJ Award # 2014-NE-BX-0006, Awarded, $699,533]. Sponsor: National Institute of
-Justice. Location: Michigan State University, East Lansing, MI.
+Campbell, R., Pierce, S. J., & Sharma, D. (2015–2018). 
+*Serial sexual assaults: A longitudinal examination of offending patterns using DNA evidence*. 
+(NIJ Award # 2014-NE-BX-0006) [Grant]. National Institute of Justice. 
 
 \FloatBarrier
 
