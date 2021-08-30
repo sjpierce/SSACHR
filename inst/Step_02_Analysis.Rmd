@@ -316,6 +316,10 @@ variables (*NINC12*, *NARR12*, *NCHG12*, *NJUD12*, & *NCON12*) below. Table
 types, plus summaries broken down by when the associated incidents occurred
 relative to the testing window.
 
+Only the data about incident records counts from Table \ref{tab:describe_rcvars} 
+is directly reported in the manuscript. The numbers about other types of records
+are contextual information about the volume of data that was available. 
+
 ```{r describe_rcvars}
 # Table caption. 
 TCap <- paste("Offender-Level Record Counts (All Crime Categories, Overall and",
@@ -604,6 +608,10 @@ as_tibble(confint(NINC12_emmeans1$contrasts)) %>%
 
 ### Arrest Offense Records
 
+Output in this section is not directly used in the manuscript. It is here 
+because it helped us to understand the volume of raw data that was being 
+processed along the way to constructing the data sets used for the manuscript. 
+
 ```{r freq_NARR12}
 # Table caption.
 TCap <- paste("Frequency Distributions for Number of Arrest Offenses (All",
@@ -661,6 +669,10 @@ IDNEW %>%
 \FloatBarrier 
 
 ### Prosecutor Charge Records
+
+Output in this section is not directly used in the manuscript. It is here 
+because it helped us to understand the volume of raw data that was being 
+processed along the way to constructing the data sets used for the manuscript. 
 
 ```{r freq_NCHG12}
 # Table caption.
@@ -720,6 +732,10 @@ IDNEW %>%
 
 ### Adjudicated Charge Records (All)
 
+Output in this section is not directly used in the manuscript. It is here 
+because it helped us to understand the volume of raw data that was being 
+processed along the way to constructing the data sets used for the manuscript. 
+
 ```{r freq_NJUD12}
 # Table caption.
 TCap <- paste("Frequency Distributions for Number of Adjudicated Charges (All",
@@ -778,6 +794,10 @@ IDNEW %>%
 \FloatBarrier 
 
 ### Adjudicated Charge Records (Convictions)
+
+Output in this section is not directly used in the manuscript. It is here 
+because it helped us to understand the volume of raw data that was being 
+processed along the way to constructing the data sets used for the manuscript. 
 
 ```{r freq_NCON12}
 # Table caption.
@@ -1083,6 +1103,13 @@ category, then aggregated again to get to the offender level incident counts. It
 is possible to have multiple arrest offense records, charge records, or
 adjudication records for convictions on a single incident, but these variables
 ignore that and only count each incident once.
+
+It may be helpful to note that the order of subsections below follows the 
+numerical coding of the categories (which was influenced by alphabetical order
+of the labels we chose). We grouped and presented results in a different order 
+in the manuscript that we think makes the material easier to present to readers.
+So, in comparing these materials to the published paper, pay attention to the 
+crime category labels and section headings.
 
 The chunk below creates some objects we use to dynamically construct text later 
 in the subsections below. 
@@ -3729,7 +3756,8 @@ as_tibble(confint(HXCat12_12_emmeans1$contrasts)) %>%
 ## Incident Counts by Broader Crime Category (4 levels) and Period
 In this section, we analyze variables that contain the number of unique 
 incidents in the offender's criminal history for a given broader category of 
-crime. 
+crime. The numerical results for broader categories were omitted from the paper
+for the sake of brevity, but we retain them here for future reference. 
 
 For each broader crime category, we report include counts of incidents based on 
 a combined criterion where the offender was 
@@ -4580,6 +4608,10 @@ as_tibble(confint(HXCat12_Other_emmeans1$contrasts)) %>%
 \FloatBarrier
 
 ## Before Period Summary 
+The content of this section was not reported in the manuscript for the sake of
+brevity. Table \ref{tab:before_summary} remains here to document an analysis
+performed and provide it in a form consistent with the one used for some of the
+after period results.
 
 ```{r before_summary}
 TCap <- paste("Amount of Crime That Occurred Before the Testing Window")
@@ -4637,6 +4669,10 @@ IDNEWB %>%
 \FloatBarrier
 
 ## During Period Summary 
+The content of this section was not reported in the manuscript for the sake of
+brevity. Table \ref{tab:during_summary} remains here to document an analysis 
+performed and provide it in a form consistent with the one used for some of the
+after period results.
 
 ```{r during_summary}
 TCap <- paste("Amount of Crime That Occurred During the Testing Window")
@@ -5231,7 +5267,8 @@ ggsave(filename = here::here("inst/Figure_Crime_Years.eps"),
 
 # Arrest Offense Record Summaries
 All summaries in this section directly summarize the ARR data without first 
-aggregating to the incident or offender level. 
+aggregating to the incident or offender level. These outputs are not directly 
+used in the manuscript.
 
 \FloatBarrier
 
@@ -5281,7 +5318,8 @@ ARREW %>%
 
 # Prosecutor Charge Record Summaries
 This section directly summarizes the CHG data without first aggregating to the 
-incident or offender level. 
+incident or offender level. These outputs are not directly used in the
+manuscript.
 
 \FloatBarrier
 
@@ -5303,7 +5341,8 @@ kable(freq(as_factor(CHGEW$CCat12), user.missing = "Excluded user-missing"),
 # Judicial Charge Record Summaries
 All summaries in this section directly summarize the JUD data without first 
 aggregating to the incident or offender level. While some of these records are 
-convictions, others will have other dispositions.
+convictions, others will have other dispositions. These outputs are not directly 
+used in the manuscript.
 
 \FloatBarrier
 
