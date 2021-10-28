@@ -1,3 +1,13 @@
+# SSACHR 0.20.0, 2021-10-28
+* Update `inst/Step_02_Analysis.Rmd` to:
+    * Add notes on why we are retaining GEE model results even though they no 
+      longer appear in the manuscript.
+    * Stop exporting a figure that we will no longer include in the manuscript. 
+    * Fix a problem caused by ggplot2::layer() masking latticeExtra::layer(). 
+    * Added a new figure for the manuscript and export it instead of prior 
+      figure.  
+    * Improve code legibility. 
+
 # SSACHR 0.19.3, 2021-08-30
 * Update `inst/Step_02_Analysis.Rmd` to:
     * Rename some chunks and improve in-text cross-referencing. 
