@@ -5303,7 +5303,8 @@ INCEWA %>%
   kable_styling() %>% 
   add_header_above(., c(" ", " ", "1 Year" = 2, "2 Years" = 2, 
                         "5 Years" = 2, "10 Years" = 2)) %>% 
-  add_header_above(., c(" ", " ", "Delay in Matching to Offender Reference Sample" = 8)) %>% 
+  add_header_above(., c(" ", " ",
+                        "Delay in Matching to Offender Reference Sample" = 8)) %>% 
   row_spec(., row = c(1, 4, 10, 14), italic = TRUE) %>% 
   pack_rows(" ", start_row = 1, end_row = 3) %>% 
   pack_rows(" ", start_row = 4, end_row = 9) %>% 
