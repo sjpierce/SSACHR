@@ -5162,6 +5162,56 @@ INCEWA %>%
 Figure_BCrime_Years
 ```
 
+Figure \ref{fig:plot_IYearsAfterTW_Crime_ecdf} was the original version of a  
+figure we submitted in a revision to our manuscript. Reviewers found it 
+confusing, so we created Figure \ref{fig:plot_IYearsAfterTW_Crime_ecdf2}
+as a replacement when resubmitting the manuscript. The cumulative density at any 
+given number of years after the end of the testing window is the proportion of
+incidents that had already occurred by that time. Switching to a focus on the 
+proportion remaining instead more closely aligns with the number of potentially preventable incidents. 
+
+```{r plot_IYearsAfterTW_Crime_ecdf2, fig.height = 6, fig.width = 7.2, fig.cap = FCap}
+FCap <- paste("\\label{fig:plot_IYearsAfterTW_Crime_ecdf}",
+              "Percentage of Incidents Occurring After the Testing Window",
+              "Remaining As a Function of Time Since the end of the Testing",
+              "After the Testing Window, By Crime Category.",
+              "Each panel shows a cumulative density function plot above a ",
+              "strip plot with an overlaid boxplot.",
+              "The strip plots show a dot for each incident, with positions",
+              "jittered to reduce overlap.")
+
+# Graph after period frequency distributions.
+INCEWA %>%
+  # Keep only the main 12 crime categories (drops the broader crime categories).
+  filter(!is.na(Crime)) %>%
+  select(OID, IID, Crime, IYearsAfterTW) %>% 
+  # use y = -... to position boxplot and jitterplot below the histogram
+  ggplot(data = ., aes(x = IYearsAfterTW, y = -.4)) +
+  # Add empirical cumulative distribution function plot.
+  stat_ecdf(geom = "step", pad = FALSE) +
+  # Add a jittered strip plot. 
+  geom_point(aes(), position = position_jitter(width = 0, height = .25),
+             size = 1, color = "gray50") +
+  # Overlay a boxplot on the strip plot from ggstance
+  geom_boxplot(lwd = 1, width = .20, outlier.shape = NA) +
+  # Merged those calls to one display
+  guides(scale = "none") +
+  # Split each crime category into a separate panel (facet)
+  facet_wrap(~Crime, nrow = 6, strip.position = "top") +
+  xlab("Years to Incident Date") +
+  ylab("Cumulative Density") +
+    # Format the y axis ticks. 
+  scale_y_continuous(limits = c(-.65, 1.00), 
+                     breaks = c(0, .5, 1.0), labels = c("0%", "50%", "100%")) +
+  scale_x_continuous(limits = c(-.5, 30.00), 
+                     breaks = c(0, 5, 10, 15, 20, 25, 30), 
+                     labels = c(0, 5, 10, 15, 20, 25, 30)) ->
+  Figure_Crime_Years
+
+Figure_Crime_Years
+```
+
+
 \FloatBarrier
 
 ### Number of Potentially Preventable Incidents by Crime Category
