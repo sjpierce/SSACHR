@@ -5280,15 +5280,6 @@ We can chooose between submitting TIFF versus EPS file. Because EPS files are
 orders of magnitude smaller, we choose those for submission. We also export PNG 
 files for convenience (they are easier to view without specialized software). 
 
-```{r export_Figure_Crime_Counts}
-ggsave(filename = here::here("inst/Figure_Crime_Counts.eps"), 
-       plot = Figure_Crime_partial_width, device = "eps", dpi = 600, 
-       height = 6.0, width = 7.2, units = "in")
-ggsave(filename = here::here("inst/Figure_Crime_Counts.png"), 
-       plot = Figure_Crime_partial_width, device = "png", dpi = 600, 
-       height = 6.0, width = 7.2, units = "in")
-```
-
 ```{r export_Figure_Crime_Years}
 ggsave(filename = here::here("inst/Figure_Crime_Years.eps"), 
        plot = Figure_Crime_Years, device = "eps", dpi = 600, 
