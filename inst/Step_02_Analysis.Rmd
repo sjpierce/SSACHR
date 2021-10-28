@@ -5109,10 +5109,7 @@ INCEWA %>%
                      breaks = c(0, .5, 1.0), labels = c("0%", "50%", "100%")) +
   scale_x_continuous(limits = c(-.5, 30.00), 
                      breaks = c(0, 5, 10, 15, 20, 25, 30), 
-                     labels = c(0, 5, 10, 15, 20, 25, 30)) ->
-  Figure_Crime_Years
-
-Figure_Crime_Years
+                     labels = c(0, 5, 10, 15, 20, 25, 30))
 ```
 
 Figure \ref{fig:plot_IYearsAfterTW_BCrime} shows the distributions for the
