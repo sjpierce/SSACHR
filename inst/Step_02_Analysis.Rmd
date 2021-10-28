@@ -219,7 +219,7 @@ IDNEW %>%
   bwplot(VName ~ Age, data = ., factor = 1, xlim = c(-2, 82),
        panel = panel.mybox, par.settings = my.boxes,
        xlab = "Offender Age")  + 
-  layer(panel.abline(v = 16, col.line = "red"))
+  latticeExtra::layer(panel.abline(v = 16, col.line = "red"))
 ```
 
 \FloatBarrier
