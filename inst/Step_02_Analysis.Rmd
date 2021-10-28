@@ -5165,7 +5165,8 @@ confusing, so we created Figure \ref{fig:plot_IYearsAfterTW_Crime_ecdf2}
 as a replacement when resubmitting the manuscript. The cumulative density at any 
 given number of years after the end of the testing window is the proportion of
 incidents that had already occurred by that time. Switching to a focus on the 
-proportion remaining instead more closely aligns with the number of potentially preventable incidents. We also improved the labeling of the axes and the figure
+proportion remaining instead more closely aligns with the number of potentially 
+preventable incidents. We also improved the labeling of the axes and the figure
 caption to address reviewer comments and make the figure easier to understand. 
 
 ```{r plot_IYearsAfterTW_Crime_ecdf2, fig.height = 6, fig.width = 7.2, fig.cap = FCap}
