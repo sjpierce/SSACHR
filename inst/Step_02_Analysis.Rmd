@@ -5165,17 +5165,23 @@ confusing, so we created Figure \ref{fig:plot_IYearsAfterTW_Crime_ecdf2}
 as a replacement when resubmitting the manuscript. The cumulative density at any 
 given number of years after the end of the testing window is the proportion of
 incidents that had already occurred by that time. Switching to a focus on the 
-proportion remaining instead more closely aligns with the number of potentially preventable incidents. 
+proportion remaining instead more closely aligns with the number of potentially preventable incidents. We also improved the labeling of the axes and the figure
+caption to address reviewer comments and make the figure easier to understand. 
 
 ```{r plot_IYearsAfterTW_Crime_ecdf2, fig.height = 6, fig.width = 7.2, fig.cap = FCap}
 FCap <- paste("\\label{fig:plot_IYearsAfterTW_Crime_ecdf}",
-              "Percentage of Incidents Occurring After the Testing Window",
-              "Remaining As a Function of Time Since the end of the Testing",
-              "After the Testing Window, By Crime Category.",
-              "Each panel shows a cumulative density function plot above a ",
-              "strip plot with an overlaid boxplot.",
-              "The strip plots show a dot for each incident, with positions",
-              "jittered to reduce overlap.")
+              "Percentage of Incidents Remaining As a Function of Years From",
+              "End of Testing Window to Incident Date, By Crime Category.",
+              "Only incidents ocurring after the testing window are included.",
+              "Each panel includes a line showing how the percentage of", 
+              "incidents remaining declines over time (this line is the",
+              "complement of the cumulative density function) above a strip",
+              "plot with an overlaid boxplot.",
+              "The strip plots show a dot for when each incident occurred,",
+              "with positions jittered to reduce overlap. They show the raw",
+              "data used to obtain the summary represented by the lines.",
+              "The boxplots provide an additional summary of the raw data",
+              "that highlight when 75%, 50%, and 25% of the incidents remain.")
 
 # Graph after period frequency distributions.
 INCEWA %>%
@@ -5184,8 +5190,8 @@ INCEWA %>%
   select(OID, IID, Crime, IYearsAfterTW) %>% 
   # use y = -... to position boxplot and jitterplot below the histogram
   ggplot(data = ., aes(x = IYearsAfterTW, y = -.4)) +
-  # Add empirical cumulative distribution function plot.
-  stat_ecdf(geom = "step", pad = FALSE) +
+  # Add the complement of the empirical cumulative distribution function plot.
+  stat_ecdf(mapping = aes(y = 1 - ..y..), geom = "step", pad = FALSE) +
   # Add a jittered strip plot. 
   geom_point(aes(), position = position_jitter(width = 0, height = .25),
              size = 1, color = "gray50") +
@@ -5195,8 +5201,8 @@ INCEWA %>%
   guides(scale = "none") +
   # Split each crime category into a separate panel (facet)
   facet_wrap(~Crime, nrow = 6, strip.position = "top") +
-  xlab("Years to Incident Date") +
-  ylab("Cumulative Density") +
+  xlab("Years From End of Testing Window to Incident Date") +
+  ylab("Percentage of Incidents Remaining") +
     # Format the y axis ticks. 
   scale_y_continuous(limits = c(-.65, 1.00), 
                      breaks = c(0, .5, 1.0), labels = c("0%", "50%", "100%")) +
@@ -5207,7 +5213,6 @@ INCEWA %>%
 
 Figure_Crime_Years
 ```
-
 
 \FloatBarrier
 
