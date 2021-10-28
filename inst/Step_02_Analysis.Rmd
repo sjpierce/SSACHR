@@ -55,6 +55,17 @@ omit that qualifier for the sake of brevity.] The data come from Detroit, MI.
 
 \FloatBarrier
 
+# Notes on Generalized Estimating Equation (GEE) Results
+Numerous sections below contain output for GEE models and estimates derived from
+them, such as estimated marginal means and contrasts for ratios of those means.
+We performed those analyses because we think the contrasts provide useful
+insights into how much offenders' rates of criminal activity differed between
+the periods before versus after the testing window. Reviewers found them less
+relevant than we did. We have left those results in the research compendium
+despite having removed them from the final manuscript because some readers may
+still find them interesting and relevant. Preserving them facilitates achieving
+transparency regarding all the analyses we conducted.
+
 # Setup
 Set global R chunk options (local chunk options will over-ride global options). 
 The method for creating a size option that controls font size in code chunks and
