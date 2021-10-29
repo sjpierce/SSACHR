@@ -5182,7 +5182,15 @@ FCap <- paste("\\label{fig:plot_IYearsAfterTW_Crime_ecdf}",
               "with positions jittered to reduce overlap. They show the raw",
               "data used to obtain the summary represented by the lines.",
               "The boxplots provide an additional summary of the raw data",
-              "that highlight when 75%, 50%, and 25% of the incidents remain.")
+              "that highlight when 75%, 50%, and 25% of the incidents remain.",
+              "Bold x-axis values (at 1, 2, 5, and 10) are time points we", 
+              "examined to quantify possible implications of delayed CODIS",
+              "matches for how many crimes might still be preventable.")
+
+x.ticks <- c(0, 1, 2, 5, 10, 15, 20, 25, 30)
+x.face  <- c("0", expression(bold("1")), expression(bold("2")), 
+             expression(bold("5")), expression(bold("10")), "15", "20", "25", 
+             "30")
 
 # Graph after period frequency distributions.
 INCEWA %>%
@@ -5208,8 +5216,8 @@ INCEWA %>%
   scale_y_continuous(limits = c(-.65, 1.00), 
                      breaks = c(0, .5, 1.0), labels = c("0%", "50%", "100%")) +
   scale_x_continuous(limits = c(-.5, 30.00), 
-                     breaks = c(0, 5, 10, 15, 20, 25, 30), 
-                     labels = c(0, 5, 10, 15, 20, 25, 30)) ->
+                     breaks = x.ticks, labels = x.face) -> 
+  #theme(axis.text.x = element_text(face=x.face)) ->
   Figure_Crime_Years
 
 Figure_Crime_Years
