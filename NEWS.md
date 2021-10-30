@@ -1,3 +1,7 @@
+# SSACHR 0.20.2, 2021-10-30
+* Update `inst/Step_02_Analysis.Rmd` to:
+    * Improved a figure for use in manuscript. 
+
 # SSACHR 0.20.1, 2021-10-29
 * Update `inst/Step_02_Analysis.Rmd` to:
     * Improved a figure for use in manuscript. 
