@@ -2408,11 +2408,11 @@ IDNEW %>%
                              "HXCat12_4", "HXCat12_5", "HXCat12_6", 
                              "HXCat12_7", "HXCat12_8", "HXCat12_9",
                              "HXCat12_10", "HXCat12_11", "HXCat12_12")) %>% 
-  rename(NINC12 = HXCat12_Any) %>% 
+  #rename(NINC12 = HXCat12_Any) %>% 
   mutate(When = factor(x = When, levels = c("After", "Before", "During"))) %>% 
   var_labels(When = "When period occurred (relative to testing window)",
              Years = "Years of period duration",
-             NINC12 = "No. incidents arrested, charged, or convicted for any of 12 main crime categories during period",
+             HXCat12_Any = "No. incidents arrested, charged, or convicted for any of 12 main crime categories during period",
              HXCat12_Sexual = "No. incidents arrested, charged, or convicted for any sexual crimes (2 categories) during period",
              HXCat12_Violent = "No. incidents arrested, charged, or convicted for any violent crimes (5 categories) during period",
              HXCat12_Property = "No. incidents arrested, charged, or convicted for any property crimes (3 categories) during period",
