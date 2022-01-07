@@ -4750,7 +4750,7 @@ that occurred after the testing window ended.
 ```{r after_summary}
 TCap <- paste("Amount of Crime That Occurred After the Testing Window")
 FN <- paste0("Separately for each crime category, we counted offenders ",
-             "arrested, charged, or convicted for at least one incident" ,
+             "arrested, charged, or convicted for at least one incident " ,
              "occurring after the testing window. Total incidents are summed ",
              "across those offenders. The four italicized broader categories ",
              "include offenders who were arrested, charged or convicted for ", 
@@ -5274,7 +5274,7 @@ FN2 <- paste("Only offenders with valid testing window start dates are",
              "The four italicized broader categories include incidents",
              "associated with any of the more specific crime categories nested", 
              "below them.",
-             "Incidents associated with more than one kind of crime are ",
+             "Incidents associated with more than one kind of crime are",
              "included in all applicable specific categories, but only once per",
              "applicable broader category. For example, an incident with both a",
              "homicide and a robbery only contributes one observation to the",
