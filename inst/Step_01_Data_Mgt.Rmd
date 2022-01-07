@@ -2445,6 +2445,7 @@ to peer review feedback on the manuscript. We store the resulting data in
 ```{r create_IDNEWA}
 # Create objects to hold vectors of variable names that should be grouped 
 # together in output later. 
+Any_Crimes      <- c("HXCat12_Any")
 Sexual_Crimes   <- c("HXCat12_5", "HXCat12_10", "HXCat12_Sexual")
 Violent_Crimes  <- c("HXCat12_2", "HXCat12_3", "HXCat12_7", "HXCat12_9", 
                      "HXCat12_12", "HXCat12_Violent")
@@ -2465,8 +2466,9 @@ CCLabels <- c("Criminal Sexual Conduct (CSC)",
               "Drug Crimes",
               "Traffic & Ordinances")
 
-# Create vector of labels for the 4 broader crime categories.
-BCLabels <- c("Sexual Crimes (2 categories)",
+# Create vector of labels for the 5 broader crime categories.
+BCLabels <- c("Any Crimes (12 categories)",
+              "Sexual Crimes (2 categories)",
               "Violent Non-Sexual Crimes (5 categories)",
               "Property Crimes (3 categories)",
               "Other Crimes (2 categories)")
@@ -2477,7 +2479,8 @@ IDNEWL %>%
   pivot_longer(data = ., cols = starts_with("HXCat12_"), names_to = "Variable",
                values_to = "Count") %>%
   mutate(# Create a variable to store variable labels we will need for tables & plots. 
-         VLabel = case_when(Variable == "HXCat12_Sexual" ~ "Sexual Crimes (2 categories)",
+         VLabel = case_when(Variable == "HXCat12_Any" ~ "Any Crimes (12 categories)",
+                            Variable == "HXCat12_Sexual" ~ "Sexual Crimes (2 categories)",
                             Variable == "HXCat12_Violent" ~ "Violent Non-Sexual Crimes (5 categories)",
                             Variable == "HXCat12_Property" ~ "Property Crimes (3 categories)",
                             Variable == "HXCat12_Other" ~ "Other Crimes (2 categories)",
@@ -2496,31 +2499,33 @@ IDNEWL %>%
                             Variable == "HXCat12_12" ~ "Weapons"),
          # Add a variable to group rows into subsets we may need later. 
          VGroup = case_when(Variable == "HXCat12_Count" ~ "Crime Category Count",
+                            Variable %in% Any_Crimes ~ "Any Crimes",
                             Variable %in% Sexual_Crimes ~ "Sexual Crimes",
                             Variable %in% Violent_Crimes ~ "Violent Non-Sexual Crimes",
                             Variable %in% Property_Crimes ~ "Property Crimes",
                             Variable %in% Other_Crimes ~ "Other Crimes"),
          # Create a variable for the sort order of rows. 
          VOrder = case_when(Variable == "HXCat12_Count" ~ 0,
-                            Variable == "HXCat12_Sexual" ~ 1,
-                            Variable == "HXCat12_5" ~ 2,
-                            Variable == "HXCat12_10" ~ 3,
-                            Variable == "HXCat12_Violent" ~ 4,
-                            Variable == "HXCat12_2" ~ 5,
-                            Variable == "HXCat12_3" ~ 6,
-                            Variable == "HXCat12_7" ~ 7,
-                            Variable == "HXCat12_9" ~ 8,
-                            Variable == "HXCat12_12" ~ 9,
-                            Variable == "HXCat12_Property" ~ 10,
-                            Variable == "HXCat12_1" ~ 11,
-                            Variable == "HXCat12_4" ~ 12,
-                            Variable == "HXCat12_8" ~ 13,
-                            Variable == "HXCat12_Other" ~ 14,
-                            Variable == "HXCat12_6" ~ 15,
-                            Variable == "HXCat12_11" ~ 16),
+                            Variable == "HXCat12_Any" ~ 1,
+                            Variable == "HXCat12_Sexual" ~ 2,
+                            Variable == "HXCat12_5" ~ 3,
+                            Variable == "HXCat12_10" ~ 4,
+                            Variable == "HXCat12_Violent" ~ 5,
+                            Variable == "HXCat12_2" ~ 6,
+                            Variable == "HXCat12_3" ~ 7,
+                            Variable == "HXCat12_7" ~ 8,
+                            Variable == "HXCat12_9" ~ 9,
+                            Variable == "HXCat12_12" ~ 10,
+                            Variable == "HXCat12_Property" ~ 11,
+                            Variable == "HXCat12_1" ~ 12,
+                            Variable == "HXCat12_4" ~ 13,
+                            Variable == "HXCat12_8" ~ 14,
+                            Variable == "HXCat12_Other" ~ 15,
+                            Variable == "HXCat12_6" ~ 16,
+                            Variable == "HXCat12_11" ~ 17),
          # Create a factor variable for the 12 main crime categories.
          Crime = factor(VLabel, levels = CCLabels, labels = CCLabels),
-         # Create a factor variable for the 4 broader crime categories.
+         # Create a factor variable for the 5 broader crime categories.
          BCrime = factor(VLabel, levels = BCLabels, labels = BCLabels)) %>% 
   arrange(OID, VOrder) %>% 
   var_labels(Count = "No. incidents arrested, charged, or convicted after the testing window",
@@ -2547,7 +2552,8 @@ IDNEWL %>%
   pivot_longer(data = ., cols = starts_with("HXCat12_"), names_to = "Variable",
                values_to = "Count") %>%
   mutate(# Create a variable to store variable labels we will need for tables & plots. 
-         VLabel = case_when(Variable == "HXCat12_Sexual" ~ "Sexual Crimes (2 categories)",
+         VLabel = case_when(Variable == "HXCat12_Any" ~ "Any Crimes (12 categories)",
+                            Variable == "HXCat12_Sexual" ~ "Sexual Crimes (2 categories)",
                             Variable == "HXCat12_Violent" ~ "Violent Non-Sexual Crimes (5 categories)",
                             Variable == "HXCat12_Property" ~ "Property Crimes (3 categories)",
                             Variable == "HXCat12_Other" ~ "Other Crimes (2 categories)",
@@ -2566,31 +2572,33 @@ IDNEWL %>%
                             Variable == "HXCat12_12" ~ "Weapons"),
          # Add a variable to group rows into subsets we may need later. 
          VGroup = case_when(Variable == "HXCat12_Count" ~ "Crime Category Count",
+                            Variable %in% Any_Crimes ~ "Any Crimes",
                             Variable %in% Sexual_Crimes ~ "Sexual Crimes",
                             Variable %in% Violent_Crimes ~ "Violent Non-Sexual Crimes",
                             Variable %in% Property_Crimes ~ "Property Crimes",
                             Variable %in% Other_Crimes ~ "Other Crimes"),
          # Create a variable for the sort order of rows. 
          VOrder = case_when(Variable == "HXCat12_Count" ~ 0,
-                            Variable == "HXCat12_Sexual" ~ 1,
-                            Variable == "HXCat12_5" ~ 2,
-                            Variable == "HXCat12_10" ~ 3,
-                            Variable == "HXCat12_Violent" ~ 4,
-                            Variable == "HXCat12_2" ~ 5,
-                            Variable == "HXCat12_3" ~ 6,
-                            Variable == "HXCat12_7" ~ 7,
-                            Variable == "HXCat12_9" ~ 8,
-                            Variable == "HXCat12_12" ~ 9,
-                            Variable == "HXCat12_Property" ~ 10,
-                            Variable == "HXCat12_1" ~ 11,
-                            Variable == "HXCat12_4" ~ 12,
-                            Variable == "HXCat12_8" ~ 13,
-                            Variable == "HXCat12_Other" ~ 14,
-                            Variable == "HXCat12_6" ~ 15,
-                            Variable == "HXCat12_11" ~ 16),
+                            Variable == "HXCat12_Any" ~ 1,
+                            Variable == "HXCat12_Sexual" ~ 2,
+                            Variable == "HXCat12_5" ~ 3,
+                            Variable == "HXCat12_10" ~ 4,
+                            Variable == "HXCat12_Violent" ~ 5,
+                            Variable == "HXCat12_2" ~ 6,
+                            Variable == "HXCat12_3" ~ 7,
+                            Variable == "HXCat12_7" ~ 8,
+                            Variable == "HXCat12_9" ~ 9,
+                            Variable == "HXCat12_12" ~ 10,
+                            Variable == "HXCat12_Property" ~ 11,
+                            Variable == "HXCat12_1" ~ 12,
+                            Variable == "HXCat12_4" ~ 13,
+                            Variable == "HXCat12_8" ~ 14,
+                            Variable == "HXCat12_Other" ~ 15,
+                            Variable == "HXCat12_6" ~ 16,
+                            Variable == "HXCat12_11" ~ 17),
          # Create a factor variable for the 12 main crime categories.
          Crime = factor(VLabel, levels = CCLabels, labels = CCLabels),
-         # Create a factor variable for the 4 broader crime categories.
+         # Create a factor variable for the 5 broader crime categories.
          BCrime = factor(VLabel, levels = BCLabels, labels = BCLabels)) %>% 
   arrange(OID, VOrder) %>% 
   var_labels(Count = "No. incidents arrested, charged, or convicted before the testing window",
@@ -2617,7 +2625,8 @@ IDNEWL %>%
   pivot_longer(data = ., cols = starts_with("HXCat12_"), names_to = "Variable",
                values_to = "Count") %>%
   mutate(# Create a variable to store variable labels we will need for tables & plots. 
-         VLabel = case_when(Variable == "HXCat12_Sexual" ~ "Sexual Crimes (2 categories)",
+         VLabel = case_when(Variable == "HXCat12_Any" ~ "Any Crimes (12 categories)",
+                            Variable == "HXCat12_Sexual" ~ "Sexual Crimes (2 categories)",
                             Variable == "HXCat12_Violent" ~ "Violent Non-Sexual Crimes (5 categories)",
                             Variable == "HXCat12_Property" ~ "Property Crimes (3 categories)",
                             Variable == "HXCat12_Other" ~ "Other Crimes (2 categories)",
@@ -2636,31 +2645,33 @@ IDNEWL %>%
                             Variable == "HXCat12_12" ~ "Weapons"),
          # Add a variable to group rows into subsets we may need later. 
          VGroup = case_when(Variable == "HXCat12_Count" ~ "Crime Category Count",
+                            Variable %in% Any_Crimes ~ "Any Crimes",
                             Variable %in% Sexual_Crimes ~ "Sexual Crimes",
                             Variable %in% Violent_Crimes ~ "Violent Non-Sexual Crimes",
                             Variable %in% Property_Crimes ~ "Property Crimes",
                             Variable %in% Other_Crimes ~ "Other Crimes"),
          # Create a variable for the sort order of rows. 
          VOrder = case_when(Variable == "HXCat12_Count" ~ 0,
-                            Variable == "HXCat12_Sexual" ~ 1,
-                            Variable == "HXCat12_5" ~ 2,
-                            Variable == "HXCat12_10" ~ 3,
-                            Variable == "HXCat12_Violent" ~ 4,
-                            Variable == "HXCat12_2" ~ 5,
-                            Variable == "HXCat12_3" ~ 6,
-                            Variable == "HXCat12_7" ~ 7,
-                            Variable == "HXCat12_9" ~ 8,
-                            Variable == "HXCat12_12" ~ 9,
-                            Variable == "HXCat12_Property" ~ 10,
-                            Variable == "HXCat12_1" ~ 11,
-                            Variable == "HXCat12_4" ~ 12,
-                            Variable == "HXCat12_8" ~ 13,
-                            Variable == "HXCat12_Other" ~ 14,
-                            Variable == "HXCat12_6" ~ 15,
-                            Variable == "HXCat12_11" ~ 16),
+                            Variable == "HXCat12_Any" ~ 1,
+                            Variable == "HXCat12_Sexual" ~ 2,
+                            Variable == "HXCat12_5" ~ 3,
+                            Variable == "HXCat12_10" ~ 4,
+                            Variable == "HXCat12_Violent" ~ 5,
+                            Variable == "HXCat12_2" ~ 6,
+                            Variable == "HXCat12_3" ~ 7,
+                            Variable == "HXCat12_7" ~ 8,
+                            Variable == "HXCat12_9" ~ 9,
+                            Variable == "HXCat12_12" ~ 10,
+                            Variable == "HXCat12_Property" ~ 11,
+                            Variable == "HXCat12_1" ~ 12,
+                            Variable == "HXCat12_4" ~ 13,
+                            Variable == "HXCat12_8" ~ 14,
+                            Variable == "HXCat12_Other" ~ 15,
+                            Variable == "HXCat12_6" ~ 16,
+                            Variable == "HXCat12_11" ~ 17),
          # Create a factor variable for the 12 main crime categories.
          Crime = factor(VLabel, levels = CCLabels, labels = CCLabels),
-         # Create a factor variable for the 4 broader crime categories.
+         # Create a factor variable for the 5 broader crime categories.
          BCrime = factor(VLabel, levels = BCLabels, labels = BCLabels)) %>% 
   arrange(OID, VOrder) %>% 
   var_labels(Count = "No. incidents arrested, charged, or convicted during the testing window",
@@ -2687,7 +2698,8 @@ INCEW %>%
   pivot_longer(data = ., cols = starts_with("HXCat12_"), names_to = "Variable",
                values_to = "Include") %>%
   mutate(# Create a variable to store variable labels we will need for tables & plots. 
-         VLabel = case_when(Variable == "HXCat12_Sexual" ~ "Sexual Crimes (2 categories)",
+         VLabel = case_when(Variable == "HXCat12_Any" ~ "Any Crimes (12 categories)",
+                            Variable == "HXCat12_Sexual" ~ "Sexual Crimes (2 categories)",
                             Variable == "HXCat12_Violent" ~ "Violent Non-Sexual Crimes (5 categories)",
                             Variable == "HXCat12_Property" ~ "Property Crimes (3 categories)",
                             Variable == "HXCat12_Other" ~ "Other Crimes (2 categories)",
@@ -2706,31 +2718,33 @@ INCEW %>%
                             Variable == "HXCat12_12" ~ "Weapons"),
          # Add a variable to group rows into subsets we may need later. 
          VGroup = case_when(Variable == "HXCat12_Count" ~ "Crime Category Count",
+                            Variable %in% Any_Crimes ~ "Any Crimes",
                             Variable %in% Sexual_Crimes ~ "Sexual Crimes",
                             Variable %in% Violent_Crimes ~ "Violent Non-Sexual Crimes",
                             Variable %in% Property_Crimes ~ "Property Crimes",
                             Variable %in% Other_Crimes ~ "Other Crimes"),
          # Create a variable for the sort order of rows. 
          VOrder = case_when(Variable == "HXCat12_Count" ~ 0,
-                            Variable == "HXCat12_Sexual" ~ 1,
-                            Variable == "HXCat12_5" ~ 2,
-                            Variable == "HXCat12_10" ~ 3,
-                            Variable == "HXCat12_Violent" ~ 4,
-                            Variable == "HXCat12_2" ~ 5,
-                            Variable == "HXCat12_3" ~ 6,
-                            Variable == "HXCat12_7" ~ 7,
-                            Variable == "HXCat12_9" ~ 8,
-                            Variable == "HXCat12_12" ~ 9,
-                            Variable == "HXCat12_Property" ~ 10,
-                            Variable == "HXCat12_1" ~ 11,
-                            Variable == "HXCat12_4" ~ 12,
-                            Variable == "HXCat12_8" ~ 13,
-                            Variable == "HXCat12_Other" ~ 14,
-                            Variable == "HXCat12_6" ~ 15,
-                            Variable == "HXCat12_11" ~ 16),
+                            Variable == "HXCat12_Any" ~ 1,
+                            Variable == "HXCat12_Sexual" ~ 2,
+                            Variable == "HXCat12_5" ~ 3,
+                            Variable == "HXCat12_10" ~ 4,
+                            Variable == "HXCat12_Violent" ~ 5,
+                            Variable == "HXCat12_2" ~ 6,
+                            Variable == "HXCat12_3" ~ 7,
+                            Variable == "HXCat12_7" ~ 8,
+                            Variable == "HXCat12_9" ~ 9,
+                            Variable == "HXCat12_12" ~ 10,
+                            Variable == "HXCat12_Property" ~ 11,
+                            Variable == "HXCat12_1" ~ 12,
+                            Variable == "HXCat12_4" ~ 13,
+                            Variable == "HXCat12_8" ~ 14,
+                            Variable == "HXCat12_Other" ~ 15,
+                            Variable == "HXCat12_6" ~ 16,
+                            Variable == "HXCat12_11" ~ 17),
          # Create a factor variable for the 12 main crime categories.
          Crime = factor(VLabel, levels = CCLabels, labels = CCLabels),
-         # Create a factor variable for the 4 broader crime categories.
+         # Create a factor variable for the 5 broader crime categories.
          BCrime = factor(VLabel, levels = BCLabels, labels = BCLabels)) %>% 
   filter(Include == 1) %>% 
   arrange(OID, VOrder) %>% 
