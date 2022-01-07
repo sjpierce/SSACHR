@@ -5169,6 +5169,9 @@ proportion remaining instead more closely aligns with the number of potentially
 preventable incidents. We also improved the labeling of the axes and the figure
 caption to address reviewer comments and make the figure easier to understand. 
 
+Subsequent peer review feedback caused us to eventually remove the figure even 
+though we believe is is useful in communicating the results. 
+
 ```{r plot_IYearsAfterTW_Crime_ecdf2, fig.height = 6, fig.width = 7.2, fig.cap = FCap}
 FCap <- paste("\\label{fig:plot_IYearsAfterTW_Crime_ecdf2}",
               "Percentage of Incidents Remaining As a Function of Years From",
@@ -5340,11 +5343,15 @@ refer authors to
 preparing figures. We are complying with those guidelines for preparing the 
 following Figure files that we export. 
 
-We can chooose between submitting TIFF versus EPS file. Because EPS files are
+We can choose between submitting TIFF versus EPS file. Because EPS files are
 orders of magnitude smaller, we choose those for submission. We also export PNG 
 files for convenience (they are easier to view without specialized software). 
 
-```{r export_Figure_Crime_Years}
+We wrote the code below to export a version of Figure 
+\ref{fig:plot_IYearsAfterTW_Crime_ecdf2}, but have subsequently disabled the 
+code chunk below because the final manuscript will no longer contain the figure. 
+
+```{r export_Figure_Crime_Years, eval=FALSE}
 ggsave(filename = here::here("inst/Figure_Crime_Years.eps"), 
        plot = Figure_Crime_Years, device = "eps", dpi = 600, 
        height = 6.0, width = 7.2, units = "in")
