@@ -11,6 +11,7 @@
       NINC12 when the relevant data frame is IDNEWL, IDNEWA, IDNEWB, IDNEWD, or 
       INCEWA.
     * Update tables and figures to include summaries of Any Crimes category. 
+* Updated README.md by knitting README.Rmd.
 
 # SSACHR 0.20.2, 2021-10-30
 * Update `inst/Step_02_Analysis.Rmd` to:
