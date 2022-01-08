@@ -60,33 +60,33 @@ Marwick et al. (2018).
         -   **extdata**: This subfolder is where you will need to put
             the SPSS data files mentioned in the Obtaining Data Files
             section below.
-            -   *Read\_This\_Note.txt*: This text file is just present
-                to ensure that the **extdata** subfolder will be created
+            -   *Read_This_Note.txt*: This text file is just present to
+                ensure that the **extdata** subfolder will be created
                 when you clone the repository or extract files from ZIP
                 file copy of the repository obtained from GitHub.
         -   *compact-title.tex*: This LaTeX file is used when you knit
             .Rmd files  
             into PDF files. It helps control formatting of the title
             section.
-        -   *Development\_Tools.R*: This file just contains R code
+        -   *Development_Tools.R*: This file just contains R code
             reminders that I use while developing the package.
-        -   *Step\_01\_Data\_Mgt.Rmd*: Knitting this file requires that
-            you have already obtained the data files mentioned in the
+        -   *Step_01_Data_Mgt.Rmd*: Knitting this file requires that you
+            have already obtained the data files mentioned in the
             Obtaining Data Files section below. It performs initial data
             management steps to prepare the data for use in other
             scripts.
-        -   *Step\_02\_Analysis.Rmd*: This file should be knitted after
-            you knit *Step\_01\_Data\_Mgt.Rmd* because it depends on
-            files created by that script.
-        -   *R\_Citations.Rmd*: This file provides more details about
-            the R packages used by *Step\_01\_Data\_Mgt.Rmd* and
-            *Step\_02\_Analysis.Rmd*. We recommend knitting it after you
+        -   *Step_02_Analysis.Rmd*: This file should be knitted after
+            you knit *Step_01_Data_Mgt.Rmd* because it depends on files
+            created by that script.
+        -   *R_Citations.Rmd*: This file provides more details about the
+            R packages used by *Step_01_Data_Mgt.Rmd* and
+            *Step_02_Analysis.Rmd*. We recommend knitting it after you
             knit those two files. When you knit it, you will get an
-            output file called *R\_Citations.pdf* showing the citations
+            output file called *R_Citations.pdf* showing the citations
             and versions for what is installed and in use on your
             computer.
-        -   *R\_Citations\_Published.pdf*: This is output from knitting
-            *R\_Citations.Rmd* on our computer and represents the
+        -   *R_Citations_Published.pdf*: This is output from knitting
+            *R_Citations.Rmd* on our computer and represents the
             software environment we used to generate the files upon
             which our published manuscript was based. You can compare it
             to the environment on you computer. Maximum reproducibility
@@ -141,7 +141,7 @@ build and install the package from those local files, or install it
 directly from GitHub.
 
 The following code will install *devtools* and *SSACHR*. We use the
-*install\_github()* function from *devtools* to install the *SSACHR*
+*install_github()* function from *devtools* to install the *SSACHR*
 pacakge directly from the Github repository.
 
 ``` r
@@ -179,11 +179,11 @@ Knitting our other R Markdown scripts from this package generates PDF
 output files containing explanatory text, R code, plus R output (both
 text and graphics).
 
--   We use [RStudio](www.rstudio.org) 1.4.1717 or later to work with R
-    and R markdown files. The software chain looks like this: **Rmd
-    file &gt; RStudio &gt; R &gt; rmarkdown &gt; knitr &gt; pandoc &gt;
-    TinyTeX or MiKTeX &gt; PDF file**.
--   We use [pandoc](https://pandoc.org) 2.11.4 or later for this
+-   We use [RStudio](www.rstudio.org) 2021.9.1.372 or later to work with
+    R and R markdown files. The software chain looks like this: **Rmd
+    file > RStudio > R > rmarkdown > knitr > pandoc > TinyTeX or
+    MiKTeX > PDF file**.
+-   We use [pandoc](https://pandoc.org) 2.14.0.3 or later for this
     document. A version of pandoc comes bundled with RStudio, but if you
     want the most recent version, download it from
     <https://pandoc.org/>.
@@ -233,7 +233,7 @@ following grant.
 
 Campbell, R., Pierce, S. J., & Sharma, D. (2015–2018). *Serial sexual
 assaults: A longitudinal examination of offending patterns using DNA
-evidence*. (NIJ Award \# 2014-NE-BX-0006) \[Grant\]. National Institute
+evidence*. (NIJ Award # 2014-NE-BX-0006) \[Grant\]. National Institute
 of Justice.
 
 ## Disclaimer
