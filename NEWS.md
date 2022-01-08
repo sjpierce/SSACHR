@@ -1,3 +1,17 @@
+# SSACHR 0.21.0, 2022-01-07
+* Updated `inst/Step_01_Data_Mgt.Rmd` to: 
+    * Stop renaming variable HXCat12_Any to NINC12. 
+    * Update the IDNEWL, IDNEWA, IDNEWB, IDNEWD, and INCEWA data to include 
+      results based on the HXCat12_Any variable. 
+* Update `inst/Step_02_Analysis.Rmd` to:
+    * Fix some table footnote formatting. 
+    * Stop exporting Figure 2. It will be omitted from the manuscript based on 
+      peer review feedback, but will remain in the reproducibility materials. 
+    * Update variable names and object names to refer to HXCat12_Any instead of
+      NINC12 when the relevant data frame is IDNEWL, IDNEWA, IDNEWB, IDNEWD, or 
+      INCEWA.
+    * Update tables and figures to include summaries of Any Crimes category. 
+
 # SSACHR 0.20.2, 2021-10-30
 * Update `inst/Step_02_Analysis.Rmd` to:
     * Improved a figure for use in manuscript. 
