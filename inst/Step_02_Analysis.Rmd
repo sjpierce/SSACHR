@@ -4629,9 +4629,12 @@ TCap <- paste("Amount of Crime That Occurred Before the Testing Window")
 FN <- paste0("Separately for each crime category, we counted offenders ",
              "arrested, charged, or convicted for at least one incident ",
              "occurring before the testing window. Total incidents are summed ",
-             "across those offenders. The four italicized broader categories ",
-             "include offenders who were arrested, charged or convicted for ", 
-             "any of the more specific crime categories nested below them. ",
+             "across those offenders. The bottom four italicized broader ",
+             "categories include offenders who were arrested, charged or ", 
+             "convicted for any of the more specific crime categories ",
+             "nested below them, while the Any Crimes category includes ",
+             "incidents associated with at least one of the 12 specific ",
+             "crime categories. ",
              "The numerator for each percentage is the listed value for n; ",
              "the denominator is the sample size for the before period (N = ",
              format(N_Before, big.mark = ","), 
@@ -4661,15 +4664,16 @@ IDNEWB %>%
         format.args = list(big.mark = ','), caption = TCap, linesep = "") %>%
   kable_styling() %>%
   add_header_above(c(" " = 1, "Offenders" = 2, " " = 1)) %>%
-  row_spec(., row = c(1, 4, 10, 14), italic = TRUE) %>% 
-  pack_rows(" ", start_row = 1, end_row = 3) %>% 
-  pack_rows(" ", start_row = 4, end_row = 9) %>% 
-  pack_rows(" ", start_row = 10, end_row = 13) %>% 
-  pack_rows(" ", start_row = 14, end_row = 16) %>% 
-  add_indent(., positions = c(2:3), level_of_indent = 1) %>%
-  add_indent(., positions = c(5:9), level_of_indent = 1) %>%
-  add_indent(., positions = c(11:13), level_of_indent = 1) %>%
-  add_indent(., positions = c(15:16), level_of_indent = 1) %>%
+  row_spec(., row = c(1, 2, 5, 11, 15), italic = TRUE) %>% 
+  pack_rows(" ", start_row = 1, end_row = 1) %>% 
+  pack_rows(" ", start_row = 2, end_row = 4) %>% 
+  pack_rows(" ", start_row = 5, end_row = 10) %>% 
+  pack_rows(" ", start_row = 11, end_row = 14) %>% 
+  pack_rows(" ", start_row = 15, end_row = 17) %>% 
+  add_indent(., positions = c(3:4), level_of_indent = 1) %>%
+  add_indent(., positions = c(6:10), level_of_indent = 1) %>%
+  add_indent(., positions = c(12:14), level_of_indent = 1) %>%
+  add_indent(., positions = c(16:17), level_of_indent = 1) %>%
   column_spec(., column = 2, width = "1.15cm") %>%
   column_spec(., column = 3, width = "1.15cm") %>%
   column_spec(., column = 4, width = "2cm") %>%
@@ -4690,9 +4694,12 @@ TCap <- paste("Amount of Crime That Occurred During the Testing Window")
 FN <- paste0("Separately for each crime category, we counted offenders ",
              "arrested, charged, or convicted for at least one incident ",
              "occurring during the testing window. Total incidents are summed ",
-             "across those offenders. The four italicized broader categories ",
-             "include offenders who were arrested, charged or convicted for ", 
-             "any of the more specific crime categories nested below them. ",
+            "across those offenders. The bottom four italicized broader ",
+             "categories include offenders who were arrested, charged or ", 
+             "convicted for any of the more specific crime categories ",
+             "nested below them, while the Any Crimes category includes ",
+             "incidents associated with at least one of the 12 specific ",
+             "crime categories. ",
              "The numerator for each percentage is the listed value for n; ",
              "the denominator is the sample size for the during period (N = ",
              format(N_During, big.mark = ","), "). ",
@@ -4721,15 +4728,16 @@ IDNEWD %>%
         format.args = list(big.mark = ','), caption = TCap, linesep = "") %>%
   kable_styling() %>%
   add_header_above(c(" " = 1, "Offenders" = 2, " " = 1)) %>%
-  row_spec(., row = c(1, 4, 10, 14), italic = TRUE) %>% 
-  pack_rows(" ", start_row = 1, end_row = 3) %>% 
-  pack_rows(" ", start_row = 4, end_row = 9) %>% 
-  pack_rows(" ", start_row = 10, end_row = 13) %>% 
-  pack_rows(" ", start_row = 14, end_row = 16) %>% 
-  add_indent(., positions = c(2:3), level_of_indent = 1) %>%
-  add_indent(., positions = c(5:9), level_of_indent = 1) %>%
-  add_indent(., positions = c(11:13), level_of_indent = 1) %>%
-  add_indent(., positions = c(15:16), level_of_indent = 1) %>%
+ row_spec(., row = c(1, 2, 5, 11, 15), italic = TRUE) %>% 
+  pack_rows(" ", start_row = 1, end_row = 1) %>% 
+  pack_rows(" ", start_row = 2, end_row = 4) %>% 
+  pack_rows(" ", start_row = 5, end_row = 10) %>% 
+  pack_rows(" ", start_row = 11, end_row = 14) %>% 
+  pack_rows(" ", start_row = 15, end_row = 17) %>% 
+  add_indent(., positions = c(3:4), level_of_indent = 1) %>%
+  add_indent(., positions = c(6:10), level_of_indent = 1) %>%
+  add_indent(., positions = c(12:14), level_of_indent = 1) %>%
+  add_indent(., positions = c(16:17), level_of_indent = 1) %>%
   column_spec(., column = 2, width = "1.15cm") %>%
   column_spec(., column = 3, width = "1.15cm") %>%
   column_spec(., column = 4, width = "2cm") %>%
@@ -4752,9 +4760,12 @@ TCap <- paste("Amount of Crime That Occurred After the Testing Window")
 FN <- paste0("Separately for each crime category, we counted offenders ",
              "arrested, charged, or convicted for at least one incident " ,
              "occurring after the testing window. Total incidents are summed ",
-             "across those offenders. The four italicized broader categories ",
-             "include offenders who were arrested, charged or convicted for ", 
-             "any of the more specific crime categories nested below them. ",
+             "across those offenders. The bottom four italicized broader ",
+             "categories include offenders who were arrested, charged or ", 
+             "convicted for any of the more specific crime categories ",
+             "nested below them, while the Any Crimes category includes ",
+             "incidents associated with at least one of the 12 specific ",
+             "crime categories. ",
              "The numerator for each percentage is the listed value for n; ",
              "the denominator is the sample size for the after period (N = ",
              format(N_After, big.mark = ","), "). ",
@@ -4783,15 +4794,16 @@ IDNEWA %>%
         format.args = list(big.mark = ','), caption = TCap, linesep = "") %>%
   kable_styling() %>%
   add_header_above(c(" " = 1, "Offenders" = 2, " " = 1)) %>%
-  row_spec(., row = c(1, 4, 10, 14), italic = TRUE) %>% 
-  pack_rows(" ", start_row = 1, end_row = 3) %>% 
-  pack_rows(" ", start_row = 4, end_row = 9) %>% 
-  pack_rows(" ", start_row = 10, end_row = 13) %>% 
-  pack_rows(" ", start_row = 14, end_row = 16) %>% 
-  add_indent(., positions = c(2:3), level_of_indent = 1) %>%
-  add_indent(., positions = c(5:9), level_of_indent = 1) %>%
-  add_indent(., positions = c(11:13), level_of_indent = 1) %>%
-  add_indent(., positions = c(15:16), level_of_indent = 1) %>%
+  row_spec(., row = c(1, 2, 5, 11, 15), italic = TRUE) %>% 
+  pack_rows(" ", start_row = 1, end_row = 1) %>% 
+  pack_rows(" ", start_row = 2, end_row = 4) %>% 
+  pack_rows(" ", start_row = 5, end_row = 10) %>% 
+  pack_rows(" ", start_row = 11, end_row = 14) %>% 
+  pack_rows(" ", start_row = 15, end_row = 17) %>% 
+  add_indent(., positions = c(3:4), level_of_indent = 1) %>%
+  add_indent(., positions = c(6:10), level_of_indent = 1) %>%
+  add_indent(., positions = c(12:14), level_of_indent = 1) %>%
+  add_indent(., positions = c(16:17), level_of_indent = 1) %>%
   column_spec(., column = 2, width = "1.15cm") %>%
   column_spec(., column = 3, width = "1.15cm") %>%
   column_spec(., column = 4, width = "2cm") %>%
@@ -4927,8 +4939,9 @@ FCap <- paste("\\label{fig:plot_BCrime_partial_width}",
               "offenders who had a given number of incidents.",
               "The strip plots show a dot for each offender, with positions",
               "jittered to reduce overlap. This plot has been zoomed",
-              "in to show incident counts in the range 0-15, omitting a few",
-              "outliers for (a) property crimes, and (b) other crimes.")
+              "in to show incident counts in the range 0-15, omitting some",
+              "larger values in the any crimes panel and some outliers for",
+              "(a) property crimes and (b) other crimes.")
 
 Figure_BCrime_full_width + 
   scale_x_continuous(limits = c(-.6, 15.5)) ->
@@ -4957,16 +4970,19 @@ FN2 <- paste("Only offenders with valid testing window start dates are",
              "where the offender was arrested for, charged with, or convicted",
              "of at least one offense from the relevant crime category were",
              "included.",
-             "The four italicized broader categories include incidents",
-             "associated with any of the more specific crime categories nested", 
-             "below them.",
+             "The bottom four italicized broader categories include offenders ",
+             "who were arrested, charged or convicted for any of the more ", 
+             "specific crime categories nested below them, while the Any ",
+             "Crimes category includes incidents associated with at least one ",
+             "of the 12 specific crime categories. ",
              "Incidents associated with more than one kind of crime are ",
              "included in all applicable specific categories, but only once per",
              "applicable broader category. For example, an incident with both a",
              "homicide and a robbery only contributes one observation to the",
              "years summary for the broader violent crimes category.")
 
-VLLevels <- c("Sexual Crimes (2 categories)",
+VLLevels <- c("Any Crimes (12 categories)",
+              "Sexual Crimes (2 categories)",
               "Criminal Sexual Conduct (CSC)",
               "Sex Crimes (non-CSC crimes)",
               "Violent Non-Sexual Crimes (5 categories)",
@@ -4998,15 +5014,16 @@ INCEWA %>%
   select(Category, n, mean, sd, min, max, skew, kurtosis, Q0.25, Q0.5, Q0.75) %>% 
   kable(., format = "latex", booktabs = TRUE, digits = 2, row.names = FALSE, 
         col.names = CNames2, caption = TCap, linesep = "") %>% 
-  row_spec(., row = c(1, 4, 10, 14), italic = TRUE) %>% 
-  pack_rows(" ", start_row = 1, end_row = 3) %>% 
-  pack_rows(" ", start_row = 4, end_row = 9) %>% 
-  pack_rows(" ", start_row = 10, end_row = 13) %>% 
-  pack_rows(" ", start_row = 14, end_row = 16) %>% 
-  add_indent(., positions = c(2:3), level_of_indent = 1) %>%
-  add_indent(., positions = c(5:9), level_of_indent = 1) %>%
-  add_indent(., positions = c(11:13), level_of_indent = 1) %>%
-  add_indent(., positions = c(15:16), level_of_indent = 1) %>%
+  row_spec(., row = c(1, 2, 5, 11, 15), italic = TRUE) %>% 
+  pack_rows(" ", start_row = 1, end_row = 1) %>% 
+  pack_rows(" ", start_row = 2, end_row = 4) %>% 
+  pack_rows(" ", start_row = 5, end_row = 10) %>% 
+  pack_rows(" ", start_row = 11, end_row = 14) %>% 
+  pack_rows(" ", start_row = 15, end_row = 17) %>% 
+  add_indent(., positions = c(3:4), level_of_indent = 1) %>%
+  add_indent(., positions = c(6:10), level_of_indent = 1) %>%
+  add_indent(., positions = c(12:14), level_of_indent = 1) %>%
+  add_indent(., positions = c(16:17), level_of_indent = 1) %>%
   column_spec(column = 1, width = "6.8 cm") %>% 
   footnote(general = FN2, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
@@ -5274,9 +5291,11 @@ FN2 <- paste("Only offenders with valid testing window start dates are",
              "where the offender was arrested for, charged with, or convicted",
              "of at least one offense from the relevant crime category were",
              "included.",
-             "The four italicized broader categories include incidents",
-             "associated with any of the more specific crime categories nested", 
-             "below them.",
+             "The bottom four italicized broader categories include offenders ",
+             "who were arrested, charged or convicted for any of the more ", 
+             "specific crime categories nested below them, while the Any ",
+             "Crimes category includes incidents associated with at least one ",
+             "of the 12 specific crime categories. ",
              "Incidents associated with more than one kind of crime are",
              "included in all applicable specific categories, but only once per",
              "applicable broader category. For example, an incident with both a",
@@ -5319,15 +5338,16 @@ INCEWA %>%
                         "5 Years" = 2, "10 Years" = 2)) %>% 
   add_header_above(., c(" ", " ",
                         "Delay in Matching to Offender Reference Sample" = 8)) %>% 
-  row_spec(., row = c(1, 4, 10, 14), italic = TRUE) %>% 
-  pack_rows(" ", start_row = 1, end_row = 3) %>% 
-  pack_rows(" ", start_row = 4, end_row = 9) %>% 
-  pack_rows(" ", start_row = 10, end_row = 13) %>% 
-  pack_rows(" ", start_row = 14, end_row = 16) %>% 
-  add_indent(., positions = c(2:3), level_of_indent = 1) %>%
-  add_indent(., positions = c(5:9), level_of_indent = 1) %>%
-  add_indent(., positions = c(11:13), level_of_indent = 1) %>%
-  add_indent(., positions = c(15:16), level_of_indent = 1) %>%
+  row_spec(., row = c(1, 2, 5, 11, 15), italic = TRUE) %>% 
+  pack_rows(" ", start_row = 1, end_row = 1) %>% 
+  pack_rows(" ", start_row = 2, end_row = 4) %>% 
+  pack_rows(" ", start_row = 5, end_row = 10) %>% 
+  pack_rows(" ", start_row = 11, end_row = 14) %>% 
+  pack_rows(" ", start_row = 15, end_row = 17) %>% 
+  add_indent(., positions = c(3:4), level_of_indent = 1) %>%
+  add_indent(., positions = c(6:10), level_of_indent = 1) %>%
+  add_indent(., positions = c(12:14), level_of_indent = 1) %>%
+  add_indent(., positions = c(16:17), level_of_indent = 1) %>%
   column_spec(column = 1, width = "6.8 cm") %>% 
   footnote(general = FN2, general_title = "Note: ", footnote_as_chunk = TRUE,
          threeparttable = TRUE)
