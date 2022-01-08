@@ -498,25 +498,25 @@ an offset term for log(*Years*) to adjust for the period durations. Both models
 used Poisson distributions, an exchangeable correlation structure, a log link
 function, and robust standard errors based on the sandwich estimator. 
 
-```{r NINC12_gee}
-NINC12_gee1 <- IDNEWL %>% 
+```{r HXCat12_Any_gee}
+HXCat12_Any_gee1 <- IDNEWL %>% 
   # Keep only observations for observed periods (i.e., those with Years > 0).
   filter(Years > 0) %>%
-  geeglm(NINC12 ~ When, 
+  geeglm(HXCat12_Any ~ When, 
          family = poisson(link = "log"), data = ., 
          id = OID, corstr = "exchangeable", std.err = "san.se")
 
-NINC12_gee2 <- IDNEWL %>% 
+HXCat12_Any_gee2 <- IDNEWL %>% 
   filter(Years > 0) %>% 
-  geeglm(NINC12 ~ When + offset(log(Years)), 
+  geeglm(HXCat12_Any ~ When + offset(log(Years)), 
          family = poisson(link = "log"), data = ., 
          id = OID, corstr = "exchangeable", std.err = "san.se")
 ```
 
-Table \ref{tab:NINC12_texreg} below shows the parameter estimates for both GEE
+Table \ref{tab:HXCat12_Any_texreg} below shows the parameter estimates for both GEE
 models. 
 
-```{r NINC12_texreg, results = "asis", cfsize = "normalsize"}
+```{r HXCat12_Any_texreg, results = "asis", cfsize = "normalsize"}
 TCap <- paste("Generalized Estimating Equation Models for Incident Counts",
               "Predicted by When Incidents Occurred")
 FN <- paste ("\\item * p < .05, null hypothesis value outside 95\\% confidence",
@@ -532,22 +532,22 @@ FN <- paste ("\\item * p < .05, null hypothesis value outside 95\\% confidence",
              "Model 1 did not use an offset.",
              "Model 2 used log(Years) as an offset term.")
 
-texreg(list(NINC12_gee1, NINC12_gee2), booktabs = TRUE, dcolumn = TRUE,
+texreg(list(HXCat12_Any_gee1, HXCat12_Any_gee2), booktabs = TRUE, dcolumn = TRUE,
        threeparttable = TRUE, fontsize = "normalsize", table = TRUE, 
-       use.packages = FALSE, ci.force = TRUE, label = "tab:NINC12_texreg",
+       use.packages = FALSE, ci.force = TRUE, label = "tab:HXCat12_Any_texreg",
        stars = 0.05, caption = TCap, custom.note = FN)
 ```
 
 \FloatBarrier
 
 #### Estimated Marginal Means
-Table \ref{tab:NINC12_emmeans} provides the estimated marginal means obtained
+Table \ref{tab:HXCat12_Any_emmeans} provides the estimated marginal means obtained
 from Models 1 and 2, along with corresponding confidence intervals. The units of
 measurement for those means are counts per offender for Model 1 (which ignore
 period duration) and counts per offender-year for Model 2 (which adjust for
 duration and are thus considered annual incidence rates).
 
-```{r NINC12_emmeans}
+```{r HXCat12_Any_emmeans}
 # Table caption.
 TCap <- paste("Marginal Means of Incident Counts and Incidence Rates",
               "By When Incidents Occurred")
@@ -558,13 +558,13 @@ FN <- paste("Model 1 did not use an offset, so means are counts.",
             "incidence rates.",
             "Confidence intervals are based on z-scores.")
 
-NINC12_emmeans1 <- emmeans(NINC12_gee1, specs = pairwise ~ When, 
+HXCat12_Any_emmeans1 <- emmeans(HXCat12_Any_gee1, specs = pairwise ~ When, 
                            type = "response", ref = "During")
-NINC12_emmeans2 <- emmeans(NINC12_gee2, specs = pairwise ~ When, 
+HXCat12_Any_emmeans2 <- emmeans(HXCat12_Any_gee2, specs = pairwise ~ When, 
                            type = "response", ref = "During")
 
-as_tibble(NINC12_emmeans1$emmeans) %>% 
-  full_join(x = ., y = as_tibble(NINC12_emmeans2$emmeans)) %>% 
+as_tibble(HXCat12_Any_emmeans1$emmeans) %>% 
+  full_join(x = ., y = as_tibble(HXCat12_Any_emmeans2$emmeans)) %>% 
   mutate(Model = c(1, 1, 1, 2, 2, 2), 
          When = factor(When, levels = c("Before", "During", "After"))) %>% 
   arrange(Model, When) %>% 
@@ -585,11 +585,11 @@ as_tibble(NINC12_emmeans1$emmeans) %>%
 
 #### Contrasts for Ratios of Estimated Marginal Means
 Finally, we also estimated a set of contrasts to compare the marginal means from
-Models 1 and 2 (Table \ref{tab:NINC12_ratios}). Each of these contrasts
+Models 1 and 2 (Table \ref{tab:HXCat12_Any_ratios}). Each of these contrasts
 estimates the ratios of a pair of means rather than a raw difference between
 means. This is because of the nature of the underlying Poisson GEE model.
 
-```{r NINC12_ratios}
+```{r HXCat12_Any_ratios}
 TCap <- paste("Contrasts Estimating Ratios of Marginal Means for Incident",
               "Counts and Incidence Rates By When Incidents Occurred")
 
@@ -601,8 +601,8 @@ FN <- paste("Model 1 did not use an offset, so means are counts.",
             "Tukey's method to adjust for multiple comparisons.",
             "Confidence intervals are based on z-scores.")
 
-as_tibble(confint(NINC12_emmeans1$contrasts)) %>% 
-  full_join(x = ., y = as_tibble(confint(NINC12_emmeans2$contrasts))) %>% 
+as_tibble(confint(HXCat12_Any_emmeans1$contrasts)) %>% 
+  full_join(x = ., y = as_tibble(confint(HXCat12_Any_emmeans2$contrasts))) %>% 
   kable(format = "latex", booktabs = TRUE, caption = TCap, digits = 2, 
         col.names = c("Contrast", "Ratio", "SE", "df", "LCL", "UCL")) %>% 
   kable_styling() %>% 
