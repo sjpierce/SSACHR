@@ -37,3 +37,4 @@
 
 # Omit the license files.
 ^LICENSE\.md$
+^LICENSE\.txt$
