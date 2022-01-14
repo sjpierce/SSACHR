@@ -47,6 +47,9 @@ inst/*.pdf
 inst/*.eps
 inst/*.png
 inst/*.tiff
+inst/Drafts/*.eps
+inst/Drafts/*.png
+inst/Drafts/*.tiff
 
 # Omit SPSS data files that should be downloaded from NACJD archive
 # instead of distributed via GitHub.

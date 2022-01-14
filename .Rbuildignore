@@ -19,6 +19,7 @@
 
 # Omit PDF output files from knitting .Rmd files in selected folders.
 ^inst/*\.pdf$
+^inst/Drafts/*\.pdf$
 
 # Omit text file that should not be treated as actual data.
 ^data/Read_This_Note\.txt$
@@ -27,6 +28,9 @@
 ^inst/*\.eps$
 ^inst/*\.png$
 ^inst/*\.tiff$
+^inst/Drafts/*\.eps$
+^inst/Drafts/*\.png$
+^inst/Drafts/*\.tiff$
 
 # Omit SPSS data files that should be downloaded from NACJD archive
 # instead of distributed via GitHub.
