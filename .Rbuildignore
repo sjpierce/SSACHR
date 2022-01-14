@@ -34,3 +34,6 @@
 
 # Omit log files created by knitting to PDF.
 ^inst/*.log
+
+# Omit the license files.
+^LICENSE\.md$
