@@ -41,7 +41,10 @@ Thumbs.db
 
 # Omit PDF output files from knitting .Rmd files in selected folders.
 # This is to keep report results off of GitHub.
-inst/*.pdf
+inst/R_Citations.pdf
+inst/Step_01_Data_Mgt.pdf
+inst/Step_02_Analysis.pdf
+inst/Drafts/*.pdf
 
 # Omit EPS, PNG, and TIFF files from knitting .Rmd files in selected folders.
 inst/*.eps
