@@ -380,12 +380,12 @@ read_sav(here::here("inst/extdata/SAK_PERP_2018-04-03.sav"),
 \FloatBarrier
 
 ## Scenarios for Alignment of Periods
-The file read in below contains a data file used to show various potential
-scenarios for how the before, during, and after testing window periods can align
-with the observed portion of the criminal history records. These are
-*hypothetical data* manually constructed to yield a compact figure rather than
-examples from the actual data on specific offenders. The Scenarios data frame
-is designed to be used with the *vistime::gg_vistime()* function. 
+The file read in below contains data used to show various potential scenarios
+for how the before, during, and after testing window periods can align with the
+observed portion of the criminal history records. These are *hypothetical data*
+manually constructed to yield a compact figure rather than examples from the
+actual data on specific offenders. The Scenarios data frame is designed to be
+used with the *vistime::gg_vistime()* function.
 
 ```{r import_TWindow_Scenarios}
 Scenarios <- read.csv(file = here::here("inst/extdata/TWindow_Scenarios.csv"), 
@@ -661,11 +661,11 @@ adjust for period duration to produce crime incidence rate variables.
 
 We are working with adult criminal history records that only include data for
 crimes committed since each offender reached 16 years of age. We create a date
-interval variable called *OWindow* that starts on the the offender's 16th
-birthday (*Age16Date*, which can be computed from from date of birth *DOB*) and
-ends on the data collection date when the criminal history data were extracted
-from the state data warehouse: April 15, 2016 (*DCDate*). The duration (in 
-years) of that overall observed adult CHR period is stored in *Years_Overall*.
+interval variable called *OWindow* that starts on the offender's 16th birthday
+(*Age16Date*, which can be computed from date of birth *DOB*) and ends on the
+data collection date when the criminal history data were extracted from the
+state data warehouse: April 15, 2016 (*DCDate*). The duration (in years) of that
+overall observed adult CHR period is stored in *Years_Overall*.
 
 One might assume that the offender's 16th birth day (*Age16Date*) should be the
 start date for the before period. However, because *WDate* is derived from when
