@@ -66,6 +66,12 @@
       INCEWA.
     * Update tables and figures to include summaries of Any Crimes category. 
 * Updated README.md by knitting README.Rmd.
+* Added final output files produced from running code after installing version 
+  1.0.0 on my computer. These correspond to output we used in the manuscript and
+  are being bundled into the version 1.0.0 release. 
+    * `inst/Step_01_Data_Mgt_Published.pdf`
+    * `inst/Step_02_Analysis_Published.pdf`
+    * `inst/R_Citations_Published.pdf`
 
 # SSACHR 0.20.2, 2021-10-30
 * Update `inst/Step_02_Analysis.Rmd` to:
