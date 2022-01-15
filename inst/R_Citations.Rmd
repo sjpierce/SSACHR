@@ -47,7 +47,7 @@ header-includes:
 ********************************************************************************  
 \FloatBarrier
 
-# Purpose.
+# Purpose
 This file just produces a list of R and R package citations so that we can give 
 appropriate credit to the many people who developed or contributed to the 
 software we relied on in doing this work. It's a separate file so that we can 
