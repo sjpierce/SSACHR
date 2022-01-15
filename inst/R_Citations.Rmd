@@ -10,6 +10,8 @@ output:
    toc_depth: 3
    includes:
      in_header: "compact-title.tex"
+params: 
+ LogFile: "R_Citations.pdf"
 urlcolor: blue
 header-includes:
 - \usepackage{fancyhdr}
