@@ -15,6 +15,7 @@ knitr::opts_chunk$set(
 
 # SSACHR: Serial Sexual Assault Study Criminal History Records Paper Research Compendium
 <!-- badges: start -->
+[![DOI](https://zenodo.org/badge/257417300.svg)](https://zenodo.org/badge/latestdoi/257417300)
 [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![Project Status: Inactive](https://www.repostatus.org/badges/latest/inactive.svg)](https://www.repostatus.org/#inactive)
 [![CRAN status](https://www.r-pkg.org/badges/version/SSACHR)](https://CRAN.R-project.org/package=SSACHR)
