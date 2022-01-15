@@ -122,9 +122,6 @@ dependencies:
 # Check and report whether we used TinyTex or other LaTeX software. 
 which_latex()
 
-# RStudio citation.
-rstudioapi::versionInfo()
-
 # Get R citation.
 citation() 
 
