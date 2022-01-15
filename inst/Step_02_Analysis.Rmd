@@ -5524,12 +5524,12 @@ We use R Markdown to enhance reproducibility. Knitting the source R Markdown
 script *`r knitr:::current_input()`* generates this PDF file containing 
 explanatory text, R code, plus R output (text and graphics).
 
-- We used [RStudio](www.rstudio.org) `r rstudioapi::versionInfo()$version` to 
-  work with R and R markdown files. The software chain looks like this:
-  **Rmd file > RStudio > R > rmarkdown > knitr > pandoc > TinyTeX or MiKTeX > PDF file**.
+- We used [RStudio](www.rstudio.org) to work with R and R markdown files. The 
+  software chain looks like this: 
+  **Rmd file > RStudio > R > rmarkdown > knitr > md file > pandoc > tex file > TinyTeX > PDF file**.
 - We recommend using [TinyTeX](https://yihui.org/tinytex/) to compile LaTeX files 
   into PDF files. However, it should be viable to use 
-  [MiKTeX version 2.9](https://miktex.org) instead. 
+  [MiKTeX](https://miktex.org) or another LaTeX distribution instead. 
 - We used [pandoc](https://pandoc.org) `r pandoc_version()` for this 
   document. 
 
