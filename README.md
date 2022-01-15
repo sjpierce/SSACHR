@@ -393,3 +393,27 @@ expressed in this document (or any other document included in this R
 package and repository) are solely those of the authors and do not
 reflect the official positions of any participating organization or the
 U.S. Department of Justice.
+
+## Citing This Package
+
+Please cite the package itself, plus the associated data files and the
+journal article.
+
+Pierce, S. J. (2022). *SSACHR: Serial sexual assault study criminal
+history records paper research compendium*. (Version 1.0.0)
+\[Reproducible research materials and computer program, R package\].
+GitHub and Zenodo. <https://github.com/sjpierce/SSACHR> and
+<https://doi.org/10.5281/zenodo.5854874>
+
+Campbell, R. (2019). *Serial sexual assaults: A longitudinal examination
+of offending patterns using DNA evidence, Detroit, Michigan, 2009*
+\[Data files, codebooks, computer programs, and statistical output\].
+ICPSR37134-v1. Ann Arbor, MI: Inter-university Consortium for Political
+and Social Research \[distributor\], 2019-02-28. Retrieved from:
+<https://doi.org/10.3886/ICPSR37134.v1>
+
+Campbell, R., Pierce, S. J., Goodman-Williams, R., & Feeney, H. (2022).
+A window of opportunity: Examining the potential impact of mandatory
+sexual assault kit (SAK) testing legislation on crime prevention
+\[Manuscript accepted for publication\]. *Psychology, Public Policy, and
+Law*.
