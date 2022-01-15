@@ -1,3 +1,11 @@
+# SSACHR 1.0.1, 2022-01-15
+* Updated `README.Rmd` and `README.md`:
+    * Added DOI badge.
+    * Added section on citing the package. 
+* Obtained DOIs from Zenodo.
+    * DOI: 10.5281/zenodo.5854873 always points to the latest version. 
+    * DOI: 10.5281/zenodo.5854874 specifically points to v1.0.0
+    
 # SSACHR 1.0.0, 2022-01-14 to 2022-01-15
 * The manuscript has been accepted for publication. Began preparing to publish 
   the package & GitHub repository. 
