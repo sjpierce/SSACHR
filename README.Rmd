@@ -277,7 +277,7 @@ Then you can open and knit the key scripts in the following order:
 * `SSACHR/inst/Step_02_Analysis.Rmd`
 * `SSACHR/inst/R_Citations.Rmd`
 
-To do that from the R console, the following code should work. Each 
+To do that from the R console, the following code should work. Each call to 
 `Rscript_call()` runs the listed input script in a fresh R session and writes a 
 PDF output file to the specified name and folder inside the local repository.
 That will replace any prior version of the output by overwriting the file.
@@ -304,7 +304,7 @@ Rscript_call(fun = render,
 ```
 
 ```{r render-output-for-reproducibility, echo = FALSE, eval = FALSE}
-# This chunk can be used by people trying to replicate our results without 
+# This chunk can be used by people trying to reproduce our results without 
 # overwriting the "*_Published.pdf" versions of the output distributed with the
 # repository. 
 
@@ -314,19 +314,16 @@ library(rmarkdown) # for render()
 
 Rscript_call(fun = render,
              args = list(input = here("inst/Step_01_Data_Mgt.Rmd"),
-                         #params = list(LogFile = "Step_01_Data_Mgt.pdf"),
                          output_file = "Step_01_Data_Mgt.pdf",
                          output_dir = here("inst")))
 
 Rscript_call(fun = render,
              args = list(input = here("inst/Step_02_Analysis.Rmd"),
-                         #params = list(LogFile = "Step_02_Analysis.pdf"),
                          output_file = "Step_02_Analysis.pdf",
                          output_dir = here("inst")))
 
 Rscript_call(fun = render,
              args = list(input = here("inst/R_Citations.Rmd"),
-                         #params = list(LogFile = "R_Citations.pdf"),
                          output_file = "R_Citations.pdf",
                          output_dir = here("inst")))
 ```

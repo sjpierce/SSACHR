@@ -287,9 +287,9 @@ Then you can open and knit the key scripts in the following order:
 -   `SSACHR/inst/Step_02_Analysis.Rmd`
 -   `SSACHR/inst/R_Citations.Rmd`
 
-To do that from the R console, the following code should work. Each
-`Rscript_call()` runs the listed input script in a fresh R session and
-writes a PDF output file to the specified name and folder inside the
+To do that from the R console, the following code should work. Each call
+to `Rscript_call()` runs the listed input script in a fresh R session
+and writes a PDF output file to the specified name and folder inside the
 local repository. That will replace any prior version of the output by
 overwriting the file.
 
