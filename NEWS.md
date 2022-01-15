@@ -1,3 +1,57 @@
+# SSACHR 1.0.0, 2022-01-14 to 2022-01-15
+* The manuscript has been accepted for publication. Began preparing to publish 
+  the package & GitHub repository. 
+* Updated `DESCRIPTION`:
+    * Minor change to Description field. 
+    * Fixed License field by standardizing entry, renaming LICENSE.txt file to 
+      LICENSE, and adding LICENSE.note file. 
+* License now reflects GPL (>= 3) for source code and CC BY-SA-4.0 for all
+  other content.
+* Added `LICENSE.md` file containing GPL-3 license terms. 
+* Added `LICENSE` containing CC BY-SA-4.0 license terms
+* Updated `.Rbuildignore` to:
+    * Omit `LICENSE`, `LICENSE.md`, and `LICENSE.note` files. 
+    * Omit PDF & graphics files in `inst/Drafts`
+* Update `.gitignore` to 
+    * Omit selected PDF files in `inst`.
+    * Omit PDF & graphics files in `inst/Drafts`.
+* Updated `README.Rmd` and `README.md` to prepare for public release.
+* Removed `inst/Step_03_Case_Studies.Rmd` because we ultimately decided not to
+  include case studies in this paper. 
+* Updated `RData_Mgt_Functions.R` to remove functions we no longer need because 
+  the paper does not include any case studies. Those draft functions were never 
+  fully tested anyway. 
+    * getARRS()
+    * getCHGs()
+    * getIIDs()
+    * getINC()
+    * getJUDs()
+* Removed help documentation for deleted functions: 
+    * getARRS()
+    * getCHGs()
+    * getIIDs()
+    * getINC()
+    * getJUDs()
+* Updated `man/SSACHR-pakage.Rd` description field to match `DESCRIPTION`.
+* Updated `NAMESPACE`.
+* Updated `inst/Step_01_Data_Mgt.Rmd` to:
+    * Added a LogFile parameter with the default output filename. 
+    * Use LogFile parameter to set the left footer. 
+    * Improve explanatory text. 
+    * Update Software Information section.
+* Updated `inst/Step_02_Analysis.Rmd` to:
+    * Added a LogFile parameter with the default output filename. 
+    * Use LogFile parameter to set the left footer.
+    * Improve explanatory text. 
+    * Update Software Information section.
+* Updated `inst/R_Citations.Rmd` to:
+    * Added a LogFile parameter with the default output filename. 
+    * Use LogFile parameter to set the left footer.
+    * Update Software Information section.
+    * Fix a header. 
+    * Remove rstudioapi::versionInfo() call from show_citations chunk. It does 
+      not work when script is knitted via xfun::Rscript_call().
+
 # SSACHR 0.21.0, 2022-01-07
 * Updated `inst/Step_01_Data_Mgt.Rmd` to: 
     * Stop renaming variable HXCat12_Any to NINC12. 
