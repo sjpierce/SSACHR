@@ -19,9 +19,7 @@ Description: This package and corresponding GitHub repository are intended to
   the criminal histories of suspected serial sexual offenders using data from
   both criminal history records and forensic DNA testing of sexual assault 
   kits (SAKs). 
-License: GPL (>= 3) for source code (see LICENSE.md file), plus CC-BY-SA-4.0
-  for all other contents (see https://creativecommons.org/licenses/by-sa/4.0/ or 
-  LICENSE.txt file)
+License: GPL (>= 3) + file LICENSE
 URL: https://github.com/sjpierce/SSACHR
 BugReport: https://github.com/sjpierce/SSACHR/issues
 Encoding: UTF-8
