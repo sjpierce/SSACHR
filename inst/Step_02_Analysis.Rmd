@@ -62,11 +62,15 @@ Numerous sections below contain output for GEE models and estimates derived from
 them, such as estimated marginal means and contrasts for ratios of those means.
 We performed those analyses because we think the contrasts provide useful
 insights into how much offenders' rates of criminal activity differed between
-the periods before versus after the testing window. Reviewers found them less
-relevant than we did. We have left those results in the research compendium
-despite having removed them from the final manuscript because some readers may
+the periods before versus after the testing window. Reviewers found some of them
+less relevant than we did. We have left those results in the research compendium
+despite having removed some of them from the final paper because readers may
 still find them interesting and relevant. Preserving them facilitates achieving
 transparency regarding all the analyses we conducted.
+
+In particular note that we ran models that compared incident counts with and 
+without adjustments for period duration. Only the adjusted comparisons remain in
+the published paper. 
 
 # Setup
 Set global R chunk options (local chunk options will over-ride global options). 
@@ -271,7 +275,7 @@ Those dates were used in the previous data management script to compute the
 durations of the observed portions of adult CHR that correspond to the periods 
 before, during, and after the earliest testing window. Table
 \ref{tab:describe_windows} shows descriptive statistics for the these durations
-and \ref{fig:boxplot_windows} shows corresponding boxplots. These provide 
+and Figure \ref{fig:boxplot_windows} shows corresponding boxplots. These provide 
 crucial context for interpreting the numbers of crimes observed in each of those 
 periods and provide the denominators for translating them into incidence rates. 
 
