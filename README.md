@@ -179,11 +179,14 @@ project](https://support.rstudio.com/hc/en-us/articles/200526207-Using-RStudio-P
         building the package from the source code.
     -   `DESCRIPTION`: This file is a brief, structured description of
         the package that is required by R package building conventions.
-    -   `LICENSE.md`: This file contains the terms of the GPL3 software
-        license that apply to the source code in this repository.
-    -   `LICENSE.txt`: This file contains the terms of the CC-BY-SA-4.0
+    -   `LICENSE`: This file contains the terms of the CC-BY-SA-4.0
         license that applies to all non-source code content in this
         repository.
+    -   `LICENSE.md`: This file contains the terms of the GPL3 software
+        license that apply to the source code in this repository.
+    -   `LICENSE.note`: This file contais a notes explaining why there
+        are are multiple licenses by specifying which content
+        repository/package content falls under each license.
     -   `NAMESPACE`: This file is created automatically by R when
         building the package. You should not edit it manually. It is
         required by R package building conventions.
